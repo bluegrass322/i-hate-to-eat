@@ -33,6 +33,10 @@ group :development, :test do
   # Code analyze
   gem 'rubocop', '~> 1.22', require: false
   gem 'rubocop-rails', require: false
+
+  # Security analysis
+  gem 'brakeman'
+  gem 'bundler-audit'
 end
 
 group :development do
