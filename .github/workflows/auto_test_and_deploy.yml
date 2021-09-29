@@ -30,12 +30,6 @@ jobs:
       - name: yarn
         run: yarn --frozen-lockfile
 
-      - name: Prepare Webpacker
-        run: |
-          rm -rf bin/webpack*
-          rails webpacker:install
-          bundle exec rails webpacker:compile
-
   build-test:
     name: auto build-test
     needs: prepare
