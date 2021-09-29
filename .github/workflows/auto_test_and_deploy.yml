@@ -52,8 +52,6 @@ jobs:
           bundle exec rails db:create
           bundle exec rails db:migrate
 
-      - uses: actions/checkout@v2
-
       # Check vulnerability
       - name: Run Breakman
         run: |
@@ -73,7 +71,7 @@ jobs:
 
   deploy:
     name: auto deploy to heroku
-    needs: [prepare, build-test]
+    needs: [build-test]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
