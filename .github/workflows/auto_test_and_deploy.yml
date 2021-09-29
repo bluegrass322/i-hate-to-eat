@@ -57,6 +57,12 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
 
+      - name: Prepare Ruby and Gems
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7.4
+          bundler-cache: true
+
       - name: Setup database
         run: |
           cp config/database.yml.github-actions config/database.yml
