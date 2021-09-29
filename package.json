@@ -1,6 +1,10 @@
 {
   "name": "i_hate_to_eat",
   "private": true,
+  "scripts": {
+    "lint": "yarn run eslint --ext .vue --ext .js app/javascript",
+    "lint-fix": "yarn run eslint --fix --ext .vue --ext .js app/javascript && prettier --write --ext .vue --ext .js app/javascript"
+  },
   "dependencies": {
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
