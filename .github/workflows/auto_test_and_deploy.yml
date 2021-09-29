@@ -8,6 +8,7 @@ env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
   POSTGRES_HOST: 127.0.0.1
+  POSTGRES_PORT: 5432
 jobs:
   build-test:
     name: auto build-test
@@ -16,6 +17,9 @@ jobs:
     services:
       postgres:
         image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
