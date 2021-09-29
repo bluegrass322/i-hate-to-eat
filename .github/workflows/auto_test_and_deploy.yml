@@ -60,13 +60,13 @@ jobs:
       # Check vulnerability
       - name: Run Breakman
         run: |
-          bundle exec bundler-audit check --update
-          bundle exec brakeman -q -w2
+          bin/bundler-audit --update
+          bin/brakeman -q -w2
 
       # Run Linter
       - name: Run Rubocop
         run: |
-          bundle exec rubocop --parallel
+          bin/rubocop --parallel
 
       - name: Run ESLint
         run: |
