@@ -19,6 +19,7 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+      - name: bundle install
         run: bundle install
 
       - name: Prepare Node
@@ -26,6 +27,7 @@ jobs:
         with:
           node-version: '14.x'
           cache: 'yarn'
+      - name: yarn
         run: yarn --frozen-lockfile
 
       - name: Prepare Webpacker
