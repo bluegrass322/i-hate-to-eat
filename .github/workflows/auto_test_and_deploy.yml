@@ -5,6 +5,9 @@ on:
       - main
 env:
   RAILS_ENV: test
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_HOST: 127.0.0.1
 jobs:
   build-test:
     name: auto build-test
@@ -13,10 +16,6 @@ jobs:
     services:
       postgres:
         image: postgres
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -48,6 +47,7 @@ jobs:
 
       - name: Setup database
         run: |
+          cp config/database.yml.github-actions config/database.yml
           bundle exec rails db:create
           bundle exec rails db:migrate
 
