@@ -106,4 +106,5 @@ jobs:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "i-hate-to-eat"
           heroku_email: ${{secrets.HEROKU_EMAIL}}
-          healthcheck: "https://i-hate-to-eat.herokuapp.com/health"
+          # TODO: add a route for health check
+          healthcheck: "https://i-hate-to-eat.herokuapp.com"
