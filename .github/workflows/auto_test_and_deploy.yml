@@ -6,10 +6,26 @@ on:
 env:
   RAILS_ENV: test
 jobs:
-  prepare:
-    name: prepare test
+  build-test:
+    name: auto build-test
+    needs: prepare
     runs-on: ubuntu-latest
     timeout-minutes: 10
+    services:
+      postgres:
+        image: postgres
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
     steps:
       # Checkout and install dependencies
       - name: Check out repository code
@@ -31,38 +47,18 @@ jobs:
       - name: yarn
         run: yarn --frozen-lockfile
 
-  build-test:
-    name: auto build-test
-    needs: prepare
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    services:
-      postgres:
-        image: postgres
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
-          POSTGRES_DB: postgres
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 5432:5432
-    steps:
-      # - name: Setup database
-      #   run: |
-      #     bundle exec rails db:create
-      #     bundle exec rails db:migrate
+      - name: Setup database
+        run: |
+          bundle exec rails db:create
+          bundle exec rails db:migrate
 
       - uses: actions/checkout@v2
 
       # Check vulnerability
-      # - name: Run Breakman
-      #   run: |
-      #     bin/bundler-audit --update
-      #     bin/brakeman -q -w2
+      - name: Run Breakman
+        run: |
+          bin/bundler-audit --update
+          bin/brakeman -q -w2
 
       # Run Linter
       - name: Run Rubocop
