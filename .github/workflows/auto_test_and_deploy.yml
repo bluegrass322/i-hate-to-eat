@@ -81,14 +81,13 @@ jobs:
       # Run RSpec (added later)
 
   deploy:
-    name: auto deploy
+    name: auto deploy to heroku
     needs: [prepare, build-test]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Deploy to Heroku
-        uses: actions/checkout@v2
-        uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
           heroku_app_name: "i-hate-to-eat"
