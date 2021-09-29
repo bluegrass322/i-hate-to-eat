@@ -60,10 +60,10 @@ jobs:
       - uses: actions/checkout@v2
 
       # Check vulnerability
-      - name: Run Breakman
-        run: |
-          bin/bundler-audit --update
-          bin/brakeman -q -w2
+      # - name: Run Breakman
+      #   run: |
+      #     bin/bundler-audit --update
+      #     bin/brakeman -q -w2
 
       # Run Linter
       - name: Run Rubocop
