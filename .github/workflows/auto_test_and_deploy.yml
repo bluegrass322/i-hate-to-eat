@@ -20,7 +20,7 @@ jobs:
         with:
           bundler-cache: true
       - name: bundle install
-        run: bundle install
+        run: bundle install --path vendor/bundle
 
       - name: Prepare Node
         uses: actions/setup-node@v2
