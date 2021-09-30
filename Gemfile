@@ -35,6 +35,10 @@ gem 'rails-i18n', '~> 6.0.0'
 gem 'enum_help'
 
 group :development, :test do
+  # Code analyze
+  gem 'rubocop', '~> 1.22', require: false
+  gem 'rubocop-rails', require: false
+
   # Debugger
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'pry'
@@ -43,9 +47,9 @@ group :development, :test do
   gem 'better_errors'
   gem 'binding_of_caller'
 
-  # Code analyze
-  gem 'rubocop', '~> 1.22', require: false
-  gem 'rubocop-rails', require: false
+  # Print debug
+  gem 'hirb'
+  gem 'hirb-unicode-steakknife'
 
   # Security analysis
   gem 'brakeman'
