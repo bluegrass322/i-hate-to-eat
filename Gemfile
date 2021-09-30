@@ -35,8 +35,13 @@ gem 'rails-i18n', '~> 6.0.0'
 gem 'enum_help'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  # Debugger
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'pry'
+  gem 'pry-rails'
+  gem 'pry-byebug'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 
   # Code analyze
   gem 'rubocop', '~> 1.22', require: false
