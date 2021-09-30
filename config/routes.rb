@@ -2,6 +2,9 @@
 
 Rails.application.routes.draw do
   root to: 'top#index'
+
+  # ルーティングエラーを拾う
+  get '*path', to: 'top#index'
 end
 
 # == Route Map
