@@ -29,6 +29,10 @@ Layout/LineLength:
 Layout/IndentationConsistency:
   EnforcedStyle: indented_internal_methods
 
+Layout/HashAlignment:
+  Exclude:
+    - 'lib/tasks/auto_annotate_models.rake'
+
 Lint/AmbiguousBlockAssociation:
   Exclude:
     - 'spec/**/*_spec.rb'

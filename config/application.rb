@@ -44,11 +44,11 @@ module IHateToEat
       g.skip_routes true
       g.helper false
       g.test_framework :rspec,
-        controller_specs: false,
-        request_specs: false,
-        view_specs: false,
-        helper_specs: false,
-        routing_specs: false
+                       controller_specs: false,
+                       request_specs: false,
+                       view_specs: false,
+                       helper_specs: false,
+                       routing_specs: false
     end
   end
 end
