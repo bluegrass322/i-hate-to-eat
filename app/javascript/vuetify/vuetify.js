@@ -11,10 +11,10 @@ export default new Vuetify({
       base: 'F5F5F6',
       primary: '5A7899',
       pLight: '89A7CA',
-      pDark:'2C4C6B'
-    }
+      pDark: '2C4C6B',
+    },
   },
   icons: {
-    iconfont: 'mdi'
-  }
+    iconfont: 'mdi',
+  },
 });
