@@ -39,6 +39,16 @@ module IHateToEat
     # the framework and any gems in your application.
 
     # Don't generate system test files.
-    config.generators.system_tests = nil
+    config.generators do |g|
+      g.assets false
+      g.skip_routes true
+      g.helper false
+      g.test_framework :rspec,
+        controller_specs: false,
+        request_specs: false,
+        view_specs: false,
+        helper_specs: false,
+        routing_specs: false
+    end
   end
 end
