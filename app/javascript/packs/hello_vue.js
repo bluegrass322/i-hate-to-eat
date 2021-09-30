@@ -7,9 +7,11 @@
 
 import Vue from 'vue';
 import App from '../app.vue';
+import vuetify from '../vuetify/vuetify';
 
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
+    vuetify,
     render: (h) => h(App),
   }).$mount();
   document.body.appendChild(app.$el);
