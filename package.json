@@ -6,6 +6,7 @@
     "lint-fix": "yarn run eslint --fix --ext .vue --ext .js app/javascript && prettier --write --ext .vue --ext .js app/javascript"
   },
   "dependencies": {
+    "@mdi/font": "^6.1.95",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
@@ -17,7 +18,6 @@
   },
   "version": "0.1.0",
   "devDependencies": {
-    "@mdi/font": "^6.1.95",
     "@webpack-cli/serve": "^1.5.2",
     "deepmerge": "^4.2.2",
     "eslint": "^7.32.0",
