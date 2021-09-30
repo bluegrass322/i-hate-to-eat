@@ -54,6 +54,12 @@ group :development, :test do
   # Security analysis
   gem 'brakeman'
   gem 'bundler-audit'
+
+  # Test
+  gem 'rspec-rails', '~> 5.0.0'
+  gem 'factory_bot_rails'
+
+  gem 'rubyzip', '~> 2.3.0'
 end
 
 group :development do
@@ -66,6 +72,11 @@ group :development do
 
   # Table/Schema
   gem 'annotate'
+end
+
+group :test do
+  gem 'capybara'
+  gem 'webdrivers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
