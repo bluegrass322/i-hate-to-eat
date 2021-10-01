@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
+  authenticates_with_sorcery!
+
   # Enums
   enum role: { general: 0, admin: 10 }
 
