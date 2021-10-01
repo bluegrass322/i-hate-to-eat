@@ -17,7 +17,7 @@ export default {
   data() {
     return {
       date: '',
-    }
+    };
   },
   mounted() {
     this.setDate();
@@ -28,9 +28,9 @@ export default {
       dayjs.extend(timezone);
 
       const today = dayjs();
-      this.date = today.tz("Asia/Tokyo").format('YYYY.MM.DD')
-  }
-  }
+      this.date = today.tz('Asia/Tokyo').format('YYYY.MM.DD');
+    },
+  },
 };
 </script>
 
@@ -43,7 +43,7 @@ export default {
 .date {
   margin-top: 20px;
   height: 30;
-  border-bottom: medium solid #5A7899;
+  border-bottom: medium solid #5a7899;
   /* エリア確認用 */
   /* background-color: rgba(90, 40, 80, 0.3); */
 }

@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }).$mount();
   document.body.appendChild(app.$el);
 
+  // TODO: 後に削除
   console.log(app);
 });
 

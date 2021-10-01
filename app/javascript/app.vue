@@ -15,8 +15,8 @@ import FooterMenu from './components/commons/FooterMenu';
 export default {
   components: {
     CommonHeader,
-    FooterMenu
-  }
+    FooterMenu,
+  },
 };
 </script>
-    CommonHeader
+CommonHeader

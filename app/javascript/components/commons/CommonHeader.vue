@@ -1,14 +1,6 @@
 <template>
-  <v-app-bar
-    app
-    color="primary"
-    flat
-    fixed
-    height="70"
-  >
-    <span class="text-h5 base--text">
-      I hate to Eat
-    </span>
+  <v-app-bar app color="primary" flat fixed height="70">
+    <span class="text-h5 base--text"> I hate to Eat </span>
     <!-- <v-card
       flat
       width="300px"
