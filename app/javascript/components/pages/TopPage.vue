@@ -5,6 +5,7 @@
         {{ date }}
       </p>
     </div>
+    <router-view />
   </v-container>
 </template>
 
