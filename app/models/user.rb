@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
   # Enums
-  enum role: { general: 0, admin: 10 } 
+  enum role: { general: 0, admin: 10 }
 
   # Validations
   with_options presence: true do
@@ -22,7 +24,7 @@ end
 #  crypted_password :string
 #  email            :string           default("address@example.com"), not null
 #  name             :string           default("noname"), not null
-#  role             :integer          default(0), not null
+#  role             :integer          default("general"), not null
 #  salt             :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
