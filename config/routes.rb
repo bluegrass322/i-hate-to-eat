@@ -3,6 +3,12 @@
 Rails.application.routes.draw do
   root to: 'top#index'
 
+  namespace :api, format: 'json' do
+    namespace :v1 do
+      resource :registration, only: %i[create]
+    end
+  end
+
   # ルーティングエラーを拾う
   get '*path', to: 'top#index'
 end
@@ -11,6 +17,8 @@ end
 #
 #                                Prefix Verb   URI Pattern                                                                              Controller#Action
 #                                  root GET    /                                                                                        top#index
+#                   api_v1_registration POST   /api/v1/registration(.:format)                                                           api/v1/registrations#create {:format=>/json/}
+#                                       GET    /*path(.:format)                                                                         top#index
 #         rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
 #            rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create
 #         rails_sendgrid_inbound_emails POST   /rails/action_mailbox/sendgrid/inbound_emails(.:format)                                  action_mailbox/ingresses/sendgrid/inbound_emails#create
