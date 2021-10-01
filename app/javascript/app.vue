@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="app">
     <v-main>
       <common-header />
       <router-view />
@@ -19,4 +19,9 @@ export default {
   },
 };
 </script>
-CommonHeader
+
+<style scoped>
+#app {
+  background-color: #f5f5f6;
+}
+</style>

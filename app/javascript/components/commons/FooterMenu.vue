@@ -1,9 +1,15 @@
 <template>
   <v-app-bar app bottom color="primary" fixed flat>
-    <span class="text-h5 base--text"> I hate to Eat </span>
+    <footer-menu-items-before-login />
   </v-app-bar>
 </template>
 
 <script>
-export default {};
+import FooterMenuItemsBeforeLogin from '../parts/FooterMenuItemsBeforeLogin';
+
+export default {
+  components: {
+    FooterMenuItemsBeforeLogin,
+  },
+};
 </script>

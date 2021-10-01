@@ -30,6 +30,9 @@ gem 'jbuilder', '~> 2.7'
 # Reduces boot times
 gem 'bootsnap', '>= 1.4.2', require: false
 
+# Authentication
+gem 'sorcery'
+
 # Serializer
 gem 'fast_jsonapi'
 
