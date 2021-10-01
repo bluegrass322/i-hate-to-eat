@@ -2,6 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 
 import TopPage from '../components/pages/TopPage';
+import RegisterPage from '../components/pages/RegisterPage';
 import NotFound from '../components/pages/NotFound';
 
 Vue.use(VueRouter);
@@ -13,6 +14,13 @@ const router = new VueRouter({
       path: '/',
       component: TopPage,
       name: 'TopPage',
+      children: [
+        {
+          path: 'register',
+          component: RegisterPage,
+          name: 'RegisterPage',
+        },
+      ],
     },
     // 404 not found
     {
