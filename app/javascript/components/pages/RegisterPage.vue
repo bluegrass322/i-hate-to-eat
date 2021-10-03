@@ -3,48 +3,83 @@
     <v-card-title>
       <div class="text-h6 base--text">新規ユーザー登録</div>
     </v-card-title>
-    <v-form @submit.prevent="createUser">
-      <v-card-text>
-        <template v-if="railsErrors.show">
-          <v-alert class="text-center" dense type="error">
-            <template v-for="e in railsErrors.errorMessages">
-              <p :key="e">{{ e }}</p>
-            </template>
-          </v-alert>
-        </template>
-        <v-text-field
-          v-model="user.name"
-          color="base"
-          dark
-          type="text"
-          label="ユーザーネーム"
-        />
-        <v-text-field
-          v-model="user.email"
-          color="base"
-          dark
-          type="email"
-          label="メールアドレス"
-        />
-        <v-text-field
-          v-model="user.password"
-          color="base"
-          dark
-          type="password"
-          label="パスワード"
-        />
-        <v-text-field
-          v-model="user.password_confirmation"
-          color="base"
-          dark
-          type="password"
-          label="パスワード（確認）"
-        />
-      </v-card-text>
-      <v-card-actions>
-        <v-btn type="submit" color="base" outlined>登録</v-btn>
-      </v-card-actions>
-    </v-form>
+    <validation-observer ref="observer" v-slot="{ handleSubmit }">
+      <v-form @submit.prevent="handleSubmit(createUser)">
+        <v-card-text>
+          <template v-if="railsErrors.show">
+            <v-alert class="text-center" dense type="error">
+              <template v-for="e in railsErrors.errorMessages">
+                <p :key="e">{{ e }}</p>
+              </template>
+            </v-alert>
+          </template>
+          <validation-provider
+            v-slot="{ errors }"
+            name="ユーザーネーム"
+            rules="required"
+          >
+            <v-text-field
+              v-model="user.name"
+              :error-messages="errors"
+              color="base"
+              dark
+              type="text"
+              label="ユーザーネーム"
+              required
+            />
+          </validation-provider>
+          <validation-provider
+            v-slot="{ errors }"
+            name="メールアドレス"
+            rules="email|required"
+          >
+            <v-text-field
+              v-model="user.email"
+              :error-messages="errors"
+              color="base"
+              dark
+              type="email"
+              label="メールアドレス"
+              required
+            />
+          </validation-provider>
+          <validation-provider
+            v-slot="{ errors }"
+            name="パスワード"
+            rules="alpha_num|min:5|required"
+            vid="confirmation"
+          >
+            <v-text-field
+              v-model="user.password"
+              :error-messages="errors"
+              color="base"
+              dark
+              type="password"
+              label="パスワード"
+              required
+            />
+          </validation-provider>
+          <validation-provider
+            v-slot="{ errors }"
+            name="パスワード（確認）"
+            rules="confirmed:confirmation|required"
+          >
+            <v-text-field
+              v-model="user.password_confirmation"
+              :error-messages="errors"
+              color="base"
+              dark
+              type="password"
+              label="パスワード（確認）"
+              required
+            />
+          </validation-provider>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn type="submit" color="base" outlined>登録</v-btn>
+        </v-card-actions>
+      </v-form>
+    </validation-observer>
   </v-card>
 </template>
 
