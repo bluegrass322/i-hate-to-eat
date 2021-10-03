@@ -11,6 +11,7 @@ import axios from 'axios';
 import AxiosPlugin from '../plugins/vue-axios';
 import { csrfToken } from '@rails/ujs';
 import router from '../router/router';
+import store from '../store/index';
 import vuetify from '../vuetify/vuetify';
 
 Vue.use(AxiosPlugin, { axios: axios, csrfToken: csrfToken });
@@ -18,6 +19,7 @@ Vue.use(AxiosPlugin, { axios: axios, csrfToken: csrfToken });
 document.addEventListener('DOMContentLoaded', () => {
   const app = new Vue({
     router,
+    store,
     vuetify,
     render: (h) => h(App),
   }).$mount();
