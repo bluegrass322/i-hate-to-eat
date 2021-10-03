@@ -4,11 +4,14 @@ ja:
       user: "ユーザー"
     attributes:
       user:
+        id: "id"
         name: "ユーザーネーム"
         email: "メールアドレス"
         password: "パスワード"
         password_confirmation: "パスワード（確認）"
         role: "権限"
+        created_at: "登録日時"
+        updated_at: "更新日時"
   enums:
     user:
       role:

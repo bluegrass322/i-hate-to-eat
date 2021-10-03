@@ -3,6 +3,12 @@
 Rails.application.routes.draw do
   root to: 'top#index'
 
+  # 管理画面
+  namespace :admin do
+    root to: 'dashboards#index'
+    resources :users
+  end
+
   namespace :api, format: 'json' do
     namespace :v1 do
       resource :registration, only: %i[create]
@@ -17,6 +23,15 @@ end
 #
 #                                Prefix Verb   URI Pattern                                                                              Controller#Action
 #                                  root GET    /                                                                                        top#index
+#                            admin_root GET    /admin(.:format)                                                                         admin/dashboards#index
+#                           admin_users GET    /admin/users(.:format)                                                                   admin/users#index
+#                                       POST   /admin/users(.:format)                                                                   admin/users#create
+#                        new_admin_user GET    /admin/users/new(.:format)                                                               admin/users#new
+#                       edit_admin_user GET    /admin/users/:id/edit(.:format)                                                          admin/users#edit
+#                            admin_user GET    /admin/users/:id(.:format)                                                               admin/users#show
+#                                       PATCH  /admin/users/:id(.:format)                                                               admin/users#update
+#                                       PUT    /admin/users/:id(.:format)                                                               admin/users#update
+#                                       DELETE /admin/users/:id(.:format)                                                               admin/users#destroy
 #                   api_v1_registration POST   /api/v1/registration(.:format)                                                           api/v1/registrations#create {:format=>/json/}
 #                                       GET    /*path(.:format)                                                                         top#index
 #         rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create

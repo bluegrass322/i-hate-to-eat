@@ -1,0 +1,32 @@
+<div id="admin-contents">
+  <h3>ユーザー : <%= @user.name %></h3>
+
+  <div>
+    <%= link_to '編集', edit_admin_user_path(@user), class: "admin-btn" %>
+    <%= link_to '削除', admin_user_path(@user), method: :delete, data: { confirm: "#{@user.name}を削除する？" }, class: "admin-btn" %>
+  </div>
+  <table class="admin-table">
+    <t-body>
+      <tr class="admin-t-row">
+        <th class="admin-t-head"><%= User.human_attribute_name(:id) %></th>
+        <td class="admin-t-data"><%= @user.id %></td>
+      </tr>
+      <tr class="admin-t-row">
+        <th class="admin-t-head"><%= User.human_attribute_name(:name) %></th>
+        <td class="admin-t-data"><%= @user.name %></td>
+      </tr>
+      <tr class="admin-t-row">
+        <th class="admin-t-head"><%= User.human_attribute_name(:role) %></th>
+        <td class="admin-t-data"><%= @user.role_i18n %></td>
+      </tr>
+      <tr class="admin-t-row">
+        <th class="admin-t-head"><%= User.human_attribute_name(:created_at) %></th>
+        <td class="admin-t-data"><%= l @user.created_at %></td>
+      </tr>
+      <tr class="admin-t-row">
+        <th class="admin-t-head"><%= User.human_attribute_name(:updated_at) %></th>
+        <td class="admin-t-data"><%= l @user.updated_at %></td>
+      </tr>
+    </t-body>
+  </table>
+</div>
