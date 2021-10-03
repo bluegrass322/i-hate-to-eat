@@ -6,14 +6,10 @@
     <v-form @submit.prevent="createUser">
       <v-card-text>
         <template v-if="railsErrors.show">
-          <v-alert
-            v-for="e in railsErrors.errorMessages"
-            :key="e"
-            class="text-center"
-            dense
-            type="error"
-          >
-            {{ e }}
+          <v-alert class="text-center" dense type="error">
+            <template v-for="e in railsErrors.errorMessages">
+              <p :key="e">{{ e }}</p>
+            </template>
           </v-alert>
         </template>
         <v-text-field
@@ -76,6 +72,12 @@ export default {
         .post('api/v1/registration', { user: this.user })
         .then((res) => {
           console.log(res.status);
+
+          this.$store.commit('flashMessage/setMessage', {
+            type: 'success',
+            message: '登録に成功しました',
+          });
+
           // TODO: 遷移先を一時的にTopに、後に修正
           this.$router.push({ name: 'TopPage' });
         })
