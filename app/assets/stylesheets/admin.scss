@@ -1,0 +1,133 @@
+// 基本色
+$base-color: #F5F5F6;
+$primary-color: #5A7899;
+$plight-color: #89A7CA;
+$pdark-color: #2C4C6B;
+$error-color: #e05c74;
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+#admin-body {
+  background-color: $base-color;
+  display: flex;
+  flex-wrap: wrap;
+  color: $primary-color;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+// 管理画面：サイドメニュー
+#admin-sidemenu {
+  background-color: $primary-color;
+  height: 100%;
+  padding: 10px 15px;
+  flex-basis: 200px;
+}
+
+.admin-sidemenu {
+  &-text {
+    color: $base-color;
+  }
+
+  &-ul {
+    list-style: none;
+  }
+
+  &-link {
+    text-decoration: none;
+  }
+}
+
+// メインコンテンツ
+#admin-contents {
+  height: 100%;
+  padding: 20px 40px;
+}
+
+.admin {
+  &-table {
+    border: solid 1px $plight-color;
+    border-collapse: collapse;
+    padding: 0;
+  }
+
+  &-t-head {
+    background-color: $primary-color;
+    border: solid 1px $plight-color;
+    color: $base-color;
+    margin: 0;
+    padding: 5px 10px;
+  }
+
+  &-t-row {
+    border: solid 1px $plight-color;
+  }
+
+  &-t-data {
+    border: solid 1px $plight-color;
+    margin: 0;
+    padding: 5px 15px;
+  }
+
+  &-btn {
+    text-decoration: none;
+    margin: 5px 10px;
+  }
+
+  &-form {
+    &-group {
+      margin: 10px 0;
+      text-align: left;
+    }
+
+    &-text {
+      width: 250px;
+    }
+
+    &-label {
+      font-size: 13px;
+    }
+
+    &-btn {
+      margin: 20px 15px;
+    }
+  }
+
+  &-error-ul {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+  }
+
+  &-error-li {
+    background-color: $error-color;
+    color: $base-color;
+    padding: 3px 5px;
+  }
+
+  &-flash {
+    background-color: $error-color;
+    color: $base-color;
+    height:25px;
+    padding: 5px 10px;
+    text-align: center;
+    vertical-align: middle;
+  }
+}
+
+#admin-error-explanation {
+  padding: 0;
+  text-align: center;
+}
+
+// 共通設定
+a:visited{
+  color: inherit;
+}
