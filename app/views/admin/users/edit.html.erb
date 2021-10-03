@@ -1,5 +1,5 @@
 <div id="admin-contents">
-  <h2>ユーザー編集 : <%= @user.name %></h2>
+  <h3>ユーザー編集 : <%= @user.name %></h3>
 
   <div class="admin-form">
     <%= form_with model: @user, url: admin_user_path, local: true do |f| %>
