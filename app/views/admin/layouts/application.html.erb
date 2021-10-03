@@ -11,6 +11,9 @@
 
   <body id="admin-body">
     <%= render 'admin/shared/sidemenu' %>
-    <%= yield %>
+    <div>
+      <%= render 'admin/shared/flash_message' %>
+      <%= yield %>
+    </div>
   </body>
 </html>
