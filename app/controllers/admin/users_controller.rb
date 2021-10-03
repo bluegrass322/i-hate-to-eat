@@ -5,6 +5,21 @@ class Admin::UsersController < Admin::BaseController
     @users = User.all.order(created_at: "DESC")
   end
 
+  def new
+    @user = User.new
+  end
+
+  def create
+    @user = User.new(user_params)
+
+    if @user.save
+      redirect_to admin_user_path(user), notice: "ユーザーの作成に成功"
+    else
+      flash.now[:danger] = "ユーザー作成に失敗"
+      render :new
+    end
+  end
+
   def show; end
 
   def edit; end
@@ -30,7 +45,7 @@ class Admin::UsersController < Admin::BaseController
     end
 
     def user_params
-      params.require(:user).permit(:name, :email, :password, :pasword_confirmation,
+      params.require(:user).permit(:name, :email, :password, :password_confirmation,
                                    :role)
     end
 end
