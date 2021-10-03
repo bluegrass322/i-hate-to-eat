@@ -1,6 +1,7 @@
 <template>
-  <v-app-bar app color="primary" flat fixed height="70">
-    <span class="text-h5 base--text"> I hate to Eat </span>
+  <v-toolbar app color="primary" flat fixed height="70" tile>
+    <flash-message class="flash-alert"/>
+    <div class="fix-item text-h5 base--text"> I hate to Eat </div>
     <!-- <v-card
       flat
       width="300px"
@@ -10,9 +11,22 @@
         Ad
       </span>
     </v-card> -->
-  </v-app-bar>
+  </v-toolbar>
 </template>
 
 <script>
-export default {};
+import FlashMessage from './FlashMessage';
+
+export default {
+  components: {
+    FlashMessage
+  }
+};
 </script>
+
+<style scoped>
+.flash-alert {
+  margin: 0;
+  padding: 25px 15px;
+}
+</style>
