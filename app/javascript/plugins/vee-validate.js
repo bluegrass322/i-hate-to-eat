@@ -4,7 +4,7 @@ import {
   ValidationProvider,
   ValidationObserver,
   extend,
-  setInteractionMode
+  setInteractionMode,
 } from 'vee-validate';
 
 import {
@@ -12,7 +12,7 @@ import {
   confirmed,
   email,
   min,
-  required
+  required,
 } from 'vee-validate/dist/rules';
 
 setInteractionMode('eager');
@@ -22,25 +22,25 @@ Vue.component('ValidationObserver', ValidationObserver);
 
 extend('alpha_num', {
   ...alpha_num,
-  message: '{_field_}は英数字のみ使用できます'
+  message: '{_field_}は英数字のみ使用できます',
 });
 
 extend('confirmed', {
   ...confirmed,
-  message: 'パスワードと一致しません'
+  message: 'パスワードと一致しません',
 });
 
 extend('email', {
   ...email,
-  message: '形式を確認してください'
+  message: '形式を確認してください',
 });
 
 extend('min', {
   ...min,
-  message: '{length}文字以上で入力してください'
+  message: '{length}文字以上で入力してください',
 });
 
 extend('required', {
   ...required,
-  message: '{_field_}を入力してください'
+  message: '{_field_}を入力してください',
 });

@@ -3,10 +3,7 @@
     <v-card-title>
       <div class="text-h6 base--text">新規ユーザー登録</div>
     </v-card-title>
-    <validation-observer
-      ref="observer"
-      v-slot="{ handleSubmit }"
-    >
+    <validation-observer ref="observer" v-slot="{ handleSubmit }">
       <v-form @submit.prevent="handleSubmit(createUser)">
         <v-card-text>
           <template v-if="railsErrors.show">
