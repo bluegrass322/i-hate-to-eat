@@ -1,7 +1,7 @@
 <template>
-  <v-toolbar app color="primary" flat fixed height="70" tile>
-    <flash-message class="flash-alert"/>
-    <div class="fix-item text-h5 base--text"> I hate to Eat </div>
+  <v-toolbar color="primary" flat fixed height="70" tile>
+    <flash-message class="flash-alert" />
+    <div class="fix-item text-h5 base--text">I hate to Eat</div>
     <!-- <v-card
       flat
       width="300px"
@@ -19,8 +19,8 @@ import FlashMessage from './FlashMessage';
 
 export default {
   components: {
-    FlashMessage
-  }
+    FlashMessage,
+  },
 };
 </script>
 

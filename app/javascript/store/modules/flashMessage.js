@@ -1,33 +1,32 @@
 const state = {
   type: 'success',
-  message: ''
+  message: '',
 };
 
 const getters = {
-  type: state => state.type,
-  message: state => state.message
+  type: (state) => state.type,
+  message: (state) => state.message,
 };
 
 const mutations = {
-  setMessage (state, { type, message, timeout }) {
+  setMessage(state, { type, message, timeout }) {
     state.type = type;
     state.message = message;
 
     if (typeof timeout === 'undefined') {
       timeout = 3000;
-    };
+    }
 
     setTimeout(() => {
       state.type = 'success';
       state.message = '';
-    },
-    timeout);
-  }
+    }, timeout);
+  },
 };
 
 export default {
   namespaced: true,
   state,
   getters,
-  mutations
+  mutations,
 };

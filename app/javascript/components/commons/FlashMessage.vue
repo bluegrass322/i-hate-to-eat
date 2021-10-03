@@ -1,10 +1,5 @@
 <template>
-  <v-alert
-    v-show="message"
-    dense
-    height="70px"
-    :type="type"
-  >
+  <v-alert v-show="message" dense height="70px" :type="type">
     {{ message }}
   </v-alert>
 </template>
@@ -14,7 +9,7 @@ import { mapGetters } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters('flashMessage', ['type', 'message'])
-  }
+    ...mapGetters('flashMessage', ['type', 'message']),
+  },
 };
 </script>

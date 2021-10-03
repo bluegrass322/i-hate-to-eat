@@ -7,8 +7,8 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
   modules: {
-    flashMessage
-  }
+    flashMessage,
+  },
 });
 
 export default store;
