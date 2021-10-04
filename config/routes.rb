@@ -6,6 +6,9 @@ Rails.application.routes.draw do
   # 管理画面
   namespace :admin do
     root to: 'dashboards#index'
+    get 'login', to: 'user_sessions#new'
+    post 'login', to: 'user_sessions#create'
+    delete 'logout', to: 'user_sessions#destroy'
     resources :users
   end
 
@@ -25,6 +28,9 @@ end
 #                                Prefix Verb   URI Pattern                                                                              Controller#Action
 #                                  root GET    /                                                                                        top#index
 #                            admin_root GET    /admin(.:format)                                                                         admin/dashboards#index
+#                           admin_login GET    /admin/login(.:format)                                                                   admin/user_sessions#new
+#                                       POST   /admin/login(.:format)                                                                   admin/user_sessions#create
+#                          admin_logout DELETE /admin/logout(.:format)                                                                  admin/user_sessions#destroy
 #                           admin_users GET    /admin/users(.:format)                                                                   admin/users#index
 #                                       POST   /admin/users(.:format)                                                                   admin/users#create
 #                        new_admin_user GET    /admin/users/new(.:format)                                                               admin/users#new
@@ -34,8 +40,8 @@ end
 #                                       PUT    /admin/users/:id(.:format)                                                               admin/users#update
 #                                       DELETE /admin/users/:id(.:format)                                                               admin/users#destroy
 #                   api_v1_registration POST   /api/v1/registration(.:format)                                                           api/v1/registrations#create {:format=>/json/}
-#                  api_v1_authenticaton DELETE /api/v1/authenticaton(.:format)                                                          api/v1/authenticatons#destroy {:format=>/json/}
-#                                       POST   /api/v1/authenticaton(.:format)                                                          api/v1/authenticatons#create {:format=>/json/}
+#                 api_v1_authentication DELETE /api/v1/authentication(.:format)                                                         api/v1/authentications#destroy {:format=>/json/}
+#                                       POST   /api/v1/authentication(.:format)                                                         api/v1/authentications#create {:format=>/json/}
 #                                       GET    /*path(.:format)                                                                         top#index
 #         rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
 #            rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create
