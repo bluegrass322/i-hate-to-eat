@@ -1,6 +1,6 @@
 export const initialState = {
   userId: '',
-  isLoggedIn: false
+  isLoggedIn: false,
 };
 
 const getters = {
@@ -14,7 +14,7 @@ const mutations = {
   login(state, userId) {
     state.userId = userId.id;
     state.isLoggedIn = true;
-  }
+  },
 };
 
 export default {

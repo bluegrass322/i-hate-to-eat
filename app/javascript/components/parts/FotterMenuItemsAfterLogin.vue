@@ -34,23 +34,23 @@ export default {
     logoutUser() {
       this.axios
         .delete('api/v1/authentication')
-        .then(response => {
+        .then((response) => {
           console.log(response.status);
 
           this.$store.commit('authUser/RESET_AUTHUSER_STATE');
           this.$store.commit('flashMessage/setMessage', {
             type: 'success',
-            message: 'ログアウトしました'
+            message: 'ログアウトしました',
           });
 
           this.$router.push({ name: 'TopPage' });
         })
-        .catch(error => {
+        .catch((error) => {
           let e = error.response;
           console.error(e.status);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -13,14 +13,13 @@ const store = new Vuex.Store({
     flashMessage,
   },
 
-  plugins: [createPersistedState({
-    key: 'iHateToEat',
-    paths: [
-      'authUser.userId',
-      'authUser.isLoggedIn'
-    ],
-    storage: window.localStorage,
-  })],
+  plugins: [
+    createPersistedState({
+      key: 'iHateToEat',
+      paths: ['authUser.userId', 'authUser.isLoggedIn'],
+      storage: window.localStorage,
+    }),
+  ],
 });
 
 export default store;

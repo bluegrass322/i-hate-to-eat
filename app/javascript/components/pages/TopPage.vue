@@ -6,6 +6,11 @@
       </p>
     </div>
     <router-view />
+    <!-- TODO: アクセス制限確認用 -->
+    <div>
+      <p>require login</p>
+      <router-link to="/home">home</router-link>
+    </div>
   </v-container>
 </template>
 
@@ -45,8 +50,6 @@ export default {
   margin-top: 20px;
   height: 30;
   border-bottom: medium solid #5a7899;
-  /* エリア確認用 */
-  /* background-color: rgba(90, 40, 80, 0.3); */
 }
 
 .date-text {
