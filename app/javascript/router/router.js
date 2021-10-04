@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 
 import TopPage from '../components/pages/TopPage';
 import RegisterPage from '../components/pages/RegisterPage';
+import LoginPage from '../components/pages/LoginPage';
 import NotFound from '../components/pages/NotFound';
 
 Vue.use(VueRouter);
@@ -19,6 +20,11 @@ const router = new VueRouter({
           path: 'register',
           component: RegisterPage,
           name: 'RegisterPage',
+        },
+        {
+          path: 'login',
+          component: LoginPage,
+          name: 'LoginPage',
         },
       ],
     },
