@@ -22,14 +22,31 @@
     >
       logout
     </v-btn>
-    <div class="menu-icon">
-      <v-app-bar-nav-icon />
-    </div>
+    <v-menu offset-y tile top>
+      <template #activator="{ on, attrs }">
+        <div class="menu-icon">
+          <v-app-bar-nav-icon v-bind="attrs" v-on="on" />
+        </div>
+      </template>
+
+      <v-list :color="menuBack" flat min-width="150px" outlined tile>
+        <v-list-item-group color="base">
+          <v-list-item to="/mypage">
+            <v-list-item-title>mypage</v-list-item-title>
+          </v-list-item>
+        </v-list-item-group>
+      </v-list>
+    </v-menu>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      menuBack: 'rgba(72, 96, 122, 0.7)'
+    }
+  },
   methods: {
     logoutUser() {
       this.axios
