@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>IHateToEat</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
+  </head>
+
+  <body id="admin-body">
+    <div>
+      <%= render 'admin/shared/flash_message' %>
+      <%= yield %>
+    </div>
+  </body>
+</html>
