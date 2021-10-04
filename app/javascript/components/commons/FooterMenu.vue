@@ -1,5 +1,5 @@
 <template>
-  <v-app-bar app bottom color="primary" fixed flat>
+  <v-app-bar app bottom color="primary" fixed flat class="footer-menu">
     <footer-menu-items-before-login />
   </v-app-bar>
 </template>
@@ -13,3 +13,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.footer-menu {
+  padding: 0;
+}
+</style>
