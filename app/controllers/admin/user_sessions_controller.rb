@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class UserSessionsController < Admin::BaseController
     skip_before_action :check_admin
