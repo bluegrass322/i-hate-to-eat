@@ -3,6 +3,10 @@ export const initialState = {
   isLoggedIn: false
 };
 
+const getters = {
+  isLoggedIn: (state) => state.isLoggedIn,
+};
+
 const mutations = {
   RESET_AUTHUSER_STATE(state) {
     Object.assign(state, JSON.parse(localStorage.getItem('initialState')));
@@ -16,5 +20,6 @@ const mutations = {
 export default {
   namespaced: true,
   state: initialState,
+  getters,
   mutations,
 };
