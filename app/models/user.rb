@@ -27,6 +27,10 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: :new_or_changes_password
 
   # Instance methods
+  def calc_age
+    (Time.zone.today.strftime("%Y%m%d").to_i - birth.strftime("%Y%m%d").to_i) / 10_000
+  end
+
   private
 
     def new_or_changes_password
