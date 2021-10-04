@@ -3,6 +3,8 @@
 module Api
   module V1
     class RegistrationsController < BaseController
+      skip_before_action :require_login
+
       def create
         user = User.new(user_params)
 
