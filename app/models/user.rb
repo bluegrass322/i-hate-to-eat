@@ -31,6 +31,27 @@ class User < ApplicationRecord
     (Time.zone.today.strftime("%Y%m%d").to_i - birth.strftime("%Y%m%d").to_i) / 10_000
   end
 
+  # 国立健康・栄養研究所の式（Ganpule の式）を使用
+  def calc_bmr
+    age = calc_age
+
+    if gender == 'female'
+      (0.0481 * weight + 0.0234 * height - 0.0138 * age - 0.9708) * 1000 / 4.186
+    else
+      (0.0481 * weight + 0.0234 * height - 0.0138 * age - 0.4235) * 1000 / 4.186
+    end
+  end
+
+  def set_attributes_for_bmr
+    {
+      gender: gender,
+      birth: birth,
+      height: height,
+      weight: weight,
+      bmr: bmr
+    }
+  end
+
   private
 
     def new_or_changes_password
