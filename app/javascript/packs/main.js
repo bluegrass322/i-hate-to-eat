@@ -10,6 +10,7 @@ import App from '../app.vue';
 import axios from 'axios';
 import AxiosPlugin from '../plugins/vue-axios';
 import { csrfToken } from '@rails/ujs';
+import { initialState } from '../store/modules/authUser';
 import router from '../router/router';
 import store from '../store/index';
 import vuetify from '../vuetify/vuetify';
@@ -23,6 +24,9 @@ document.addEventListener('DOMContentLoaded', () => {
     store,
     veeValidate,
     vuetify,
+    created() {
+      localStorage.setItem('initialState', JSON.stringify(initialState));
+    },
     render: (h) => h(App),
   }).$mount();
   document.body.appendChild(app.$el);
