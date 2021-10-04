@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   namespace :api, format: 'json' do
     namespace :v1 do
       resource :registration, only: %i[create]
+      resource :authenticaton, only: %i[create destroy]
     end
   end
 
@@ -33,6 +34,8 @@ end
 #                                       PUT    /admin/users/:id(.:format)                                                               admin/users#update
 #                                       DELETE /admin/users/:id(.:format)                                                               admin/users#destroy
 #                   api_v1_registration POST   /api/v1/registration(.:format)                                                           api/v1/registrations#create {:format=>/json/}
+#                  api_v1_authenticaton DELETE /api/v1/authenticaton(.:format)                                                          api/v1/authenticatons#destroy {:format=>/json/}
+#                                       POST   /api/v1/authenticaton(.:format)                                                          api/v1/authenticatons#create {:format=>/json/}
 #                                       GET    /*path(.:format)                                                                         top#index
 #         rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
 #            rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create
