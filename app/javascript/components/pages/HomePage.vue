@@ -5,11 +5,10 @@
         {{ date }}
       </p>
     </div>
-    <router-view />
-    <!-- TODO: アクセス制限確認用 -->
     <div>
-      <p>require login</p>
-      <router-link to="/home">home</router-link>
+      <p>ログイン状況</p>
+      <p>ユーザーID: {{ userId }}</p>
+      <p>ログイン: {{ isLoggedIn }}</p>
     </div>
   </v-container>
 </template>
@@ -18,12 +17,19 @@
 import dayjs from 'dayjs';
 import timezone from 'dayjs/plugin/timezone';
 import utc from 'dayjs/plugin/utc';
+import { mapState } from 'vuex';
 
 export default {
   data() {
     return {
       date: '',
     };
+  },
+  computed: {
+    ...mapState({
+      userId: (state) => state.authUser.userId,
+      isLoggedIn: (state) => state.authUser.isLoggedIn,
+    }),
   },
   mounted() {
     this.setDate();
