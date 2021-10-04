@@ -7,7 +7,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import FooterMenuItemsAfterLogin from '../parts/FotterMenuItemsAfterLogin';
+import FooterMenuItemsAfterLogin from '../parts/FooterMenuItemsAfterLogin';
 import FooterMenuItemsBeforeLogin from '../parts/FooterMenuItemsBeforeLogin';
 
 export default {
