@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   namespace :api, format: 'json' do
     namespace :v1 do
       resource :registration, only: %i[create]
-      resource :authenticaton, only: %i[create destroy]
+      resource :authentication, only: %i[create destroy]
     end
   end
 
