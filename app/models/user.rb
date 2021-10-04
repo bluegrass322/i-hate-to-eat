@@ -4,6 +4,7 @@ class User < ApplicationRecord
   authenticates_with_sorcery!
 
   # Enums
+  enum gender: { female: 0, male: 10 }
   enum role: { general: 0, admin: 10 }
 
   # Validations
