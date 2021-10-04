@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import { calcAge } from './vee-validate-func';
 
 import {
   ValidationProvider,
@@ -11,6 +12,7 @@ import {
   alpha_num,
   confirmed,
   email,
+  numeric,
   min,
   required,
 } from 'vee-validate/dist/rules';
@@ -35,6 +37,11 @@ extend('email', {
   message: '形式を確認してください',
 });
 
+extend('numeric', {
+  ...numeric,
+  message: '数字で入力してください'
+});
+
 extend('min', {
   ...min,
   message: '{length}文字以上で入力してください',
@@ -43,4 +50,15 @@ extend('min', {
 extend('required', {
   ...required,
   message: '{_field_}を入力してください',
+});
+
+// Custom rules
+extend('abailable_age', {
+  message: '本サービスは18歳以上60歳未満の方が対象です',
+  validate(value) {
+    const age = calcAge(value);
+    if (age >= 18 && age < 60) {
+      return true;
+    };
+  }
 });
