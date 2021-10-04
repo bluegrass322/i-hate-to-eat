@@ -51,7 +51,39 @@ body {
   padding: 20px 40px;
 }
 
+#admin-login {
+  background-color: $base-color;
+  height: 100%;
+  padding: 20px 40px;
+}
+
 .admin {
+  &-login-form {
+    background-color: $primary-color;
+    color: $base-color;
+    padding: 5px 80px;
+    text-align: center;
+
+    &-group {
+      margin: 10px 0;
+      text-align: left;
+    }
+
+    &-text {
+      width: 200px;
+    }
+
+    &-label {
+      font-size: 13px;
+    }
+
+    &-btn {
+      color: $primary-color;
+      margin: 20px 15px;
+      padding: 7px 10px;
+    }  
+  }
+
   &-table {
     border: solid 1px $plight-color;
     border-collapse: collapse;
