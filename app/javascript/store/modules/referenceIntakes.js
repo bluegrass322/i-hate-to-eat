@@ -12,7 +12,7 @@ const state = {
     folate: { label: '葉酸', amount: '', unit: 'μg' },
     pantothenic_acid: { label: 'パントテン酸', amount: '', unit: 'mg' },
     biotin: { label: 'ビオチン', amount: '', unit: 'μg' },
-    vitamin_c: { label: 'ビタミンC', amount: '', unit: 'mg' }
+    vitamin_c: { label: 'ビタミンC', amount: '', unit: 'mg' },
   },
   minerals: {
     potassium: { label: 'カリウム', amount: '', unit: 'mg' },
@@ -26,8 +26,8 @@ const state = {
     iodine: { label: 'ヨウ素', amount: '', unit: 'μg' },
     selenium: { label: 'セレン', amount: '', unit: 'μg' },
     chromium: { label: 'クロム', amount: '', unit: 'μg' },
-    molybdenum: { label: 'モリブデン', amount: '', unit: 'μg' }
-  }
+    molybdenum: { label: 'モリブデン', amount: '', unit: 'μg' },
+  },
 };
 
 const getters = {
@@ -38,22 +38,22 @@ const getters = {
 const mutations = {
   // TODO: これでエラーは起こらず正しく動作するか？
   setVitamins(state, value) {
-    Object.keys(state.vitamins).forEach(key => {
+    Object.keys(state.vitamins).forEach((key) => {
       state.vitamins[key].amount = value[key];
     });
   },
   setMinerals(state, value) {
-    Object.keys(state.minerals).forEach(key => {
+    Object.keys(state.minerals).forEach((key) => {
       state.minerals[key].amount = value[key];
     });
-  }
+  },
 };
 
 const actions = {
   setAttributes(context, attr) {
     context.commit('setVitamins', attr);
     context.commit('setMinerals', attr);
-  }
+  },
 };
 
 export default {
@@ -61,5 +61,5 @@ export default {
   state,
   getters,
   mutations,
-  actions
+  actions,
 };
