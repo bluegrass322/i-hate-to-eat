@@ -1,0 +1,17 @@
+<div id="admin-contents">
+  <h3>DRI : ID<%= @dri.id %></h3>
+
+  <div>
+    <%= link_to '削除', admin_dietary_reference_intake_path(@dri), method: :delete, data: { confirm: "DRI (id:#{@dri.id})を削除する？" }, class: "admin-btn" %>
+  </div>
+  <table class="admin-table">
+    <t-body>
+      <% @columns.each do |c| %>
+        <tr class="admin-t-row">
+          <th class="admin-t-head"><%= DietaryReferenceIntake.human_attribute_name(c) %></th>
+          <td class="admin-t-data"><%= @dri[c] %></td>
+        </tr>
+      <% end %>
+    </t-body>
+  </table>
+</div>

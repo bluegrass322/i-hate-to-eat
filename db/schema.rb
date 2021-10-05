@@ -10,10 +10,59 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_04_093424) do
+ActiveRecord::Schema.define(version: 2021_10_05_042010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "dietary_reference_intakes", force: :cascade do |t|
+    t.integer "gender", default: 0, null: false
+    t.integer "age_top", default: 0, null: false
+    t.integer "age_bottom", default: 0, null: false
+    t.float "vitamin_a", default: 0.0, null: false
+    t.float "upper_limit_vitamin_a", default: 0.0, null: false
+    t.float "vitamin_d", default: 0.0, null: false
+    t.float "upper_limit_vitamin_d", default: 0.0, null: false
+    t.float "vitamin_e", default: 0.0, null: false
+    t.float "upper_limit_vitamin_e", default: 0.0, null: false
+    t.float "vitamin_k", default: 0.0, null: false
+    t.float "vitamin_b1", default: 0.0, null: false
+    t.float "vitamin_b2", default: 0.0, null: false
+    t.float "niacin", default: 0.0, null: false
+    t.float "upper_limit_niacin", default: 0.0, null: false
+    t.float "vitamin_b6", default: 0.0, null: false
+    t.float "upper_limit_vitamin_b6", default: 0.0, null: false
+    t.float "vitamin_b12", default: 0.0, null: false
+    t.float "folate", default: 0.0, null: false
+    t.float "upper_limit_folate", default: 0.0, null: false
+    t.float "pantothenic_acid", default: 0.0, null: false
+    t.float "biotin", default: 0.0, null: false
+    t.float "vitamin_c", default: 0.0, null: false
+    t.float "potassium", default: 0.0, null: false
+    t.float "calcium", default: 0.0, null: false
+    t.float "upper_limit_calcium", default: 0.0, null: false
+    t.float "magnesium", default: 0.0, null: false
+    t.float "phosphorus", default: 0.0, null: false
+    t.float "upper_limit_phosphorus", default: 0.0, null: false
+    t.float "iron", default: 0.0, null: false
+    t.float "upper_limit_iron", default: 0.0, null: false
+    t.float "zinc", default: 0.0, null: false
+    t.float "upper_limit_zinc", default: 0.0, null: false
+    t.float "copper", default: 0.0, null: false
+    t.float "upper_limit_copper", default: 0.0, null: false
+    t.float "manganese", default: 0.0, null: false
+    t.float "upper_limit_manganese", default: 0.0, null: false
+    t.float "iodine", default: 0.0, null: false
+    t.float "upper_limit_iodine", default: 0.0, null: false
+    t.float "selenium", default: 0.0, null: false
+    t.float "upper_limit_selenium", default: 0.0, null: false
+    t.float "chromium", default: 0.0, null: false
+    t.float "upper_limit_chromium", default: 0.0, null: false
+    t.float "molybdenum", default: 0.0, null: false
+    t.float "upper_limit_molybdenum", default: 0.0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name", default: "noname", null: false
@@ -28,7 +77,10 @@ ActiveRecord::Schema.define(version: 2021_10_04_093424) do
     t.integer "height", default: 0, null: false
     t.float "weight", default: 0.0, null: false
     t.float "bmr", default: 0.0, null: false
+    t.bigint "dietary_reference_intake_id", default: 0, null: false
+    t.index ["dietary_reference_intake_id"], name: "index_users_on_dietary_reference_intake_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "users", "dietary_reference_intakes"
 end

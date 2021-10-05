@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     post 'login', to: 'user_sessions#create'
     delete 'logout', to: 'user_sessions#destroy'
     resources :users
+    resources :dietary_reference_intakes, only: %i[index show destroy]
   end
 
   namespace :api, format: 'json' do
@@ -17,6 +18,7 @@ Rails.application.routes.draw do
       resource :registration, only: %i[create]
       resource :authentication, only: %i[create destroy]
       resource :bmr, only: %i[show update]
+      resource :users_dietary_reference_intake, only: %i[show update]
     end
   end
 
@@ -40,12 +42,18 @@ end
 #                                       PATCH  /admin/users/:id(.:format)                                                               admin/users#update
 #                                       PUT    /admin/users/:id(.:format)                                                               admin/users#update
 #                                       DELETE /admin/users/:id(.:format)                                                               admin/users#destroy
+#       admin_dietary_reference_intakes GET    /admin/dietary_reference_intakes(.:format)                                               admin/dietary_reference_intakes#index
+#        admin_dietary_reference_intake GET    /admin/dietary_reference_intakes/:id(.:format)                                           admin/dietary_reference_intakes#show
+#                                       DELETE /admin/dietary_reference_intakes/:id(.:format)                                           admin/dietary_reference_intakes#destroy
 #                   api_v1_registration POST   /api/v1/registration(.:format)                                                           api/v1/registrations#create {:format=>/json/}
 #                 api_v1_authentication DELETE /api/v1/authentication(.:format)                                                         api/v1/authentications#destroy {:format=>/json/}
 #                                       POST   /api/v1/authentication(.:format)                                                         api/v1/authentications#create {:format=>/json/}
 #                            api_v1_bmr GET    /api/v1/bmr(.:format)                                                                    api/v1/bmrs#show {:format=>/json/}
 #                                       PATCH  /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
 #                                       PUT    /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
+# api_v1_users_dietary_reference_intake GET    /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#show {:format=>/json/}
+#                                       PATCH  /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
+#                                       PUT    /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
 #                                       GET    /*path(.:format)                                                                         top#index
 #         rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
 #            rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create

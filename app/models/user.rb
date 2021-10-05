@@ -3,6 +3,9 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
+  # Associations
+  belongs_to :dietary_reference_intake
+
   # Enums
   enum gender: { female: 0, male: 10 }
   enum role: { general: 0, admin: 10 }
@@ -63,21 +66,27 @@ end
 #
 # Table name: users
 #
-#  id               :bigint           not null, primary key
-#  birth            :date
-#  bmr              :float            default(0.0), not null
-#  crypted_password :string
-#  email            :string           default("address@example.com"), not null
-#  gender           :integer          default("female"), not null
-#  height           :integer          default(0), not null
-#  name             :string           default("noname"), not null
-#  role             :integer          default("general"), not null
-#  salt             :string
-#  weight           :float            default(0.0), not null
-#  created_at       :datetime         not null
-#  updated_at       :datetime         not null
+#  id                          :bigint           not null, primary key
+#  birth                       :date
+#  bmr                         :float            default(0.0), not null
+#  crypted_password            :string
+#  email                       :string           default("address@example.com"), not null
+#  gender                      :integer          default("female"), not null
+#  height                      :integer          default(0), not null
+#  name                        :string           default("noname"), not null
+#  role                        :integer          default("general"), not null
+#  salt                        :string
+#  weight                      :float            default(0.0), not null
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  dietary_reference_intake_id :bigint           default(0), not null
 #
 # Indexes
 #
-#  index_users_on_email  (email) UNIQUE
+#  index_users_on_dietary_reference_intake_id  (dietary_reference_intake_id)
+#  index_users_on_email                        (email) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (dietary_reference_intake_id => dietary_reference_intakes.id)
 #
