@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       resource :registration, only: %i[create]
       resource :authentication, only: %i[create destroy]
       resource :bmr, only: %i[show update]
+      resource :users_dietary_reference_intake, only: %i[show update]
     end
   end
 
@@ -50,6 +51,9 @@ end
 #                            api_v1_bmr GET    /api/v1/bmr(.:format)                                                                    api/v1/bmrs#show {:format=>/json/}
 #                                       PATCH  /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
 #                                       PUT    /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
+# api_v1_users_dietary_reference_intake GET    /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#show {:format=>/json/}
+#                                       PATCH  /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
+#                                       PUT    /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
 #                                       GET    /*path(.:format)                                                                         top#index
 #         rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
 #            rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create
