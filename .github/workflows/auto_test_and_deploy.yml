@@ -3,6 +3,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch:
 env:
   RAILS_ENV: test
   POSTGRES_USER: postgres
