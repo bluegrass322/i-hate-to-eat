@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class RegistrationsController < BaseController
+    class RegistrationsController < Api::V1::BaseController
       skip_before_action :require_login
 
       def create

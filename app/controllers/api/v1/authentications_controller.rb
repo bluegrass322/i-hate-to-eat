@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class AuthenticationsController < BaseController
+    class AuthenticationsController < Api::V1::BaseController
       skip_before_action :require_login
 
       def create

@@ -49,7 +49,8 @@ module Admin
 
       def user_params
         # アクセス制限後:roleを再度追加
-        params.require(:user).permit(:name, :email, :password, :password_confirmation)
+        params.require(:user).permit(:name, :email, :password, :password_confirmation,
+                                     :gender, :birth, :height, :weight)
       end
   end
 end
