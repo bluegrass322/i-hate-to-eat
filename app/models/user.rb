@@ -3,6 +3,9 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
+  # Associations
+  belongs_to :dietary_reference_intake
+
   # Enums
   enum gender: { female: 0, male: 10 }
   enum role: { general: 0, admin: 10 }

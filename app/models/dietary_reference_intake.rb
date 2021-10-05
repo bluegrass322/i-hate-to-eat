@@ -1,4 +1,6 @@
 class DietaryReferenceIntake < ApplicationRecord
+  # Associations
+  has_many :users, dependent: :nullify
 end
 
 # == Schema Information
