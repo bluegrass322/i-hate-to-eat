@@ -1,6 +1,60 @@
 class DietaryReferenceIntake < ApplicationRecord
   # Associations
   has_many :users, dependent: :nullify
+
+  # Enums
+  enum gender: { female: 0, male: 10 }
+
+  # Validations
+  with_options presence: true do
+    validates :gender
+
+    with_options numericality: true do
+      validates :age_bottom
+      validates :age_top
+      validates :biotin
+      validates :calcium
+      validates :chromium
+      validates :copper
+      validates :folate
+      validates :iodine
+      validates :iron
+      validates :magnesium
+      validates :manganese
+      validates :molybdenum
+      validates :niacin
+      validates :pantothenic_acid
+      validates :phosphorus
+      validates :potassium
+      validates :selenium
+      validates :upper_limit_calcium
+      validates :upper_limit_chromium
+      validates :upper_limit_copper
+      validates :upper_limit_folate
+      validates :upper_limit_iodine
+      validates :upper_limit_iron
+      validates :upper_limit_manganese
+      validates :upper_limit_molybdenum
+      validates :upper_limit_niacin
+      validates :upper_limit_phosphorus
+      validates :upper_limit_selenium
+      validates :upper_limit_vitamin_a
+      validates :upper_limit_vitamin_b6
+      validates :upper_limit_vitamin_d
+      validates :upper_limit_vitamin_e
+      validates :upper_limit_zinc
+      validates :vitamin_a
+      validates :vitamin_b1
+      validates :vitamin_b12
+      validates :vitamin_b2
+      validates :vitamin_b6
+      validates :vitamin_c
+      validates :vitamin_d
+      validates :vitamin_e
+      validates :vitamin_k
+      validates :zinc
+    end
+  end
 end
 
 # == Schema Information
@@ -15,7 +69,7 @@ end
 #  chromium               :float            default(0.0), not null
 #  copper                 :float            default(0.0), not null
 #  folate                 :float            default(0.0), not null
-#  gender                 :integer          default(0), not null
+#  gender                 :integer          default("female"), not null
 #  iodine                 :float            default(0.0), not null
 #  iron                   :float            default(0.0), not null
 #  magnesium              :float            default(0.0), not null

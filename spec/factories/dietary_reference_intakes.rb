@@ -16,7 +16,7 @@ end
 #  chromium               :float            default(0.0), not null
 #  copper                 :float            default(0.0), not null
 #  folate                 :float            default(0.0), not null
-#  gender                 :integer          default(0), not null
+#  gender                 :integer          default("female"), not null
 #  iodine                 :float            default(0.0), not null
 #  iron                   :float            default(0.0), not null
 #  magnesium              :float            default(0.0), not null
