@@ -1,0 +1,26 @@
+<div id="admin-contents">
+  <h3>DRI一覧</h3>
+
+  <table class="admin-table">
+    <t-head>
+      <th class="admin-t-head"><%= DietaryReferenceIntake.human_attribute_name(:id) %></th>
+      <th class="admin-t-head"><%= DietaryReferenceIntake.human_attribute_name(:age_bottom) %></th>
+      <th class="admin-t-head"><%= DietaryReferenceIntake.human_attribute_name(:age_top) %></th>
+      <th class="admin-t-head"><%= DietaryReferenceIntake.human_attribute_name(:gender) %></th>
+      <th class="admin-t-head"></th>
+    </t-head>
+    <t-body>
+      <% @dris.each do |dri| %>
+        <tr class="admin-t-row">
+          <td class="admin-t-data"><%= link_to dri.id, admin_dietary_reference_intake_path(dri) %></td>
+          <td class="admin-t-data"><%= dri.age_bottom %></td>
+          <td class="admin-t-data"><%= dri.age_top %></td>
+          <td class="admin-t-data"><%= dri.gender_i18n %></td>
+          <td>
+            <%= link_to '削除', admin_dietary_reference_intake_path(dri), method: :delete, data: { confirm: "#{dri.id}を削除する？" }, class: "admin-btn" %>
+          </td>
+        </tr>
+      <% end %>
+    </t-body>
+  </table>
+</div>
