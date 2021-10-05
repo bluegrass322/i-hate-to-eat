@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_05_040857) do
+ActiveRecord::Schema.define(version: 2021_10_05_042010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -77,7 +77,10 @@ ActiveRecord::Schema.define(version: 2021_10_05_040857) do
     t.integer "height", default: 0, null: false
     t.float "weight", default: 0.0, null: false
     t.float "bmr", default: 0.0, null: false
+    t.bigint "dietary_reference_intake_id", default: 0, null: false
+    t.index ["dietary_reference_intake_id"], name: "index_users_on_dietary_reference_intake_id"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "users", "dietary_reference_intakes"
 end
