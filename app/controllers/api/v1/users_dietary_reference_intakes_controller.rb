@@ -2,8 +2,7 @@
 
 module Api
   module V1
-    class UsersDietaryReferenceIntakeController < Api::V1::BaseController
-      include Api::DietaryReferenceIntakesHandler
+    class UsersDietaryReferenceIntakesController < Api::V1::BaseController
       before_action :set_user
 
       def show
