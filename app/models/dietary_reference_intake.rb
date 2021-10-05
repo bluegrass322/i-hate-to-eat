@@ -5,6 +5,10 @@ class DietaryReferenceIntake < ApplicationRecord
   # Enums
   enum gender: { female: 0, male: 10 }
 
+  # Scopes
+  scope :for_female, -> { where(gender: 'female') }
+  scope :for_maele, -> { where(gender: 'male') }
+
   # Validations
   with_options presence: true do
     validates :gender
@@ -54,6 +58,19 @@ class DietaryReferenceIntake < ApplicationRecord
       validates :vitamin_k
       validates :zinc
     end
+  end
+
+  # Class methods
+  def self.for_eighteen_to_twentynine
+    find_by(age_bottom: 18)
+  end
+
+  def self.for_thirty_to_fortynine
+    find_by(age_bottom: 30)
+  end
+
+  def self.for_fifty_to_sixtyfour
+    find_by(age_bottom: 50)
   end
 end
 
