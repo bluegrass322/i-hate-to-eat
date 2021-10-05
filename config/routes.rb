@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :registration, only: %i[create]
       resource :authentication, only: %i[create destroy]
+      resource :bmr, only: %i[show update]
     end
   end
 
@@ -42,6 +43,9 @@ end
 #                   api_v1_registration POST   /api/v1/registration(.:format)                                                           api/v1/registrations#create {:format=>/json/}
 #                 api_v1_authentication DELETE /api/v1/authentication(.:format)                                                         api/v1/authentications#destroy {:format=>/json/}
 #                                       POST   /api/v1/authentication(.:format)                                                         api/v1/authentications#create {:format=>/json/}
+#                            api_v1_bmr GET    /api/v1/bmr(.:format)                                                                    api/v1/bmrs#show {:format=>/json/}
+#                                       PATCH  /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
+#                                       PUT    /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
 #                                       GET    /*path(.:format)                                                                         top#index
 #         rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
 #            rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create
