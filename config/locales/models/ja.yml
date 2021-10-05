@@ -16,6 +16,7 @@ ja:
         weight: "体重"
         bmr: "BMR"
         role: "権限"
+        dietary_reference_intake_id: "食事摂取基準ID"
         created_at: "登録日時"
         updated_at: "更新日時"
       dietary_reference_intake:

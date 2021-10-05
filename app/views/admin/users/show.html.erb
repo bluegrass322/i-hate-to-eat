@@ -44,6 +44,10 @@
         <td class="admin-t-data"><%= @user.role_i18n %></td>
       </tr>
       <tr class="admin-t-row">
+        <th class="admin-t-head"><%= User.human_attribute_name(:dietary_reference_intake_id) %></th>
+        <td class="admin-t-data"><%= @user.dietary_reference_intake_id %></td>
+      </tr>
+      <tr class="admin-t-row">
         <th class="admin-t-head"><%= User.human_attribute_name(:created_at) %></th>
         <td class="admin-t-data"><%= l @user.created_at %></td>
       </tr>
