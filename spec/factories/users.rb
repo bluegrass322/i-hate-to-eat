@@ -14,7 +14,7 @@ end
 #  bmr              :float            default(0.0), not null
 #  crypted_password :string
 #  email            :string           default("address@example.com"), not null
-#  gender           :integer          default(0), not null
+#  gender           :integer          default("female"), not null
 #  height           :integer          default(0), not null
 #  name             :string           default("noname"), not null
 #  role             :integer          default("general"), not null

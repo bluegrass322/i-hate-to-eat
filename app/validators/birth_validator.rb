@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class BirthValidator < ActiveModel::EachValidator
-  def validate_each(record, attribute, value)
+  def validate_each(record, _attribute, value)
     return unless value
 
     record.errors.add(:birth, "未来の日付は入力できません") if value.future?

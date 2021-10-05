@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <v-container class="container">
     <p class="text-h1 primary--text">404</p>
     <p class="text-h3 primary--text">not found</p>
-  </div>
+  </v-container>
 </template>
 
 <script>

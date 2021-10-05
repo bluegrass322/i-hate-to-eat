@@ -44,8 +44,8 @@
 export default {
   data() {
     return {
-      menuBack: 'rgba(72, 96, 122, 0.7)'
-    }
+      menuBack: 'rgba(72, 96, 122, 0.7)',
+    };
   },
   methods: {
     logoutUser() {

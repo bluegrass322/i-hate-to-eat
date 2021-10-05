@@ -39,7 +39,7 @@ extend('email', {
 
 extend('numeric', {
   ...numeric,
-  message: '数字で入力してください'
+  message: '数字で入力してください',
 });
 
 extend('min', {
@@ -59,6 +59,6 @@ extend('abailable_age', {
     const age = calcAge(value);
     if (age >= 18 && age < 60) {
       return true;
-    };
-  }
+    }
+  },
 });
