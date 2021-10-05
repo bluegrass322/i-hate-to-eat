@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 import createPersistedState from 'vuex-persistedstate';
 
 import authUser from './modules/authUser';
+import bmrParams from './modules/bmrParams';
 import flashMessage from './modules/flashMessage';
 
 Vue.use(Vuex);
@@ -10,6 +11,7 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   modules: {
     authUser,
+    bmrParams,
     flashMessage,
   },
 

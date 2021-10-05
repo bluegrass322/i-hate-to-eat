@@ -6,6 +6,7 @@ import TopPage from '../components/pages/TopPage';
 import RegisterPage from '../components/pages/RegisterPage';
 import LoginPage from '../components/pages/LoginPage';
 import HomePage from '../components/pages/HomePage';
+import MyPage from '../components/pages/MyPage';
 import NotFound from '../components/pages/NotFound';
 
 Vue.use(VueRouter);
@@ -37,7 +38,11 @@ const router = new VueRouter({
       path: '/home',
       component: HomePage,
       name: 'HomePage',
-      meta: { requiresAuth: true },
+    },
+    {
+      path: '/mypage',
+      component: MyPage,
+      name: 'MyPage',
     },
     // 404 not found
     {
