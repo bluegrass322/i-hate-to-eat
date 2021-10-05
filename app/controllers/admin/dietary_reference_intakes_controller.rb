@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Admin
   class DietaryReferenceIntakesController < Admin::BaseController
     before_action :set_dri, only: %i[show destroy]

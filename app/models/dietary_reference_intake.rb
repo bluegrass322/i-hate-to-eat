@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DietaryReferenceIntake < ApplicationRecord
   # Associations
   has_many :users, dependent: :nullify

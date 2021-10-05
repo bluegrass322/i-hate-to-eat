@@ -58,7 +58,7 @@ module Api
           when 50..64
             dri.for_fifty_to_sixtyfour
           end
-        end    
+        end
     end
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DietaryReferenceIntakeSerializer
   include FastJsonapi::ObjectSerializer
   attributes :biotin, :calcium, :chromium, :copper, :folate, :iodine,
@@ -12,7 +14,7 @@ class DietaryReferenceIntakeSerializer
              :vitamin_b2, :vitamin_b6, :vitamin_c, :vitamin_d,
              :vitamin_e, :vitamin_k, :zinc
 
-    has_many :users
+  has_many :users
 end
 
 # == Schema Information
