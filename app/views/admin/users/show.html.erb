@@ -40,6 +40,18 @@
         <td class="admin-t-data"><%= @user.bmr %></td>
       </tr>
       <tr class="admin-t-row">
+        <th class="admin-t-head"><%= User.human_attribute_name(:percentage_protein) %></th>
+        <td class="admin-t-data"><%= @user.percentage_protein %></td>
+      </tr>
+      <tr class="admin-t-row">
+        <th class="admin-t-head"><%= User.human_attribute_name(:percentage_fat) %></th>
+        <td class="admin-t-data"><%= @user.percentage_fat %></td>
+      </tr>
+      <tr class="admin-t-row">
+        <th class="admin-t-head"><%= User.human_attribute_name(:percentage_carbohydrate) %></th>
+        <td class="admin-t-data"><%= @user.percentage_carbohydrate %></td>
+      </tr>
+      <tr class="admin-t-row">
         <th class="admin-t-head"><%= User.human_attribute_name(:role) %></th>
         <td class="admin-t-data"><%= @user.role_i18n %></td>
       </tr>
