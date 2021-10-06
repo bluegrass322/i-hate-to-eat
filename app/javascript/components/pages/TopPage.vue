@@ -10,7 +10,7 @@
     <div>
       <p>require login</p>
       <router-link to="/home">home</router-link>
-      <router-link to="/mypage">mypage</router-link>
+      <router-link to="/mypage">mypage（コントローラー改修済）</router-link>
     </div>
   </v-container>
 </template>
