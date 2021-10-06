@@ -43,10 +43,10 @@ class User < ApplicationRecord
     (Time.zone.today.strftime("%Y%m%d").to_i - birth.strftime("%Y%m%d").to_i) / 10_000
   end
 
-  # 国立健康・栄養研究所の式（Ganpule の式）を使用
   def calc_bmr
     age = calc_age
 
+    # 国立健康・栄養研究所の式（Ganpule の式）を使用
     if gender == 'female'
       (0.0481 * weight + 0.0234 * height - 0.0138 * age - 0.9708) * 1000 / 4.186
     else
@@ -54,6 +54,7 @@ class User < ApplicationRecord
     end
   end
 
+  # TODO: コントローラーの整理後不要になるかも？
   def set_attributes_for_bmr
     {
       gender: gender,
@@ -64,7 +65,27 @@ class User < ApplicationRecord
     }
   end
 
+  def set_amount_pfc
+    { 
+      protein: calc_amount_protein,
+      fat: calc_amount_fat,
+      carbohydrate: calc_amount_carbo
+    }
+  end
+
   private
+
+    def calc_amount_protein
+      bmr * percentage_protein / 4
+    end
+
+    def calc_amount_fat
+      bmr * percentage_fat / 9
+    end
+
+    def calc_amount_carbo
+      bmr * percentage_carbohydrate / 4
+    end
 
     def new_or_changes_password
       new_record? || changes[:crypted_password]
