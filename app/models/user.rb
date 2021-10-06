@@ -22,6 +22,12 @@ class User < ApplicationRecord
       validates :weight
       validates :bmr
     end
+
+    with_options numericality: { greater_than_or_equal_to: 0.1, less_than_or_equal_to: 0.8 } do
+      validates :percentage_protein
+      validates :percentage_fat
+      validates :percentage_carbohydrate
+    end
   end
 
   validates :birth, birth: true
