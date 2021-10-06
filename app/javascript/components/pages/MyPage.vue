@@ -38,6 +38,7 @@ export default {
     this.setData();
   },
   methods: {
+    // BMRフォーム用のメソッド
     setData() {
       this.axios
         .get('/api/v1/mypage')
@@ -66,10 +67,13 @@ export default {
     updateBmrAndReference() {
       this.axios
         .patch('/api/v1/bmr', { user: this.$store.state.bmrParams.user })
-        .then((response) => {
-          console.log(response.status);
+        .then((res) => {
+          console.log(res.status);
 
-          this.$store.commit('bmrParams/updateBmr', response.data.bmr);
+          this.$store.commit('bmrParams/updateBmr', res.data.bmr);
+          this.dispatchPfc(res.data.pfc_params);
+
+          // TODO: genderまたはbirthの値に変更がある時のみ実行するよう
           this.updateReferenceIntake();
         })
         .catch((error) => {
@@ -90,12 +94,12 @@ export default {
     updateReferenceIntake() {
       this.axios
         .patch('/api/v1/users_dietary_reference_intake')
-        .then((response) => {
-          console.log(response.status);
+        .then((res) => {
+          console.log(res.status);
 
           this.$store.dispatch(
             'referenceIntakes/setAttributes',
-            response.data.data.attributes
+            res.data.data.attributes
           );
         })
         .catch((error) => {

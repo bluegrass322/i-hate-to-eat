@@ -11,7 +11,7 @@ module Api
           bmr = @user.calc_bmr.floor
           @user.update!(bmr: bmr)
 
-          render json: { bmr: @user.bmr }
+          render json: { bmr: @user.bmr, pfc_params: @user.set_attributes_for_pfc }
         else
           render400(nil, @user.errors.full_messages)
         end

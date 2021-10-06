@@ -62,6 +62,15 @@ class User < ApplicationRecord
     }
   end
 
+  def set_attributes_for_pfc
+    { pct: { pct_p: percentage_protein,
+             pct_f: percentage_fat,
+             pct_c: percentage_carbohydrate },
+      amt: { amt_p: calc_amount_protein.floor,
+             amt_f: calc_amount_fat.floor,
+             amt_c: calc_amount_carbo.floor } }
+  end
+
   private
 
     def set_attributes_for_bmr
@@ -72,15 +81,6 @@ class User < ApplicationRecord
         weight: weight,
         bmr: bmr
       }
-    end
-
-    def set_attributes_for_pfc
-      { pct: { pct_p: percentage_protein,
-               pct_f: percentage_fat,
-               pct_c: percentage_carbohydrate },
-        amt: { amt_p: calc_amount_protein.floor,
-               amt_f: calc_amount_fat.floor,
-               amt_c: calc_amount_carbo.floor } }
     end
 
     def calc_amount_protein
