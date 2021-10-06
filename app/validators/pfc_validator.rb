@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PfcValidator < ActiveModel::Validator
   def validate(record)
     sum = record.percentage_protein +
