@@ -37,6 +37,18 @@
         <%= f.number_field :weight, class: "admin-form-text" %>
       </div>
       <div class="admin-form-group">
+        <%= f.label :percentage_protein, class: "admin-form-label" %><br>
+        <%= f.number_field :percentage_protein, step: "0.1", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :percentage_fat, class: "admin-form-label" %><br>
+        <%= f.number_field :percentage_fat, step: "0.1", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :percentage_carbohydrate, class: "admin-form-label" %><br>
+        <%= f.number_field :percentage_carbohydrate, step: "0.1", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
         <%= f.label :role, class: "admin-form-label" %><br>
         <%= f.select :role, User.roles_i18n.invert, {}, class: "admin-form-select" %>
       </div>
