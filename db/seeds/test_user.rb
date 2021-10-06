@@ -6,7 +6,7 @@ admin = User.create({
           role: "admin",
           gender: "male",
           birth: "1995-09-11",
-          dietary_reference_intake_id: 1
+          dietary_reference_intake_id: 2
         })
 
 general = User.create({

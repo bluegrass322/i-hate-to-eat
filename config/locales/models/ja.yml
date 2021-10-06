@@ -15,8 +15,11 @@ ja:
         height: "身長"
         weight: "体重"
         bmr: "BMR"
-        role: "権限"
+        percentage_protein: "タンパク質の割合"
+        percentage_fat: "脂質の割合"
+        percentage_carbohydrate: "炭水化物の割合"
         dietary_reference_intake_id: "食事摂取基準ID"
+        role: "権限"
         created_at: "登録日時"
         updated_at: "更新日時"
       dietary_reference_intake:
