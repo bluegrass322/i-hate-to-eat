@@ -39,9 +39,23 @@ export default {
   },
   methods: {
     setData() {
-      this.axios.get('/api/v1/bmr').then((response) => {
-        this.$store.dispatch('bmrParams/setAttributes', response.data);
-      });
+      this.axios.get('/api/v1/mypage')
+        .then((res) => {
+          console.log(res.status);
+
+          const r = res.data;
+          this.dispatchBmr(r.bmr_params);
+          this.dispatchDri(r.dri_params);
+        })
+        .catch((e) => {
+          console.log(e.response.status);
+        });
+    },
+    dispatchBmr(params) {
+      this.$store.dispatch('bmrParams/setAttributes', params);
+    },
+    dispatchDri(params) {
+      this.$store.dispatch('referenceIntakes/setAttributes', params);
     },
     // TODO: 要リファクタリング
     updateBmrAndReference() {
