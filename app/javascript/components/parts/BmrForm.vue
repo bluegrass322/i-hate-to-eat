@@ -106,16 +106,21 @@
             />
           </validation-provider>
           <div class="result">
-            <v-btn type="submit" color="base" outlined tile small>=</v-btn>
-            <span class="base--text result-text">
+            <v-btn type="submit" color="base" outlined tile small class="mt-1"
+              >=</v-btn
+            >
+            <div class="base--text result-text">
               基礎代謝量: <span class="text-h5 result-bmr">{{ bmr }}</span
-              >kcal
-            </span>
+              >kcal<br />
+              <!-- TODO: PFCの内訳は仮置き -->
+              <span class="text-body-2">
+                P: {{ amt.amtP }}g / F: {{ amt.amtF }}g / C: {{ amt.amtC }}g
+              </span>
+            </div>
           </div>
         </v-form>
       </validation-observer>
     </v-card>
-    <!-- TODO: 国立健康・栄養研究所の式に変更予定 -->
     <div class="caption">
       <p class="text-caption primary--text">
         BMRの算出には国立健康・栄養研究所の式を採用しています。
@@ -128,6 +133,8 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
+
 export default {
   data() {
     return {
@@ -142,6 +149,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters('pfcBalance', ['amt']),
     // TODO: 要リファクタリング
     gender: {
       get() {
@@ -209,13 +217,14 @@ export default {
 }
 
 .result {
-  align-items: center;
+  align-items: flex-start;
   display: flex;
   margin-top: 10px;
 }
 
 .result-text {
   margin-left: 20px;
+  text-align: center;
 }
 
 .result-bmr {
