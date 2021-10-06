@@ -7,10 +7,10 @@
 
       <v-tab-item class="tab-item">
         <v-row>
-          <v-col cols="12" md="4"  class="mypage-items">
+          <v-col cols="12" md="4" class="mypage-items">
             <bmr-form @click="updateBmrAndReference" />
           </v-col>
-          <v-col cols="12" md="4" class="mypage-items" >
+          <v-col cols="12" md="4" class="mypage-items">
             <my-page-dri-index />
           </v-col>
         </v-row>
@@ -39,12 +39,14 @@ export default {
   },
   methods: {
     setData() {
-      this.axios.get('/api/v1/mypage')
+      this.axios
+        .get('/api/v1/mypage')
         .then((res) => {
           console.log(res.status);
 
           const r = res.data;
           this.dispatchBmr(r.bmr_params);
+          this.dispatchPfc(r.pfc_params);
           this.dispatchDri(r.dri_params);
         })
         .catch((e) => {
@@ -53,6 +55,9 @@ export default {
     },
     dispatchBmr(params) {
       this.$store.dispatch('bmrParams/setAttributes', params);
+    },
+    dispatchPfc(params) {
+      this.$store.dispatch('pfcBalance/setAttributes', params);
     },
     dispatchDri(params) {
       this.$store.dispatch('referenceIntakes/setAttributes', params);
