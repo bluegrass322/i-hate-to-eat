@@ -11,6 +11,9 @@ class User < ApplicationRecord
   enum role: { general: 0, admin: 10 }
 
   # Validations
+  include ActiveModel::Validations
+  validates_with PfcValidator
+
   with_options presence: true do
     validates :name, length: { maximum: 50 }
     validates :email, uniqueness: { case_sensitive: false }
