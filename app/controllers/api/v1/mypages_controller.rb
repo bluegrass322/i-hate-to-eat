@@ -7,15 +7,13 @@ module Api
 
       def show
         mypage_params = @user.set_mypage_params
-
-        json_string = mypage_params.to_json
-        render json: json_string
+        render json: mypage_params
       end
 
       private
 
         def set_user
-          @user = User.find(current_user.id)
+          @user = User.includes(:dietary_reference_intake).find(current_user.id)
         end
     end
   end
