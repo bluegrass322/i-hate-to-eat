@@ -74,6 +74,9 @@ end
 #  gender                      :integer          default("female"), not null
 #  height                      :integer          default(0), not null
 #  name                        :string           default("noname"), not null
+#  percentage_carbohydrate     :float            default(0.6), not null
+#  percentage_fat              :float            default(0.2), not null
+#  percentage_protein          :float            default(0.2), not null
 #  role                        :integer          default("general"), not null
 #  salt                        :string
 #  weight                      :float            default(0.0), not null
