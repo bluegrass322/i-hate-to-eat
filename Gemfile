@@ -39,6 +39,7 @@ gem 'fast_jsonapi'
 # UI/UX
 gem 'rails-i18n', '~> 6.0.0'
 gem 'enum_help'
+gem 'kaminari'
 
 group :development, :test do
   # Code analyze
