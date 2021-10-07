@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Admin
-  class Admin::FoodCategoriesController < Admin::BaseController
+  class FoodCategoriesController < Admin::BaseController
     before_action :set_category, only: %i[edit update destroy]
 
     def index

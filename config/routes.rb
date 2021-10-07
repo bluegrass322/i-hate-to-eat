@@ -51,6 +51,7 @@ end
 #              edit_admin_food_category GET    /admin/food_categories/:id/edit(.:format)                                                admin/food_categories#edit
 #                   admin_food_category PATCH  /admin/food_categories/:id(.:format)                                                     admin/food_categories#update
 #                                       PUT    /admin/food_categories/:id(.:format)                                                     admin/food_categories#update
+#                                       DELETE /admin/food_categories/:id(.:format)                                                     admin/food_categories#destroy
 #                   api_v1_registration POST   /api/v1/registration(.:format)                                                           api/v1/registrations#create {:format=>/json/}
 #                 api_v1_authentication DELETE /api/v1/authentication(.:format)                                                         api/v1/authentications#destroy {:format=>/json/}
 #                                       POST   /api/v1/authentication(.:format)                                                         api/v1/authentications#create {:format=>/json/}
