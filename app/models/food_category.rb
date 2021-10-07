@@ -1,4 +1,6 @@
 class FoodCategory < ApplicationRecord
+  # Validations
+  validates :name, presence: true, uniqueness: true
 end
 
 # == Schema Information
