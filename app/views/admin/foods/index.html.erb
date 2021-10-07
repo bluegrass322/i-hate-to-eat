@@ -1,0 +1,34 @@
+<div id="admin-contents">
+  <h3>食品一覧</h3>
+
+  <table class="admin-table">
+    <t-head>
+      <th class="admin-t-head"><%= Food.human_attribute_name(:id) %></th>
+      <th class="admin-t-head"><%= Food.human_attribute_name(:food_category_id) %></th>
+      <th class="admin-t-head"><%= Food.human_attribute_name(:name) %></th>
+      <th class="admin-t-head"><%= Food.human_attribute_name(:subname) %></th>
+      <th class="admin-t-head"><%= Food.human_attribute_name(:priority) %></th>
+      <th class="admin-t-head"><%= Food.human_attribute_name(:created_at) %></th>
+      <th class="admin-t-head"></th>
+    </t-head>
+    <t-body>
+      <% @foods.each do |food| %>
+        <tr class="admin-t-row">
+          <td class="admin-t-data"><%= link_to food.id, admin_food_path(food) %></td>
+          <td class="admin-t-data"><%= link_to food.food_category.name, admin_food_categories_path(food) %></td>
+          <td class="admin-t-data"><%= food.name %></td>
+          <td class="admin-t-data"><%= food.subname %></td>
+          <td class="admin-t-data"><%= food.priority %></td>
+          <td class="admin-t-data"><%= l food.created_at, format: :default %></td>
+          <td>
+            <%= link_to '編集', edit_admin_food_path(food), class: "admin-btn" %>
+            <%= link_to '削除', admin_food_path(food), method: :delete, data: { confirm: "#{food.name}を削除する？" }, class: "admin-btn" %>
+          </td>
+        </tr>
+      <% end %>
+    </t-body>
+  </table>
+  <div class="admin-pagenate" >
+    <%= paginate @foods %>
+  </div>
+</div>
