@@ -1,0 +1,14 @@
+<div id="admin-contents">
+  <h3>食品カテゴリー編集 : <%= @category.name %></h3>
+
+  <div class="admin-form">
+    <%= form_with model: @category, url: admin_food_category_path, local: true do |f| %>
+      <%= render 'admin/shared/error_messages', object: f.object %>
+      <div class="admin-form-group">
+        <%= f.label :name, class: "admin-form-label" %><br>
+        <%= f.text_field :name, class: "admin-form-text" %>
+      </div>
+      <%= f.submit class: "admin-form-btn" %>
+    <% end %>
+  </div>
+</div>
