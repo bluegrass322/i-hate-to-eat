@@ -1,0 +1,18 @@
+<div id="admin-contents">
+  <h3>食品: <%= @food.name %><%= @food.subname %></h3>
+
+  <div>
+    <%= link_to '編集', edit_admin_food_path(@food), class: "admin-btn" %>
+    <%= link_to '削除', admin_food_path(@food), method: :delete, data: { confirm: "#{@food.name}#{@food.subname}を削除する？" }, class: "admin-btn" %>
+  </div>
+  <table class="admin-table">
+    <t-body>
+      <% @food.attributes.each do |f| %>
+        <tr class="admin-t-row">
+          <th class="admin-t-head"><%= Food.human_attribute_name(f[0]) %></th>
+          <td class="admin-t-data"><%= f[1] %></td>
+        </tr>
+      <% end %>
+    </t-body>
+  </table>
+</div>
