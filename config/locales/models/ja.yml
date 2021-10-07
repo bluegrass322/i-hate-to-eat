@@ -3,6 +3,7 @@ ja:
     models:
       user: "ユーザー"
       dietary_reference_intake: "食事摂取基準"
+      food_category: "食品カテゴリー"
     attributes:
       user:
         id: "id"
@@ -67,6 +68,10 @@ ja:
         vitamin_e: "ビタミンE"
         vitamin_k: "ビタミンK"
         zinc: "亜鉛"
+        created_at: "登録日時"
+        updated_at: "更新日時"
+      food_category:
+        name: "カテゴリー名"
         created_at: "登録日時"
         updated_at: "更新日時"
   enums:

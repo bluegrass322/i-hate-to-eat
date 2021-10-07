@@ -1,0 +1,23 @@
+<div id="admin-contents">
+  <h3>食品カテゴリー一覧</h3>
+
+  <table class="admin-table">
+    <t-head>
+      <th class="admin-t-head"><%= FoodCategory.human_attribute_name(:id) %></th>
+      <th class="admin-t-head"><%= FoodCategory.human_attribute_name(:name) %></th>
+      <th class="admin-t-head"></th>
+    </t-head>
+    <t-body>
+      <% @categories.each do |cate| %>
+        <tr class="admin-t-row">
+          <td class="admin-t-data"><%= cate.id %></td>
+          <td class="admin-t-data"><%= cate.name %></td>
+          <td>
+            <%= link_to '編集', edit_admin_food_category_path(cate), class: "admin-btn" %>
+            <%= link_to '削除', admin_food_category_path(cate), method: :delete, data: { confirm: "#{cate.name}を削除する？" }, class: "admin-btn" %>
+          </td>
+        </tr>
+      <% end %>
+    </t-body>
+  </table>
+</div>
