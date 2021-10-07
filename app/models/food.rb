@@ -1,6 +1,47 @@
 class Food < ApplicationRecord
   # Associations
   belongs_to :food_category
+
+  # Validations
+  with_options presence: true do
+    validates :name, length: { maximum: 30 }
+
+    with_options numericality: true do
+      validates :priority
+      validates :reference_amount
+      validates :biotin
+      validates :calcium
+      validates :calorie
+      validates :carbohydrate
+      validates :chromium
+      validates :copper
+      validates :fat
+      validates :folate
+      validates :iodine
+      validates :iron
+      validates :magnesium
+      validates :manganese
+      validates :molybdenum
+      validates :niacin
+      validates :pantothenic_acid
+      validates :phosphorus
+      validates :potassium
+      validates :protein
+      validates :selenium
+      validates :vitamin_a
+      validates :vitamin_b1
+      validates :vitamin_b12
+      validates :vitamin_b2
+      validates :vitamin_b6
+      validates :vitamin_c
+      validates :vitamin_d
+      validates :vitamin_e
+      validates :vitamin_k
+      validates :zinc
+    end
+  end
+  validates :subname, length: { maximum: 30 }
+  validates :description, length: { maximum: 400 }
 end
 
 # == Schema Information
