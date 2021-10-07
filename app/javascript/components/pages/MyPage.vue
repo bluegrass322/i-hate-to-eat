@@ -7,10 +7,10 @@
 
       <v-tab-item class="tab-item">
         <v-row>
-          <v-col cols="12" md="4"  class="mypage-items">
+          <v-col cols="12" md="4" class="mypage-items">
             <bmr-form @click="updateBmrAndReference" />
           </v-col>
-          <v-col cols="12" md="4" class="mypage-items" >
+          <v-col cols="12" md="4" class="mypage-items">
             <my-page-dri-index />
           </v-col>
         </v-row>
@@ -38,19 +38,42 @@ export default {
     this.setData();
   },
   methods: {
+    // BMRフォーム用のメソッド
     setData() {
-      this.axios.get('/api/v1/bmr').then((response) => {
-        this.$store.dispatch('bmrParams/setAttributes', response.data);
-      });
+      this.axios
+        .get('/api/v1/mypage')
+        .then((res) => {
+          console.log(res.status);
+
+          const r = res.data;
+          this.dispatchBmr(r.bmr_params);
+          this.dispatchPfc(r.pfc_params);
+          this.dispatchDri(r.dri_params);
+        })
+        .catch((e) => {
+          console.log(e.response.status);
+        });
+    },
+    dispatchBmr(params) {
+      this.$store.dispatch('bmrParams/setAttributes', params);
+    },
+    dispatchPfc(params) {
+      this.$store.dispatch('pfcBalance/setAttributes', params);
+    },
+    dispatchDri(params) {
+      this.$store.dispatch('referenceIntakes/setAttributes', params);
     },
     // TODO: 要リファクタリング
     updateBmrAndReference() {
       this.axios
         .patch('/api/v1/bmr', { user: this.$store.state.bmrParams.user })
-        .then((response) => {
-          console.log(response.status);
+        .then((res) => {
+          console.log(res.status);
 
-          this.$store.commit('bmrParams/updateBmr', response.data.bmr);
+          this.$store.commit('bmrParams/updateBmr', res.data.bmr);
+          this.dispatchPfc(res.data.pfc_params);
+
+          // TODO: genderまたはbirthの値に変更がある時のみ実行するよう
           this.updateReferenceIntake();
         })
         .catch((error) => {
@@ -71,12 +94,12 @@ export default {
     updateReferenceIntake() {
       this.axios
         .patch('/api/v1/users_dietary_reference_intake')
-        .then((response) => {
-          console.log(response.status);
+        .then((res) => {
+          console.log(res.status);
 
           this.$store.dispatch(
             'referenceIntakes/setAttributes',
-            response.data.data.attributes
+            res.data.data.attributes
           );
         })
         .catch((error) => {

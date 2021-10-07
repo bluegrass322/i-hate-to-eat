@@ -5,15 +5,6 @@ module Api
     class UsersDietaryReferenceIntakesController < Api::V1::BaseController
       before_action :set_user
 
-      def show
-        dri = @user.dietary_reference_intake
-        json_string = DietaryReferenceIntakeSerializer
-                      .new(dri)
-                      .serialized_json
-
-        render json: json_string
-      end
-
       def update
         dri = set_reference_intake(@user)
 

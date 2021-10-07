@@ -61,21 +61,6 @@ export default {
   computed: {
     ...mapGetters('referenceIntakes', ['vitamins', 'minerals']),
   },
-  mounted() {
-    this.setData();
-  },
-  methods: {
-    setData() {
-      this.axios
-        .get('/api/v1/users_dietary_reference_intake')
-        .then((response) => {
-          this.$store.dispatch(
-            'referenceIntakes/setAttributes',
-            response.data.data.attributes
-          );
-        });
-    },
-  },
 };
 </script>
 

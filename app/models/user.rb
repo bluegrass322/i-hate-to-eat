@@ -54,26 +54,34 @@ class User < ApplicationRecord
     end
   end
 
-  # TODO: コントローラーの整理後不要になるかも？
-  def set_attributes_for_bmr
+  def set_mypage_params
     {
-      gender: gender,
-      birth: birth,
-      height: height,
-      weight: weight,
-      bmr: bmr
+      bmr_params: set_attributes_for_bmr,
+      pfc_params: set_attributes_for_pfc,
+      dri_params: dietary_reference_intake
     }
   end
 
-  def set_amount_pfc
-    {
-      protein: calc_amount_protein.floor,
-      fat: calc_amount_fat.floor,
-      carbohydrate: calc_amount_carbo.floor
-    }
+  def set_attributes_for_pfc
+    { pct: { pct_p: percentage_protein,
+             pct_f: percentage_fat,
+             pct_c: percentage_carbohydrate },
+      amt: { amt_p: calc_amount_protein.floor,
+             amt_f: calc_amount_fat.floor,
+             amt_c: calc_amount_carbo.floor } }
   end
 
   private
+
+    def set_attributes_for_bmr
+      {
+        gender: gender,
+        birth: birth,
+        height: height,
+        weight: weight,
+        bmr: bmr
+      }
+    end
 
     def calc_amount_protein
       bmr * percentage_protein / 4

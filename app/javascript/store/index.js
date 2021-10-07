@@ -5,6 +5,7 @@ import createPersistedState from 'vuex-persistedstate';
 import authUser from './modules/authUser';
 import bmrParams from './modules/bmrParams';
 import flashMessage from './modules/flashMessage';
+import pfcBalance from './modules/pfcBalance';
 import referenceIntakes from './modules/referenceIntakes';
 
 Vue.use(Vuex);
@@ -14,6 +15,7 @@ const store = new Vuex.Store({
     authUser,
     bmrParams,
     flashMessage,
+    pfcBalance,
     referenceIntakes,
   },
 

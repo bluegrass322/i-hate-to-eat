@@ -17,8 +17,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :registration, only: %i[create]
       resource :authentication, only: %i[create destroy]
-      resource :bmr, only: %i[show update]
-      resource :users_dietary_reference_intake, only: %i[show update]
+      resource :mypage, only: %i[show]
+      resource :bmr, only: %i[update]
+      resource :users_dietary_reference_intake, only: %i[update]
     end
   end
 
@@ -48,11 +49,10 @@ end
 #                   api_v1_registration POST   /api/v1/registration(.:format)                                                           api/v1/registrations#create {:format=>/json/}
 #                 api_v1_authentication DELETE /api/v1/authentication(.:format)                                                         api/v1/authentications#destroy {:format=>/json/}
 #                                       POST   /api/v1/authentication(.:format)                                                         api/v1/authentications#create {:format=>/json/}
-#                            api_v1_bmr GET    /api/v1/bmr(.:format)                                                                    api/v1/bmrs#show {:format=>/json/}
-#                                       PATCH  /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
+#                         api_v1_mypage GET    /api/v1/mypage(.:format)                                                                 api/v1/mypages#show {:format=>/json/}
+#                            api_v1_bmr PATCH  /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
 #                                       PUT    /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
-# api_v1_users_dietary_reference_intake GET    /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#show {:format=>/json/}
-#                                       PATCH  /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
+# api_v1_users_dietary_reference_intake PATCH  /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
 #                                       PUT    /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
 #                                       GET    /*path(.:format)                                                                         top#index
 #         rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
