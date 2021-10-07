@@ -32,7 +32,7 @@ module Admin
         @food = Food.find(params[:id])
       end
 
-      def foos_params
+      def food_params
         params.require(:food).permit(:name, :subname, :priority, :reference_amount, :description,
                                      :biotin, :calcium, :calorie, :carbohydrate, :chromium,
                                      :copper, :fat, :folate, :iodine, :iron, :magnesium,
