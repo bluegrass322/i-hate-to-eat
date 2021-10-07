@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     resources :users
     resources :dietary_reference_intakes, only: %i[index show destroy]
     resources :food_categories, only: %i[index edit update destroy]
+    resources :foods, only: %i[index show edit update destroy]
   end
 
   namespace :api, format: 'json' do
@@ -52,6 +53,12 @@ end
 #                   admin_food_category PATCH  /admin/food_categories/:id(.:format)                                                     admin/food_categories#update
 #                                       PUT    /admin/food_categories/:id(.:format)                                                     admin/food_categories#update
 #                                       DELETE /admin/food_categories/:id(.:format)                                                     admin/food_categories#destroy
+#                           admin_foods GET    /admin/foods(.:format)                                                                   admin/foods#index
+#                       edit_admin_food GET    /admin/foods/:id/edit(.:format)                                                          admin/foods#edit
+#                            admin_food GET    /admin/foods/:id(.:format)                                                               admin/foods#show
+#                                       PATCH  /admin/foods/:id(.:format)                                                               admin/foods#update
+#                                       PUT    /admin/foods/:id(.:format)                                                               admin/foods#update
+#                                       DELETE /admin/foods/:id(.:format)                                                               admin/foods#destroy
 #                   api_v1_registration POST   /api/v1/registration(.:format)                                                           api/v1/registrations#create {:format=>/json/}
 #                 api_v1_authentication DELETE /api/v1/authentication(.:format)                                                         api/v1/authentications#destroy {:format=>/json/}
 #                                       POST   /api/v1/authentication(.:format)                                                         api/v1/authentications#create {:format=>/json/}
