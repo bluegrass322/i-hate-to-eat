@@ -11,7 +11,7 @@ Rails.application.routes.draw do
     delete 'logout', to: 'user_sessions#destroy'
     resources :users
     resources :dietary_reference_intakes, only: %i[index show destroy]
-    resources :food_categories, only: %i[index edit update]
+    resources :food_categories, only: %i[index edit update destroy]
   end
 
   namespace :api, format: 'json' do

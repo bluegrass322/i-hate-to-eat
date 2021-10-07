@@ -2,7 +2,7 @@
 
 module Admin
   class Admin::FoodCategoriesController < Admin::BaseController
-    before_action :set_category, only: %i[edit update]
+    before_action :set_category, only: %i[edit update destroy]
 
     def index
       @categories = FoodCategory.all.order(id: "DESC")
@@ -17,6 +17,11 @@ module Admin
         flash.now[:danger] = "食品カテゴリーの更新に失敗"
         render :edit
       end
+    end
+
+    def destroy
+      @category.destroy!
+      redirect_to admin_food_categories_path, notice: "食品カテゴリーの削除に成功"
     end
 
     private
