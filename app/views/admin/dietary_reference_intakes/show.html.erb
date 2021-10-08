@@ -6,10 +6,10 @@
   </div>
   <table class="admin-table">
     <t-body>
-      <% @columns.each do |c| %>
+      <% @dri.attributes.each do |d| %>
         <tr class="admin-t-row">
-          <th class="admin-t-head"><%= DietaryReferenceIntake.human_attribute_name(c) %></th>
-          <td class="admin-t-data"><%= @dri[c] %></td>
+          <th class="admin-t-head"><%= DietaryReferenceIntake.human_attribute_name(d[0]) %></th>
+          <td class="admin-t-data"><%= d[1] %></td>
         </tr>
       <% end %>
     </t-body>

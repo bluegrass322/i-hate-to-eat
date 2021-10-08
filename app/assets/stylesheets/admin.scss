@@ -124,6 +124,10 @@ body {
       width: 250px;
     }
 
+    &-number {
+      width: 50px;
+    }
+
     &-label {
       font-size: 13px;
     }
@@ -152,6 +156,21 @@ body {
     padding: 5px 10px;
     text-align: center;
     vertical-align: middle;
+  }
+
+  &-pagenate {
+    margin: 15px
+  }
+
+  &-search {
+    &-group {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    &-form {
+      margin-right: 20px;
+    }
   }
 }
 

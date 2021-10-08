@@ -5,7 +5,8 @@ module Admin
     before_action :set_user, only: %i[show edit update destroy]
 
     def index
-      @users = User.all.order(created_at: "DESC")
+      @q = User.ransack(params[:q])
+      @users = @q.result.page(params[:page])
     end
 
     def new

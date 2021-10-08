@@ -1,0 +1,144 @@
+<div id="admin-contents">
+  <h3>食品編集 : <%= @food.name %><%= @food.subname %></h3>
+
+  <div class="admin-form">
+    <%= form_with model: @food, url: admin_food_path, local: true do |f| %>
+      <%= render 'admin/shared/error_messages', object: f.object %>
+      <div class="admin-form-group">
+        <%= f.label :name, class: "admin-form-label" %><br>
+        <%= f.text_field :name, class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :subname, class: "admin-form-label" %><br>
+        <%= f.text_field :subname, class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :reference_amount, class: "admin-form-label" %><br>
+        <%= f.number_field :reference_amount, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :priority, class: "admin-form-label" %><br>
+        <%= f.number_field :priority, class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :description, class: "admin-form-label" %><br>
+        <%= f.text_area :description, class: "admin-form-text" %>
+      </div>
+
+      <div class="admin-form-group">
+        <%= f.label :calorie, class: "admin-form-label" %><br>
+        <%= f.number_field :calorie, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :protein, class: "admin-form-label" %><br>
+        <%= f.number_field :protein, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :fat, class: "admin-form-label" %><br>
+        <%= f.number_field :fat, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :carbohydrate, class: "admin-form-label" %><br>
+        <%= f.number_field :carbohydrate, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :biotin, class: "admin-form-label" %><br>
+        <%= f.number_field :biotin, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :calcium, class: "admin-form-label" %><br>
+        <%= f.number_field :calcium, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :chromium, class: "admin-form-label" %><br>
+        <%= f.number_field :chromium, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :copper, class: "admin-form-label" %><br>
+        <%= f.number_field :copper, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :folate, class: "admin-form-label" %><br>
+        <%= f.number_field :folate, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :iodine, class: "admin-form-label" %><br>
+        <%= f.number_field :iodine, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :iron, class: "admin-form-label" %><br>
+        <%= f.number_field :iron, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :magnesium, class: "admin-form-label" %><br>
+        <%= f.number_field :magnesium, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :molybdenum, class: "admin-form-label" %><br>
+        <%= f.number_field :molybdenum, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :niacin, class: "admin-form-label" %><br>
+        <%= f.number_field :niacin, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :pantothenic_acid, class: "admin-form-label" %><br>
+        <%= f.number_field :pantothenic_acid, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :phosphorus, class: "admin-form-label" %><br>
+        <%= f.number_field :phosphorus, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :potassium, class: "admin-form-label" %><br>
+        <%= f.number_field :potassium, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :selenium, class: "admin-form-label" %><br>
+        <%= f.number_field :selenium, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :vitamin_a, class: "admin-form-label" %><br>
+        <%= f.number_field :vitamin_a, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :vitamin_b1, class: "admin-form-label" %><br>
+        <%= f.number_field :vitamin_b1, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :vitamin_b12, class: "admin-form-label" %><br>
+        <%= f.number_field :vitamin_b12, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :vitamin_b2, class: "admin-form-label" %><br>
+        <%= f.number_field :vitamin_b2, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :vitamin_b6, class: "admin-form-label" %><br>
+        <%= f.number_field :vitamin_b6, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :vitamin_c, class: "admin-form-label" %><br>
+        <%= f.number_field :vitamin_c, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :vitamin_d, class: "admin-form-label" %><br>
+        <%= f.number_field :vitamin_d, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :vitamin_e, class: "admin-form-label" %><br>
+        <%= f.number_field :vitamin_e, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :vitamin_k, class: "admin-form-label" %><br>
+        <%= f.number_field :vitamin_k, step: "0.01", class: "admin-form-text" %>
+      </div>
+      <div class="admin-form-group">
+        <%= f.label :zinc, class: "admin-form-label" %><br>
+        <%= f.number_field :zinc, step: "0.01", class: "admin-form-text" %>
+      </div>
+
+      <%= f.submit class: "admin-form-btn" %>
+    <% end %>
+  </div>
+</div>

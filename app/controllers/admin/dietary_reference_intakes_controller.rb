@@ -8,9 +8,7 @@ module Admin
       @dris = DietaryReferenceIntake.all.order(id: "DESC")
     end
 
-    def show
-      @columns = DietaryReferenceIntake.column_names.map(&:to_sym)
-    end
+    def show; end
 
     def destroy
       @dri.destroy!
