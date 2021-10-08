@@ -40,6 +40,7 @@ gem 'fast_jsonapi'
 gem 'rails-i18n', '~> 6.0.0'
 gem 'enum_help'
 gem 'kaminari'
+gem 'ransack'
 
 group :development, :test do
   # Code analyze
