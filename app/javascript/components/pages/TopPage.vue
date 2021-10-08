@@ -8,6 +8,8 @@
     <router-view />
     <!-- TODO: アクセス制限確認用 -->
     <div>
+      <p>実装済みリスト</p>
+      <p>食品カテゴリー・食品</p>
       <p>require login</p>
       <router-link to="/home">home</router-link>
       <router-link to="/mypage">mypage（コントローラー改修済）</router-link>
