@@ -2,6 +2,15 @@ class Suggestion < ApplicationRecord
   # Associations
   belongs_to :user
   belongs_to :food
+
+  # Validations
+  with_options presence: true do
+    validates :amount
+    validates :target_date
+    validates :expires_at
+  end
+
+  validates :user_id, uniqueness: { scope: [:food_id, :target_date] }
 end
 
 # == Schema Information
