@@ -2,6 +2,27 @@
   <h3>ユーザー一覧</h3>
 
   <%= link_to '新規登録', new_admin_user_path, class: "admin-btn" %>
+  <%= search_form_for @q, url: admin_users_path do |f| %>
+    <div class="admin-search-group">
+      <div class="admin-search-form">
+        <%= f.label :name_cont, 'ユーザー名', class: "admin-form-label" %>
+        <%= f.search_field :name_cont, class: "admin-form-text" %>
+      </div>
+      <div class="admin-search-form">
+        <%= f.label :email_cont, 'メールアドレス', class: "admin-form-label" %>
+        <%= f.search_field :email_cont, class: "admin-form-text" %>
+      </div>
+      <div class="admin-search-form">
+        <%= f.label :gender_eq, '性別', class: "admin-form-label" %>
+        <%= f.select :gender_eq, User.genders_i18n.invert.map{|key, value| [key, User.genders[value]]}, { include_blank: '未選択' }, class: "admin-form-select" %>
+      </div>
+      <div class="admin-search-form">
+        <%= f.label :role_eq, '権限', class: "admin-form-label" %>
+        <%= f.select :role_eq, User.roles_i18n.invert.map{|key, value| [key, User.roles[value]]}, { include_blank: '未選択' }, class: "admin-form-select" %>
+      </div>
+      <%= f.submit %>
+    </div>
+  <% end %>
   <table class="admin-table">
     <t-head>
       <th class="admin-t-head"><%= User.human_attribute_name(:id) %></th>
@@ -25,4 +46,7 @@
       <% end %>
     </t-body>
   </table>
+  <div class="admin-pagenate" >
+    <%= paginate @users %>
+  </div>
 </div>
