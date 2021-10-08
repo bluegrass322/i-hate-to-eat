@@ -3,6 +3,7 @@
 class Food < ApplicationRecord
   # Associations
   belongs_to :food_category
+  has_many :suggestions, dependent: :destroy
 
   # Validations
   with_options presence: true do

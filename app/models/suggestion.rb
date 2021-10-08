@@ -1,4 +1,7 @@
 class Suggestion < ApplicationRecord
+  # Associations
+  belongs_to :user
+  belongs_to :food
 end
 
 # == Schema Information
