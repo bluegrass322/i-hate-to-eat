@@ -5,7 +5,8 @@ module Admin
     before_action :set_food, only: %i[show edit update destroy]
 
     def index
-      @foods = Food.all.includes(:food_category).order(id: "ASC").page(params[:page])
+      @q = Food.ransack(params[:q])
+      @foods = @q.result.includes(:food_category).page(params[:page])
     end
 
     def show; end
