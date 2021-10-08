@@ -124,6 +124,10 @@ body {
       width: 250px;
     }
 
+    &-number {
+      width: 50px;
+    }
+
     &-label {
       font-size: 13px;
     }
@@ -155,7 +159,18 @@ body {
   }
 
   &-pagenate {
-    margin: 15px 5px;
+    margin: 15px
+  }
+
+  &-search {
+    &-group {
+      display: flex;
+      margin-bottom: 10px;
+    }
+
+    &-form {
+      margin-right: 20px;
+    }
   }
 }
 
