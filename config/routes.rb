@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :dietary_reference_intakes, only: %i[index show destroy]
     resources :food_categories, only: %i[index edit update destroy]
     resources :foods, only: %i[index show edit update destroy]
+    resources :suggestions, only: %i[index]
   end
 
   namespace :api, format: 'json' do
@@ -59,6 +60,7 @@ end
 #                                       PATCH  /admin/foods/:id(.:format)                                                               admin/foods#update
 #                                       PUT    /admin/foods/:id(.:format)                                                               admin/foods#update
 #                                       DELETE /admin/foods/:id(.:format)                                                               admin/foods#destroy
+#                     admin_suggestions GET    /admin/suggestions(.:format)                                                             admin/suggestions#index
 #                   api_v1_registration POST   /api/v1/registration(.:format)                                                           api/v1/registrations#create {:format=>/json/}
 #                 api_v1_authentication DELETE /api/v1/authentication(.:format)                                                         api/v1/authentications#destroy {:format=>/json/}
 #                                       POST   /api/v1/authentication(.:format)                                                         api/v1/authentications#create {:format=>/json/}
