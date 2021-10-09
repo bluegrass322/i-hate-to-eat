@@ -1,4 +1,9 @@
-namespace :suggestion do
+namespace :scheduler do
+  desc "動作確認用"
+  task test_scheduler: :environment do
+    puts "Scheduler test is works."
+  end
+
   desc "期限切れのsuggestionを削除"
   task destroy_expied_suggestions: :environment do
     User.find_each do |user|
@@ -27,14 +32,15 @@ namespace :suggestion do
             item = user.suggestions.new(
               food_id: m.id,
               amount: m.reference_amount,
-              target_date: "",
+              # target_date: "",
+              target_date: Time.current.ago(1.day),
               # target_date: Time.zone.today,
               expires_at: Time.current.end_of_day
             )
   
             item.save!
           end
-        end        
+        end
       rescue => exception
         Rails.logger.warn "User#{user.id}: Failed to save the suggestion. Cause...'#{exception}'"
       end
