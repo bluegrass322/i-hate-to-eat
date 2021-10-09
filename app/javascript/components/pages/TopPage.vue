@@ -10,6 +10,7 @@
     <div>
       <p>実装済みリスト</p>
       <p>食品カテゴリー・食品</p>
+      <p>rakeタスクを作成</p>
       <p>require login</p>
       <router-link to="/home">home</router-link>
       <router-link to="/mypage">mypage（コントローラー改修済）</router-link>
