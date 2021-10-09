@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :scheduler do
   desc "動作確認用"
   task test_scheduler: :environment do
@@ -37,12 +39,12 @@ namespace :scheduler do
               # target_date: Time.zone.today,
               expires_at: Time.current.end_of_day
             )
-  
+
             item.save!
           end
         end
-      rescue => exception
-        Rails.logger.warn "User#{user.id}: Failed to save the suggestion. Cause...'#{exception}'"
+      rescue StandardError => e
+        Rails.logger.warn "User#{user.id}: Failed to save the suggestion. Cause...'#{e}'"
       end
     end
   end
