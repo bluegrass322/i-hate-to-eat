@@ -33,6 +33,9 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # Authentication
 gem 'sorcery'
 
+# LINE Bot
+gem 'line-bot-api'
+
 # Serializer
 gem 'fast_jsonapi'
 
