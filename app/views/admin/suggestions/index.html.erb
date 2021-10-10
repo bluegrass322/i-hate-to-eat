@@ -1,0 +1,38 @@
+<div id="admin-contents">
+  <h3>提案一覧</h3>
+
+  <%= search_form_for @q, url: admin_suggestions_path do |f| %>
+    <div class="admin-search-group">
+      <div class="admin-search-form">
+        <%= f.label :user_id_eq, 'ユーザーID', class: "admin-form-label" %>
+        <%= f.number_field :user_id_eq, class: "admin-form-number" %>
+      </div>
+      <%= f.submit %>
+    </div>
+  <% end %> 
+  <table class="admin-table">
+    <t-head>
+      <th class="admin-t-head"><%= Suggestion.human_attribute_name(:id) %></th>
+      <th class="admin-t-head"><%= Suggestion.human_attribute_name(:user_id) %></th>
+      <th class="admin-t-head"><%= Suggestion.human_attribute_name(:food_id) %></th>
+      <th class="admin-t-head"><%= Suggestion.human_attribute_name(:target_date) %></th>
+      <th class="admin-t-head"><%= Suggestion.human_attribute_name(:expires_at) %></th>
+      <th class="admin-t-head"><%= Suggestion.human_attribute_name(:created_at) %></th>
+    </t-head>
+    <t-body>
+      <% @suggestions.each do |sgt| %>
+        <tr class="admin-t-row">
+          <td class="admin-t-data"><%= sgt.id %></td>
+          <td class="admin-t-data"><%= link_to sgt.user_id, admin_user_path(sgt.user_id) %></td>
+          <td class="admin-t-data"><%= link_to sgt.food_id, admin_food_path(sgt.food_id) %></td>
+          <td class="admin-t-data"><%= l sgt.target_date, format: :default %></td>
+          <td class="admin-t-data"><%= l sgt.expires_at, format: :default %></td>
+          <td class="admin-t-data"><%= l sgt.created_at, format: :default %></td>
+        </tr>
+      <% end %>
+    </t-body>
+  </table>
+  <div class="admin-pagenate" >
+    <%= paginate @suggestions %>
+  </div>
+</div>

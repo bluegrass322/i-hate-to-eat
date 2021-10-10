@@ -3,6 +3,15 @@
 class Food < ApplicationRecord
   # Associations
   belongs_to :food_category
+  has_many :suggestions, dependent: :destroy
+
+  # Scopes
+  scope :prio_h, -> { where(priority: 15) }
+  scope :prio_m, -> { where(priority: 10) }
+  scope :prio_r, -> { where(priority: 5) }
+  scope :prio_rm, -> { where(priority: 5..10) }
+  scope :maindish, -> { where(food_category_id: [10, 11]) }
+  scope :sidedish, -> { where(food_category_id: 1..9) }
 
   # Validations
   with_options presence: true do
