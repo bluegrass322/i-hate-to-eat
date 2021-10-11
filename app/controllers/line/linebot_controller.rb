@@ -9,18 +9,12 @@ module Line
 
       # 複数同時に送られてくる可能性のあるイベントたちを1つずつ処理
       events.each do |event|
-        # イベントの種類がMessageである場合（他には友達追加やブロックなど）
         case event
         when Line::Bot::Event::Message
-          # メッセージの種類がテキストであるか画像であるか
           case event.type
           when Line::Bot::Event::MessageType::Text
-            message = set_reply_message
+            message = set_reply_message(event.message['text'])
             client.reply_message(event['replyToken'], message)
-          when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
-            response = client.get_message_content(event.message['id'])
-            tf = Tempfile.open("content")
-            tf.write(response.body)
           end
         end
       end
@@ -31,8 +25,8 @@ module Line
 
     private
 
-      def set_reply_message
-        reply_text = case event.message['text']
+      def set_reply_message(text)
+        reply_text = case text
                      when "hi"
                        'Good morning!'
                      when "bye"
