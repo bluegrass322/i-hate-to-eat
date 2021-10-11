@@ -1,19 +1,9 @@
-# frozen_string_literal: true
-
 module Line
   class LinebotController < Line::BaseController
     # LINEからのPOSTはprotect_from_forgeryを通過できない
     protect_from_forgery except: :callback
 
     def callback
-      body = request.body.read
-
-      # POSTが本当にLINEサーバのものからかをチェック
-      signature = request.env['HTTP_X_LINE_SIGNATURE']
-      unless client.validate_signature(body, signature)
-        error 400 do 'Bad Request' end
-      end
-
       # 送られてきたデータをrubyが扱いやすいよう変換
       events = client.parse_events_from(body)
       # 複数同時に送られてくる可能性のあるイベントたちを1つずつ処理
