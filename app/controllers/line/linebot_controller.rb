@@ -15,10 +15,7 @@ module Line
           # メッセージの種類がテキストであるか画像であるか
           case event.type
           when Line::Bot::Event::MessageType::Text
-            message = {
-              type: 'text',
-              text: event.message['text']
-            }
+            message = set_reply_message
             client.reply_message(event['replyToken'], message)
           when Line::Bot::Event::MessageType::Image, Line::Bot::Event::MessageType::Video
             response = client.get_message_content(event.message['id'])
@@ -31,5 +28,21 @@ module Line
       # 200status は必ず返さなければならない
       head :ok
     end
+
+    private
+
+      def set_reply_message
+        reply_text = case event.message['text']
+                     when "hi"
+                       'Good morning!'
+                     when "bye"
+                       'Good bye!'
+                     else
+                       # 所定の文言以外にはエラーメッセージを返す
+                       'ちょっと何言ってるかわかんない'
+                     end
+
+        return { type: 'text', text: reply_text }
+      end
   end
 end
