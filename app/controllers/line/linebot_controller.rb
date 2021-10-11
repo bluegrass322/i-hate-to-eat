@@ -5,7 +5,8 @@ module Line
 
     def callback
       # 送られてきたデータをrubyが扱いやすいよう変換
-      events = client.parse_events_from(body)
+      events = client.parse_events_from(@body)
+
       # 複数同時に送られてくる可能性のあるイベントたちを1つずつ処理
       events.each do |event|
         # イベントの種類がMessageである場合（他には友達追加やブロックなど）
