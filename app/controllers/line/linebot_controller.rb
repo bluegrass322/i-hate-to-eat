@@ -13,8 +13,7 @@ module Line
         when Line::Bot::Event::Message
           case event.type
           when Line::Bot::Event::Follow
-            puts event
-            message = reply_confirm_linking_account
+            message = { type: 'text', text: "Thanks to follow!" }
           when Line::Bot::Event::MessageType::Text
             message = reply_text_message(event)
           end
