@@ -18,7 +18,8 @@ module Line
             message = reply_text_message(event)
           end
         when Line::Bot::Event::Unfollow
-          message = { type: "text", text: "Thank you, good bye!" }
+          # rplyTokenは発行されない
+          # 連携解除処理
         end
         client.reply_message(event['replyToken'], message)
       end
@@ -36,16 +37,18 @@ module Line
           template: {
             type: "confirm",
             text: "LINEアカウントの連携をしてください。 \n" + "なお、連携の解除はいつでも行うことができます。",
-            actions: {
-              type: "message",
-              label: "Yes",
-              text: "do linking"
-            },
-            actions: {
-              type: "message",
-              label: "No",
-              text: "don't linking"
-            }
+            actions: [
+              {
+                type: "message",
+                label: "Yes",
+                text: "do linking"
+              },
+              {
+                type: "message",
+                label: "No",
+                text: "don't linking"
+              }
+            ]
           }
         }
       end
@@ -62,7 +65,7 @@ module Line
                        "Good bye!"
                      else
                        # 所定の文言以外にはエラーメッセージを返す
-                       "ちょっと何言ってるかわかんない"
+                       "ちょっと何言ってるかわからない"
                      end
 
         { type: 'text', text: reply_text }
