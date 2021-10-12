@@ -10,10 +10,15 @@ module Line
       # 複数同時に送られてくる可能性のあるイベントたちを1つずつ処理
       events.each do |event|
         case event
+        when Line::Bot::Event::Follow
+          message = {
+            type: "text",
+            text: "Thanks to follow!"
+          }
+          client.reply_message(event['replyToken'], message)
+        end
         when Line::Bot::Event::Message
           case event.type
-          when Line::Bot::Event::Follow
-            message = { type: 'text', text: "Thanks to follow!" }
           when Line::Bot::Event::MessageType::Text
             message = reply_text_message(event)
           end
