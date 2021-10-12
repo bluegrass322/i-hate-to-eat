@@ -28,7 +28,7 @@ Rails.application.routes.draw do
 
   namespace :line, format: 'json' do
     post 'callback', to: 'linebot#callback'
-    post 'link', to: 'linebot#link'
+    get 'link', to: 'linebot#link'
   end
 
   # ルーティングエラーを拾う
