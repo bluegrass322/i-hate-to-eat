@@ -54,9 +54,9 @@ module Line
       end
 
       def reply_text_message(event)
-        reply_text = case event.message['text']
+        reply_text = case event.message["text"]
                      when "do linking"
-                       set_url_for_linking(event.source.userId)
+                       set_url_for_linking(event["source"]["userId"])
                      when "don't linking"
                        "引き続きLINE通知以外の機能をご利用ください"
                      when "hi"
