@@ -16,7 +16,6 @@ module Line
             text: "Thanks to follow!"
           }
           client.reply_message(event['replyToken'], message)
-        end
         when Line::Bot::Event::Message
           case event.type
           when Line::Bot::Event::MessageType::Text
