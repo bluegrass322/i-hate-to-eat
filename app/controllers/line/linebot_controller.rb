@@ -56,7 +56,7 @@ module Line
       def reply_text_message(event)
         reply_text = case event.message["text"]
                      when "do linking"
-                       "userId: #{ event["source"]["userId"] }"
+                       set_url_for_linking(event["source"]["userId"])
                      when "don't linking"
                        "引き続きLINE通知以外の機能をご利用ください"
                      when "hi"
@@ -73,37 +73,12 @@ module Line
 
       def set_url_for_linking(line_id)
         # 連携手順1. 連携トークンを発行する
-        token = require_link_token(line_id)
-
-        # 連携手順2. ユーザーを連携URLにリダイレクトする
-        {
-          type: "template",
-          altText: "アカウント連携用ページ",
-          template: {
-            type: "buttons",
-            text: "以下のURLから再度ログインし、アカウント連携を行ってください",
-            defaultAction: {
-              type: "uri",
-              label: "アカウント連携ページ",
-              uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{ token['linkToken'] }"
-            },
-            actions: [
-              {
-                type: "uri",
-                label: "アカウント連携ページ",
-                uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{ token['linkToken'] }"
-              }
-            ]
-          }
-        }
-      end
-
-      def require_link_token(line_id)
         client = Line::Bot::Client.new{ |config|
           config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
           config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
         }
-        client.create_link_token(line_id)
+        token = client.create_link_token(line_id)
+        "Token: #{ token }"
       end
   end
 end
