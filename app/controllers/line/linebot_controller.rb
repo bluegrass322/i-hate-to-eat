@@ -89,7 +89,7 @@ module Line
             actions: [{
                 type: "uri",
                 label: "アカウント連携ページ",
-                uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{ token["linkToken"] }"
+                uri: "https://i-hate-to-eat.herokuapp.com"
             }]
           }
         }
