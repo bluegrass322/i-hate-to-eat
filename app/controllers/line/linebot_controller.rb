@@ -11,18 +11,16 @@ module Line
       events.each do |event|
         case event
         when Line::Bot::Event::Follow
-          message = {
-            type: "text",
-            text: "Thanks to follow!"
-          }
-          client.reply_message(event['replyToken'], message)
+          message = reply_confirm_linking_account
         when Line::Bot::Event::Message
           case event.type
           when Line::Bot::Event::MessageType::Text
             message = reply_text_message(event)
           end
-          client.reply_message(event['replyToken'], message)
+        when Line::Bot::Event::Unfollow
+          message = { type: "text", text: "Thank you, good bye!" }
         end
+        client.reply_message(event['replyToken'], message)
       end
 
       # 200status は必ず返さなければならない
