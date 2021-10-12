@@ -54,21 +54,23 @@ module Line
       end
 
       def reply_text_message(event)
-        reply_text = case event.message["text"]
-                     when "do linking"
-                       set_url_for_linking(event["source"]["userId"])
-                     when "don't linking"
-                       "引き続きLINE通知以外の機能をご利用ください"
-                     when "hi"
-                       "Good morning!"
-                     when "bye"
-                       "Good bye!"
-                     else
-                       # 所定の文言以外にはエラーメッセージを返す
-                       "ちょっと何言ってるかわからない"
-                     end
+        case event.message["text"]
+        when "do linking"
+          set_url_for_linking(event["source"]["userId"])
+        when "don't linking"
+          set_reply_text("引き続きLINE通知以外の機能をご利用ください")
+        when "hi"
+          set_reply_text("Good morning!")
+        when "bye"
+          set_reply_text("Good bye!")
+        else
+          # 所定の文言以外にはエラーメッセージを返す
+          set_reply_text("ちょっと何言ってるかわからない")
+        end
+      end
 
-        { type: 'text', text: reply_text }
+      def set_reply_text(text)
+        { type: 'text', text: text }
       end
 
       def set_url_for_linking(line_id)
@@ -89,7 +91,7 @@ module Line
             actions: [{
                 type: "uri",
                 label: "アカウント連携ページ",
-                uri: "https://i-hate-to-eat.herokuapp.com"
+                uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{ token["linkToken"] }"
             }]
           }
         }
