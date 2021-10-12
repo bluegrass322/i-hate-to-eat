@@ -12,10 +12,12 @@ module Line
         case event
         when Line::Bot::Event::Message
           case event.type
+          when Line::Bot::Event::MessageType::Follow
+            message = reply_confirm_linking_account
           when Line::Bot::Event::MessageType::Text
-            message = set_reply_message(event.message['text'])
-            client.reply_message(event['replyToken'], message)
+            message = reply_text_message(event)
           end
+          client.reply_message(event['replyToken'], message)
         end
       end
 
@@ -25,18 +27,47 @@ module Line
 
     private
 
-      def set_reply_message(text)
-        reply_text = case text
+      def reply_confirm_linking_account
+        {
+          type: "template",
+          altText: "LINEアカウントの連携をしてください",
+          template: {
+            type: "confirm",
+            text: "LINEアカウントの連携をしてください。 \n" + "なお、連携の解除はいつでも行うことができます。",
+            actions: {
+              type: "message",
+              label: "Yes",
+              text: "do linking"
+            },
+            actions: {
+              type: "message",
+              label: "No",
+              text: "don't linking"
+            }
+          }
+        }
+      end
+
+      def reply_text_message(event)
+        reply_text = case event.message['text']
+                     when "do linking"
+                       set_url_for_linking(event.message['text'])
+                     when "don't linking"
+                       "引き続きLINE通知以外の機能をご利用ください"
                      when "hi"
-                       'Good morning!'
+                       "Good morning!"
                      when "bye"
-                       'Good bye!'
+                       "Good bye!"
                      else
                        # 所定の文言以外にはエラーメッセージを返す
-                       'ちょっと何言ってるかわかんない'
+                       "ちょっと何言ってるかわかんない"
                      end
 
-        return { type: 'text', text: reply_text }
+        { type: 'text', text: reply_text }
+      end
+
+      def set_url_for_linking(text)
+        "OK! Let's #{text}!"
       end
   end
 end
