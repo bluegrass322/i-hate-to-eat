@@ -12,7 +12,8 @@ module Line
         case event
         when Line::Bot::Event::Message
           case event.type
-          when Line::Bot::Event::MessageType::Follow
+          when Line::Bot::Event::Follow
+            puts event
             message = reply_confirm_linking_account
           when Line::Bot::Event::MessageType::Text
             message = reply_text_message(event)
