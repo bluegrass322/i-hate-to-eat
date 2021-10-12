@@ -80,19 +80,17 @@ module Line
         token = client.create_link_token(line_id)
 
         # 連携手順2. ユーザーを連携URLにリダイレクトする
-        {
+        return {
           type: "template",
           altText: "アカウント連携用ページ",
           template: {
             type: "buttons",
             text: "以下のURLから再度ログインし、アカウント連携を行ってください",
-            actions: [
-              {
+            actions: [{
                 type: "uri",
                 label: "アカウント連携ページ",
                 uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{ token["linkToken"] }"
-              }
-            ]
+            }]
           }
         }
       end
