@@ -1,0 +1,18 @@
+<div id="line-login">
+  <div>以下のフォームから再度ログインしてください</div>
+
+  <div class="line-login-form">
+    <h4>LINE連携用ログイン</h4>
+    <%= form_with url: line_link_path, local: true do |f| %>
+      <div class="line-login-form-group">
+        <%= f.label :email, class: "line-login-form-label" %><br>
+        <%= f.email_field :email, class: "line-login-form-text" %>
+      </div>
+      <div class="line-login-form-group">
+        <%= f.label :password, class: "line-login-form-label" %><br>
+        <%= f.password_field :password, class: "line-login-form-text" %>
+      </div>
+      <%= f.submit "login", class: "line-login-form-btn" %>
+    <% end %>
+  </div>
+</div>
