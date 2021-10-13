@@ -26,9 +26,10 @@ Rails.application.routes.draw do
     end
   end
 
-  namespace :line, format: 'json' do
-    post 'callback', to: 'linebot#callback'
-    get 'link', to: 'linebot#link'
+  namespace :line do
+    post 'callback', to: 'linebot#callback', format: 'json'
+    get 'link', to: 'authentications#link'
+    post 'link', to: 'authentications#create'
   end
 
   # ルーティングエラーを拾う
@@ -75,7 +76,8 @@ end
 # api_v1_users_dietary_reference_intake PATCH  /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
 #                                       PUT    /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
 #                         line_callback POST   /line/callback(.:format)                                                                 line/linebot#callback {:format=>/json/}
-#                             line_link POST   /line/link(.:format)                                                                     line/linebot#link {:format=>/json/}
+#                             line_link GET    /line/link(.:format)                                                                     line/authentications#link
+#                                       POST   /line/link(.:format)                                                                     line/authentications#create
 #                                       GET    /*path(.:format)                                                                         top#index
 #         rails_postmark_inbound_emails POST   /rails/action_mailbox/postmark/inbound_emails(.:format)                                  action_mailbox/ingresses/postmark/inbound_emails#create
 #            rails_relay_inbound_emails POST   /rails/action_mailbox/relay/inbound_emails(.:format)                                     action_mailbox/ingresses/relay/inbound_emails#create
