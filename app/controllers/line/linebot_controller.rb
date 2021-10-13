@@ -81,12 +81,13 @@ module Line
           config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
           config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
         }
-        response = client.create_link_token(line_id)
+        response = client.create_link_token(line_id).body
+        parsed_response = JSON.parse(response)
 
         # TODO: デバッグ用、忘れず削除
         Rails.logger.debug "#{ response }"
-        Rails.logger.debug "#{ response.body }"
-        Rails.logger.debug "#{ response.body["linkToken"] }"
+        Rails.logger.debug "#{ parsed_response }"
+        Rails.logger.debug "#{ parsed_response["linkToken"] }"
 
         # 連携手順2. ユーザーを連携URLにリダイレクトする
         return {
@@ -98,7 +99,7 @@ module Line
             actions: [{
                 type: "uri",
                 label: "アカウント連携ページ",
-                uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{ response.body["linkToken"] }"
+                uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{ parsed_response["linkToken"] }"
             }]
           }
         }
