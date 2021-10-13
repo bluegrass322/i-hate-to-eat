@@ -6,7 +6,7 @@ ruby '2.7.4'
 gem 'rails', '~> 6.0.4.1'
 
 # App server
-gem 'puma', '~> 4.1'
+gem 'puma', '4.3.9'
 
 # Database
 gem 'pg', '>= 0.18', '< 2.0'
