@@ -84,11 +84,6 @@ module Line
         response = client.create_link_token(line_id).body
         parsed_response = JSON.parse(response)
 
-        # TODO: デバッグ用、忘れず削除
-        Rails.logger.debug "#{ response }"
-        Rails.logger.debug "#{ parsed_response }"
-        Rails.logger.debug "#{ parsed_response["linkToken"] }"
-
         # 連携手順2. ユーザーを連携URLにリダイレクトする
         return {
           type: "template",
