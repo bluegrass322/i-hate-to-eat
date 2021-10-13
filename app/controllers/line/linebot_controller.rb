@@ -85,6 +85,7 @@ module Line
 
         # TODO: デバッグ用、忘れず削除
         Rails.logger.debug "#{ token }"
+        Rails.logger.debug "#{ token["linkToken"] }"
 
         # 連携手順2. ユーザーを連携URLにリダイレクトする
         return {
@@ -96,7 +97,7 @@ module Line
             actions: [{
                 type: "uri",
                 label: "アカウント連携ページ",
-                uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{ token }"
+                uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{ token["linkToken"] }"
             }]
           }
         }
