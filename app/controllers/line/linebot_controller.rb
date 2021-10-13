@@ -10,6 +10,8 @@ module Line
       # 複数同時に送られてくる可能性のあるイベントたちを1つずつ処理
       events.each do |event|
         case event
+        # when Line::Bot::Event::AccountLink
+          # 連携処理
         when Line::Bot::Event::Follow
           message = reply_confirm_linking_account
         when Line::Bot::Event::Message
@@ -17,7 +19,7 @@ module Line
           when Line::Bot::Event::MessageType::Text
             message = reply_text_message(event)
           end
-        when Line::Bot::Event::Unfollow
+        # when Line::Bot::Event::Unfollow
           # rplyTokenは発行されない
           # 連携解除処理
         end
@@ -81,6 +83,9 @@ module Line
         }
         token = client.create_link_token(line_id)
 
+        # TODO: デバッグ用、忘れず削除
+        Rails.logger.debug "#{ token }"
+
         # 連携手順2. ユーザーを連携URLにリダイレクトする
         return {
           type: "template",
@@ -91,7 +96,7 @@ module Line
             actions: [{
                 type: "uri",
                 label: "アカウント連携ページ",
-                uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{ token["linkToken"] }"
+                uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{ token }"
             }]
           }
         }

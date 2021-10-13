@@ -13,8 +13,9 @@ module Line
 
       if @user
         user_id = current_user.id
-        puts user_id
-        puts @link_token
+        # TODO: デバッグ用、忘れず削除
+        Rails.logger.debug "user_id: #{ user_id }"
+        Rails.logger.debug "linkToken: #{ @link_token }"
 
         # nonce生成
         # { nonce: user_id }で保存（nonce用のカラムを追加？連携が完了したら削除する）
