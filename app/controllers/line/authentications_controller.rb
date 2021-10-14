@@ -1,11 +1,12 @@
 module Line
   class AuthenticationsController < Line::BaseController
     skip_before_action :validate_signature
+    before_action :token_params
 
     layout 'line/layouts/line_login'
 
     def link
-      @link_token = params[:linkToken]
+      puts @link_token
     end
 
     def create
@@ -16,6 +17,7 @@ module Line
         user_id = current_user.id
         # TODO: デバッグ用、忘れず削除
         Rails.logger.debug "user_id: #{ user_id }"
+        Rails.logger.debug "params[:linkToken]: #{ params[:linkToken] }"
         Rails.logger.debug "linkToken: #{ @link_token }"
 
         # nonce生成
@@ -30,5 +32,11 @@ module Line
         render :link
       end
     end
+
+    private
+
+      def token_params
+        @link_token = params[:linkToken]
+      end
   end
 end
