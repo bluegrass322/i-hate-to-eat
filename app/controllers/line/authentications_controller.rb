@@ -1,14 +1,15 @@
 module Line
   class AuthenticationsController < Line::BaseController
     skip_before_action :validate_signature
-    before_action :token_params
-    # before_action :logout_current_user
 
     layout 'line/layouts/line_login'
 
-    def link; end
+    def link
+      @link_token = params[:linkToken]
+    end
 
     def create
+      # 3. 自社サービスのユーザーIDを取得する
       @user = login(params[:email], params[:password])
 
       if @user
@@ -23,21 +24,11 @@ module Line
         # 成功したらアカウント連携イベントが帰ってくる
         # linebotコントローラーへ
 
-        redirect_to "https://i-hate-to-eat.herokuapp.com/register"
+        # redirect_to "https://i-hate-to-eat.herokuapp.com/register"
       else
         flash.now[:danger] = "ログイン失敗"
         render :link
       end
     end
-
-    private
-
-      # def logout_current_user
-      #   logout if logged_in?
-      # end
-
-      def token_params
-        @link_token = params[:linkToken]
-      end
   end
 end
