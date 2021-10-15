@@ -12,6 +12,7 @@
         <%= f.label :password, class: "line-login-form-label" %><br>
         <%= f.password_field :password, class: "line-login-form-text" %>
       </div>
+      <%= f.hidden_field :link_token, :value => @link_token %>
       <%= f.submit "login", class: "line-login-form-btn" %>
     <% end %>
   </div>
