@@ -19,6 +19,7 @@ module Line
         # 4. nonceを生成してユーザーをLINEプラットフォームにリダイレクトする
         nonce = SecureRandom.urlsafe_base64(16)
         session[:nonce] = { nonce => user_id }
+        Rails.logger.debug "Sessions nonce: #{ session[:nonce].keys[0] }"
 
         redirect_to "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}"
       else

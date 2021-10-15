@@ -98,27 +98,24 @@ module Line
             actions: [{
                 type: "uri",
                 label: "アカウント連携ページ",
-                uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{ parsed_response["linkToken"] }"
+                uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{parsed_response["linkToken"]}&openExternalBrowser=1 "
             }]
           }
         }
       end
 
       def complete_linking_account(event)
-        Rails.logger.debug "Res result: #{ event["link"]["result"] }"
-        Rails.logger.debug "Res source type: #{ event["source"]["type"] }"
-        
-        # アカウント連携イベントに含まれるnonceとセッションに保存したnonceが一致するか？
-        Rails.logger.debug "Res nonce: #{ event["link"]["nonce"] }"
         Rails.logger.debug "Sessions nonce: #{ session[:nonce].keys[0] }"
-        Rails.logger.debug "Boolean: #{ session[:nonce].keys[0] == event["link"]["nonce"] }"
-        # session[:nonce].keys[0] ==
+        Rails.logger.debug "Boolean: #{ session[:nonce].keys[0] == event.nonce }"
+
+        # アカウント連携イベントに含まれるnonceとセッションに保存したnonceが一致するか？
+        # session[:nonce].keys[0] == event.nonce
 
         # 同じLINEuserIDを持ったユーザーが既に存在しないか？
 
         # LINEのuserIDを該当のuserレコードに保存
         # user = User.find(session[:nonce].keys[0])
-        # user.line_user_id = 
+        # user.line_user_id = event["source"]["userId"]
         # user.save
 
         # 必ずセッションのnonceを削除！！！
