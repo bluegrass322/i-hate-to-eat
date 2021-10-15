@@ -1,29 +1,26 @@
 module Line
   class AuthenticationsController < Line::BaseController
+    layout 'line/layouts/line_login'
     skip_before_action :validate_signature
 
-    layout 'line/layouts/line_login'
-
     def link
+      # TODO: hidden_fieldを使う形では問題があるのでは？
       @link_token = params[:linkToken]
     end
 
     def create
       # 3. 自社サービスのユーザーIDを取得する
       user = login(params[:email], params[:password])
-      link_token = params[:link_token]
 
       if user
         user_id = current_user.id
+        link_token = params[:link_token]
 
-        # nonce生成
-        # { nonce: user_id }で保存（nonce用のカラムを追加？連携が完了したら削除する）
-        # lineプラットフォームにリダイレクト（linkToken + nonce)
-        # 成功したらアカウント連携イベントが帰ってくる
-        # linebotコントローラーへ
+        # 4. nonceを生成してユーザーをLINEプラットフォームにリダイレクトする
+        nonce = SecureRandom.urlsafe_base64(16)
+        session[:nonce] = { nonce => user_id }
 
-        # TODO: リダイレクト確認用に一時的に設置
-        redirect_to "https://i-hate-to-eat.herokuapp.com/register"
+        redirect_to "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}"
       else
         flash.now[:danger] = "ログイン失敗"
         render :link

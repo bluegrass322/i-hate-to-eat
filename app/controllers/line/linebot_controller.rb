@@ -10,8 +10,8 @@ module Line
       # 複数同時に送られてくる可能性のあるイベントたちを1つずつ処理
       events.each do |event|
         case event
-        # when Line::Bot::Event::AccountLink
-          # 連携処理
+        when Line::Bot::Event::AccountLink
+          complete_linking_account(event)
         when Line::Bot::Event::Follow
           message = reply_confirm_linking_account
         when Line::Bot::Event::Message
@@ -32,6 +32,8 @@ module Line
 
     private
 
+      # TODO: この1手間を挟むのをやめる、いきなりURL発行
+      # NOの場合メッセージを削除するよう依頼文？
       def reply_confirm_linking_account
         {
           type: "template",
@@ -98,6 +100,27 @@ module Line
             }]
           }
         }
+      end
+
+      def complete_linking_account(event)
+        Rails.logger.debug "Res result: #{ event.link["result"] }"
+        Rails.logger.debug "Res source type: #{ event.source["type"] }"
+        
+        # アカウント連携イベントに含まれるnonceとセッションに保存したnonceが一致するか？
+        Rails.logger.debug "Res nonce: #{ event.link["nonce"] }"
+        Rails.logger.debug "Sessions nonce: #{ session[:nonce].keys[0] }"
+        Rails.logger.debug "Boolean: #{ session[:nonce].keys[0] == event.link["nonce"] }"
+        # session[:nonce].keys[0] ==
+
+        # LINEのuserIDを該当のuserレコードに保存
+        # user = User.find(session[:nonce].keys[0])
+        # user.line_user_id = 
+        # user.save
+
+        # 必ずセッションのnonceを削除！！！
+        session.delete(:nonce)
+
+        # 確認としてuser.nameをメッセージで返しておくか？
       end
   end
 end
