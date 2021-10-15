@@ -12,6 +12,7 @@ module Line
         case event
         when Line::Bot::Event::AccountLink
           complete_linking_account(event)
+          message = "アカウント連携イベントを受け取った"
         when Line::Bot::Event::Follow
           message = reply_confirm_linking_account
         when Line::Bot::Event::Message
@@ -104,12 +105,16 @@ module Line
 
       def complete_linking_account(event)
         Rails.logger.debug "Res result: #{ event.link["result"] }"
+        Rails.logger.debug "Res result: #{ event["link"]["result"] }"
         Rails.logger.debug "Res source type: #{ event.source["type"] }"
+        Rails.logger.debug "Res source type: #{ event["source"]["type"] }"
         
         # アカウント連携イベントに含まれるnonceとセッションに保存したnonceが一致するか？
         Rails.logger.debug "Res nonce: #{ event.link["nonce"] }"
+        Rails.logger.debug "Res nonce: #{ event["link"]["nonce"] }"
         Rails.logger.debug "Sessions nonce: #{ session[:nonce].keys[0] }"
         Rails.logger.debug "Boolean: #{ session[:nonce].keys[0] == event.link["nonce"] }"
+        Rails.logger.debug "Boolean: #{ session[:nonce].keys[0] == event["link"]["nonce"] }"
         # session[:nonce].keys[0] ==
 
         # LINEのuserIDを該当のuserレコードに保存
