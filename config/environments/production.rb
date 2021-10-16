@@ -117,7 +117,7 @@ Rails.application.configure do
 
   # TTLは当面2週間
   config.session_store :redis_store,
-    servers: ENV['REDIS_URL'],
-    expire_after: 14.days,
-    key: "_i_hate_to_eat_session"
+                       servers: ENV['REDIS_URL'],
+                       expire_after: 14.days,
+                       key: "_i_hate_to_eat_session"
 end
