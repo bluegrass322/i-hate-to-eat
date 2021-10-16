@@ -114,4 +114,10 @@ Rails.application.configure do
   # config.active_record.database_selector = { delay: 2.seconds }
   # config.active_record.database_resolver = ActiveRecord::Middleware::DatabaseSelector::Resolver
   # config.active_record.database_resolver_context = ActiveRecord::Middleware::DatabaseSelector::Resolver::Session
+
+  # TTLは当面2週間
+  config.session_store :redis_store,
+    servers: ENV['REDIS_URL'],
+    expire_after: 14.days,
+    key: "_i_hate_to_eat_session"
 end
