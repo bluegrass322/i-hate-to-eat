@@ -141,5 +141,3 @@ yarn-debug.log*
 /config/database.yml
 
 Procfile.dev
-
-dump.rdb

@@ -32,12 +32,6 @@ Rails.application.configure do
     config.cache_store = :null_store
   end
 
-  # 開発環境ではTTLは長く取っておく
-  config.session_store :redis_store,
-                       servers: "redis://localhost:6379/0/session",
-                       expire_after: 30.days,
-                       key: "_i_hate_to_eat_session"
-
   # Store uploaded files on the local file system (see config/storage.yml for options).
   config.active_storage.service = :local
 

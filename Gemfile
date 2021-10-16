@@ -38,9 +38,6 @@ gem 'line-bot-api'
 # Serializer
 gem 'fast_jsonapi'
 
-# Session storage
-gem 'redis-actionpack'
-
 # UI/UX
 gem 'rails-i18n', '~> 6.0.0'
 gem 'enum_help'
