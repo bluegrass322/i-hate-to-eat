@@ -89,6 +89,7 @@ module Line
         parsed_response = JSON.parse(response)
 
         # 連携手順2. ユーザーを連携URLにリダイレクトする
+        # TODO: .queryメソッドを用いてulrにパラメーターを含めるよう修正
         return {
           type: "template",
           altText: "アカウント連携用ページ",
@@ -105,6 +106,7 @@ module Line
       end
 
       def complete_linking_account(event)
+        Rails.logger.debug "Event nonce: #{ event.nonce }"
         Rails.logger.debug "Sessions nonce: #{ session[:nonce].keys[0] }"
         Rails.logger.debug "Boolean: #{ session[:nonce].keys[0] == event.nonce }"
 
@@ -120,6 +122,8 @@ module Line
 
         # 必ずセッションのnonceを削除！！！
         session.delete(:nonce)
+        Rails.logger.debug "Session delete..."
+        Rails.logger.debug "Sessions nonce: #{ session[:nonce].keys[0] }"
 
         # 確認としてuser.nameをメッセージで返しておくか？
       end
