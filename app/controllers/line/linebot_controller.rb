@@ -99,7 +99,7 @@ module Line
             actions: [{
                 type: "uri",
                 label: "アカウント連携ページ",
-                uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{parsed_response["linkToken"]}&openExternalBrowser=1"
+                uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{parsed_response["linkToken"]}"
             }]
           }
         }
@@ -107,6 +107,8 @@ module Line
 
       def complete_linking_account(event)
         Rails.logger.debug "Event nonce: #{ event.nonce }"
+
+        # nonceで該当するセッションを取得する
         Rails.logger.debug "Sessions nonce: #{ session[:nonce].keys[0] }"
         Rails.logger.debug "Boolean: #{ session[:nonce].keys[0] == event.nonce }"
 
