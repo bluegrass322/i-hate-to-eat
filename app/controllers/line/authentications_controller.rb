@@ -10,16 +10,15 @@ module Line
 
     def create
       # 3. 自社サービスのユーザーIDを取得する
-      user = login(params[:email], params[:password])
+      login_user = login(params[:email], params[:password])
 
-      if user
-        user_id = current_user.id
+      if login_user
         link_token = params[:link_token]
 
         # 4. nonceを生成してユーザーをLINEプラットフォームにリダイレクトする
         nonce = SecureRandom.urlsafe_base64(16)
-        session[:nonce] = { nonce => user_id }
-        Rails.logger.debug "Sessions nonce: #{ session[:nonce].keys[0] }"
+        login_user.update!(line_nonce: nonce)
+        Rails.logger.debug "Users nonce: #{ login_user.line_nonce }"
 
         redirect_to "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}"
       else

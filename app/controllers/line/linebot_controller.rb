@@ -12,8 +12,13 @@ module Line
         case event
         when Line::Bot::Event::AccountLink
           Rails.logger.debug "アカウント連携イベントを受け取った"
-          complete_linking_account(event)
-          message = "アカウント連携イベントを受け取った"
+          if  event.result == "ok"
+            Rails.logger.debug "resultがokだった"
+            complete_linking_account(event)
+          elseif event.result == "failed"
+            Rails.logger.debug "resultがfailedだった"
+          end
+          message = "アカウント連携イベントが完了した"
         when Line::Bot::Event::Follow
           message = reply_confirm_linking_account
         when Line::Bot::Event::Message
@@ -106,28 +111,32 @@ module Line
       end
 
       def complete_linking_account(event)
-        Rails.logger.debug "Event nonce: #{ event.nonce }"
+        nonce = event.nonce
+        Rails.logger.debug "Event nonce: #{ nonce }"
 
-        # nonceで該当するセッションを取得する
-        Rails.logger.debug "Sessions nonce: #{ session[:nonce].keys[0] }"
-        Rails.logger.debug "Boolean: #{ session[:nonce].keys[0] == event.nonce }"
+        # nonceで該当するユーザーを取得する
+        linking_user = User.find_by(line_nonce: nonce)
+        Rails.logger.debug "Users nonce: #{ linking_user.line_nonce }"
+        Rails.logger.debug "Boolean: #{ linking_user.line_nonce == nonce }"
 
         # アカウント連携イベントに含まれるnonceとセッションに保存したnonceが一致するか？
         # session[:nonce].keys[0] == event.nonce
 
         # 同じLINEuserIDを持ったユーザーが既に存在しないか？
+        # unless User.where(line_user_id: )
 
         # LINEのuserIDを該当のuserレコードに保存
         # user = User.find(session[:nonce].keys[0])
         # user.line_user_id = event["source"]["userId"]
         # user.save
 
-        # 必ずセッションのnonceを削除！！！
-        session.delete(:nonce)
-        Rails.logger.debug "Session delete..."
-        Rails.logger.debug "Sessions nonce: #{ session[:nonce].keys[0] }"
+        # 必ずnonceを削除！！！
+        linking_user.update!(line_nonce: nil)
+        Rails.logger.debug "Users nonce delete..."
+        Rails.logger.debug "Users nonce: #{ linking_user.line_nonce }"
 
         # 確認としてuser.nameをメッセージで返しておくか？
+        # else event.result == failed
       end
   end
 end
