@@ -32,6 +32,10 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # Authentication
 gem 'sorcery'
 
+# Active record encryption
+gem 'lockbox'
+gem 'blind_index'
+
 # LINE Bot
 gem 'line-bot-api'
 

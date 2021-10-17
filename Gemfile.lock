@@ -61,6 +61,7 @@ GEM
     annotate (3.1.1)
       activerecord (>= 3.2, < 7.0)
       rake (>= 10.4, < 14.0)
+    argon2-kdf (0.1.6)
     ast (2.4.2)
     bcrypt (3.1.16)
     better_errors (2.9.1)
@@ -70,6 +71,9 @@ GEM
     bindex (0.8.1)
     binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
+    blind_index (2.2.0)
+      activesupport (>= 5)
+      argon2-kdf (>= 0.1.1)
     bootsnap (1.9.1)
       msgpack (~> 1.0)
     brakeman (5.1.1)
@@ -149,6 +153,7 @@ GEM
     listen (3.7.0)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
+    lockbox (0.6.6)
     loofah (2.12.0)
       crass (~> 1.0.2)
       nokogiri (>= 1.5.9)
@@ -333,6 +338,7 @@ DEPENDENCIES
   annotate
   better_errors
   binding_of_caller
+  blind_index
   bootsnap (>= 1.4.2)
   brakeman
   bundler-audit
@@ -347,6 +353,7 @@ DEPENDENCIES
   kaminari
   line-bot-api
   listen (~> 3.2)
+  lockbox
   pg (>= 0.18, < 2.0)
   pry
   pry-byebug
