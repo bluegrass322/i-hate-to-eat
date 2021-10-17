@@ -120,7 +120,6 @@ module Line
 
           # nonceは必ず削除
           linking_user.update!(line_user_id: line_id, line_nonce: nil)
-          Rails.logger.debug "User line id: #{ linking_user.line_id.present? }"
           Rails.logger.debug "User line nonce: #{ linking_user.line_nonce }"
 
           # push_linking_complete_message(linking_user.line_user_id)
