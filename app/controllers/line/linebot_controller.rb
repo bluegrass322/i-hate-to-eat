@@ -11,11 +11,10 @@ module Line
       events.each do |event|
         case event
         when Line::Bot::Event::AccountLink
-          Rails.logger.debug "アカウント連携イベントを受け取った"
           message = if event.result == "ok"
                       complete_linking_account(event)
                     else
-                      "resultがfailedだった"
+                      "アカウントの連携に失敗しました"
                     end
         when Line::Bot::Event::Follow
           message = reply_confirm_linking_account
@@ -109,33 +108,36 @@ module Line
       end
 
       def complete_linking_account(event)
+        # 5. アカウントを連携する
         nonce = event.nonce
-        Rails.logger.debug "Event nonce: #{ nonce }"
-        Rails.logger.debug "Event nonce class: #{ nonce.class }"
-
-        # nonceで該当するユーザーを取得する
         linking_user = User.find_by(line_nonce: nonce.to_s)
-        Rails.logger.debug "Users nonce: #{ linking_user.line_nonce }"
-        Rails.logger.debug "Boolean: #{ linking_user.line_nonce == nonce.to_s }"
 
-        # アカウント連携イベントに含まれるnonceとセッションに保存したnonceが一致するか？
-        # session[:nonce].keys[0] == event.nonce
+        if linking_user
+          line_id = event["source"]["userId"]
+          Rails.logger.debug "Event line id: #{ line_id.present? }"
 
-        # 同じLINEuserIDを持ったユーザーが既に存在しないか？
-        # unless User.where(line_user_id: )
+          return "すでに同じLINE-IDが登録されています" if User.where(line_user_id: line_id)
 
-        # LINEのuserIDを該当のuserレコードに保存
-        # user = User.find(session[:nonce].keys[0])
-        # user.line_user_id = event["source"]["userId"]
-        # user.save
+          # nonceは必ず削除
+          linking_user.update!(line_user_id: line_id, line_nonce: nil)
+          Rails.logger.debug "User line id: #{ linking_user.line_id.present? }"
+          Rails.logger.debug "User line nonce: #{ linking_user.line_nonce }"
 
-        # 必ずnonceを削除！！！
-        linking_user.update!(line_nonce: "finished")
-        Rails.logger.debug "Users nonce delete..."
-        Rails.logger.debug "Users nonce: #{ linking_user.line_nonce }"
+          push_linking_complete_message(linking_user.line_user_id)
+          "#{ linking_user.name }さんのアカウント連携が完了しました"
+        else
+          "対象のユーザーが見つかりませんでした"
+        end
+      end
 
-        # 確認としてuser.nameをメッセージで返しておくか？
-        return "#{ linking_user.name }のアカウント連携イベントが完了した"
+      def push_linking_complete_message(user_id)
+        message = {
+          type: 'text',
+          text: '連携に成功しました'
+        }
+
+        response = client.push_message("#{ user_id }", message)
+        p response
       end
   end
 end
