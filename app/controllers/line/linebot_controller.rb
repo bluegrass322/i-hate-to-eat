@@ -123,7 +123,7 @@ module Line
           Rails.logger.debug "User line id: #{ linking_user.line_id.present? }"
           Rails.logger.debug "User line nonce: #{ linking_user.line_nonce }"
 
-          push_linking_complete_message(linking_user.line_user_id)
+          # push_linking_complete_message(linking_user.line_user_id)
           "#{ linking_user.name }さんのアカウント連携が完了しました"
         else
           "対象のユーザーが見つかりませんでした"
