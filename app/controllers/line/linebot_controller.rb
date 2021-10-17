@@ -118,8 +118,11 @@ module Line
           line_id = event["source"]["userId"]
           linking_user.update!(line_user_id: line_id, line_nonce: nil)
 
+          Rails.logger.debug "Linked user name: #{ linking_user.name }"
+
           # push_linking_complete_message(linking_user.line_user_id)
-          return "#{linking_user.name}さんのアカウント連携が完了しました"
+          Rails.logger.debug "アカウント連携が完了しました"
+          return "アカウント連携が完了しました"
         else
           return "対象のユーザーが見つかりませんでした"
         end
