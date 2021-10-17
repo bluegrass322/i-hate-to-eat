@@ -6,6 +6,28 @@ namespace :scheduler do
     puts "Scheduler test is works."
   end
 
+  desc "LINEプッシュメッセージ送信テスト"
+  task push_line_message_test: :environment do
+    require 'line/bot'
+
+    User.where.not(line_user_id: nil).find_each do |user|
+      to_name = user.name
+      to_id = user.line_user_id
+      bmr = user.bmr
+
+      message = {
+        type: "text",
+        text: "#{to_name}さんのBMR: #{bmr}kcal"
+      }
+      client = Line::Bot::Client.new { |config|
+          config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
+          config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
+      }
+      response = client.push_message(to_id, message)
+      p response
+    end
+  end
+
   desc "期限切れのsuggestionを削除"
   task destroy_expied_suggestions: :environment do
     User.find_each do |user|
