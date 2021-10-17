@@ -12,13 +12,11 @@ module Line
         case event
         when Line::Bot::Event::AccountLink
           Rails.logger.debug "アカウント連携イベントを受け取った"
-          if  event.result == "ok"
-            Rails.logger.debug "resultがokだった"
-            complete_linking_account(event)
-          elseif event.result == "failed"
-            Rails.logger.debug "resultがfailedだった"
-          end
-          message = "アカウント連携イベントが完了した"
+          message = if event.result == "ok"
+                      complete_linking_account(event)
+                    else
+                      "resultがfailedだった"
+                    end
         when Line::Bot::Event::Follow
           message = reply_confirm_linking_account
         when Line::Bot::Event::Message
@@ -137,7 +135,7 @@ module Line
         Rails.logger.debug "Users nonce: #{ linking_user.line_nonce }"
 
         # 確認としてuser.nameをメッセージで返しておくか？
-        # else event.result == failed
+        return "#{ linking_user.name }のアカウント連携イベントが完了した"
       end
   end
 end
