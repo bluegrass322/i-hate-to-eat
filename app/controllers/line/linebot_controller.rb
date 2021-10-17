@@ -16,7 +16,7 @@ module Line
                     else
                       "アカウントの連携に失敗しました"
                     end
-          Rails.logger.debug "Reply complete message"
+          Rails.logger.debug "Reply: #{message}"
         when Line::Bot::Event::Follow
           message = reply_confirm_linking_account
         when Line::Bot::Event::Message
@@ -29,6 +29,7 @@ module Line
           # 連携解除処理
         end
         client.reply_message(event['replyToken'], message)
+        Rails.logger.debug "Complete linked message"
       end
 
       # 200status は必ず返さなければならない
@@ -120,8 +121,6 @@ module Line
           linking_user.update!(line_user_id: line_id, line_nonce: nil)
 
           push_linking_complete_message(linking_user)
-          Rails.logger.debug "Push welcome message"
-
           return "アカウントの連携が完了しました"
         else
           return "対象のユーザーが見つかりませんでした"
