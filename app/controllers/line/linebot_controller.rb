@@ -16,6 +16,7 @@ module Line
                     else
                       "アカウントの連携に失敗しました"
                     end
+          Rails.logger.debug "Reply complete message"
         when Line::Bot::Event::Follow
           message = reply_confirm_linking_account
         when Line::Bot::Event::Message
@@ -118,23 +119,28 @@ module Line
           line_id = event["source"]["userId"]
           linking_user.update!(line_user_id: line_id, line_nonce: nil)
 
-          Rails.logger.debug "Linked user name: #{ linking_user.name }"
+          push_linking_complete_message(linking_user)
+          Rails.logger.debug "Push welcome message"
 
-          # push_linking_complete_message(linking_user.line_user_id)
-          Rails.logger.debug "アカウント連携が完了しました"
-          return "アカウント連携が完了しました"
+          return "アカウントの連携が完了しました"
         else
           return "対象のユーザーが見つかりませんでした"
         end
       end
 
-      def push_linking_complete_message(user_id)
-        message = {
-          type: 'text',
-          text: '連携に成功しました'
-        }
+      def push_linking_complete_message(user)
+        to_name = user.name
+        to_id = user.line_user_id
 
-        response = client.push_message("#{ user_id }", message)
+        message = {
+          type: "text",
+          text: "ようこそ、#{to_name}さん"
+        }
+        client = Line::Bot::Client.new { |config|
+            config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
+            config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
+        }
+        response = client.push_message(to_id, message)
         p response
       end
   end
