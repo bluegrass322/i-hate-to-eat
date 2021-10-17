@@ -113,10 +113,10 @@ module Line
         linking_user = User.find_by(line_nonce: nonce)
 
         if linking_user
-          line_id = event["source"]["userId"].to_s
+          line_id = event["source"]["userId"]
           Rails.logger.debug "Event line id: #{ line_id.present? }"
 
-          return "すでに同じLINE-IDが登録されています" if User.where(line_user_id: line_id)
+          # return "すでに同じLINE-IDが登録されています" if User.where(line_user_id: line_id)
 
           # nonceは必ず削除
           linking_user.update!(line_user_id: line_id, line_nonce: nil)
