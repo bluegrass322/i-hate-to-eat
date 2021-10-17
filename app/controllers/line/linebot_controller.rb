@@ -109,23 +109,19 @@ module Line
 
       def complete_linking_account(event)
         # 5. アカウントを連携する
+        # return "すでに同じLINE-IDが登録されています" if User.where(line_user_id: line_id)
         nonce = event.nonce.to_s
         linking_user = User.find_by(line_nonce: nonce)
 
         if linking_user
-          line_id = event["source"]["userId"]
-          Rails.logger.debug "Event line id: #{ line_id.present? }"
-
-          # return "すでに同じLINE-IDが登録されています" if User.where(line_user_id: line_id)
-
           # nonceは必ず削除
+          line_id = event["source"]["userId"]
           linking_user.update!(line_user_id: line_id, line_nonce: nil)
-          Rails.logger.debug "User line nonce: #{ linking_user.line_nonce }"
 
           # push_linking_complete_message(linking_user.line_user_id)
-          "#{ linking_user.name }さんのアカウント連携が完了しました"
+          return "#{linking_user.name}さんのアカウント連携が完了しました"
         else
-          "対象のユーザーが見つかりませんでした"
+          return "対象のユーザーが見つかりませんでした"
         end
       end
 
