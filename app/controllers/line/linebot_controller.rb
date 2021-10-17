@@ -109,11 +109,11 @@ module Line
 
       def complete_linking_account(event)
         # 5. アカウントを連携する
-        nonce = event.nonce
-        linking_user = User.find_by(line_nonce: nonce.to_s)
+        nonce = event.nonce.to_s
+        linking_user = User.find_by(line_nonce: nonce)
 
         if linking_user
-          line_id = event["source"]["userId"]
+          line_id = event["source"]["userId"].to_s
           Rails.logger.debug "Event line id: #{ line_id.present? }"
 
           return "すでに同じLINE-IDが登録されています" if User.where(line_user_id: line_id)
