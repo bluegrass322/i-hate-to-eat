@@ -39,7 +39,7 @@ class User < ApplicationRecord
     end
   end
 
-  validates :line_user_id, uniqueness: { case_sensitive: true }
+  validates :line_user_id, uniqueness: { case_sensitive: true, allow_nil: true }
   validates :birth, birth: true
   validates :password, length: { minimum: 5 }, if: :new_or_changes_password
   validates :password, confirmation: true, if: :new_or_changes_password
