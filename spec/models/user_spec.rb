@@ -17,6 +17,9 @@ end
 #  email                       :string           default("address@example.com"), not null
 #  gender                      :integer          default("female"), not null
 #  height                      :integer          default(0), not null
+#  line_nonce                  :string
+#  line_user_id_bidx           :string
+#  line_user_id_ciphertext     :text
 #  name                        :string           default("noname"), not null
 #  percentage_carbohydrate     :float            default(0.6), not null
 #  percentage_fat              :float            default(0.2), not null
@@ -32,6 +35,7 @@ end
 #
 #  index_users_on_dietary_reference_intake_id  (dietary_reference_intake_id)
 #  index_users_on_email                        (email) UNIQUE
+#  index_users_on_line_user_id_bidx            (line_user_id_bidx) UNIQUE
 #
 # Foreign Keys
 #
