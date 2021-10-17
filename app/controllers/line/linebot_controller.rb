@@ -113,11 +113,12 @@ module Line
       def complete_linking_account(event)
         nonce = event.nonce
         Rails.logger.debug "Event nonce: #{ nonce }"
+        Rails.logger.debug "Event nonce class: #{ nonce.class }"
 
         # nonceで該当するユーザーを取得する
-        linking_user = User.find_by(line_nonce: nonce)
+        linking_user = User.find_by(line_nonce: nonce.to_s)
         Rails.logger.debug "Users nonce: #{ linking_user.line_nonce }"
-        Rails.logger.debug "Boolean: #{ linking_user.line_nonce == nonce }"
+        Rails.logger.debug "Boolean: #{ linking_user.line_nonce == nonce.to_s }"
 
         # アカウント連携イベントに含まれるnonceとセッションに保存したnonceが一致するか？
         # session[:nonce].keys[0] == event.nonce
@@ -131,7 +132,7 @@ module Line
         # user.save
 
         # 必ずnonceを削除！！！
-        linking_user.update!(line_nonce: nil)
+        linking_user.update!(line_nonce: "finished")
         Rails.logger.debug "Users nonce delete..."
         Rails.logger.debug "Users nonce: #{ linking_user.line_nonce }"
 
