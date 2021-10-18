@@ -5,6 +5,7 @@ module Api
     class BaseController < ApplicationController
       before_action :require_login
 
+      # TODO: エラーハンドリングをどこに置く？
       rescue_from StandardError, with: :render500
       rescue_from ActiveRecord::RecordNotFound, with: :render404
 

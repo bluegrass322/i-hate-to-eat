@@ -13,6 +13,7 @@ AllCops:
     - 'node_modules/**/*'
     - 'Gemfile'
     - 'Rakefile'
+    - 'app/controllers/line/**/*'
 
 Rails:
   Enabled: true

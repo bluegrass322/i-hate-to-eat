@@ -6,7 +6,7 @@ ruby '2.7.4'
 gem 'rails', '~> 6.0.4.1'
 
 # App server
-gem 'puma', '~> 4.1'
+gem 'puma', '4.3.9'
 
 # Database
 gem 'pg', '>= 0.18', '< 2.0'
@@ -19,8 +19,7 @@ gem 'webpacker', '5.4.3'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
-# Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -32,6 +31,13 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 # Authentication
 gem 'sorcery'
+
+# Active record encryption
+gem 'lockbox'
+gem 'blind_index'
+
+# LINE Bot
+gem 'line-bot-api'
 
 # Serializer
 gem 'fast_jsonapi'

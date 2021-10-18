@@ -8,6 +8,10 @@ class User < ApplicationRecord
   has_many :suggestions, dependent: :destroy
   has_many :suggested_foods, through: :suggestions, source: :food
 
+  # Encryption
+  encrypts :line_user_id
+  blind_index :line_user_id
+
   # Enums
   enum gender: { female: 0, male: 10 }
   enum role: { general: 0, admin: 10 }
@@ -35,6 +39,7 @@ class User < ApplicationRecord
     end
   end
 
+  validates :line_user_id, uniqueness: { case_sensitive: true, allow_nil: true }
   validates :birth, birth: true
   validates :password, length: { minimum: 5 }, if: :new_or_changes_password
   validates :password, confirmation: true, if: :new_or_changes_password
@@ -113,6 +118,9 @@ end
 #  email                       :string           default("address@example.com"), not null
 #  gender                      :integer          default("female"), not null
 #  height                      :integer          default(0), not null
+#  line_nonce                  :string
+#  line_user_id_bidx           :string
+#  line_user_id_ciphertext     :text
 #  name                        :string           default("noname"), not null
 #  percentage_carbohydrate     :float            default(0.6), not null
 #  percentage_fat              :float            default(0.2), not null
@@ -128,6 +136,7 @@ end
 #
 #  index_users_on_dietary_reference_intake_id  (dietary_reference_intake_id)
 #  index_users_on_email                        (email) UNIQUE
+#  index_users_on_line_user_id_bidx            (line_user_id_bidx) UNIQUE
 #
 # Foreign Keys
 #
