@@ -17,7 +17,6 @@ module Line
                       set_reply_text("アカウントの連携に失敗しました")
                     end
         when Line::Bot::Event::Follow
-          Rails.logger.debug "イベントを受け取った"
           message = reply_url_for_linking(event["source"]["userId"])
         when Line::Bot::Event::Message
           case event.type
@@ -97,20 +96,13 @@ module Line
 
       # アカウント連携用URIの生成
       def reply_url_for_linking(line_id)
-        Rails.logger.debug "メソッドに突入"
         # 連携手順1. 連携トークンを発行する
         response = client.create_link_token(line_id).body
-        Rails.logger.debug "Response: #{response}"
-        Rails.logger.debug "Response token: #{response["linkToken"]}"
-
         parsed_response = JSON.parse(response)
-        Rails.logger.debug "Parsed response: #{parsed_response}"
-        Rails.logger.debug "Parsed response token: #{parsed_response["linkToken"]}"
 
         # 連携手順2. ユーザーを連携URLにリダイレクトする
         uri = URI("https://i-hate-to-eat.herokuapp.com/line/link")
-        uri.query = URI.encode_www_form({ linkToken: "#{parsed_response["linkToken"]}" })
-        Rails.logger.debug "LINK URI: #{uri}"
+        uri.query = URI.encode_www_form({ linkToken: parsed_response["linkToken"] })
 
         return {
           type: "template",
