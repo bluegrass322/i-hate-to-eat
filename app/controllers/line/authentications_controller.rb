@@ -9,13 +9,13 @@ module Line
     end
 
     def create
-      # 3. 自社サービスのユーザーIDを取得する
+      # 連携手順3. 自社サービスのユーザーIDを取得する
       login_user = login(params[:email], params[:password])
 
       if login_user
         link_token = params[:link_token]
 
-        # 4. nonceを生成してユーザーをLINEプラットフォームにリダイレクトする
+        # 連携手順4. nonceを生成してユーザーをLINEプラットフォームにリダイレクトする
         nonce = SecureRandom.urlsafe_base64(16)
         login_user.update!(line_nonce: nonce)
 

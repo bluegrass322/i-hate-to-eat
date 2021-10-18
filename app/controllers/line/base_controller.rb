@@ -19,6 +19,7 @@ module Line
 
       signature = request.env['HTTP_X_LINE_SIGNATURE']
       unless client.validate_signature(@body, signature)
+        # TODO: エラーの出し方を修正
         error 400 do 'Bad Request' end
       end
     end
