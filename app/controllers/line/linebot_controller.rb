@@ -85,10 +85,6 @@ module Line
         case event.message["text"]
         when "delete linking"
           disconnecting_accounts(event["source"]["userId"])
-        when "hi"
-          set_reply_text("Good morning!")
-        when "bye"
-          set_reply_text("Good bye!")
         else
           # 所定の文言以外にはエラーメッセージを返す
           set_reply_text("ちょっと何言ってるかわからない")
@@ -103,11 +99,17 @@ module Line
         # 連携手順1. 連携トークンを発行する
         client = set_client
         response = client.create_link_token(line_id).body
+        Rails.logger.debug "Response: #{response}"
+        Rails.logger.debug "Response token: #{response["linkToken"]}"
+
         parsed_response = JSON.parse(response)
+        Rails.logger.debug "Parsed response: #{parsed_response}"
+        Rails.logger.debug "Parsed response token: #{parsed_response["linkToken"]}"
 
         # 連携手順2. ユーザーを連携URLにリダイレクトする
         uri = URI("https://i-hate-to-eat.herokuapp.com/line/link")
-        uri.query = URI.encode_www_form({ linkToken: parsed_response["linkToken"] })
+        uri.query = URI.encode_www_form({ linkToken: "#{parsed_response["linkToken"]}" })
+        Rails.logger.debug "LINK URI: #{uri}"
 
         return {
           type: "template",
@@ -118,7 +120,7 @@ module Line
             actions: [{
                 type: "uri",
                 label: "アカウント連携ページ",
-                uri: "#{ uri }"
+                uri: uri
             }]
           }
         }
