@@ -74,7 +74,7 @@ module Line
           set_reply_text("引き続きLINE通知以外の機能をご利用ください")
         when "delete linking"
           disconnecting_accounts(event["source"]["userId"])
-          set_reply_text("アカウントの連携を解除しました")
+          set_reply_text("LINEアカウントの連携を解除しました")
         when "hi"
           set_reply_text("Good morning!")
         when "bye"
@@ -115,12 +115,12 @@ module Line
         }
       end
 
-      def complete_linking_account(event)
+      def complete_linking_account(linkevent)
         # 5. アカウントを連携する
-        line_id = event["source"]["userId"]
-        return set_reply_text("すでに同じLINE-IDが登録されています") if User.where(line_user_id: line_id)
+        line_id = linkevent["source"]["userId"]
+        return set_reply_text("すでに同じLINE-IDが登録されています") if User.where(line_user_id: line_id).present?
 
-        nonce = event.nonce.to_s
+        nonce = linkevent.nonce.to_s
         linking_user = User.find_by(line_nonce: nonce)
 
         if linking_user
