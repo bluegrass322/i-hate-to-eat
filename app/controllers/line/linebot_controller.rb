@@ -37,8 +37,7 @@ module Line
     private
 
       def disconnecting_accounts(line_id)
-        Rails.logger.debug "ID class: #{line_id.class}"
-        target_user = User.where(line_user_id: line_id.to_s)
+        target_user = User.where(line_user_id: line_id).to_a
         Rails.logger.debug "Target: #{target_user}"
 
         if target_user.present?
