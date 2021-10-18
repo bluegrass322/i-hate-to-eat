@@ -39,8 +39,17 @@ module Line
       def disconnecting_accounts(line_id)
         target_user = User.where(line_user_id: line_id)
         Rails.logger.debug "Target: #{target_user}"
-        target_uesr.each { |u| u.update!(line_user_id: nil) }
-        Rails.logger.debug "Target ID: #{target_user.line_user_id.present?}"
+        target_uesr.each do |u|
+          Rails.logger.debug "Target user: #{u}"
+        end
+
+        if target_user.present?
+          target_uesr.each { |u| u.update!(line_user_id: nil) }
+          Rails.logger.debug "Target ID: #{target_user.line_user_id}"
+          set_reply_text("LINEアカウントの連携を解除しました")
+        else
+          set_reply_text("ユーザーの取得に失敗しました")
+        end
       end
 
       # TODO: この1手間を挟むのをやめる、いきなりURL発行
@@ -76,7 +85,6 @@ module Line
           set_reply_text("引き続きLINE通知以外の機能をご利用ください")
         when "delete linking"
           disconnecting_accounts(event["source"]["userId"])
-          set_reply_text("LINEアカウントの連携を解除しました")
         when "hi"
           set_reply_text("Good morning!")
         when "bye"
