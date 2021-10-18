@@ -37,11 +37,13 @@ module Line
     private
 
       def disconnecting_accounts(line_id)
-        target_user = User.where(line_user_id: line_id).to_a
+        target_user = User.where(line_user_id: line_id)
         Rails.logger.debug "Target: #{target_user}"
 
         if target_user.present?
-          target_uesr.each { |u| u.update!(line_user_id: nil) }
+          Rails.logger.debug "if節に入った"
+          target_user.each { |u| u.update!(line_user_id: nil) }
+
           Rails.logger.debug "Target ID: #{target_user.line_user_id}"
           set_reply_text("LINEアカウントの連携を解除しました")
         else
