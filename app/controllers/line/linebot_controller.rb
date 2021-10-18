@@ -38,7 +38,9 @@ module Line
 
       def disconnecting_accounts(line_id)
         target_user = User.where(line_user_id: line_id)
+        Rails.logger.debug "Target: #{target_user}"
         target_uesr.each { |u| u.update!(line_user_id: nil) }
+        Rails.logger.debug "Target ID: #{target_user.line_user_id.present?}"
       end
 
       # TODO: この1手間を挟むのをやめる、いきなりURL発行
