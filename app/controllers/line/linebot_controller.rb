@@ -37,11 +37,9 @@ module Line
     private
 
       def disconnecting_accounts(line_id)
-        target_user = User.where(line_user_id: line_id)
+        Rails.logger.debug "ID class: #{line_id.class}"
+        target_user = User.where(line_user_id: line_id.to_s)
         Rails.logger.debug "Target: #{target_user}"
-        target_uesr.each do |u|
-          Rails.logger.debug "Target user: #{u}"
-        end
 
         if target_user.present?
           target_uesr.each { |u| u.update!(line_user_id: nil) }
