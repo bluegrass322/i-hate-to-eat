@@ -4,6 +4,8 @@ module Line
     protect_from_forgery except: :callback
 
     def callback
+      client ||= set_client
+
       # 送られてきたデータをrubyが扱いやすいよう変換
       events = client.parse_events_from(@body)
 
@@ -73,10 +75,8 @@ module Line
           type: "text",
           text: "ようこそ、#{to_name}さん"
         }
-        client = Line::Bot::Client.new do |config|
-          config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
-          config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
-        end
+
+        client = set_client
         response = client.push_message(to_id, message)
         p response
       end
@@ -130,10 +130,7 @@ module Line
 
       def set_url_for_linking(line_id)
         # 連携手順1. 連携トークンを発行する
-        client = Line::Bot::Client.new{ |config|
-          config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
-          config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
-        }
+        client = set_client
         response = client.create_link_token(line_id).body
         parsed_response = JSON.parse(response)
 
