@@ -14,9 +14,8 @@ module Line
           message = if event.result == "ok"
                       complete_linking_account(event)
                     else
-                      "アカウントの連携に失敗しました"
+                      set_reply_text("アカウントの連携に失敗しました")
                     end
-          Rails.logger.debug "Reply: #{message}"
         when Line::Bot::Event::Follow
           message = reply_confirm_linking_account
         when Line::Bot::Event::Message
@@ -29,7 +28,6 @@ module Line
           # 連携解除処理
         end
         client.reply_message(event['replyToken'], message)
-        Rails.logger.debug "Complete linked message"
       end
 
       # 200status は必ず返さなければならない
@@ -37,6 +35,11 @@ module Line
     end
 
     private
+
+      def disconnecting_accounts(line_id)
+        target_user = User.where(line_user_id: line_id)
+        target_uesr.each(&:update!(line_user_id: nil))
+      end
 
       # TODO: この1手間を挟むのをやめる、いきなりURL発行
       # NOの場合メッセージを削除するよう依頼文？
@@ -69,6 +72,9 @@ module Line
           set_url_for_linking(event["source"]["userId"])
         when "don't linking"
           set_reply_text("引き続きLINE通知以外の機能をご利用ください")
+        when "delete linking"
+          disconnecting_accounts(event["source"]["userId"])
+          set_reply_text("アカウントの連携を解除しました")
         when "hi"
           set_reply_text("Good morning!")
         when "bye"
@@ -111,7 +117,8 @@ module Line
 
       def complete_linking_account(event)
         # 5. アカウントを連携する
-        # return "すでに同じLINE-IDが登録されています" if User.where(line_user_id: line_id)
+        return set_reply_text("すでに同じLINE-IDが登録されています") if User.where(line_user_id: line_id)
+
         nonce = event.nonce.to_s
         linking_user = User.find_by(line_nonce: nonce)
 
@@ -121,9 +128,9 @@ module Line
           linking_user.update!(line_user_id: line_id, line_nonce: nil)
 
           push_linking_complete_message(linking_user)
-          return "アカウントの連携が完了しました"
+          set_reply_text("アカウントの連携が完了しました")
         else
-          return "対象のユーザーが見つかりませんでした"
+          set_reply_text("対象のユーザーが見つかりませんでした")
         end
       end
 
@@ -135,10 +142,10 @@ module Line
           type: "text",
           text: "ようこそ、#{to_name}さん"
         }
-        client = Line::Bot::Client.new { |config|
-            config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
-            config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
-        }
+        client = Line::Bot::Client.new do |config|
+          config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
+          config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
+        end
         response = client.push_message(to_id, message)
         p response
       end
