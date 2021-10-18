@@ -19,7 +19,7 @@ module Line
                       set_reply_text("アカウントの連携に失敗しました")
                     end
         when Line::Bot::Event::Follow
-          message = reply_confirm_linking_account
+          message = reply_url_for_linking(event["source"]["userId"])
         when Line::Bot::Event::Message
           case event.type
           when Line::Bot::Event::MessageType::Text
@@ -81,37 +81,8 @@ module Line
         p response
       end
 
-      # TODO: この1手間を挟むのをやめる、いきなりURL発行
-      # NOの場合メッセージを削除するよう依頼文？
-      def reply_confirm_linking_account
-        {
-          type: "template",
-          altText: "LINEアカウントの連携をしてください",
-          template: {
-            type: "confirm",
-            text: "LINEアカウントの連携をしてください。 \n" + "なお、連携の解除はいつでも行うことができます。",
-            actions: [
-              {
-                type: "message",
-                label: "Yes",
-                text: "do linking"
-              },
-              {
-                type: "message",
-                label: "No",
-                text: "don't linking"
-              }
-            ]
-          }
-        }
-      end
-
       def reply_text_message(event)
         case event.message["text"]
-        when "do linking"
-          set_url_for_linking(event["source"]["userId"])
-        when "don't linking"
-          set_reply_text("引き続きLINE通知以外の機能をご利用ください")
         when "delete linking"
           disconnecting_accounts(event["source"]["userId"])
         when "hi"
@@ -128,7 +99,7 @@ module Line
         { type: 'text', text: text }
       end
 
-      def set_url_for_linking(line_id)
+      def reply_url_for_linking(line_id)
         # 連携手順1. 連携トークンを発行する
         client = set_client
         response = client.create_link_token(line_id).body
@@ -141,7 +112,7 @@ module Line
           altText: "アカウント連携用ページ",
           template: {
             type: "buttons",
-            text: "以下のURLから再度ログインし、アカウント連携を行ってください",
+            text: "以下のURLからログインし、アカウント連携を行ってください \n" + "なお、連携の解除はいつでも行うことができます。",
             actions: [{
                 type: "uri",
                 label: "アカウント連携ページ",
