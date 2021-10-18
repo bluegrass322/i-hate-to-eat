@@ -13,7 +13,6 @@ AllCops:
     - 'node_modules/**/*'
     - 'Gemfile'
     - 'Rakefile'
-    # 一時的に除外
     - 'app/controllers/line/**/*'
 
 Rails:
