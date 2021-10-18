@@ -117,6 +117,7 @@ module Line
 
       def complete_linking_account(event)
         # 5. アカウントを連携する
+        line_id = event["source"]["userId"]
         return set_reply_text("すでに同じLINE-IDが登録されています") if User.where(line_user_id: line_id)
 
         nonce = event.nonce.to_s
@@ -124,7 +125,6 @@ module Line
 
         if linking_user
           # nonceは必ず削除
-          line_id = event["source"]["userId"]
           linking_user.update!(line_user_id: line_id, line_nonce: nil)
 
           push_linking_complete_message(linking_user)
