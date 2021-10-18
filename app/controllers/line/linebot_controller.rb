@@ -83,6 +83,8 @@ module Line
         case event.message["text"]
         when "delete linking"
           disconnecting_accounts(event["source"]["userId"])
+        when "bmr"
+          set_users_bmr(event["source"]["userId"])
         else
           # 所定の文言以外にはエラーメッセージを返す
           set_reply_text("ちょっと何言ってるかわからない")
@@ -92,6 +94,17 @@ module Line
       # テキストメッセージの作成
       def set_reply_text(text)
         { type: 'text', text: text }
+      end
+
+      def set_users_bmr(line_id)
+        target_user = User.where(line_user_id: line_id)[0]
+
+        if target_user.present?
+          bmr = target_user.bmr
+          set_reply_text("BMR: #{bmr}kcal")
+        else
+          set_reply_text("ユーザーの取得に失敗しました")
+        end
       end
 
       # アカウント連携用URIの生成
@@ -111,9 +124,9 @@ module Line
             type: "buttons",
             text: "以下のURLからログインし、アカウント連携を行ってください \n" + "なお、連携の解除はいつでも行うことができます。",
             actions: [{
-                type: "uri",
-                label: "アカウント連携ページ",
-                uri: uri
+              type: "uri",
+              label: "アカウント連携ページ",
+              uri: uri
             }]
           }
         }
