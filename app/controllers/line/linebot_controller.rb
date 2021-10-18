@@ -118,7 +118,7 @@ module Line
             actions: [{
                 type: "uri",
                 label: "アカウント連携ページ",
-                uri: uri
+                uri: "#{ uri }"
             }]
           }
         }
