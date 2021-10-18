@@ -106,7 +106,9 @@ module Line
         parsed_response = JSON.parse(response)
 
         # 連携手順2. ユーザーを連携URLにリダイレクトする
-        # TODO: .queryメソッドを用いてulrにパラメーターを含めるよう修正
+        uri = URI("https://i-hate-to-eat.herokuapp.com/line/link")
+        uri.query = URI.encode_www_form({ linkToken: parsed_response["linkToken"] })
+
         return {
           type: "template",
           altText: "アカウント連携用ページ",
@@ -116,7 +118,7 @@ module Line
             actions: [{
                 type: "uri",
                 label: "アカウント連携ページ",
-                uri: "https://i-hate-to-eat.herokuapp.com/line/link?linkToken=#{parsed_response["linkToken"]}"
+                uri: uri
             }]
           }
         }
