@@ -23,11 +23,8 @@ module Line
           when Line::Bot::Event::MessageType::Text
             message = reply_text_message(event)
           end
-        # when Line::Bot::Event::Unfollow
-          # rplyTokenは発行されない
-          # 連携解除処理
         end
-        client.reply_message(event['replyToken'], message)
+        client.reply_message(event['replyToken'], message) if message
       end
 
       # 200status は必ず返さなければならない
@@ -36,6 +33,26 @@ module Line
 
     private
 
+      # LINEアカウント連携 5. アカウントを連携する
+      def complete_linking_account(linkevent)
+        nonce = linkevent.nonce.to_s
+        linking_user = User.find_by(line_nonce: nonce)
+
+        return set_reply_text("対象のユーザーが見つかりませんでした") unless linking_user
+
+        line_id = linkevent["source"]["userId"]
+
+        if User.where(line_user_id: line_id).present?
+          linking_user.update!(line_nonce: nil)
+          return set_reply_text("すでに同じLINE-IDが登録されています")
+        end
+
+        linking_user.update!(line_user_id: line_id, line_nonce: nil)
+        push_linking_complete_message(linking_user)
+        set_reply_text("アカウントの連携が完了しました")
+      end
+
+      # LINEアカウント連携解除
       def disconnecting_accounts(line_id)
         target_user = User.where(line_user_id: line_id)
 
@@ -45,6 +62,23 @@ module Line
         else
           set_reply_text("ユーザーの取得に失敗しました")
         end
+      end
+
+      # アカウント連携完了後、プッシュメッセージを送信
+      def push_linking_complete_message(user)
+        to_name = user.name
+        to_id = user.line_user_id
+
+        message = {
+          type: "text",
+          text: "ようこそ、#{to_name}さん"
+        }
+        client = Line::Bot::Client.new do |config|
+          config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
+          config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
+        end
+        response = client.push_message(to_id, message)
+        p response
       end
 
       # TODO: この1手間を挟むのをやめる、いきなりURL発行
@@ -118,41 +152,6 @@ module Line
             }]
           }
         }
-      end
-
-      def complete_linking_account(linkevent)
-        # 5. アカウントを連携する
-        line_id = linkevent["source"]["userId"]
-        return set_reply_text("すでに同じLINE-IDが登録されています") if User.where(line_user_id: line_id).present?
-
-        nonce = linkevent.nonce.to_s
-        linking_user = User.find_by(line_nonce: nonce)
-
-        if linking_user
-          # nonceは必ず削除
-          linking_user.update!(line_user_id: line_id, line_nonce: nil)
-
-          push_linking_complete_message(linking_user)
-          set_reply_text("アカウントの連携が完了しました")
-        else
-          set_reply_text("対象のユーザーが見つかりませんでした")
-        end
-      end
-
-      def push_linking_complete_message(user)
-        to_name = user.name
-        to_id = user.line_user_id
-
-        message = {
-          type: "text",
-          text: "ようこそ、#{to_name}さん"
-        }
-        client = Line::Bot::Client.new do |config|
-          config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
-          config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
-        end
-        response = client.push_message(to_id, message)
-        p response
       end
   end
 end
