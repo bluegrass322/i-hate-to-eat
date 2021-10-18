@@ -4,8 +4,6 @@ module Line
     protect_from_forgery except: :callback
 
     def callback
-      client ||= set_client
-
       # 送られてきたデータをrubyが扱いやすいよう変換
       events = client.parse_events_from(@body)
 
@@ -19,6 +17,7 @@ module Line
                       set_reply_text("アカウントの連携に失敗しました")
                     end
         when Line::Bot::Event::Follow
+          Rails.logger.debug "イベントを受け取った"
           message = reply_url_for_linking(event["source"]["userId"])
         when Line::Bot::Event::Message
           case event.type
@@ -76,11 +75,11 @@ module Line
           text: "ようこそ、#{to_name}さん"
         }
 
-        client = set_client
         response = client.push_message(to_id, message)
         p response
       end
 
+      # Event::Messageのテキストの内容により処理を振り分ける
       def reply_text_message(event)
         case event.message["text"]
         when "delete linking"
@@ -91,13 +90,15 @@ module Line
         end
       end
 
+      # テキストメッセージの作成
       def set_reply_text(text)
         { type: 'text', text: text }
       end
 
+      # アカウント連携用URIの生成
       def reply_url_for_linking(line_id)
+        Rails.logger.debug "メソッドに突入"
         # 連携手順1. 連携トークンを発行する
-        client = set_client
         response = client.create_link_token(line_id).body
         Rails.logger.debug "Response: #{response}"
         Rails.logger.debug "Response token: #{response["linkToken"]}"
