@@ -38,7 +38,7 @@ module Line
 
       def disconnecting_accounts(line_id)
         target_user = User.where(line_user_id: line_id)
-        target_uesr.each(&:update!(line_user_id: nil))
+        target_uesr.each { |u| u.update!(line_user_id: nil) }
       end
 
       # TODO: この1手間を挟むのをやめる、いきなりURL発行
