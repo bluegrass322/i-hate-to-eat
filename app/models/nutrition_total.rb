@@ -70,7 +70,21 @@ class NutritionTotal
     validates :zinc
   end
 
-  private
+  # Instance methods
+  def calc_intake_total(foods)
+    params = attributes
+
+    params.each_key do |k|
+      sum = 0
+      foods.each do |f|
+        sum += f[k] * f.reference_amount
+      end
+      params[k] = sum.floor(4)
+    end
+    self.attributes = params
+  end
+
+  # private
 
     def attr_validation
       valid?
