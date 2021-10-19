@@ -5,6 +5,7 @@ import store from '../store/index';
 import TopPage from '../components/pages/TopPage';
 import RegisterPage from '../components/pages/RegisterPage';
 import LoginPage from '../components/pages/LoginPage';
+import MealSuggestionPage from '../components/pages/MealSuggestionPage';
 import HomePage from '../components/pages/HomePage';
 import MyPage from '../components/pages/MyPage';
 import NotFound from '../components/pages/NotFound';
@@ -43,6 +44,11 @@ const router = new VueRouter({
       path: '/mypage',
       component: MyPage,
       name: 'MyPage',
+    },
+    {
+      path: '/suggestion',
+      component: MealSuggestionPage,
+      name: 'MealSuggestionPage',
     },
     // 404 not found
     {
