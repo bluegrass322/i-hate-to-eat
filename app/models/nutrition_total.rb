@@ -84,7 +84,7 @@ class NutritionTotal
     self.attributes = params
   end
 
-  # private
+  private
 
     def attr_validation
       valid?
