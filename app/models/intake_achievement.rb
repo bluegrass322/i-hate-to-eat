@@ -70,9 +70,35 @@ class IntakeAchievement
     validates :zinc
   end
 
+  # Instance methods
+  def calc_intake_achievement(total, bmr, dri, pfc)
+    calc_cal_achv(total, bmr)
+    calc_nutritions_achv(total, dri, pfc)
+  end
+
   private
 
     def attr_validation
       valid?
+    end
+
+    def calc_cal_achv(total, bmr)
+      achv = (total["calorie"] / bmr).floor(2)
+      self.attributes = { calorie: achv }
+    end
+
+    def calc_nutritions_achv(total, dri, pfc)
+      params = attributes
+
+      total.each_key do |k|
+        next if k == "calorie"
+
+        params[k] = if dri[k].nil?
+                      (total[k] / pfc[k.to_sym]).floor(2)
+                    else
+                      (total[k] / dri[k]).floor(2)
+                    end
+      end
+      self.attributes = params
     end
 end
