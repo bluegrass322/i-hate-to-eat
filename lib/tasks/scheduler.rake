@@ -57,9 +57,7 @@ namespace :scheduler do
             item = user.suggestions.new(
               food_id: m.id,
               amount: m.reference_amount,
-              # target_date: "",
-              target_date: Time.current.ago(1.day),
-              # target_date: Time.zone.today,
+              target_date: Time.zone.today,
               expires_at: Time.current.end_of_day
             )
 
