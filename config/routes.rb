@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       resource :mypage, only: %i[show]
       resource :bmr, only: %i[update]
       resource :users_dietary_reference_intake, only: %i[update]
+      resource :suggestion, only: %i[show]
     end
   end
 
@@ -75,6 +76,7 @@ end
 #                                       PUT    /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
 # api_v1_users_dietary_reference_intake PATCH  /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
 #                                       PUT    /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
+#                     api_v1_suggestion GET    /api/v1/suggestion(.:format)                                                             api/v1/suggestions#show {:format=>/json/}
 #                         line_callback POST   /line/callback(.:format)                                                                 line/linebot#callback {:format=>/json/}
 #                             line_link GET    /line/link(.:format)                                                                     line/authentications#link
 #                                       POST   /line/link(.:format)                                                                     line/authentications#create

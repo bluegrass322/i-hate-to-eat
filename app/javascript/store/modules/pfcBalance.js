@@ -1,13 +1,13 @@
 const state = {
   pct: {
-    pctP: '',
-    pctF: '',
-    pctC: '',
+    protein: '',
+    fat: '',
+    carbohydrate: '',
   },
   amt: {
-    amtP: '',
-    amtF: '',
-    amtC: '',
+    protein: '',
+    fat: '',
+    carbohydrate: '',
   },
 };
 
@@ -21,14 +21,14 @@ const getters = {
 
 const mutations = {
   updatePct(state, value) {
-    state.pct.pctP = value.pct_p;
-    state.pct.pctF = value.pct_f;
-    state.pct.pctC = value.pct_c;
+    state.pct.protein = value.protein;
+    state.pct.fat = value.fat;
+    state.pct.carbohydrate = value.carbohydrate;
   },
   updateAmt(state, value) {
-    state.amt.amtP = value.amt_p;
-    state.amt.amtF = value.amt_f;
-    state.amt.amtC = value.amt_c;
+    state.amt.protein = value.protein;
+    state.amt.fat = value.fat;
+    state.amt.carbohydrate = value.carbohydrate;
   },
 };
 

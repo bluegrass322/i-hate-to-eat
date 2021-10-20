@@ -70,12 +70,12 @@ class User < ApplicationRecord
   end
 
   def set_attributes_for_pfc
-    { pct: { pct_p: percentage_protein,
-             pct_f: percentage_fat,
-             pct_c: percentage_carbohydrate },
-      amt: { amt_p: calc_amount_protein.floor,
-             amt_f: calc_amount_fat.floor,
-             amt_c: calc_amount_carbo.floor } }
+    { pct: { protein: percentage_protein,
+             fat: percentage_fat,
+             carbohydrate: percentage_carbohydrate },
+      amt: { protein: calc_amount_protein.floor,
+             fat: calc_amount_fat.floor,
+             carbohydrate: calc_amount_carbo.floor } }
   end
 
   private
