@@ -5,9 +5,7 @@
     <v-tab class="tabs-end">Mineral</v-tab>
 
     <v-tab-item class="tab-item">
-      <template
-        v-for="m in macro"
-      >
+      <template v-for="m in macro">
         <v-sheet :key="m.key" color="base" class="nutrients-card">
           <v-card
             color="primary"
@@ -19,17 +17,21 @@
           >
             <v-card-text class="pa-0 text-caption text-left base--text">
               <div class="font-weight-medium">{{ m.label }}</div>
-              <div>Total:<span class="text-body-2">{{ m.total }}</span>{{ m.unit }}</div>
-              <div>Achv:<span class="text-body-2">{{ m.achv }}</span>%</div>
+              <div>
+                Total:<span class="text-body-2">{{ m.total }}</span
+                >{{ m.unit }}
+              </div>
+              <div>
+                Achv:<span class="text-body-2">{{ m.achv }}</span
+                >%
+              </div>
             </v-card-text>
           </v-card>
         </v-sheet>
       </template>
     </v-tab-item>
     <v-tab-item class="tab-item">
-      <template
-        v-for="v in vitamins"
-      >
+      <template v-for="v in vitamins">
         <v-sheet :key="v.key" class="nutrients-card">
           <v-card
             color="primary"
@@ -41,17 +43,21 @@
           >
             <v-card-text class="pa-0 text-caption text-left base--text">
               <div class="font-weight-medium">{{ v.label }}</div>
-              <div>Total:<span class="text-body-2">{{ v.total }}</span>{{ v.unit }}</div>
-              <div>Achv:<span class="text-body-2">{{ v.achv }}</span>%</div>
+              <div>
+                Total:<span class="text-body-2">{{ v.total }}</span
+                >{{ v.unit }}
+              </div>
+              <div>
+                Achv:<span class="text-body-2">{{ v.achv }}</span
+                >%
+              </div>
             </v-card-text>
           </v-card>
         </v-sheet>
       </template>
     </v-tab-item>
     <v-tab-item class="tab-item">
-      <template
-        v-for="m in minerals"
-      >
+      <template v-for="m in minerals">
         <v-sheet :key="m.key" class="nutrients-card">
           <v-card
             color="primary"
@@ -63,8 +69,14 @@
           >
             <v-card-text class="pa-0 text-caption text-left base--text">
               <div class="font-weight-medium">{{ m.label }}</div>
-              <div>Total:<span class="text-body-2">{{ m.total }}</span>{{ m.unit }}</div>
-              <div>Achv:<span class="text-body-2">{{ m.achv }}</span>%</div>
+              <div>
+                Total:<span class="text-body-2">{{ m.total }}</span
+                >{{ m.unit }}
+              </div>
+              <div>
+                Achv:<span class="text-body-2">{{ m.achv }}</span
+                >%
+              </div>
             </v-card-text>
           </v-card>
         </v-sheet>
@@ -78,12 +90,8 @@ import { mapGetters } from 'vuex';
 
 export default {
   computed: {
-    ...mapGetters('nutrientsAchievements', [
-      'macro',
-      'vitamins',
-      'minerals'
-    ])
-  }
+    ...mapGetters('nutrientsAchievements', ['macro', 'vitamins', 'minerals']),
+  },
 };
 </script>
 

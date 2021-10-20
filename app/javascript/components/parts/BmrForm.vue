@@ -114,7 +114,8 @@
               >kcal<br />
               <!-- TODO: PFCの内訳は仮置き -->
               <span class="text-body-2">
-                P: {{ amt.protein }}g / F: {{ amt.fat }}g / C: {{ amt.carbohydrate }}g
+                P: {{ amt.protein }}g / F: {{ amt.fat }}g / C:
+                {{ amt.carbohydrate }}g
               </span>
             </div>
           </div>

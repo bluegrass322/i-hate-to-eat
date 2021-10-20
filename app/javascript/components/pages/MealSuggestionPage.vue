@@ -7,9 +7,7 @@
             <span class="suggestion-items-title-text">Today's meal</span>
           </div>
           <div class="meal-menus">
-            <template
-              v-for="f in suggestions"
-            >
+            <template v-for="f in suggestions">
               <v-sheet :key="f.id" color="base" class="foods-card">
                 <v-card
                   flat
@@ -23,9 +21,7 @@
                     <div class="font-weight-medium">
                       {{ f.name }} {{ f.subname }}
                     </div>
-                    <div>
-                      {{ f.reference_amount * 100 }}g
-                    </div>
+                    <div>{{ f.reference_amount * 100 }}g</div>
                   </v-card-text>
                 </v-card>
               </v-sheet>
@@ -47,11 +43,11 @@ import NutrientsAchievement from '../parts/NutrientsAchievement';
 
 export default {
   components: {
-    NutrientsAchievement
+    NutrientsAchievement,
   },
   data() {
     return {
-      suggestions: {}
+      suggestions: {},
     };
   },
   mounted() {
@@ -61,24 +57,21 @@ export default {
     setSuggestions() {
       this.axios
         .get('/api/v1/suggestion')
-        .then(res => {
+        .then((res) => {
           console.log(res.status);
           const r = res.data;
 
           this.suggestions = r.meals;
-          this.$store.dispatch(
-            'nutrientsAchievements/setAttributes',
-            {
-              totals: r.total,
-              achvs: r.achv,
-            }
-          );
+          this.$store.dispatch('nutrientsAchievements/setAttributes', {
+            totals: r.total,
+            achvs: r.achv,
+          });
         })
-        .catch(e => {
+        .catch((e) => {
           console.error(e);
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
