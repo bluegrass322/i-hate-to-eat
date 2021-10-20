@@ -32,7 +32,8 @@ namespace :scheduler do
   task destroy_expied_suggestions: :environment do
     User.find_each do |user|
       Suggestion.transaction do
-        user.suggestions.where("expires_at < ?", Time.zone.today).each(&:destroy!)
+        expired_suggestion = user.suggestions.where("expires_at < ?", Time.zone.today)
+        expired_suggestion.each(&:destroy!) if expired_suggestion.present?
       end
     end
   end
