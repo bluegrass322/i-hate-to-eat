@@ -34,6 +34,9 @@
           <v-list-item to="/mypage">
             <v-list-item-title>mypage</v-list-item-title>
           </v-list-item>
+          <v-list-item to="/suggestion">
+            <v-list-item-title>today's meal</v-list-item-title>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-menu>
