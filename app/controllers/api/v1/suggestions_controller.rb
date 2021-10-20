@@ -6,7 +6,7 @@ module Api
         amt_pfc = current_user.set_attributes_for_pfc[:amt]
 
         total = get_intake_total(foods)
-        achv = get_achievement(total.attributes,
+        achv = get_achievement(total,
                                current_user.bmr,
                                current_user.dietary_reference_intake,
                                amt_pfc)
@@ -17,7 +17,7 @@ module Api
       private
 
         def get_intake_total(foods)
-          total = TotalNutrition.new
+          total = NutritionTotal.new
           total.calc_intake_total(foods)
         end
 
