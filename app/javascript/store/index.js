@@ -5,6 +5,7 @@ import createPersistedState from 'vuex-persistedstate';
 import authUser from './modules/authUser';
 import bmrParams from './modules/bmrParams';
 import flashMessage from './modules/flashMessage';
+import foodDetails from './modules/foodDetails';
 import nutrientsAchievements from './modules/nutrientsAchievements';
 import pfcBalance from './modules/pfcBalance';
 import referenceIntakes from './modules/referenceIntakes';
@@ -16,6 +17,7 @@ const store = new Vuex.Store({
     authUser,
     bmrParams,
     flashMessage,
+    foodDetails,
     nutrientsAchievements,
     pfcBalance,
     referenceIntakes,
