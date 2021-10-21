@@ -80,11 +80,13 @@ module Line
 
       # Event::Messageのテキストの内容により処理を振り分ける
       def reply_text_message(event)
+        line_id = (event["source"]["userId"])
+
         case event.message["text"]
         when "delete linking"
-          disconnecting_accounts(event["source"]["userId"])
-        when "bmr"
-          set_users_bmr(event["source"]["userId"])
+          disconnecting_accounts(line_id)
+        when "BMR & PFC"
+          set_users_bmr_pfc(line_id)
         else
           # 所定の文言以外にはエラーメッセージを返す
           set_reply_text("ちょっと何言ってるかわからない")
@@ -96,12 +98,19 @@ module Line
         { type: 'text', text: text }
       end
 
-      def set_users_bmr(line_id)
+      def set_users_bmr_pfc(line_id)
         target_user = User.where(line_user_id: line_id)[0]
 
         if target_user.present?
           bmr = target_user.bmr
-          set_reply_text("BMR: #{bmr}kcal")
+          pfc = target_user.set_attributes_for_pfc[:amt]
+
+          text = "#{target_user.name}さん \n" +
+                 "BMR: #{bmr}kcal \n" +
+                 "P: #{pfc[:protein]}g \n" +
+                 "F: #{pfc[:fat]}g \n" +
+                 "C: #{pfc[:carbohydrate]}g \n"
+          set_reply_text(text)
         else
           set_reply_text("ユーザーの取得に失敗しました")
         end
