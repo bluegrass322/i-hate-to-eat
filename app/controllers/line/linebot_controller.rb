@@ -87,6 +87,8 @@ module Line
           disconnecting_accounts(line_id)
         when "BMR & PFC"
           set_users_bmr_pfc(line_id)
+        when "today's menu"
+          set_users_suggested_foods(line_id)
         else
           # 所定の文言以外にはエラーメッセージを返す
           set_reply_text("ちょっと何言ってるかわからない")
@@ -98,6 +100,7 @@ module Line
         { type: 'text', text: text }
       end
 
+      # ユーザーのBMR/PFC情報を返答
       def set_users_bmr_pfc(line_id)
         target_user = User.where(line_user_id: line_id)[0]
 
@@ -110,6 +113,22 @@ module Line
                  "P: #{pfc[:protein]}g \n" +
                  "F: #{pfc[:fat]}g \n" +
                  "C: #{pfc[:carbohydrate]}g \n"
+          set_reply_text(text)
+        else
+          set_reply_text("ユーザーの取得に失敗しました")
+        end
+      end
+
+      def set_users_suggested_foods(line_id)
+        target_user = User.where(line_user_id: line_id)[0]
+
+        if target_user.present?
+          foods = target_user.suggested_foods
+          text = "#{Time.zone.today}"
+
+          foods.each do |f|
+            text = text + "\n #{f.name} #{f.subname}: #{f.reference_amount * 100}g"
+          end
           set_reply_text(text)
         else
           set_reply_text("ユーザーの取得に失敗しました")
