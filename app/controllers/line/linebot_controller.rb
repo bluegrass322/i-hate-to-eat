@@ -80,7 +80,7 @@ module Line
 
       # Event::Messageのテキストの内容により処理を振り分ける
       def reply_text_message(event)
-        line_id = (event["source"]["userId"])
+        line_id = event["source"]["userId"]
 
         case event.message["text"]
         when "アカウント連携解除"
