@@ -109,10 +109,10 @@ module Line
           pfc = target_user.set_attributes_for_pfc[:amt]
 
           text = "#{target_user.name}さん \n" +
-                 "  BMR: #{bmr}kcal \n" +
-                 "    P: #{pfc[:protein]}g \n" +
-                 "    F: #{pfc[:fat]}g \n" +
-                 "    C: #{pfc[:carbohydrate]}g"
+                 "BMR: #{bmr}kcal \n" +
+                 "  P: #{pfc[:protein]}g \n" +
+                 "  F: #{pfc[:fat]}g \n" +
+                 "  C: #{pfc[:carbohydrate]}g"
           set_reply_text(text)
         else
           set_reply_text("ユーザーの取得に失敗しました")
