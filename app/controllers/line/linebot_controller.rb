@@ -81,14 +81,16 @@ module Line
       # Event::Messageのテキストの内容により処理を振り分ける
       def reply_text_message(event)
         line_id = event["source"]["userId"]
+        Rails.logger.debug "代入せず: #{event["source"]["userId"]}"
+        Rails.logger.debug "代入: #{line_id}"
 
         case event.message["text"]
         when "アカウント連携解除"
-          disconnecting_accounts(line_id)
+          disconnecting_accounts(event["source"]["userId"])
         when "BMR & PFC"
-          set_users_bmr_pfc(line_id)
+          set_users_bmr_pfc(event["source"]["userId"])
         when "today's menu"
-          set_users_suggested_foods(line_id)
+          set_users_suggested_foods(event["source"]["userId"])
         else
           # 所定の文言以外にはエラーメッセージを返す
           set_reply_text("ちょっと何言ってるかわからない")
@@ -102,7 +104,9 @@ module Line
 
       # ユーザーのBMR/PFC情報を返答
       def set_users_bmr_pfc(line_id)
+        Rails.logger.debug "メソッド突入: #{line_id}"
         target_user = User.where(line_user_id: line_id)[0]
+        Rails.logger.debug "ユーザー: #{target_user.name}"
 
         if target_user.present?
           bmr = target_user.bmr
