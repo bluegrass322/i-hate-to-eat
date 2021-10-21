@@ -81,16 +81,14 @@ module Line
       # Event::Messageのテキストの内容により処理を振り分ける
       def reply_text_message(event)
         line_id = event["source"]["userId"]
-        Rails.logger.debug "代入せず: #{event["source"]["userId"]}"
-        Rails.logger.debug "代入: #{line_id}"
 
         case event.message["text"]
         when "アカウント連携解除"
-          disconnecting_accounts(event["source"]["userId"])
+          disconnecting_accounts(line_id)
         when "BMR & PFC"
-          set_users_bmr_pfc(event["source"]["userId"])
+          set_users_bmr_pfc(line_id)
         when "today's menu"
-          set_users_suggested_foods(event["source"]["userId"])
+          set_users_suggested_foods(line_id)
         else
           # 所定の文言以外にはエラーメッセージを返す
           set_reply_text("ちょっと何言ってるかわからない")
@@ -104,19 +102,17 @@ module Line
 
       # ユーザーのBMR/PFC情報を返答
       def set_users_bmr_pfc(line_id)
-        Rails.logger.debug "メソッド突入: #{line_id}"
         target_user = User.where(line_user_id: line_id)[0]
-        Rails.logger.debug "ユーザー: #{target_user.name}"
 
         if target_user.present?
           bmr = target_user.bmr
           pfc = target_user.set_attributes_for_pfc[:amt]
 
           text = "#{target_user.name}さん \n" +
-                 "BMR: #{bmr}kcal \n" +
-                 "P: #{pfc[:protein]}g \n" +
-                 "F: #{pfc[:fat]}g \n" +
-                 "C: #{pfc[:carbohydrate]}g \n"
+                 "  BMR: #{bmr}kcal \n" +
+                 "    P: #{pfc[:protein]}g \n" +
+                 "    F: #{pfc[:fat]}g \n" +
+                 "    C: #{pfc[:carbohydrate]}g"
           set_reply_text(text)
         else
           set_reply_text("ユーザーの取得に失敗しました")
@@ -131,7 +127,7 @@ module Line
           text = "#{Time.zone.today}"
 
           foods.each do |f|
-            text = text + "\n #{f.name} #{f.subname}: #{f.reference_amount * 100}g"
+            text = text + "\n  #{f.name} #{f.subname}: #{ (f.reference_amount * 100).floor }g"
           end
           set_reply_text(text)
         else
