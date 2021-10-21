@@ -83,7 +83,7 @@ module Line
         line_id = (event["source"]["userId"])
 
         case event.message["text"]
-        when "delete linking"
+        when "アカウント連携解除"
           disconnecting_accounts(line_id)
         when "BMR & PFC"
           set_users_bmr_pfc(line_id)
