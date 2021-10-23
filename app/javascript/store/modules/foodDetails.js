@@ -3,13 +3,13 @@ const state = {
     name: '',
     subname: '',
     reference_amount: 1,
-    description: ''
+    description: '',
   },
   macro: {
     calorie: { label: 'カロリー', amount: '', unit: 'kcal' },
     protein: { label: 'タンパク質', amount: '', unit: 'g' },
     fat: { label: '脂質', amount: '', unit: 'g' },
-    carbohydrate: { label: '炭水化物', amount: '', unit: 'g' }
+    carbohydrate: { label: '炭水化物', amount: '', unit: 'g' },
   },
   vitamins: {
     vitamin_a: { label: 'ビタミンA', amount: '', unit: 'μgRAE' },
@@ -24,7 +24,7 @@ const state = {
     folate: { label: '葉酸', amount: '', unit: 'μg' },
     pantothenic_acid: { label: 'パントテン酸', amount: '', unit: 'mg' },
     biotin: { label: 'ビオチン', amount: '', unit: 'μg' },
-    vitamin_c: { label: 'ビタミンC', amount: '', unit: 'mg' }
+    vitamin_c: { label: 'ビタミンC', amount: '', unit: 'mg' },
   },
   minerals: {
     potassium: { label: 'カリウム', amount: '', unit: 'mg' },
@@ -38,8 +38,8 @@ const state = {
     iodine: { label: 'ヨウ素', amount: '', unit: 'μg' },
     selenium: { label: 'セレン', amount: '', unit: 'μg' },
     chromium: { label: 'クロム', amount: '', unit: 'μg' },
-    molybdenum: { label: 'モリブデン', amount: '', unit: 'μg' }
-  }
+    molybdenum: { label: 'モリブデン', amount: '', unit: 'μg' },
+  },
 };
 
 const getters = {
@@ -52,30 +52,32 @@ const getters = {
 const mutations = {
   // TODO: これでエラーは起こらず正しく動作するか？
   setInfo(state, value) {
-    Object.keys(state.basicInfo).forEach(key => {
+    Object.keys(state.basicInfo).forEach((key) => {
       state.basicInfo[key] = value[key];
     });
   },
   // TODO: reference_amountを乗算する処理のリファクタリング
   setMacro(state, value) {
-    Object.keys(state.macro).forEach(key => {
-      state.macro[key].amount = Math.trunc(value[key] * state.basicInfo.reference_amount);
+    Object.keys(state.macro).forEach((key) => {
+      state.macro[key].amount = Math.trunc(
+        value[key] * state.basicInfo.reference_amount
+      );
     });
   },
   setVitamins(state, value) {
-    Object.keys(state.vitamins).forEach(key => {
+    Object.keys(state.vitamins).forEach((key) => {
       const origin = value[key] * state.basicInfo.reference_amount;
       const amount = trunc2ndDec(origin);
       state.vitamins[key].amount = amount;
     });
   },
   setMinerals(state, value) {
-    Object.keys(state.minerals).forEach(key => {
+    Object.keys(state.minerals).forEach((key) => {
       const origin = value[key] * state.basicInfo.reference_amount;
       const amount = trunc2ndDec(origin);
       state.minerals[key].amount = amount;
     });
-  }
+  },
 };
 
 const actions = {
@@ -84,7 +86,7 @@ const actions = {
     context.commit('setMacro', attr);
     context.commit('setVitamins', attr);
     context.commit('setMinerals', attr);
-  }
+  },
 };
 
 export default {
@@ -92,7 +94,7 @@ export default {
   state,
   getters,
   mutations,
-  actions
+  actions,
 };
 
 // 小数第二位以下切り捨て用の関数

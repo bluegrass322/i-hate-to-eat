@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class FoodSerializer
   include FastJsonapi::ObjectSerializer
   attributes :name, :subname, :description, :reference_amount,

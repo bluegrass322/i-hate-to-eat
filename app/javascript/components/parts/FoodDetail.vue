@@ -1,11 +1,5 @@
 <template>
-  <v-card
-    color="pDark"
-    flat
-    tile
-    outlined
-    class="pa-0"
-  >
+  <v-card color="pDark" flat tile outlined class="pa-0">
     <v-card-title class="base--text">
       <span class="text-subtitle-1">{{ basicInfo.name }}</span>
       <span class="text-subtitle-2">{{ basicInfo.subname }}</span>
@@ -19,9 +13,7 @@
 
         <v-tab-item class="tab-item">
           <div class="nutrients">
-            <template
-              v-for="m in macro"
-            >
+            <template v-for="m in macro">
               <nutrients-card
                 :key="m.label"
                 :label="m.label"
@@ -34,9 +26,7 @@
         </v-tab-item>
         <v-tab-item class="tab-item">
           <div class="nutrients">
-            <template
-              v-for="v in vitamins"
-            >
+            <template v-for="v in vitamins">
               <nutrients-card
                 :key="v.label"
                 :label="v.label"
@@ -48,9 +38,7 @@
         </v-tab-item>
         <v-tab-item class="tab-item">
           <div class="nutrients">
-            <template
-              v-for="m in minerals"
-            >
+            <template v-for="m in minerals">
               <nutrients-card
                 :key="m.label"
                 :label="m.label"
@@ -71,7 +59,7 @@ import nutrientsCard from '../parts/nutrientsCard';
 
 export default {
   components: {
-    nutrientsCard
+    nutrientsCard,
   },
   computed: {
     ...mapGetters('foodDetails', [
@@ -79,8 +67,8 @@ export default {
       'macro',
       'vitamins',
       'minerals',
-    ])
-  }
+    ]),
+  },
 };
 </script>
 
@@ -106,7 +94,7 @@ export default {
 }
 
 .tab-item {
-  background-color: #2C4C6B;
+  background-color: #2c4c6b;
   border-top: solid 2px #f5f5f6;
   padding: 20px 10px;
 }

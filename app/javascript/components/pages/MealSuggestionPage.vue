@@ -27,15 +27,15 @@
                       dark
                       text
                       outlined
-                      @click.stop="setFoodDetails(f.food_category_id, f.id); showDetail = true"
                       small
+                      @click.stop="
+                        setFoodDetails(f.food_category_id, f.id);
+                        showDetail = true;
+                      "
                     >
                       詳細
                     </v-btn>
-                    <v-dialog
-                      v-model="showDetail"
-                      scrollable
-                    >
+                    <v-dialog v-model="showDetail" scrollable>
                       <food-detail />
                     </v-dialog>
                   </v-card-actions>
@@ -92,18 +92,18 @@ export default {
     },
     setFoodDetails(categoryId, foodId) {
       this.axios
-        .get(`/api/v1/food_categories/${ categoryId }/foods/${ foodId }`)
-        .then(res => {
+        .get(`/api/v1/food_categories/${categoryId}/foods/${foodId}`)
+        .then((res) => {
           console.log(res.status);
           this.$store.dispatch(
             'foodDetails/setAttributes',
             res.data.data.attributes
           );
         })
-        .catch(e => {
+        .catch((e) => {
           console.error(e.response.status);
         });
-    }
+    },
   },
 };
 </script>

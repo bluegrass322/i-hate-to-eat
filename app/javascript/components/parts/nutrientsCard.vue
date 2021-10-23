@@ -11,9 +11,7 @@
       <div class="font-weight-medium">
         {{ label }}
       </div>
-      <div>
-        {{ amount }} {{ unit }}
-      </div>
+      <div>{{ amount }} {{ unit }}</div>
     </v-card-text>
   </v-card>
 </template>
@@ -24,20 +22,20 @@ export default {
     label: {
       type: String,
       required: true,
-      default: ''
+      default: '',
     },
     amount: {
       // TODO: warnログ回避のために一時タイプを複数指定
       type: [String, Number],
       required: true,
-      default: ''
+      default: '',
     },
     unit: {
       type: String,
       required: true,
-      default: 'mg'
-    }
-  }
+      default: 'mg',
+    },
+  },
 };
 </script>
 
