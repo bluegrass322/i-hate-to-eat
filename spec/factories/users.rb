@@ -17,8 +17,10 @@ end
 #  gender                      :integer          default("female"), not null
 #  height                      :integer          default(0), not null
 #  line_nonce                  :string
+#  line_notification_enabled   :boolean          default(FALSE), not null
 #  line_user_id_bidx           :string
 #  line_user_id_ciphertext     :text
+#  mealtime_first              :time
 #  name                        :string           default("noname"), not null
 #  percentage_carbohydrate     :float            default(0.6), not null
 #  percentage_fat              :float            default(0.2), not null

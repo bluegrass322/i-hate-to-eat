@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_16_124921) do
+ActiveRecord::Schema.define(version: 2021_10_23_062812) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,6 +144,8 @@ ActiveRecord::Schema.define(version: 2021_10_16_124921) do
     t.string "line_nonce"
     t.text "line_user_id_ciphertext"
     t.string "line_user_id_bidx"
+    t.time "mealtime_first"
+    t.boolean "line_notification_enabled", default: false, null: false
     t.index ["dietary_reference_intake_id"], name: "index_users_on_dietary_reference_intake_id"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["line_user_id_bidx"], name: "index_users_on_line_user_id_bidx", unique: true
