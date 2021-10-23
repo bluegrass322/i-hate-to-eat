@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class BirthValidator < ActiveModel::EachValidator
+class MealtimeValidator < ActiveModel::EachValidator
   def validate_each(record, _attribute, value)
     return unless value
     time = value.strftime('%R')
