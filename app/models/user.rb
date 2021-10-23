@@ -26,6 +26,7 @@ class User < ApplicationRecord
     validates :role
     validates :gender
     validates :height, numericality: { only_integer: true }
+    validates :line_notification_enabled
 
     with_options numericality: true do
       validates :weight
@@ -44,6 +45,8 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 5 }, if: :new_or_changes_password
   validates :password, confirmation: true, if: :new_or_changes_password
   validates :password_confirmation, presence: true, if: :new_or_changes_password
+  validates :mealtime_first, mealtime: true, allow_nil: true
+  # format: { with: /\A([01][0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]\z/ }
 
   # Instance methods
   def calc_age
