@@ -1,0 +1,12 @@
+# frozen_string_literal: true
+
+class BirthValidator < ActiveModel::EachValidator
+  def validate_each(record, _attribute, value)
+    return unless value
+    time = value.strftime('%R')
+
+    if time < "07:00" || time > "23:00"
+      record.errors.add(:mealtime_first, "通知の時間は7:00 - 23:00の間で設定してください")
+    end
+  end
+end
