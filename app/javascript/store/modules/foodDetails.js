@@ -42,6 +42,13 @@ const state = {
   }
 };
 
+const getters = {
+  basicInfo: (state) => state.basicInfo,
+  macro: (state) => state.macro,
+  vitamins: (state) => state.vitamins,
+  minerals: (state) => state.minerals,
+};
+
 const mutations = {
   // TODO: これでエラーは起こらず正しく動作するか？
   setInfo(state, value) {
@@ -52,17 +59,21 @@ const mutations = {
   // TODO: reference_amountを乗算する処理のリファクタリング
   setMacro(state, value) {
     Object.keys(state.macro).forEach(key => {
-      state.macro[key].amount = value[key] * state.basicInfo.reference_amount;
+      state.macro[key].amount = Math.trunc(value[key] * state.basicInfo.reference_amount);
     });
   },
   setVitamins(state, value) {
     Object.keys(state.vitamins).forEach(key => {
-      state.vitamins[key].amount = value[key] * state.basicInfo.reference_amount;
+      const origin = value[key] * state.basicInfo.reference_amount;
+      const amount = trunc2ndDec(origin);
+      state.vitamins[key].amount = amount;
     });
   },
   setMinerals(state, value) {
     Object.keys(state.minerals).forEach(key => {
-      state.minerals[key].amount = value[key] * state.basicInfo.reference_amount;
+      const origin = value[key] * state.basicInfo.reference_amount;
+      const amount = trunc2ndDec(origin);
+      state.minerals[key].amount = amount;
     });
   }
 };
@@ -79,6 +90,16 @@ const actions = {
 export default {
   namespaced: true,
   state,
+  getters,
   mutations,
   actions
+};
+
+// 小数第二位以下切り捨て用の関数
+const trunc2ndDec = (original) => {
+  let midCalc = original * 100;
+  midCalc = Math.trunc(midCalc);
+  const result = midCalc / 100;
+
+  return result;
 };
