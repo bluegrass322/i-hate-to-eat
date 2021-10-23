@@ -13,16 +13,32 @@
                   flat
                   tile
                   color="primary"
-                  height="60"
-                  width="130"
+                  width="120"
                   class="foods-card-contents"
                 >
                   <v-card-text class="pa-0 text-caption text-center base--text">
-                    <div class="font-weight-medium">
-                      {{ f.name }} {{ f.subname }}
-                    </div>
+                    <div class="font-weight-medium">{{ f.name }}</div>
+                    <div>{{ f.subname }}</div>
                     <div>{{ f.reference_amount * 100 }}g</div>
                   </v-card-text>
+                  <v-card-actions>
+                    <v-btn
+                      color="base"
+                      dark
+                      text
+                      outlined
+                      small
+                      @click.stop="
+                        setFoodDetails(f.food_category_id, f.id);
+                        showDetail = true;
+                      "
+                    >
+                      詳細
+                    </v-btn>
+                    <v-dialog v-model="showDetail" scrollable>
+                      <food-detail />
+                    </v-dialog>
+                  </v-card-actions>
                 </v-card>
               </v-sheet>
             </template>
@@ -39,15 +55,18 @@
 </template>
 
 <script>
+import foodDetail from '../parts/FoodDetail';
 import NutrientsAchievement from '../parts/NutrientsAchievement';
 
 export default {
   components: {
+    foodDetail,
     NutrientsAchievement,
   },
   data() {
     return {
       suggestions: {},
+      showDetail: false,
     };
   },
   mounted() {
@@ -69,6 +88,20 @@ export default {
         })
         .catch((e) => {
           console.error(e);
+        });
+    },
+    setFoodDetails(categoryId, foodId) {
+      this.axios
+        .get(`/api/v1/food_categories/${categoryId}/foods/${foodId}`)
+        .then((res) => {
+          console.log(res.status);
+          this.$store.dispatch(
+            'foodDetails/setAttributes',
+            res.data.data.attributes
+          );
+        })
+        .catch((e) => {
+          console.error(e.response.status);
         });
     },
   },

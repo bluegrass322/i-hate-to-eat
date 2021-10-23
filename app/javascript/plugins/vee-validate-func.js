@@ -9,5 +9,5 @@ export const calcAge = (value) => {
   const today = new Date();
   const formated_today = formatDate(today);
   const birth = value.replace(/-/g, '');
-  return Math.floor((parseInt(formated_today) - parseInt(birth)) / 10000);
+  return Math.trunc((parseInt(formated_today) - parseInt(birth)) / 10000);
 };
