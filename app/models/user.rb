@@ -45,7 +45,7 @@ class User < ApplicationRecord
   validates :password, confirmation: true, if: :new_or_changes_password
   validates :password_confirmation, presence: true, if: :new_or_changes_password
   validates :line_notification_enabled, inclusion: { in: [true, false] }
-  validates :mealtime_first, mealtime: true, format: { with: /\A([01][0-9]|2[0-3]):[0-5]0\z/, message: "の値の形式が不正です" }, allow_nil: true
+  validates :mealtime_first, mealtime: true, allow_nil: true
 
   # Instance methods
   def calc_age
@@ -74,7 +74,7 @@ class User < ApplicationRecord
   def set_account_params
     {
       line_notification_enabled: line_notification_enabled,
-      mealtime_first: mealtime_first.strftime('%R')
+      mealtime_first: mealtime_first&.strftime('%R')
     }
   end
 
