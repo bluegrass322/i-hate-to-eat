@@ -71,6 +71,13 @@ class User < ApplicationRecord
     }
   end
 
+  def set_account_params
+    {
+      line_notification_enabled: line_notification_enabled,
+      mealtime_first: mealtime_first.strftime('%R')
+    }
+  end
+
   def set_attributes_for_pfc
     { pct: { protein: percentage_protein,
              fat: percentage_fat,
