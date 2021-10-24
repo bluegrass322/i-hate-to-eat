@@ -20,6 +20,14 @@
         <td class="admin-t-data"><%= @user.email %></td>
       </tr>
       <tr class="admin-t-row">
+        <th class="admin-t-head"><%= User.human_attribute_name(:line_notification_enabled) %></th>
+        <td class="admin-t-data"><%= @user.line_notification_enabled %></td>
+      </tr>
+      <tr class="admin-t-row">
+        <th class="admin-t-head"><%= User.human_attribute_name(:mealtime_first) %></th>
+        <td class="admin-t-data"><%= @user.mealtime_first.strftime('%R') %></td>
+      </tr>
+      <tr class="admin-t-row">
         <th class="admin-t-head"><%= User.human_attribute_name(:gender) %></th>
         <td class="admin-t-data"><%= @user.gender_i18n %></td>
       </tr>
