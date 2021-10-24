@@ -32,6 +32,7 @@
                   prepend-icon="mdi-clock-time-four-outline"
                   color="base"
                   dark
+                  readonly
                   v-bind="attrs"
                   v-on="on"
                 ></v-text-field>
