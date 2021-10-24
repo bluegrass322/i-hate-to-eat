@@ -94,6 +94,21 @@ class User < ApplicationRecord
              carbohydrate: calc_amount_carbo.floor } }
   end
 
+  # LINE自動通知機能用
+  def set_line_notification_text
+    text = +"#{Time.zone.today}\n"
+    total_cal = 0
+
+    foods = suggested_foods
+    foods.each do |f|
+      +text << "\n#{f.name} #{f.subname}: #{ (f.reference_amount * 100).floor }g"
+      total_cal += (f.calorie * f.reference_amount).floor
+    end
+    text << "\n#{total_cal} / #{(bmr).floor}kcal"
+
+    return text
+  end
+
   private
 
     def set_attributes_for_bmr
