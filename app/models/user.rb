@@ -8,6 +8,13 @@ class User < ApplicationRecord
   has_many :suggestions, dependent: :destroy
   has_many :suggested_foods, through: :suggestions, source: :food
 
+  # Scopes
+  scope :linked_line, -> { where.not(line_user_id: nil) }
+  scope :notice_enable, -> { where(line_notification_enabled: true) }
+  scope :set_mealtime, -> { where.not(mealtime_first: nil) }
+  scope :wish_line_notice, -> { linked_line.notice_enable.set_mealtime }
+
+
   # Encryption
   encrypts :line_user_id
   blind_index :line_user_id
