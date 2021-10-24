@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resource :registration, only: %i[create]
       resource :authentication, only: %i[create destroy]
       resource :mypage, only: %i[show]
+      resource :user_account, only: %i[show update]
       resource :bmr, only: %i[update]
       resource :users_dietary_reference_intake, only: %i[update]
       resource :suggestion, only: %i[show]
@@ -75,6 +76,9 @@ end
 #                 api_v1_authentication DELETE /api/v1/authentication(.:format)                                                         api/v1/authentications#destroy {:format=>/json/}
 #                                       POST   /api/v1/authentication(.:format)                                                         api/v1/authentications#create {:format=>/json/}
 #                         api_v1_mypage GET    /api/v1/mypage(.:format)                                                                 api/v1/mypages#show {:format=>/json/}
+#                   api_v1_user_account GET    /api/v1/user_account(.:format)                                                           api/v1/user_accounts#show {:format=>/json/}
+#                                       PATCH  /api/v1/user_account(.:format)                                                           api/v1/user_accounts#update {:format=>/json/}
+#                                       PUT    /api/v1/user_account(.:format)                                                           api/v1/user_accounts#update {:format=>/json/}
 #                            api_v1_bmr PATCH  /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
 #                                       PUT    /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
 # api_v1_users_dietary_reference_intake PATCH  /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
