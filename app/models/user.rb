@@ -8,6 +8,12 @@ class User < ApplicationRecord
   has_many :suggestions, dependent: :destroy
   has_many :suggested_foods, through: :suggestions, source: :food
 
+  # Scopes
+  scope :linked_line, -> { where.not(line_user_id: nil) }
+  scope :notice_enable, -> { where(line_notification_enabled: true) }
+  scope :set_mealtime, -> { where.not(mealtime_first: nil) }
+  scope :wish_line_notice, -> { linked_line.notice_enable.set_mealtime }
+
   # Encryption
   encrypts :line_user_id
   blind_index :line_user_id
@@ -44,6 +50,8 @@ class User < ApplicationRecord
   validates :password, length: { minimum: 5 }, if: :new_or_changes_password
   validates :password, confirmation: true, if: :new_or_changes_password
   validates :password_confirmation, presence: true, if: :new_or_changes_password
+  validates :line_notification_enabled, inclusion: { in: [true, false] }
+  validates :mealtime_first, mealtime: true, allow_nil: true
 
   # Instance methods
   def calc_age
@@ -69,6 +77,13 @@ class User < ApplicationRecord
     }
   end
 
+  def set_account_params
+    {
+      line_notification_enabled: line_notification_enabled,
+      mealtime_first: mealtime_first&.strftime('%R')
+    }
+  end
+
   def set_attributes_for_pfc
     { pct: { protein: percentage_protein,
              fat: percentage_fat,
@@ -76,6 +91,21 @@ class User < ApplicationRecord
       amt: { protein: calc_amount_protein.floor,
              fat: calc_amount_fat.floor,
              carbohydrate: calc_amount_carbo.floor } }
+  end
+
+  # LINE自動通知機能用
+  def set_line_notification_text
+    text = Time.zone.today.to_s
+    total_cal = 0
+
+    foods = suggested_foods
+    foods.each do |f|
+      text << "\n- #{f.name} #{f.subname}: #{(f.reference_amount * 100).floor}g"
+      total_cal += (f.calorie * f.reference_amount).floor
+    end
+    text << "\n\n#{total_cal} / #{bmr.floor}kcal"
+
+    text
   end
 
   private
@@ -119,8 +149,10 @@ end
 #  gender                      :integer          default("female"), not null
 #  height                      :integer          default(0), not null
 #  line_nonce                  :string
+#  line_notification_enabled   :boolean          default(FALSE), not null
 #  line_user_id_bidx           :string
 #  line_user_id_ciphertext     :text
+#  mealtime_first              :time
 #  name                        :string           default("noname"), not null
 #  percentage_carbohydrate     :float            default(0.6), not null
 #  percentage_fat              :float            default(0.2), not null

@@ -16,7 +16,7 @@
         </v-row>
       </v-tab-item>
       <v-tab-item class="tab-item">
-        <p>comming soon...</p>
+        <my-page-account-form />
       </v-tab-item>
       <v-tab-item class="tab-item">
         <p>comming soon...</p>
@@ -28,11 +28,13 @@
 <script>
 import BmrForm from '../parts/BmrForm';
 import MyPageDriIndex from '../parts/MyPageDriIndex';
+import MyPageAccountForm from '../parts/MyPageAccountForm';
 
 export default {
   components: {
     BmrForm,
     MyPageDriIndex,
+    MyPageAccountForm,
   },
   mounted() {
     this.setData();

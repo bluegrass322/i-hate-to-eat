@@ -1,33 +1,6 @@
 # frozen_string_literal: true
 
 namespace :scheduler do
-  desc "動作確認用"
-  task test_scheduler: :environment do
-    puts "Scheduler test is works."
-  end
-
-  desc "LINEプッシュメッセージ送信テスト"
-  task push_line_message_test: :environment do
-    require 'line/bot'
-
-    User.where.not(line_user_id: nil).find_each do |user|
-      to_name = user.name
-      to_id = user.line_user_id
-      bmr = user.bmr
-
-      message = {
-        type: "text",
-        text: "#{to_name}さんのBMR: #{bmr}kcal"
-      }
-      client = Line::Bot::Client.new do |config|
-        config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
-        config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
-      end
-      response = client.push_message(to_id, message)
-      p response
-    end
-  end
-
   desc "期限切れのsuggestionを削除"
   task destroy_expied_suggestions: :environment do
     User.find_each do |user|
@@ -67,6 +40,58 @@ namespace :scheduler do
       rescue StandardError => e
         Rails.logger.warn "User#{user.id}: Failed to save the suggestion. Cause...'#{e}'"
       end
+    end
+  end
+
+  desc "ユーザーの設定した時間に食事内容を通知"
+  task notice_suggestion: :environment do
+    require 'line/bot'
+
+    t = Time.zone.now
+    time_now = t - (t.to_i % (60 * 30))
+
+    User.wish_line_notice.find_each do |user|
+      if user.mealtime_first.strftime('%R') == time_now.strftime('%R')
+        to_id = user.line_user_id
+
+        text = user.set_line_notification_text
+        message = { type: "text", text: text }
+
+        client = Line::Bot::Client.new do |config|
+          config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
+          config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
+        end
+        response = client.push_message(to_id, message)
+        p response
+      end
+    end
+  end
+
+  # 以下動作テスト用のタスク
+  desc "動作確認用"
+  task test_scheduler: :environment do
+    puts "Scheduler test is works."
+  end
+
+  desc "LINEプッシュメッセージ送信テスト"
+  task push_line_message_test: :environment do
+    require 'line/bot'
+
+    User.where.not(line_user_id: nil).find_each do |user|
+      to_name = user.name
+      to_id = user.line_user_id
+      bmr = user.bmr
+
+      message = {
+        type: "text",
+        text: "#{to_name}さんのBMR: #{bmr}kcal"
+      }
+      client = Line::Bot::Client.new do |config|
+        config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
+        config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
+      end
+      response = client.push_message(to_id, message)
+      p response
     end
   end
 end
