@@ -14,7 +14,6 @@ class User < ApplicationRecord
   scope :set_mealtime, -> { where.not(mealtime_first: nil) }
   scope :wish_line_notice, -> { linked_line.notice_enable.set_mealtime }
 
-
   # Encryption
   encrypts :line_user_id
   blind_index :line_user_id
@@ -101,12 +100,12 @@ class User < ApplicationRecord
 
     foods = suggested_foods
     foods.each do |f|
-      +text << "\n#{f.name} #{f.subname}: #{ (f.reference_amount * 100).floor }g"
+      +text << "\n#{f.name} #{f.subname}: #{(f.reference_amount * 100).floor}g"
       total_cal += (f.calorie * f.reference_amount).floor
     end
-    text << "\n#{total_cal} / #{(bmr).floor}kcal"
+    text << "\n#{total_cal} / #{bmr.floor}kcal"
 
-    return text
+    text
   end
 
   private

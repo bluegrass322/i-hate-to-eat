@@ -48,26 +48,26 @@
                 min="7:00"
                 max="23:00"
                 scrollable
-                width="270"
+                full-width
               >
-              <v-btn
-                outlined
-                small
-                tile
-                clor="primary"
-                @click="timePicker = false"
-              >
-                Cancel
-              </v-btn>
-              <v-btn
-                outlined
-                small
-                tile
-                color="primary"
-                @click="$refs.dialog.save(user.mealtime_first)"
-              >
-                OK
-              </v-btn>
+                <v-btn
+                  outlined
+                  small
+                  tile
+                  clor="primary"
+                  @click="timePicker = false"
+                >
+                  Cancel
+                </v-btn>
+                <v-btn
+                  outlined
+                  small
+                  tile
+                  color="primary"
+                  @click="$refs.dialog.save(user.mealtime_first)"
+                >
+                  OK
+                </v-btn>
               </v-time-picker>
             </v-dialog>
           </div>
@@ -94,7 +94,7 @@ export default {
         message: '',
         errorMessages: [],
       },
-    }
+    };
   },
   mounted() {
     this.setAccount();
@@ -122,7 +122,7 @@ export default {
           this.$store.commit('flashMessage/setMessage', {
             type: 'success',
             message: '更新に成功しました',
-          })
+          });
         })
         .catch((error) => {
           let e = error.response;
@@ -139,8 +139,8 @@ export default {
           }
         });
     },
-    allowedHours: v => v >= 7 && v <= 23,
-    allowedMinutes: m => m % 10 === 0,
-  }
+    allowedHours: (v) => v >= 7 && v <= 23,
+    allowedMinutes: (m) => m % 30 === 0,
+  },
 };
 </script>

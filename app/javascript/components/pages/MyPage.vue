@@ -34,7 +34,7 @@ export default {
   components: {
     BmrForm,
     MyPageDriIndex,
-    MyPageAccountForm
+    MyPageAccountForm,
   },
   mounted() {
     this.setData();

@@ -61,7 +61,7 @@ namespace :scheduler do
           config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
           config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
         end
-        response = client.push_message(to_id, message)
+        client.push_message(to_id, message)
       end
     end
   end
