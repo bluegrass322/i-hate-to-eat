@@ -70,6 +70,9 @@
                 </v-btn>
               </v-time-picker>
             </v-dialog>
+            <div class="base--text text-caption">
+              ※サーバーの負荷などの要因により通知のタイミングが数分ほど遅れる場合があります
+            </div>
           </div>
         </v-card-text>
         <v-card-actions>
