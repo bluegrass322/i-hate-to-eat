@@ -49,19 +49,24 @@ namespace :scheduler do
 
     t = Time.zone.now
     time_now = t - (t.to_i % (60 * 30))
+    Rails.logger.debug "Time now: #{time_now}"
 
     User.wish_line_notice.find_each do |user|
+      Rails.logger.debug "User: #{user.name}"
+
       if user.mealtime_first.strftime('%R') == time_now.strftime('%R')
         to_id = user.line_user_id
 
         text = user.set_line_notification_text
         message = { type: "text", text: text }
+        Rails.logger.debug "Message: #{message}"
 
         client = Line::Bot::Client.new do |config|
           config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
           config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
         end
-        client.push_message(to_id, message)
+        response = client.push_message(to_id, message)
+        p response
       end
     end
   end
