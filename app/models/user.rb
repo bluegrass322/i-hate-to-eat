@@ -95,15 +95,15 @@ class User < ApplicationRecord
 
   # LINE自動通知機能用
   def set_line_notification_text
-    text = +"#{Time.zone.today}\n"
+    text = +"#{Time.zone.today}"
     total_cal = 0
 
     foods = suggested_foods
     foods.each do |f|
-      +text << "\n#{f.name} #{f.subname}: #{(f.reference_amount * 100).floor}g"
+      text << "\n- #{f.name} #{f.subname}: #{(f.reference_amount * 100).floor}g"
       total_cal += (f.calorie * f.reference_amount).floor
     end
-    text << "\n#{total_cal} / #{bmr.floor}kcal"
+    text << "\n\n#{total_cal} / #{bmr.floor}kcal"
 
     text
   end
