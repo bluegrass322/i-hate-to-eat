@@ -95,7 +95,7 @@ class User < ApplicationRecord
 
   # LINE自動通知機能用
   def set_line_notification_text
-    text = +"#{Time.zone.today}"
+    text = Time.zone.today.to_s
     total_cal = 0
 
     foods = suggested_foods
