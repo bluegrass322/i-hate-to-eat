@@ -123,12 +123,7 @@ module Line
         target_user = User.where(line_user_id: line_id)[0]
 
         if target_user.present?
-          foods = target_user.suggested_foods
-          text = "#{Time.zone.today}"
-
-          foods.each do |f|
-            text = text + "\n  #{f.name} #{f.subname}: #{ (f.reference_amount * 100).floor }g"
-          end
+          text = target_user.set_line_notification_text
           set_reply_text(text)
         else
           set_reply_text("ユーザーの取得に失敗しました")
