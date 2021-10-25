@@ -23,6 +23,9 @@ Metrics/BlockLength:
     - 'spec/**/*'
   Max: 85
 
+Metrics/ClassLength:
+  Max: 120
+
 Layout/LineLength:
   Exclude:
     - 'config/**/*'
