@@ -15,6 +15,8 @@ class User < ApplicationRecord
   scope :wish_line_notice, -> { linked_line.notice_enable.set_mealtime }
 
   # Encryption
+  encrypts :email
+  blind_index :email
   encrypts :line_user_id
   blind_index :line_user_id
 
