@@ -79,6 +79,8 @@ class User < ApplicationRecord
 
   def set_account_params
     {
+      name: name,
+      email: email,
       line_notification_enabled: line_notification_enabled,
       mealtime_first: mealtime_first&.strftime('%R')
     }
