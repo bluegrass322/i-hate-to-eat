@@ -22,7 +22,7 @@ end
 #  line_user_id_bidx           :string
 #  line_user_id_ciphertext     :text
 #  mealtime_first              :time
-#  name                        :string           default("noname"), not null
+#  name                        :string           not null
 #  percentage_carbohydrate     :float            default(0.6), not null
 #  percentage_fat              :float            default(0.2), not null
 #  percentage_protein          :float            default(0.2), not null
@@ -38,6 +38,7 @@ end
 #  index_users_on_dietary_reference_intake_id  (dietary_reference_intake_id)
 #  index_users_on_email_bidx                   (email_bidx) UNIQUE
 #  index_users_on_line_user_id_bidx            (line_user_id_bidx) UNIQUE
+#  index_users_on_name                         (name) UNIQUE
 #
 # Foreign Keys
 #
