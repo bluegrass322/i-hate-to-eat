@@ -15,16 +15,16 @@
           </template>
           <validation-provider
             v-slot="{ errors }"
-            name="メールアドレス"
-            rules="email|required"
+            name="ユーザーネーム"
+            rules="required"
           >
             <v-text-field
-              v-model="email"
+              v-model="name"
               :error-messages="errors"
               color="base"
               dark
-              type="email"
-              label="メールアドレス"
+              type="name"
+              label="ユーザーネーム"
               required
             />
           </validation-provider>
@@ -57,7 +57,7 @@
 export default {
   data() {
     return {
-      email: '',
+      name: '',
       password: '',
       railsErrors: {
         show: false,
@@ -70,7 +70,7 @@ export default {
     loginUser() {
       this.axios
         .post('api/v1/authentication', {
-          email: this.email,
+          name: this.name,
           password: this.password,
         })
         .then((response) => {

@@ -3,8 +3,8 @@
     <h4>管理者用ログイン</h4>
     <%= form_with url: admin_login_path, local: true do |f| %>
       <div class="admin-login-form-group">
-        <%= f.label :email, class: "admin-login-form-label" %><br>
-        <%= f.email_field :email, class: "admin-login-form-text" %>
+        <%= f.label :name, class: "admin-login-form-label" %><br>
+        <%= f.text_field :name, class: "admin-login-form-text" %>
       </div>
       <div class="admin-login-form-group">
         <%= f.label :password, class: "admin-login-form-label" %><br>
