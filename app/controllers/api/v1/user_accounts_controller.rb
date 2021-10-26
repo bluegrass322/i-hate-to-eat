@@ -19,7 +19,7 @@ module Api
       private
 
         def user_params
-          params.require(:user).permit(:line_notification_enabled, :mealtime_first)
+          params.require(:user).permit(:name, :email, :line_notification_enabled, :mealtime_first)
         end
     end
   end
