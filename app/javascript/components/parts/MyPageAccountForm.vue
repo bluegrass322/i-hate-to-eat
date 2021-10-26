@@ -1,24 +1,62 @@
 <template>
-  <v-card id="account-form" color="primary" flat tile>
     <validation-observer ref="observer" v-slot="{ handleSubmit }">
-      <v-form @submit.prevent="handleSubmit(updateAccount)">
-        <v-card-text>
-          <template v-if="railsErrors.show">
-            <v-alert class="text-center" dense type="error">
-              <template v-for="e in railsErrors.errorMessages">
-                <p :key="e">{{ e }}</p>
-              </template>
-            </v-alert>
-          </template>
+      <v-form @submit.prevent="handleSubmit(updateAccount)" id="account-form">
+        <template v-if="railsErrors.show">
+          <v-alert class="text-center" dense type="error">
+            <template v-for="e in railsErrors.errorMessages">
+              <p :key="e">{{ e }}</p>
+            </template>
+          </v-alert>
+        </template>
 
-          <v-switch
-            v-model="user.line_notification_enabled"
+        <validation-provider
+          v-slot="{ errors }"
+          name="ユーザーネーム"
+          rules="required"
+        >
+          <v-text-field
+            v-model="user.name"
+            :error-messages="errors"
             color="base"
             dark
             dense
-            flat
-            label="LINE通知機能"
-          ></v-switch>
+            type="text"
+            label="ユーザーネーム"
+            prepend-icon="mdi-account-outline"
+            required
+            class="form-item"
+          />
+        </validation-provider>
+        <validation-provider
+          v-slot="{ errors }"
+          name="メールアドレス"
+          rules="email|required"
+        >
+          <v-text-field
+            v-model="user.email"
+            :error-messages="errors"
+            color="base"
+            dark
+            dense
+            type="email"
+            label="メールアドレス"
+            prepend-icon="mdi-email-outline"
+            required
+            class="form-item"
+          />
+        </validation-provider>
+        <div class="form-item line-form">
+          <div class="line-form-switch">
+            <v-switch
+              v-model="user.line_notification_enabled"
+              color="base"
+              dark
+              dense
+              flat
+              inset
+              label="LINE通知機能"
+            ></v-switch>
+          </div>
           <div v-show="user.line_notification_enabled">
             <v-dialog
               ref="dialog"
@@ -29,16 +67,17 @@
                 <v-text-field
                   v-model="user.mealtime_first"
                   label="食事内容を通知する時間"
-                  prepend-icon="mdi-clock-time-four-outline"
                   color="base"
                   dark
+                  dense
+                  prepend-icon="mdi-clock-time-four-outline"
                   readonly
                   v-bind="attrs"
                   v-on="on"
                 ></v-text-field>
               </template>
               <v-time-picker
-                v-if="timePicker"
+                v-show="timePicker"
                 v-model="user.mealtime_first"
                 :allowed-hours="allowedHours"
                 :allowed-minutes="allowedMinutes"
@@ -71,16 +110,21 @@
               </v-time-picker>
             </v-dialog>
             <div class="base--text text-caption">
-              ※サーバーの負荷などの要因により通知のタイミングが数分ほど遅れる場合があります
+              ※サーバーへの負荷などの要因により通知のタイミングが数分ほど遅れる場合があります
+            </div>
+            <div>
+              <a href="https://lin.ee/czet3Px">
+                <img src="https://scdn.line-apps.com/n/line_add_friends/btn/ja.png" alt="友だち追加" height="36" border="0">
+              </a>
             </div>
           </div>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn type="submit" color="base" outlined>更新</v-btn>
-        </v-card-actions>
-      </v-form>
-    </validation-observer>
-  </v-card>
+        </div>
+        <div class="base--text text-caption">
+          ※パスワードの変更は、お手数ですがログインページ下部の「パスワードをリセットする」から行ってください
+        </div>
+        <v-btn type="submit" color="base" outlined tile small width="120">更新</v-btn>
+    </v-form>
+  </validation-observer>
 </template>
 
 <script>
@@ -92,6 +136,7 @@ export default {
         mealtime_first: '',
       },
       timePicker: false,
+      passwordForm: false,
       railsErrors: {
         show: false,
         message: '',
@@ -147,3 +192,22 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#account-form {
+  text-align: center;
+}
+.form-item {
+  margin-bottom: 30px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.line-form-switch {
+  margin-bottom: 20px;
+}
+
+.v-text-field {
+  max-width: 350px;
+}
+</style>
