@@ -29,7 +29,7 @@ class User < ApplicationRecord
   validates_with PfcValidator
 
   with_options presence: true do
-    validates :name, length: { maximum: 50 }
+    validates :name, length: { maximum: 50 }, uniqueness: { case_sensitive: true }
     validates :email, uniqueness: { case_sensitive: false }
     validates :role
     validates :gender
