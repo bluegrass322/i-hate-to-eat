@@ -10,7 +10,7 @@ module Line
 
     def create
       # 連携手順3. 自社サービスのユーザーIDを取得する
-      login_user = login(params[:email], params[:password])
+      login_user = login(params[:name], params[:password])
 
       if login_user
         link_token = params[:link_token]
