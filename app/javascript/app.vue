@@ -22,6 +22,6 @@ export default {
 
 <style scoped>
 #app {
-  background-color: #2C4C6B;
+  background-color: #2c4c6b;
 }
 </style>
