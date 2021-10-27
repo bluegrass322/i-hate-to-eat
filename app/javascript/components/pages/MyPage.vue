@@ -19,7 +19,7 @@
         <my-page-account-form />
       </v-tab-item>
       <v-tab-item class="tab-item">
-        <p>comming soon...</p>
+        <my-page-withdrawal-form />
       </v-tab-item>
     </v-tabs>
   </v-container>
@@ -29,12 +29,14 @@
 import BmrForm from '../parts/BmrForm';
 import MyPageDriIndex from '../parts/MyPageDriIndex';
 import MyPageAccountForm from '../parts/MyPageAccountForm';
+import MyPageWithdrawalForm from '../parts/MyPageWithdrawalForm';
 
 export default {
   components: {
     BmrForm,
     MyPageDriIndex,
     MyPageAccountForm,
+    MyPageWithdrawalForm,
   },
   mounted() {
     this.setData();
