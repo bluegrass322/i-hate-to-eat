@@ -64,6 +64,7 @@ export default {
           });
 
           this.$router.push({ name: 'TopPage' });
+          this.$router.go({path: this.$router.currentRoute.path, force: true})
         })
         .catch((error) => {
           let e = error.response;
