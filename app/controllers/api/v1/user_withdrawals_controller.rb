@@ -2,15 +2,15 @@ module Api
   module V1
     class UserWithdrawalsController < Api::V1::BaseController
       def show
-        id = current_user.id
-        name = current_user.name
-
-        render json: { id: id, name: name }
+        u = current_user
+        render json: { id: u.id, name: u.name }
       end
 
       def destroy
-        current_user.destroy!
-        # セッションの削除
+        user = User.find(params[:id])
+        logout
+
+        user.destroy!
         head :ok
       end
     end
