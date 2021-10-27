@@ -2,7 +2,8 @@
   <div>
     <div>
       <span class="base--text">
-        ユーザー情報（メールアドレス・LINE IDなどの情報を含む）を削除し、サービスの利用を中止します。
+        ユーザー情報（メールアドレス・LINE
+        IDなどの情報を含む）を削除し、サービスの利用を中止します。
       </span>
       <v-btn
         color="base"
@@ -19,13 +20,7 @@
     </div>
 
     <v-dialog v-model="confirmModal">
-      <v-card
-        flat
-        tile
-        color="primary"
-        width="120"
-        class="foods-card-contents"
-      >
+      <v-card flat tile color="primary" width="120" class="foods-card-contents">
         <v-card-text class="pa-0 text-caption text-center base--text">
           <div>{{ user.name }}さん</div>
           <div></div>
@@ -69,7 +64,7 @@ export default {
         name: '',
       },
       confirmModal: false,
-    }
+    };
   },
   mounted() {
     this.setUserName();
@@ -88,7 +83,7 @@ export default {
     },
     acceptWithdrawal(user_id) {
       this.axios
-        .delete('/api/v1/user_withdrawal', { data: {id: user_id}})
+        .delete('/api/v1/user_withdrawal', { data: { id: user_id } })
         .then((response) => {
           console.log(response.status);
 
