@@ -22,6 +22,7 @@ Rails.application.routes.draw do
       resource :authentication, only: %i[create destroy]
       resource :mypage, only: %i[show]
       resource :user_account, only: %i[show update]
+      resource :user_withdrawal, only: %i[show destroy]
       resource :bmr, only: %i[update]
       resource :users_dietary_reference_intake, only: %i[update]
       resource :suggestion, only: %i[show]
@@ -79,6 +80,8 @@ end
 #                   api_v1_user_account GET    /api/v1/user_account(.:format)                                                           api/v1/user_accounts#show {:format=>/json/}
 #                                       PATCH  /api/v1/user_account(.:format)                                                           api/v1/user_accounts#update {:format=>/json/}
 #                                       PUT    /api/v1/user_account(.:format)                                                           api/v1/user_accounts#update {:format=>/json/}
+#                api_v1_user_withdrawal GET    /api/v1/user_withdrawal(.:format)                                                        api/v1/user_withdrawals#show {:format=>/json/}
+#                                       DELETE /api/v1/user_withdrawal(.:format)                                                        api/v1/user_withdrawals#destroy {:format=>/json/}
 #                            api_v1_bmr PATCH  /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
 #                                       PUT    /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
 # api_v1_users_dietary_reference_intake PATCH  /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
