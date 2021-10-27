@@ -10,7 +10,7 @@ module Admin
     def new; end
 
     def create
-      @user = login(params[:email], params[:password])
+      @user = login(params[:name], params[:password])
 
       if @user
         redirect_to admin_root_path, notice: "ログイン成功"

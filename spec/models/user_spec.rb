@@ -14,7 +14,8 @@ end
 #  birth                       :date
 #  bmr                         :float            default(0.0), not null
 #  crypted_password            :string
-#  email                       :string           default("address@example.com"), not null
+#  email_bidx                  :string           not null
+#  email_ciphertext            :text             not null
 #  gender                      :integer          default("female"), not null
 #  height                      :integer          default(0), not null
 #  line_nonce                  :string
@@ -22,7 +23,7 @@ end
 #  line_user_id_bidx           :string
 #  line_user_id_ciphertext     :text
 #  mealtime_first              :time
-#  name                        :string           default("noname"), not null
+#  name                        :string           not null
 #  percentage_carbohydrate     :float            default(0.6), not null
 #  percentage_fat              :float            default(0.2), not null
 #  percentage_protein          :float            default(0.2), not null
@@ -36,8 +37,9 @@ end
 # Indexes
 #
 #  index_users_on_dietary_reference_intake_id  (dietary_reference_intake_id)
-#  index_users_on_email                        (email) UNIQUE
+#  index_users_on_email_bidx                   (email_bidx) UNIQUE
 #  index_users_on_line_user_id_bidx            (line_user_id_bidx) UNIQUE
+#  index_users_on_name                         (name) UNIQUE
 #
 # Foreign Keys
 #

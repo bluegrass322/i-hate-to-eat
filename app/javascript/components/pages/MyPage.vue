@@ -134,7 +134,7 @@ export default {
 }
 
 .tab-item {
-  background-color: #f5f5f6;
+  background-color: #2c4c6b;
   padding: 30px 25px;
 }
 </style>

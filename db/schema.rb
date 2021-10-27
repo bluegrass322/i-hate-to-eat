@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_23_062812) do
+ActiveRecord::Schema.define(version: 2021_10_26_130203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -125,8 +125,7 @@ ActiveRecord::Schema.define(version: 2021_10_23_062812) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "name", default: "noname", null: false
-    t.string "email", default: "address@example.com", null: false
+    t.string "name", null: false
     t.string "crypted_password"
     t.string "salt"
     t.integer "role", default: 0, null: false
@@ -146,9 +145,12 @@ ActiveRecord::Schema.define(version: 2021_10_23_062812) do
     t.string "line_user_id_bidx"
     t.time "mealtime_first"
     t.boolean "line_notification_enabled", default: false, null: false
+    t.text "email_ciphertext", null: false
+    t.string "email_bidx", null: false
     t.index ["dietary_reference_intake_id"], name: "index_users_on_dietary_reference_intake_id"
-    t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["email_bidx"], name: "index_users_on_email_bidx", unique: true
     t.index ["line_user_id_bidx"], name: "index_users_on_line_user_id_bidx", unique: true
+    t.index ["name"], name: "index_users_on_name", unique: true
   end
 
   add_foreign_key "foods", "food_categories"

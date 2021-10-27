@@ -3,10 +3,11 @@
 
   <div class="line-login-form">
     <h4>LINE連携用ログイン</h4>
+    <!-- TODO: フォームは管理者用ログインと共有にする -->
     <%= form_with url: line_link_path, local: true do |f| %>
       <div class="line-login-form-group">
-        <%= f.label :email, class: "line-login-form-label" %><br>
-        <%= f.email_field :email, class: "line-login-form-text" %>
+        <%= f.label :name, class: "line-login-form-label" %><br>
+        <%= f.text_field :name, class: "line-login-form-text" %>
       </div>
       <div class="line-login-form-group">
         <%= f.label :password, class: "line-login-form-label" %><br>
