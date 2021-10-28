@@ -9,7 +9,7 @@ class DietaryReferenceIntake < ApplicationRecord
 
   # Scopes
   scope :for_female, -> { where(gender: 'female') }
-  scope :for_maele, -> { where(gender: 'male') }
+  scope :for_male, -> { where(gender: 'male') }
 
   # Validations
   with_options presence: true do
