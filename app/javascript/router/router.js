@@ -20,21 +20,20 @@ const router = new VueRouter({
       component: TopPage,
       name: 'TopPage',
       meta: { isPublic: true },
-      children: [
-        {
-          path: 'register',
-          component: RegisterPage,
-          name: 'RegisterPage',
-          meta: { isPublic: true },
-        },
-        {
-          path: 'login',
-          component: LoginPage,
-          name: 'LoginPage',
-          meta: { isPublic: true },
-        },
-      ],
     },
+    {
+      path: '/register',
+      component: RegisterPage,
+      name: 'RegisterPage',
+      meta: { isPublic: true },
+    },
+    {
+      path: '/login',
+      component: LoginPage,
+      name: 'LoginPage',
+      meta: { isPublic: true },
+    },
+    // 以下、要ログイン
     {
       path: '/home',
       component: HomePage,

@@ -94,6 +94,10 @@ export default {
           });
 
           this.$router.push({ name: 'TopPage' });
+          this.$router.go({
+            path: this.$router.currentRoute.path,
+            force: true,
+          });
         })
         .catch((e) => {
           console.error(e.response.status);
