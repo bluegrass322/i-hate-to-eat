@@ -1,4 +1,7 @@
 class EatenFood < ApplicationRecord
+  # Validations
+  validates :amount, presence: true, numericality: true
+  validates :meal_records_id, uniqueness: { scope: [:foods_id] }
 end
 
 # == Schema Information
