@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_26_130203) do
+ActiveRecord::Schema.define(version: 2021_10_28_152852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,44 @@ ActiveRecord::Schema.define(version: 2021_10_26_130203) do
     t.index ["food_category_id"], name: "index_foods_on_food_category_id"
   end
 
+  create_table "meal_records", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.float "calorie", default: 0.0, null: false
+    t.float "protein", default: 0.0, null: false
+    t.float "fat", default: 0.0, null: false
+    t.float "carbohydrate", default: 0.0, null: false
+    t.float "vitamin_a", default: 0.0, null: false
+    t.float "vitamin_d", default: 0.0, null: false
+    t.float "vitamin_e", default: 0.0, null: false
+    t.float "vitamin_k", default: 0.0, null: false
+    t.float "vitamin_b1", default: 0.0, null: false
+    t.float "vitamin_b2", default: 0.0, null: false
+    t.float "niacin", default: 0.0, null: false
+    t.float "vitamin_b6", default: 0.0, null: false
+    t.float "vitamin_b12", default: 0.0, null: false
+    t.float "folate", default: 0.0, null: false
+    t.float "pantothenic_acid", default: 0.0, null: false
+    t.float "biotin", default: 0.0, null: false
+    t.float "vitamin_c", default: 0.0, null: false
+    t.float "potassium", default: 0.0, null: false
+    t.float "calcium", default: 0.0, null: false
+    t.float "magnesium", default: 0.0, null: false
+    t.float "phosphorus", default: 0.0, null: false
+    t.float "iron", default: 0.0, null: false
+    t.float "zinc", default: 0.0, null: false
+    t.float "copper", default: 0.0, null: false
+    t.float "manganese", default: 0.0, null: false
+    t.float "iodine", default: 0.0, null: false
+    t.float "selenium", default: 0.0, null: false
+    t.float "chromium", default: 0.0, null: false
+    t.float "molybdenum", default: 0.0, null: false
+    t.date "ate_at", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id", "ate_at"], name: "index_meal_records_on_user_id_and_ate_at", unique: true
+    t.index ["user_id"], name: "index_meal_records_on_user_id"
+  end
+
   create_table "suggestions", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "food_id", null: false
@@ -154,6 +192,7 @@ ActiveRecord::Schema.define(version: 2021_10_26_130203) do
   end
 
   add_foreign_key "foods", "food_categories"
+  add_foreign_key "meal_records", "users"
   add_foreign_key "suggestions", "foods"
   add_foreign_key "suggestions", "users"
   add_foreign_key "users", "dietary_reference_intakes"
