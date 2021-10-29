@@ -1,4 +1,39 @@
 class MealRecord < ApplicationRecord
+  # Validations
+  with_options presence: true do
+    with_options numericality: true do
+      validates :biotin
+      validates :calcium
+      validates :calorie
+      validates :carbohydrate
+      validates :chromium
+      validates :copper
+      validates :fat
+      validates :folate
+      validates :iodine
+      validates :iron
+      validates :magnesium
+      validates :manganese
+      validates :molybdenum
+      validates :niacin
+      validates :pantothenic_acid
+      validates :phosphorus
+      validates :potassium
+      validates :protein
+      validates :selenium
+      validates :vitamin_a
+      validates :vitamin_b1
+      validates :vitamin_b12
+      validates :vitamin_b2
+      validates :vitamin_b6
+      validates :vitamin_c
+      validates :vitamin_d
+      validates :vitamin_e
+      validates :vitamin_k
+      validates :zinc
+    end
+    validates :ate_at, uniqueness: { scope: [:user_id] }
+  end  
 end
 
 # == Schema Information
