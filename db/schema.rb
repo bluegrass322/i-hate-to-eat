@@ -65,13 +65,13 @@ ActiveRecord::Schema.define(version: 2021_10_29_052649) do
   end
 
   create_table "eaten_foods", force: :cascade do |t|
-    t.bigint "meal_records_id", null: false
-    t.bigint "foods_id", null: false
+    t.bigint "meal_record_id", null: false
+    t.bigint "food_id", null: false
     t.float "amount", default: 1.0, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["foods_id"], name: "index_eaten_foods_on_foods_id"
-    t.index ["meal_records_id"], name: "index_eaten_foods_on_meal_records_id"
+    t.index ["food_id"], name: "index_eaten_foods_on_food_id"
+    t.index ["meal_record_id"], name: "index_eaten_foods_on_meal_record_id"
   end
 
   create_table "food_categories", force: :cascade do |t|
@@ -201,8 +201,8 @@ ActiveRecord::Schema.define(version: 2021_10_29_052649) do
     t.index ["name"], name: "index_users_on_name", unique: true
   end
 
-  add_foreign_key "eaten_foods", "foods", column: "foods_id"
-  add_foreign_key "eaten_foods", "meal_records", column: "meal_records_id"
+  add_foreign_key "eaten_foods", "foods"
+  add_foreign_key "eaten_foods", "meal_records"
   add_foreign_key "foods", "food_categories"
   add_foreign_key "meal_records", "users"
   add_foreign_key "suggestions", "foods"
