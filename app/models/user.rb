@@ -7,6 +7,7 @@ class User < ApplicationRecord
   belongs_to :dietary_reference_intake
   has_many :suggestions, dependent: :destroy
   has_many :suggested_foods, through: :suggestions, source: :food
+  has_many :meal_records, dependent: :destroy
 
   # Scopes
   scope :linked_line, -> { where.not(line_user_id: nil) }

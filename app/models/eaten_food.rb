@@ -1,4 +1,8 @@
 class EatenFood < ApplicationRecord
+  # Associations
+  belongs_to :meal_record
+  belongs_to :food
+
   # Validations
   validates :amount, presence: true, numericality: true
   validates :meal_record_id, uniqueness: { scope: [:food_id] }

@@ -4,6 +4,7 @@ class Food < ApplicationRecord
   # Associations
   belongs_to :food_category
   has_many :suggestions, dependent: :destroy
+  has_many :eaten_foods, dependent: :destroy
 
   # Scopes
   scope :prio_h, -> { where(priority: 15) }

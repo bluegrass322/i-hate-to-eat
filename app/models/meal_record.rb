@@ -1,4 +1,9 @@
 class MealRecord < ApplicationRecord
+  # Associations
+  belongs_to :user
+  has_many :eaten_foods, dependent: :destroy
+  has_many :recorded_foods, through: :eaten_foods, source: :food
+
   # Validations
   with_options presence: true do
     with_options numericality: true do
