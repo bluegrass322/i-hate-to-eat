@@ -25,7 +25,8 @@ Rails.application.routes.draw do
       resource :user_withdrawal, only: %i[show destroy]
       resource :bmr, only: %i[update]
       resource :users_dietary_reference_intake, only: %i[update]
-      resource :suggestion, only: %i[show]
+      resource :suggestion, only: %i[show destroy]
+      resources :meal_records, only: %i[index show create]
       resources :food_categories, only: %i[] do
         resources :foods, only: %i[show]
       end
@@ -87,6 +88,10 @@ end
 # api_v1_users_dietary_reference_intake PATCH  /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
 #                                       PUT    /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
 #                     api_v1_suggestion GET    /api/v1/suggestion(.:format)                                                             api/v1/suggestions#show {:format=>/json/}
+#                                       DELETE /api/v1/suggestion(.:format)                                                             api/v1/suggestions#destroy {:format=>/json/}
+#                   api_v1_meal_records GET    /api/v1/meal_records(.:format)                                                           api/v1/meal_records#index {:format=>/json/}
+#                                       POST   /api/v1/meal_records(.:format)                                                           api/v1/meal_records#create {:format=>/json/}
+#                    api_v1_meal_record GET    /api/v1/meal_records/:id(.:format)                                                       api/v1/meal_records#show {:format=>/json/}
 #             api_v1_food_category_food GET    /api/v1/food_categories/:food_category_id/foods/:id(.:format)                            api/v1/foods#show {:format=>/json/}
 #                         line_callback POST   /line/callback(.:format)                                                                 line/linebot#callback {:format=>/json/}
 #                             line_link GET    /line/link(.:format)                                                                     line/authentications#link
