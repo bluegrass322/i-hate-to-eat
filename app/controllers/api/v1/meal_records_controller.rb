@@ -1,6 +1,8 @@
 module Api
   module V1
-    class MealRecordController < Api::V1::BaseController
+    class MealRecordsController < Api::V1::BaseController
+      include MealRecordCreatable
+
       def index
       end
 
