@@ -2,7 +2,7 @@
 
 namespace :scheduler do
   desc "期限切れのsuggestionを削除"
-  task destroy_expied_suggestions: :environment do
+  task destroy_expired_suggestions: :environment do
     User.find_each do |user|
       Suggestion.transaction do
         expired_suggestion = user.suggestions.where("expires_at < ?", Time.zone.today)
