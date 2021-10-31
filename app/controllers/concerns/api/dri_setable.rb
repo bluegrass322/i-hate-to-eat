@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Api
-  module UsersDri
+  module DriSetable
     extend ActiveSupport::Concern
 
     def set_reference_intake(user)
