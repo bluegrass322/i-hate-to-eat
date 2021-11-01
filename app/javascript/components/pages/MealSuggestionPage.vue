@@ -1,6 +1,6 @@
 <template>
   <v-container class="container">
-    <v-row  v-if="suggestionsExists" class="suggestion-row">
+    <v-row v-if="suggestionsExists" class="suggestion-row">
       <v-col cols="12" md="6" class="pa-0">
         <div class="suggestion-item">
           <div class="base--text suggestion-items-title">
