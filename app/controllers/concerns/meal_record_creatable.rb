@@ -2,21 +2,26 @@
 
 module MealRecordCreatable
   extend ActiveSupport::Concern
+  include SuggestionsDestroyable
 
   def make_record_from_suggestion(user)
     @today = Time.zone.today
 
     suggestions = user.suggestions.for_today
+    Rails.logger.debug "Suggestions: #{suggestions}"
     foods = user.suggested_foods
+    Rails.logger.debug "Foods: #{foods}"
     return false if suggestions.blank? || foods.blank?
 
     params = get_intake_total(foods)
+    Rails.logger.debug "Params: #{params}"
 
     begin
       Suggestion.transaction do
         record = create_meal_record(user, params)
         create_eaten_foods(record, foods)
         destroy_suggestions_all(suggestions)
+        true
       end
     rescue StandardError => e
       # TODO: 例外処理を修正
