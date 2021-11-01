@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class EatenFood < ApplicationRecord
   # Associations
   belongs_to :meal_record
@@ -21,8 +23,9 @@ end
 #
 # Indexes
 #
-#  index_eaten_foods_on_food_id         (food_id)
-#  index_eaten_foods_on_meal_record_id  (meal_record_id)
+#  index_eaten_foods_on_food_id                     (food_id)
+#  index_eaten_foods_on_meal_record_id              (meal_record_id)
+#  index_eaten_foods_on_meal_record_id_and_food_id  (meal_record_id,food_id) UNIQUE
 #
 # Foreign Keys
 #

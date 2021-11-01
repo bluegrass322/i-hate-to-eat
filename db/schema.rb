@@ -71,6 +71,7 @@ ActiveRecord::Schema.define(version: 2021_10_29_052649) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["food_id"], name: "index_eaten_foods_on_food_id"
+    t.index ["meal_record_id", "food_id"], name: "index_eaten_foods_on_meal_record_id_and_food_id", unique: true
     t.index ["meal_record_id"], name: "index_eaten_foods_on_meal_record_id"
   end
 

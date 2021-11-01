@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe EatenFood, type: :model do
@@ -17,8 +19,9 @@ end
 #
 # Indexes
 #
-#  index_eaten_foods_on_food_id         (food_id)
-#  index_eaten_foods_on_meal_record_id  (meal_record_id)
+#  index_eaten_foods_on_food_id                     (food_id)
+#  index_eaten_foods_on_meal_record_id              (meal_record_id)
+#  index_eaten_foods_on_meal_record_id_and_food_id  (meal_record_id,food_id) UNIQUE
 #
 # Foreign Keys
 #

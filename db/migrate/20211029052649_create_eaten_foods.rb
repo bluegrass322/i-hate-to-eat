@@ -6,6 +6,7 @@ class CreateEatenFoods < ActiveRecord::Migration[6.0]
 
       t.float :amount, null: false, default: 1.0
 
+      t.index [:meal_record_id, :food_id], unique: true
       t.timestamps
     end
   end
