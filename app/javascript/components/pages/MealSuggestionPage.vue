@@ -6,7 +6,7 @@
           <div class="base--text suggestion-items-title">
             <span class="suggestion-items-title-text">Today's meal</span>
           </div>
-          <div class="meal-menus" v-if="suggestionsExists">
+          <div v-if="suggestionsExists" class="meal-menus">
             <template v-for="f in suggestions">
               <v-sheet :key="f.id" color="base" class="foods-card">
                 <v-card
@@ -65,7 +65,7 @@
               </v-btn>
             </div>
           </div>
-          <div class="none-menus base--text" v-else>
+          <div v-else class="none-menus base--text">
             <span>{{ noneMessage }}</span>
           </div>
         </div>
@@ -114,7 +114,7 @@ export default {
         })
         .catch((e) => {
           console.error(e.response.status);
-        })
+        });
     },
     destroySuggestions() {
       this.axios
@@ -125,7 +125,7 @@ export default {
         })
         .catch((e) => {
           console.error(e.response.status);
-        })
+        });
     },
     setSuggestions() {
       this.axios

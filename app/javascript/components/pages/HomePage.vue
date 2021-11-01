@@ -50,7 +50,7 @@ export default {
         })
         .catch((e) => {
           console.log(e.response.status);
-        })
+        });
     },
     setDate() {
       dayjs.extend(utc);
