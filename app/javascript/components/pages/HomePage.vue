@@ -10,6 +10,9 @@
       <p>ユーザーID: {{ userId }}</p>
       <p>ログイン: {{ isLoggedIn }}</p>
     </div>
+    <div>
+      <span>{{ mealRecords }}</span>
+    </div>
   </v-container>
 </template>
 
@@ -23,6 +26,7 @@ export default {
   data() {
     return {
       date: '',
+      mealRecords: '',
     };
   },
   computed: {
@@ -33,8 +37,21 @@ export default {
   },
   mounted() {
     this.setDate();
+    this.setMealRecords();
   },
   methods: {
+    setMealRecords() {
+      this.axios
+        .get('/api/v1/home')
+        .then((res) => {
+          console.log(res.status);
+          console.log(res);
+          this.mealRecords = res.data.records;
+        })
+        .catch((e) => {
+          console.log(e.response.status);
+        })
+    },
     setDate() {
       dayjs.extend(utc);
       dayjs.extend(timezone);
