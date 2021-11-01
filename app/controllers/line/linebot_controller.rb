@@ -155,7 +155,7 @@ module Line
         target_user = User.where(line_user_id: line_id)[0]
 
         if target_user.present?
-          text = target_user.set_line_notification_text
+          text = target_user.make_meal_message_for_line_notification
           set_reply_text(text)
         else
           set_reply_text("ユーザーの取得に失敗しました")

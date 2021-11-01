@@ -99,7 +99,15 @@ class User < ApplicationRecord
   end
 
   # LINE自動通知機能用
-  def set_line_notification_message
+  # confirmあり
+  def set_line_notification_cofirm
+    text = make_meal_message_for_line_notification
+    set_line_confirm_eat_or_not(text)
+  end
+
+  # LINE自動通知機能用
+  # confirmなし
+  def make_meal_message_for_line_notification
     text = Time.zone.today.to_s
     total_cal = 0
 
@@ -109,8 +117,6 @@ class User < ApplicationRecord
       total_cal += (f.calorie * f.reference_amount).floor
     end
     text << "\n\n計#{total_cal} / #{bmr.floor}kcalが摂取できます"
-
-    set_line_confirm_eat_or_not(text)
   end
 
   private
