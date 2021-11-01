@@ -159,7 +159,7 @@ module Line
         if make_record_from_suggestion(user)
           set_reply_text("great!!")
         else
-          set_reply_text("登録処理に失敗しました")
+          set_reply_text("既に登録済みか、または何らかの原因により登録処理に失敗しました")
         end
       end
   end
