@@ -3,7 +3,7 @@
 module Api
   module V1
     class UsersDietaryReferenceIntakesController < Api::V1::BaseController
-      include UsersDri
+      include DriSetable
       before_action :set_user
 
       def update

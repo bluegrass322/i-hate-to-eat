@@ -1,6 +1,6 @@
 <template>
   <v-container class="container">
-    <v-row class="suggestion-row">
+    <v-row v-if="suggestionsExists" class="suggestion-row">
       <v-col cols="12" md="6" class="pa-0">
         <div class="suggestion-item">
           <div class="base--text suggestion-items-title">
@@ -42,6 +42,28 @@
                 </v-card>
               </v-sheet>
             </template>
+            <div>
+              <v-btn
+                color="base"
+                dark
+                text
+                outlined
+                small
+                @click.stop="createMealRecord()"
+              >
+                食べる
+              </v-btn>
+              <v-btn
+                color="base"
+                dark
+                text
+                outlined
+                small
+                @click.stop="destroySuggestions()"
+              >
+                食べない
+              </v-btn>
+            </div>
           </div>
         </div>
       </v-col>
@@ -50,6 +72,11 @@
           <nutrients-achievement />
         </div>
       </v-col>
+    </v-row>
+    <v-row v-else class="none-message">
+      <div class="none-menus base--text">
+        <span>{{ noneMessage }}</span>
+      </div>
     </v-row>
   </v-container>
 </template>
@@ -66,13 +93,42 @@ export default {
   data() {
     return {
       suggestions: {},
+      suggestionsExists: false,
       showDetail: false,
+      noneMessage: '本日の食事メニューは存在しません',
     };
   },
   mounted() {
     this.setSuggestions();
   },
   methods: {
+    createMealRecord() {
+      this.axios
+        .post('/api/v1/meal_records')
+        .then((res) => {
+          console.log(res.status);
+
+          this.initializeSuggestions();
+          this.$store.commit('flashMessage/setMessage', {
+            type: 'success',
+            message: '記録を作成しました',
+          });
+        })
+        .catch((e) => {
+          console.error(e.response.status);
+        });
+    },
+    destroySuggestions() {
+      this.axios
+        .delete('/api/v1/suggestion')
+        .then((res) => {
+          console.log(res.status);
+          this.initializeSuggestions();
+        })
+        .catch((e) => {
+          console.error(e.response.status);
+        });
+    },
     setSuggestions() {
       this.axios
         .get('/api/v1/suggestion')
@@ -80,14 +136,16 @@ export default {
           console.log(res.status);
           const r = res.data;
 
+          this.suggestionsExists = true;
           this.suggestions = r.meals;
+
           this.$store.dispatch('nutrientsAchievements/setAttributes', {
             totals: r.total,
             achvs: r.achv,
           });
         })
         .catch((e) => {
-          console.error(e);
+          console.error(e.response.status);
         });
     },
     setFoodDetails(categoryId, foodId) {
@@ -104,6 +162,10 @@ export default {
           console.error(e.response.status);
         });
     },
+    initializeSuggestions() {
+      this.suggestions = {};
+      this.suggestionsExists = false;
+    },
   },
 };
 </script>
@@ -112,6 +174,10 @@ export default {
 .container {
   margin: 0;
   padding: 0;
+}
+
+.none-message {
+  margin: 30px 20px;
 }
 
 .suggestion-row {

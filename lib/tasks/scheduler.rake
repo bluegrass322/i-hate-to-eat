@@ -2,7 +2,7 @@
 
 namespace :scheduler do
   desc "期限切れのsuggestionを削除"
-  task destroy_expied_suggestions: :environment do
+  task destroy_expired_suggestions: :environment do
     User.find_each do |user|
       Suggestion.transaction do
         expired_suggestion = user.suggestions.where("expires_at < ?", Time.zone.today)
@@ -54,8 +54,7 @@ namespace :scheduler do
       if user.mealtime_first.strftime('%R') == time_now.strftime('%R')
         to_id = user.line_user_id
 
-        text = user.set_line_notification_text
-        message = { type: "text", text: text }
+        message = user.set_line_notification_cofirm
 
         client = Line::Bot::Client.new do |config|
           config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]

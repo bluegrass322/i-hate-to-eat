@@ -3,17 +3,31 @@
 module Api
   module V1
     class SuggestionsController < Api::V1::BaseController
+      include SuggestionsDestroyable
+
       def show
         foods = current_user.suggested_foods
         amt_pfc = current_user.set_attributes_for_pfc[:amt]
 
-        total = get_intake_total(foods)
-        achv = get_achievement(total,
-                               current_user.bmr,
-                               current_user.dietary_reference_intake,
-                               amt_pfc)
+        if foods.present?
+          total = get_intake_total(foods)
+          achv = get_achievement(total,
+                                 current_user.bmr,
+                                 current_user.dietary_reference_intake,
+                                 amt_pfc)
 
-        render json: { meals: foods, total: total, achv: achv }
+          render json: { meals: foods, total: total, achv: achv }
+        else
+          render404(nil, "本日の食事メニューは存在しません")
+        end
+      end
+
+      def destroy
+        if destroy_suggestions_all(current_user)
+          head :ok
+        else
+          render400(nil, '食事内容の削除に失敗しました')
+        end
       end
 
       private

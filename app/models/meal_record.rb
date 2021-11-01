@@ -1,26 +1,17 @@
 # frozen_string_literal: true
 
-class Food < ApplicationRecord
+class MealRecord < ApplicationRecord
   # Associations
-  belongs_to :food_category
-  has_many :suggestions, dependent: :destroy
+  belongs_to :user
   has_many :eaten_foods, dependent: :destroy
+  has_many :recorded_foods, through: :eaten_foods, source: :food
 
   # Scopes
-  scope :prio_h, -> { where(priority: 15) }
-  scope :prio_m, -> { where(priority: 10) }
-  scope :prio_r, -> { where(priority: 5) }
-  scope :prio_rm, -> { where(priority: 5..10) }
-  scope :maindish, -> { where(food_category_id: [10, 11]) }
-  scope :sidedish, -> { where(food_category_id: 1..9) }
+  scope :for_today, -> { where(ate_at: Time.zone.today) }
 
   # Validations
   with_options presence: true do
-    validates :name, length: { maximum: 30 }
-
     with_options numericality: true do
-      validates :priority
-      validates :reference_amount
       validates :biotin
       validates :calcium
       validates :calorie
@@ -51,23 +42,22 @@ class Food < ApplicationRecord
       validates :vitamin_k
       validates :zinc
     end
+    validates :ate_at, uniqueness: { scope: [:user_id] }
   end
-  validates :subname, length: { maximum: 30 }
-  validates :description, length: { maximum: 400 }
 end
 
 # == Schema Information
 #
-# Table name: foods
+# Table name: meal_records
 #
 #  id               :bigint           not null, primary key
+#  ate_at           :date             not null
 #  biotin           :float            default(0.0), not null
 #  calcium          :float            default(0.0), not null
 #  calorie          :float            default(0.0), not null
 #  carbohydrate     :float            default(0.0), not null
 #  chromium         :float            default(0.0), not null
 #  copper           :float            default(0.0), not null
-#  description      :text
 #  fat              :float            default(0.0), not null
 #  folate           :float            default(0.0), not null
 #  iodine           :float            default(0.0), not null
@@ -75,16 +65,12 @@ end
 #  magnesium        :float            default(0.0), not null
 #  manganese        :float            default(0.0), not null
 #  molybdenum       :float            default(0.0), not null
-#  name             :string           default("noname"), not null
 #  niacin           :float            default(0.0), not null
 #  pantothenic_acid :float            default(0.0), not null
 #  phosphorus       :float            default(0.0), not null
 #  potassium        :float            default(0.0), not null
-#  priority         :integer          default(0), not null
 #  protein          :float            default(0.0), not null
-#  reference_amount :float            default(1.0), not null
 #  selenium         :float            default(0.0), not null
-#  subname          :string
 #  vitamin_a        :float            default(0.0), not null
 #  vitamin_b1       :float            default(0.0), not null
 #  vitamin_b12      :float            default(0.0), not null
@@ -97,13 +83,14 @@ end
 #  zinc             :float            default(0.0), not null
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  food_category_id :bigint
+#  user_id          :bigint           not null
 #
 # Indexes
 #
-#  index_foods_on_food_category_id  (food_category_id)
+#  index_meal_records_on_user_id             (user_id)
+#  index_meal_records_on_user_id_and_ate_at  (user_id,ate_at) UNIQUE
 #
 # Foreign Keys
 #
-#  fk_rails_...  (food_category_id => food_categories.id)
+#  fk_rails_...  (user_id => users.id)
 #
