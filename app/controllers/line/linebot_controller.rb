@@ -148,14 +148,19 @@ module Line
         set_reply_text(text)
       end
 
+      # 既にmeal_recrdが存在する
+      # 既にsuggestionが存在しない場合
       def donot_eat_meals(user)
         destroy_suggestions_all(user)
         set_reply_text("OK!")
       end
 
       def eat_meals(user)
-        make_record_from_suggestion(user)
-        set_reply_text("great!!")
+        if make_record_from_suggestion(user)
+          set_reply_text("great!!")
+        else
+          set_reply_text("登録処理に失敗しました")
+        end
       end
   end
 end
