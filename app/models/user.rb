@@ -64,7 +64,7 @@ class User < ApplicationRecord
   def calc_bmr
     age = calc_age
 
-    # 国立健康・栄養研究所の式（Ganpule の式）を使用
+    # 国立健康・栄養研究所の式（Ganpuleの式）を使用
     if gender == 'female'
       (0.0481 * weight + 0.0234 * height - 0.0138 * age - 0.9708) * 1000 / 4.186
     else
@@ -101,13 +101,13 @@ class User < ApplicationRecord
   # LINE自動通知機能用
   # confirmあり
   def set_line_notification_cofirm
-    text = make_meal_message_for_line_notification
+    text = make_meal_menu_for_line
     set_line_confirm_eat_or_not(text)
   end
 
   # LINE自動通知機能用
   # confirmなし
-  def make_meal_message_for_line_notification
+  def make_meal_menu_for_line
     text = Time.zone.today.to_s
     total_cal = 0
 
@@ -116,7 +116,7 @@ class User < ApplicationRecord
       text << "\n- #{f.name} #{f.subname}: #{(f.reference_amount * 100).floor}g"
       total_cal += (f.calorie * f.reference_amount).floor
     end
-    text << "\n\n計#{total_cal} / #{bmr.floor}kcalが摂取できます"
+    text << "\n\n計 #{total_cal} / #{bmr.floor}kcal が摂取できます"
   end
 
   private
@@ -148,24 +148,18 @@ class User < ApplicationRecord
     end
 
     def set_line_confirm_eat_or_not(text)
-      { type: "template",
-        altText: "this is a confirm template",
+      {
+        type: "template",
+        altText: "本日の食事内容をお知らせします",
         template: {
           type: "confirm",
           text: text,
           actions: [
-            {
-              "type": "message",
-              "label": "食べない",
-              "text": "食べない"
-            },
-            {
-              "type": "message",
-              "label": "食べる",
-              "text": "食べる"
-            }
+            { "type": "message", "label": "食べない", "text": "食べない" },
+            { "type": "message", "label": "食べる", "text": "食べる" }
           ]
-        } }
+        }
+      }
     end
 end
 

@@ -56,15 +56,9 @@ module Line
       end
 
       # LINEアカウント連携解除
-      def disconnecting_accounts(line_id)
-        target_user = User.where(line_user_id: line_id)
-
-        if target_user.present?
-          target_user.each { |u| u.update!(line_user_id: nil) }
-          set_reply_text("LINEアカウントの連携を解除しました")
-        else
-          set_reply_text("ユーザーの取得に失敗しました")
-        end
+      def disconnecting_accounts(user)
+        user.update!(line_user_id: nil)
+        set_reply_text("LINEアカウントの連携を解除しました")
       end
 
       # アカウント連携完了後、プッシュメッセージを送信
@@ -83,19 +77,20 @@ module Line
 
       # Event::Messageのテキストの内容により処理を振り分ける
       def reply_text_message(event)
-        line_id = event["source"]["userId"]
+        user = User.where(line_user_id: event["source"]["userId"]).limit(1)[0]
+        return reply_user_not_found if user.blank?
 
         case event.message["text"]
         when "アカウント連携解除"
-          disconnecting_accounts(line_id)
+          disconnecting_accounts(user)
         when "BMR & PFC"
-          set_users_bmr_pfc(line_id)
+          set_users_bmr_pfc(user)
         when "today's menu"
-          set_users_suggested_foods(line_id)
+          set_users_suggested_foods(user)
         when "食べない"
-          user_donot_eat(line_id)
+          donot_eat_meals(user)
         when "食べる"
-          user_eat(line_id)
+          eat_meals(user)
         else
           # 所定の文言以外にはエラーメッセージを返す
           set_reply_text("ちょっと何言ってるかわからない")
@@ -127,61 +122,40 @@ module Line
         }
       end
 
-      # テキストメッセージの作成
+      # 汎用：テキストメッセージの作成
       def set_reply_text(text)
         { type: 'text', text: text }
       end
 
+      def reply_user_not_found
+        { type: 'text', text: "ユーザーの取得に失敗しました" }
+      end
+
       # ユーザーのBMR/PFC情報を返答
-      def set_users_bmr_pfc(line_id)
-        target_user = User.where(line_user_id: line_id)[0]
+      def set_users_bmr_pfc(user)
+        pfc = user.set_attributes_for_pfc[:amt]
+        text = "#{user.name}さん \n" +
+                "BMR: #{user.bmr}kcal \n" +
+                "P: #{pfc[:protein]}g \n" +
+                "F: #{pfc[:fat]}g \n" +
+                "C: #{pfc[:carbohydrate]}g"
 
-        if target_user.present?
-          bmr = target_user.bmr
-          pfc = target_user.set_attributes_for_pfc[:amt]
-
-          text = "#{target_user.name}さん \n" +
-                 "BMR: #{bmr}kcal \n" +
-                 "P: #{pfc[:protein]}g \n" +
-                 "F: #{pfc[:fat]}g \n" +
-                 "C: #{pfc[:carbohydrate]}g"
-          set_reply_text(text)
-        else
-          set_reply_text("ユーザーの取得に失敗しました")
-        end
+        set_reply_text(text)
       end
 
-      def set_users_suggested_foods(line_id)
-        target_user = User.where(line_user_id: line_id)[0]
-
-        if target_user.present?
-          text = target_user.make_meal_message_for_line_notification
-          set_reply_text(text)
-        else
-          set_reply_text("ユーザーの取得に失敗しました")
-        end
+      def set_users_suggested_foods(user)
+        text = user.make_meal_menu_for_line
+        set_reply_text(text)
       end
 
-      def user_eat(line_id)
-        user = User.where(line_user_id: line_id)
-
-        if user.present?
-          make_record_from_suggestion(user)
-          set_reply_text("great!!")
-        else
-          set_reply_text("ユーザーの取得に失敗しました")
-        end
+      def donot_eat_meals(user)
+        destroy_suggestions_all(user)
+        set_reply_text("OK!")
       end
 
-      def user_donot_eat(line_id)
-        user = User.where(line_user_id: line_id)
-
-        if user.present?
-          destroy_suggestions_all(user)
-          set_reply_text("OK!")
-        else
-          set_reply_text("ユーザーの取得に失敗しました")
-        end
+      def eat_meals(user)
+        make_record_from_suggestion(user)
+        set_reply_text("great!!")
       end
   end
 end
