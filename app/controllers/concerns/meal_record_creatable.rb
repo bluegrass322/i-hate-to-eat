@@ -8,13 +8,10 @@ module MealRecordCreatable
     @today = Time.zone.today
 
     suggestions = user.suggestions.for_today
-    Rails.logger.debug "Suggestions: #{suggestions}"
     foods = user.suggested_foods
-    Rails.logger.debug "Foods: #{foods}"
     return false if suggestions.blank? || foods.blank?
 
     params = get_intake_total(foods)
-    Rails.logger.debug "Params: #{params}"
 
     begin
       Suggestion.transaction do
