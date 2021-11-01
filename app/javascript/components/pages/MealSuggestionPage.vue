@@ -1,12 +1,12 @@
 <template>
   <v-container class="container">
-    <v-row class="suggestion-row">
+    <v-row  v-if="suggestionsExists" class="suggestion-row">
       <v-col cols="12" md="6" class="pa-0">
         <div class="suggestion-item">
           <div class="base--text suggestion-items-title">
             <span class="suggestion-items-title-text">Today's meal</span>
           </div>
-          <div v-if="suggestionsExists" class="meal-menus">
+          <div class="meal-menus">
             <template v-for="f in suggestions">
               <v-sheet :key="f.id" color="base" class="foods-card">
                 <v-card
@@ -65,9 +65,6 @@
               </v-btn>
             </div>
           </div>
-          <div v-else class="none-menus base--text">
-            <span>{{ noneMessage }}</span>
-          </div>
         </div>
       </v-col>
       <v-col cols="12" md="6" class="pa-0">
@@ -75,6 +72,11 @@
           <nutrients-achievement />
         </div>
       </v-col>
+    </v-row>
+    <v-row v-else class="none-message">
+      <div class="none-menus base--text">
+        <span>{{ noneMessage }}</span>
+      </div>
     </v-row>
   </v-container>
 </template>
@@ -172,6 +174,10 @@ export default {
 .container {
   margin: 0;
   padding: 0;
+}
+
+.none-message {
+  margin: 30px 20px;
 }
 
 .suggestion-row {
