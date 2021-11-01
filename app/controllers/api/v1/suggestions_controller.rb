@@ -9,12 +9,12 @@ module Api
         foods = current_user.suggested_foods
         amt_pfc = current_user.set_attributes_for_pfc[:amt]
 
-        unless foods.blank?
+        if foods.present?
           total = get_intake_total(foods)
           achv = get_achievement(total,
-                                current_user.bmr,
-                                current_user.dietary_reference_intake,
-                                amt_pfc)
+                                 current_user.bmr,
+                                 current_user.dietary_reference_intake,
+                                 amt_pfc)
 
           render json: { meals: foods, total: total, achv: achv }
         else

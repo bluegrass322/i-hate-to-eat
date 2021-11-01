@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MealRecord < ApplicationRecord
   # Associations
   belongs_to :user
@@ -38,7 +40,7 @@ class MealRecord < ApplicationRecord
       validates :zinc
     end
     validates :ate_at, uniqueness: { scope: [:user_id] }
-  end  
+  end
 end
 
 # == Schema Information

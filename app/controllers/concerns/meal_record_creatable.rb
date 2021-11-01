@@ -18,7 +18,7 @@ module MealRecordCreatable
         create_eaten_foods(record, foods)
         destroy_suggestions_all(suggestions)
       end
-    rescue => e
+    rescue StandardError => e
       # TODO: 例外処理を修正
       Rails.logger.warn "User#{user.id}: Failed to create meal record. Cause...'#{e}'"
       false
@@ -42,9 +42,7 @@ module MealRecordCreatable
     end
 
     def destroy_suggestions_all(suggestions)
-      suggestions.each do |s|
-        s.destroy!
-      end
+      suggestions.each(&:destroy!)
     end
 
     def get_intake_total(foods)

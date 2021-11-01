@@ -8,12 +8,10 @@ module SuggestionsDestroyable
     return render404(nil, "Suggestionが存在しません") if suggestions.blank?
 
     begin
-      Suggestion.transaction do  
-        suggestions.each do |s|
-          s.destroy!
-        end
+      Suggestion.transaction do
+        suggestions.each(&:destroy!)
       end
-    rescue => e
+    rescue StandardError => e
       # TODO: 例外処理を修正
       Rails.logger.warn "User#{user.id}: Failed to create meal record. Cause...'#{e}'"
       false

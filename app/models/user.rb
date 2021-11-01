@@ -159,8 +159,7 @@ class User < ApplicationRecord
               "text": "食べる"
             }
           ]
-        }
-      }  
+        } }
     end
 end
 
