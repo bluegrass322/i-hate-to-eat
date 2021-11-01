@@ -18,18 +18,19 @@ Rails.application.routes.draw do
 
   namespace :api, format: 'json' do
     namespace :v1 do
-      resource :registration, only: %i[create]
       resource :authentication, only: %i[create destroy]
-      resource :mypage, only: %i[show]
-      resource :user_account, only: %i[show update]
-      resource :user_withdrawal, only: %i[show destroy]
       resource :bmr, only: %i[update]
-      resource :users_dietary_reference_intake, only: %i[update]
-      resource :suggestion, only: %i[show destroy]
-      resources :meal_records, only: %i[index show create]
       resources :food_categories, only: %i[] do
         resources :foods, only: %i[show]
       end
+      resource :home, only: %i[show]
+      resources :meal_records, only: %i[index show create]
+      resource :mypage, only: %i[show]
+      resource :registration, only: %i[create]
+      resource :suggestion, only: %i[show destroy]
+      resource :user_account, only: %i[show update]
+      resource :users_dietary_reference_intake, only: %i[update]
+      resource :user_withdrawal, only: %i[show destroy]
     end
   end
 
@@ -74,25 +75,26 @@ end
 #                                       PUT    /admin/foods/:id(.:format)                                                               admin/foods#update
 #                                       DELETE /admin/foods/:id(.:format)                                                               admin/foods#destroy
 #                     admin_suggestions GET    /admin/suggestions(.:format)                                                             admin/suggestions#index
-#                   api_v1_registration POST   /api/v1/registration(.:format)                                                           api/v1/registrations#create {:format=>/json/}
 #                 api_v1_authentication DELETE /api/v1/authentication(.:format)                                                         api/v1/authentications#destroy {:format=>/json/}
 #                                       POST   /api/v1/authentication(.:format)                                                         api/v1/authentications#create {:format=>/json/}
-#                         api_v1_mypage GET    /api/v1/mypage(.:format)                                                                 api/v1/mypages#show {:format=>/json/}
-#                   api_v1_user_account GET    /api/v1/user_account(.:format)                                                           api/v1/user_accounts#show {:format=>/json/}
-#                                       PATCH  /api/v1/user_account(.:format)                                                           api/v1/user_accounts#update {:format=>/json/}
-#                                       PUT    /api/v1/user_account(.:format)                                                           api/v1/user_accounts#update {:format=>/json/}
-#                api_v1_user_withdrawal GET    /api/v1/user_withdrawal(.:format)                                                        api/v1/user_withdrawals#show {:format=>/json/}
-#                                       DELETE /api/v1/user_withdrawal(.:format)                                                        api/v1/user_withdrawals#destroy {:format=>/json/}
 #                            api_v1_bmr PATCH  /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
 #                                       PUT    /api/v1/bmr(.:format)                                                                    api/v1/bmrs#update {:format=>/json/}
-# api_v1_users_dietary_reference_intake PATCH  /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
-#                                       PUT    /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
-#                     api_v1_suggestion GET    /api/v1/suggestion(.:format)                                                             api/v1/suggestions#show {:format=>/json/}
-#                                       DELETE /api/v1/suggestion(.:format)                                                             api/v1/suggestions#destroy {:format=>/json/}
+#             api_v1_food_category_food GET    /api/v1/food_categories/:food_category_id/foods/:id(.:format)                            api/v1/foods#show {:format=>/json/}
+#                           api_v1_home GET    /api/v1/home(.:format)                                                                   api/v1/homes#show {:format=>/json/}
 #                   api_v1_meal_records GET    /api/v1/meal_records(.:format)                                                           api/v1/meal_records#index {:format=>/json/}
 #                                       POST   /api/v1/meal_records(.:format)                                                           api/v1/meal_records#create {:format=>/json/}
 #                    api_v1_meal_record GET    /api/v1/meal_records/:id(.:format)                                                       api/v1/meal_records#show {:format=>/json/}
-#             api_v1_food_category_food GET    /api/v1/food_categories/:food_category_id/foods/:id(.:format)                            api/v1/foods#show {:format=>/json/}
+#                         api_v1_mypage GET    /api/v1/mypage(.:format)                                                                 api/v1/mypages#show {:format=>/json/}
+#                   api_v1_registration POST   /api/v1/registration(.:format)                                                           api/v1/registrations#create {:format=>/json/}
+#                     api_v1_suggestion GET    /api/v1/suggestion(.:format)                                                             api/v1/suggestions#show {:format=>/json/}
+#                                       DELETE /api/v1/suggestion(.:format)                                                             api/v1/suggestions#destroy {:format=>/json/}
+#                   api_v1_user_account GET    /api/v1/user_account(.:format)                                                           api/v1/user_accounts#show {:format=>/json/}
+#                                       PATCH  /api/v1/user_account(.:format)                                                           api/v1/user_accounts#update {:format=>/json/}
+#                                       PUT    /api/v1/user_account(.:format)                                                           api/v1/user_accounts#update {:format=>/json/}
+# api_v1_users_dietary_reference_intake PATCH  /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
+#                                       PUT    /api/v1/users_dietary_reference_intake(.:format)                                         api/v1/users_dietary_reference_intakes#update {:format=>/json/}
+#                api_v1_user_withdrawal GET    /api/v1/user_withdrawal(.:format)                                                        api/v1/user_withdrawals#show {:format=>/json/}
+#                                       DELETE /api/v1/user_withdrawal(.:format)                                                        api/v1/user_withdrawals#destroy {:format=>/json/}
 #                         line_callback POST   /line/callback(.:format)                                                                 line/linebot#callback {:format=>/json/}
 #                             line_link GET    /line/link(.:format)                                                                     line/authentications#link
 #                                       POST   /line/link(.:format)                                                                     line/authentications#create
