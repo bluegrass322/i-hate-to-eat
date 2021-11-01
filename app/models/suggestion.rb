@@ -5,6 +5,9 @@ class Suggestion < ApplicationRecord
   belongs_to :user
   belongs_to :food
 
+  # Scopes
+  scope :for_today, -> { where(target_date: Time.zone.today) }
+
   # Validations
   with_options presence: true do
     validates :amount

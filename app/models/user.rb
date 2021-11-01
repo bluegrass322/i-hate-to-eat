@@ -99,7 +99,7 @@ class User < ApplicationRecord
   end
 
   # LINE自動通知機能用
-  def set_line_notification_text
+  def set_line_notification_message
     text = Time.zone.today.to_s
     total_cal = 0
 
@@ -108,22 +108,12 @@ class User < ApplicationRecord
       text << "\n- #{f.name} #{f.subname}: #{(f.reference_amount * 100).floor}g"
       total_cal += (f.calorie * f.reference_amount).floor
     end
-    text << "\n\n#{total_cal} / #{bmr.floor}kcal"
+    text << "\n\n計#{total_cal} / #{bmr.floor}kcalが摂取できます"
 
-    text
+    set_line_confirm_eat_or_not(text)
   end
 
   private
-
-    def set_attributes_for_bmr
-      {
-        gender: gender,
-        birth: birth,
-        height: height,
-        weight: weight,
-        bmr: bmr
-      }
-    end
 
     def calc_amount_protein
       bmr * percentage_protein / 4
@@ -139,6 +129,38 @@ class User < ApplicationRecord
 
     def new_or_changes_password
       new_record? || changes[:crypted_password]
+    end
+
+    def set_attributes_for_bmr
+      {
+        gender: gender,
+        birth: birth,
+        height: height,
+        weight: weight,
+        bmr: bmr
+      }
+    end
+
+    def set_line_confirm_eat_or_not(text)
+      { type: "template",
+        altText: "this is a confirm template",
+        template: {
+          type: "confirm",
+          text: text,
+          actions: [
+            {
+              "type": "message",
+              "label": "食べない",
+              "text": "食べない"
+            },
+            {
+              "type": "message",
+              "label": "食べる",
+              "text": "食べる"
+            }
+          ]
+        }
+      }  
     end
 end
 

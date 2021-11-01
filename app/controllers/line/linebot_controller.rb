@@ -3,6 +3,9 @@ module Line
     # LINEからのPOSTはprotect_from_forgeryを通過できない
     protect_from_forgery except: :callback
 
+    include MealRecordCreatable
+    include SuggestionsDestroyable
+
     def callback
       # 送られてきたデータをrubyが扱いやすいよう変換
       events = client.parse_events_from(@body)
@@ -89,10 +92,39 @@ module Line
           set_users_bmr_pfc(line_id)
         when "today's menu"
           set_users_suggested_foods(line_id)
+        when "食べない"
+          user_donot_eat(line_id)
+        when "食べる"
+          user_eat(line_id)
         else
           # 所定の文言以外にはエラーメッセージを返す
           set_reply_text("ちょっと何言ってるかわからない")
         end
+      end
+
+      # アカウント連携用URIの生成
+      def reply_url_for_linking(line_id)
+        # 連携手順1. 連携トークンを発行する
+        response = client.create_link_token(line_id).body
+        parsed_response = JSON.parse(response)
+
+        # 連携手順2. ユーザーを連携URLにリダイレクトする
+        uri = URI("https://i-hate-to-eat.herokuapp.com/line/link")
+        uri.query = URI.encode_www_form({ linkToken: parsed_response["linkToken"] })
+
+        return {
+          type: "template",
+          altText: "アカウント連携用ページ",
+          template: {
+            type: "buttons",
+            text: "以下のURLからログインし、アカウント連携を行ってください \n" + "なお、連携の解除はいつでも行うことができます。",
+            actions: [{
+              type: "uri",
+              label: "アカウント連携ページ",
+              uri: uri
+            }]
+          }
+        }
       end
 
       # テキストメッセージの作成
@@ -130,29 +162,26 @@ module Line
         end
       end
 
-      # アカウント連携用URIの生成
-      def reply_url_for_linking(line_id)
-        # 連携手順1. 連携トークンを発行する
-        response = client.create_link_token(line_id).body
-        parsed_response = JSON.parse(response)
+      def user_eat(line_id)
+        user = User.where(line_user_id: line_id)
 
-        # 連携手順2. ユーザーを連携URLにリダイレクトする
-        uri = URI("https://i-hate-to-eat.herokuapp.com/line/link")
-        uri.query = URI.encode_www_form({ linkToken: parsed_response["linkToken"] })
+        if user.present?
+          make_record_from_suggestion(user)
+          set_reply_text("great!!")
+        else
+          set_reply_text("ユーザーの取得に失敗しました")
+        end
+      end
 
-        return {
-          type: "template",
-          altText: "アカウント連携用ページ",
-          template: {
-            type: "buttons",
-            text: "以下のURLからログインし、アカウント連携を行ってください \n" + "なお、連携の解除はいつでも行うことができます。",
-            actions: [{
-              type: "uri",
-              label: "アカウント連携ページ",
-              uri: uri
-            }]
-          }
-        }
+      def user_donot_eat(line_id)
+        user = User.where(line_user_id: line_id)
+
+        if user.present?
+          destroy_suggestions_all(user)
+          set_reply_text("OK!")
+        else
+          set_reply_text("ユーザーの取得に失敗しました")
+        end
       end
   end
 end

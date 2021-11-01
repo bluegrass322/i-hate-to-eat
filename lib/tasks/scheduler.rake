@@ -54,8 +54,7 @@ namespace :scheduler do
       if user.mealtime_first.strftime('%R') == time_now.strftime('%R')
         to_id = user.line_user_id
 
-        text = user.set_line_notification_text
-        message = { type: "text", text: text }
+        message = user.set_line_notification_message
 
         client = Line::Bot::Client.new do |config|
           config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
