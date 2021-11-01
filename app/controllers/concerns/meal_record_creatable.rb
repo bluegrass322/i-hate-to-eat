@@ -5,8 +5,9 @@ module MealRecordCreatable
   include SuggestionsDestroyable
 
   def make_record_from_suggestion(user)
-    @today = Time.zone.today
+    return false if user.meal_records.for_today.present?
 
+    @today = Time.zone.today
     suggestions = user.suggestions.for_today
     foods = user.suggested_foods
     return false if suggestions.blank? || foods.blank?

@@ -6,6 +6,9 @@ class MealRecord < ApplicationRecord
   has_many :eaten_foods, dependent: :destroy
   has_many :recorded_foods, through: :eaten_foods, source: :food
 
+  # Scopes
+  scope :for_today, -> { where(ate_at: Time.zone.today) }
+
   # Validations
   with_options presence: true do
     with_options numericality: true do
