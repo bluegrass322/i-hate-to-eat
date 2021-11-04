@@ -55,11 +55,11 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import nutrientsCard from '../parts/nutrientsCard';
+import NutrientsCard from '../parts/NutrientsCard';
 
 export default {
   components: {
-    nutrientsCard,
+    NutrientsCard,
   },
   computed: {
     ...mapGetters('foodDetails', [
