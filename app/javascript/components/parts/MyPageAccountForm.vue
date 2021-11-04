@@ -160,9 +160,6 @@ export default {
         .get('/api/v1/user_account')
         .then((res) => {
           console.log(res.status);
-          // 削除
-          console.log(res.data);
-
           this.user = res.data;
         })
         .catch((e) => {
