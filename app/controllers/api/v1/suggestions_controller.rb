@@ -11,10 +11,8 @@ module Api
 
         if foods.present?
           total = get_intake_total(foods)
-          achv = get_achievement(total,
-                                 current_user.bmr,
-                                 current_user.dietary_reference_intake,
-                                 amt_pfc)
+          achv = get_achievement(total, current_user.bmr, amt_pfc,
+                                 current_user.dietary_reference_intake)
 
           render json: { meals: foods, total: total, achv: achv }
         else
@@ -37,9 +35,9 @@ module Api
           total.calc_intake_total(foods)
         end
 
-        def get_achievement(total, bmr, dri, pfc)
+        def get_achievement(total, bmr, pfc, dri)
           achv = IntakeAchievement.new
-          achv.calc_intake_achievement(total, bmr, dri, pfc)
+          achv.calc_intake_achievement(total, bmr, pfc, dri)
         end
     end
   end
