@@ -5,15 +5,13 @@
         {{ date }}
       </span>
     </div>
-    <div class="meal-record-charts">
+    <div v-if="chartLoaded" class="meal-record-charts">
       <radar-chart
-        v-if="chartLoaded"
         :chart-data="radarChart.data"
         :options="radarChart.options"
         class="achieve-chart"
       />
       <v-tabs
-        v-if="chartLoaded"
         background-color="pDark"
         color="base"
         dark
@@ -39,6 +37,9 @@
           />
         </v-tab-item>
       </v-tabs>
+    </div>
+    <div v-else class="none-menus base--text">
+      <span>{{ noneMessage }}</span>
     </div>
     <div>
       <p>ログイン状況</p>
@@ -66,6 +67,7 @@ export default {
     return {
       date: '',
       chartLoaded: false,
+      noneMessage: '本日は食事をとっていません',
       radarChart: {
         data: {
           labels: labelMacros,
@@ -311,6 +313,10 @@ const barChartUnachv = {
 .date-text {
   margin: 0 20px;
   padding: 0;
+}
+
+.none-message {
+  margin: 30px 20px;
 }
 
 .meal-record-charts {
