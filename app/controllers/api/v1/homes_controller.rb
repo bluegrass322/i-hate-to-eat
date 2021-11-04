@@ -13,7 +13,7 @@ module Api
           achv = get_achievement(record, current_user.bmr, amt_pfc,
                                  current_user.dietary_reference_intake)
 
-          macro = get_chart_data_macros(achv)
+          macro = get_radarchart_data(achv)
           vitamin = get_barchart_data(vitamins_label, achv)
           mineral = get_barchart_data(minerals_label, achv)
 
@@ -30,8 +30,8 @@ module Api
           achv.calc_intake_achievement(total, bmr, pfc, dri)
         end
 
-        def get_chart_data_macros(achv)
-          data = ['calorie', 'protein', 'fat', 'carbohydrate']
+        def get_radarchart_data(achv)
+          data = %w[calorie protein fat carbohydrate]
           data.map do |d|
             achv[d]
           end
@@ -39,34 +39,30 @@ module Api
 
         # TODO: 要リファクタリング
         def get_barchart_data(labels, achv)
-          achieve = labels.map{ |l| achv[l] }
+          achieve = labels.map { |l| achv[l] }
           unachieve = achieve.map do |a|
-                        result = 100 - a
-                        if result.negative?
-                          0
-                        else
-                          result
-                        end
-                      end
+            result = 100 - a
+            if result.negative?
+              0
+            else
+              result
+            end
+          end
 
           { achv: achieve, unachv: unachieve }
         end
 
         def vitamins_label
-          [
-            "vitamin_a", "vitamin_d", "vitamin_e", "vitamin_k",
-            "vitamin_b1", "vitamin_b2", "niacin", "vitamin_b6",
-            "vitamin_b12", "folate", "pantothenic_acid",
-            "biotin", "vitamin_c"
-          ]
+          %w[vitamin_a vitamin_d vitamin_e vitamin_k
+             vitamin_b1 vitamin_b2 niacin vitamin_b6
+             vitamin_b12 folate pantothenic_acid
+             biotin vitamin_c]
         end
 
         def minerals_label
-          [
-            "potassium", "calcium", "magnesium", "phosphorus",
-            "iron", "zinc", "copper", "manganese", "iodine",
-            "selenium", "chromium", "molybdenum"
-          ]
+          %w[potassium calcium magnesium phosphorus
+             iron zinc copper manganese iodine
+             selenium chromium molybdenum]
         end
     end
   end

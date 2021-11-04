@@ -12,10 +12,17 @@
         :options="radarChart.options"
         class="achieve-chart"
       />
-      <v-tabs v-if="chartLoaded" background-color="pDark" color="base" dark center-active grow class="achieve-chart achieve-tabs">
+      <v-tabs
+        v-if="chartLoaded"
+        background-color="pDark"
+        color="base"
+        dark
+        center-active
+        grow
+        class="achieve-chart achieve-tabs"
+      >
         <v-tab class="tabs">Vitamin</v-tab>
         <v-tab class="tabs-end">Mineral</v-tab>
-
 
         <v-tab-item class="tab-item">
           <bar-chart
@@ -62,15 +69,17 @@ export default {
       radarChart: {
         data: {
           labels: labelMacros,
-          datasets: [{
-            // dataキーはthis.$setで追加するため書かない
-            backgroundColor: 'rgba(90, 120, 153, 0.5)',
-            borderColor: colorBase['point1'],
-            borderWidth: 1,
-            borderCapStyle: 'butt',
-            borderJoinStyle: 'miter',
-            pointRadius: 0,
-          }],
+          datasets: [
+            {
+              // dataキーはthis.$setで追加するため書かない
+              backgroundColor: 'rgba(90, 120, 153, 0.5)',
+              borderColor: colorBase['point1'],
+              borderWidth: 1,
+              borderCapStyle: 'butt',
+              borderJoinStyle: 'miter',
+              pointRadius: 0,
+            },
+          ],
         },
         options: {
           legend: {
@@ -110,7 +119,7 @@ export default {
             labels: labelVitamins,
             datasets: [
               JSON.parse(JSON.stringify(barChartAchv)),
-              JSON.parse(JSON.stringify(barChartUnachv))
+              JSON.parse(JSON.stringify(barChartUnachv)),
             ],
           },
         },
@@ -119,7 +128,7 @@ export default {
             labels: labelMinerals,
             datasets: [
               JSON.parse(JSON.stringify(barChartAchv)),
-              JSON.parse(JSON.stringify(barChartUnachv))
+              JSON.parse(JSON.stringify(barChartUnachv)),
             ],
           },
         },
@@ -129,31 +138,35 @@ export default {
           },
           // responsive: true,
           scales: {
-            xAxes: [{
-              gridLines: {
-                color: colorBase['point3'],
-                zeroLineColor: colorBase['point5'],
+            xAxes: [
+              {
+                gridLines: {
+                  color: colorBase['point3'],
+                  zeroLineColor: colorBase['point5'],
+                },
+                stacked: true,
+                ticks: {
+                  fontColor: colorBase['point5'],
+                  max: 100,
+                  min: 0,
+                  stepSize: 20,
+                },
               },
-              stacked: true,
-              ticks: {
-                fontColor: colorBase['point5'],
-                max: 100,
-                min: 0,
-                stepSize: 20,
-              }
-            }],
-            yAxes: [{
-              gridLines: {
-                display: false,
+            ],
+            yAxes: [
+              {
+                gridLines: {
+                  display: false,
+                },
+                stacked: true,
+                ticks: {
+                  fontColor: colorBase['point5'],
+                  fontSize: 12,
+                },
               },
-              stacked: true,
-              ticks: {
-                fontColor: colorBase['point5'],
-                fontSize: 12,
-              },
-            }]
+            ],
           },
-        }
+        },
       },
     };
   },
@@ -208,15 +221,34 @@ const labelMacros = ['エネルギー', 'タンパク質', '脂質', '炭水化�
 // const labelMacros = ['Calorie', 'Protein', 'Fat', 'Carbo'];
 
 const labelVitamins = [
-  'ビタミンA', 'ビタミンD', 'ビタミンE', 'ビタミンK',
-  'ビタミンB1', 'ビタミンB2', 'ナイアシン', 'ビタミンB6',
-  'ビタミンB12', '葉酸', 'パントテン酸', 'ビオチン', 'ビタミンC'
+  'ビタミンA',
+  'ビタミンD',
+  'ビタミンE',
+  'ビタミンK',
+  'ビタミンB1',
+  'ビタミンB2',
+  'ナイアシン',
+  'ビタミンB6',
+  'ビタミンB12',
+  '葉酸',
+  'パントテン酸',
+  'ビオチン',
+  'ビタミンC',
 ];
 
 const labelMinerals = [
-  'カリウム', 'カルシウム', 'マグネシウム', 'リン',
-  '鉄', '亜鉛', '銅', 'マンガン', 'ヨウ素',
-  'セレン', 'クロム', 'モリブデン'
+  'カリウム',
+  'カルシウム',
+  'マグネシウム',
+  'リン',
+  '鉄',
+  '亜鉛',
+  '銅',
+  'マンガン',
+  'ヨウ素',
+  'セレン',
+  'クロム',
+  'モリブデン',
 ];
 
 // const labelMacros = ['Calorie', 'Protein', 'Fat', 'Carbo'];
@@ -235,25 +267,28 @@ const labelMinerals = [
 // ];
 
 // チャートで使用するカラー
-const colorBase = { point1: 'rgba(245, 245, 246, 0.1)',
-                    point3: 'rgba(245, 245, 246, 0.3)',
-                    point5: 'rgba(245, 245, 246, 0.5)' };
+const colorBase = {
+  point1: 'rgba(245, 245, 246, 0.1)',
+  point3: 'rgba(245, 245, 246, 0.3)',
+  point5: 'rgba(245, 245, 246, 0.5)',
+};
 
-const barChartAchv = { label: '摂取達成率',
-                       // dataキーはthis.$setで追加するため書かない
-                       backgroundColor: 'rgba(90, 120, 153, 0.8)',
-                       borderColor: colorBase['point3'],
-                       borderWidth: 1,
-                       categoryPercentage: 0.7,
-                     };
-const barChartUnachv = { label: '摂取未達成率率',
-                         // dataキーはthis.$setで追加するため書かない
-                         backgroundColor: 'rgba(44, 76, 107, 0.8)',
-                         borderColor: colorBase['point3'],
-                         borderWidth: 1,
-                         categoryPercentage: 0.7,
-                       };
-
+const barChartAchv = {
+  label: '摂取達成率',
+  // dataキーはthis.$setで追加するため書かない
+  backgroundColor: 'rgba(90, 120, 153, 0.8)',
+  borderColor: colorBase['point3'],
+  borderWidth: 1,
+  categoryPercentage: 0.7,
+};
+const barChartUnachv = {
+  label: '摂取未達成率率',
+  // dataキーはthis.$setで追加するため書かない
+  backgroundColor: 'rgba(44, 76, 107, 0.8)',
+  borderColor: colorBase['point3'],
+  borderWidth: 1,
+  categoryPercentage: 0.7,
+};
 </script>
 
 <style scoped>
