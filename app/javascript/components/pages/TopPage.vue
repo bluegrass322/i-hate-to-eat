@@ -47,7 +47,9 @@
       </v-col>
     </v-row>
     <v-row class="base--text">
-      <router-link to="/register">ユーザー登録してすべての機能を使用する</router-link>
+      <router-link to="/register"
+        >ユーザー登録してすべての機能を使用する</router-link
+      >
     </v-row>
   </v-container>
 </template>

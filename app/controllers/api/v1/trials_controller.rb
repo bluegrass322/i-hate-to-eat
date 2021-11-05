@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class TrialsController < Api::V1::BaseController
@@ -35,7 +37,7 @@ module Api
         def calc_age(birth)
           (Time.zone.today.strftime("%Y%m%d").to_i - birth.to_date.strftime("%Y%m%d").to_i) / 10_000
         end
-      
+
         def calc_bmr(age, gender, weight, height)
           if gender == 'female'
             (0.0481 * weight + 0.0234 * height - 0.0138 * age - 0.9708) * 1000 / 4.186
@@ -53,7 +55,7 @@ module Api
         def calc_amount_protein(bmr)
           bmr * 0.2 / 4
         end
-    
+
         def calc_amount_fat(bmr)
           bmr * 0.2 / 9
         end
