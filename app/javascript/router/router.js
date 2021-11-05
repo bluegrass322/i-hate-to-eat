@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import VueGtag from 'vue-gtag';
 import store from '../store/index';
 
 import TopPage from '../components/pages/TopPage';
@@ -75,5 +76,11 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
+Vue.use(VueGtag, {
+  config: { id: 'UA-212123833-1'},
+  appName: 'I Hate To Eat',
+  pageTrackerScreenviewEnabled: true,
+}, router);
 
 export default router;
