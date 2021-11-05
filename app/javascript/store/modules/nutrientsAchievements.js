@@ -51,19 +51,19 @@ const mutations = {
   setMacro(state, { total, achv }) {
     Object.keys(state.macro).forEach((key) => {
       state.macro[key].total = total[key];
-      state.macro[key].achv = Math.trunc(achv[key] * 100);
+      state.macro[key].achv = achv[key];
     });
   },
   setVitamins(state, { total, achv }) {
     Object.keys(state.vitamins).forEach((key) => {
       state.vitamins[key].total = total[key];
-      state.vitamins[key].achv = Math.trunc(achv[key] * 100);
+      state.vitamins[key].achv = achv[key];
     });
   },
   setMinerals(state, { total, achv }) {
     Object.keys(state.minerals).forEach((key) => {
       state.minerals[key].total = total[key];
-      state.minerals[key].achv = Math.trunc(achv[key] * 100);
+      state.minerals[key].achv = achv[key];
     });
   },
 };

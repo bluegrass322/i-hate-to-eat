@@ -113,10 +113,10 @@
               基礎代謝量: <span class="text-h5 result-bmr">{{ bmr }}</span
               >kcal<br />
               <!-- TODO: PFCの内訳は仮置き -->
-              <span class="text-body-2">
+              <!-- <span class="text-body-2">
                 P: {{ amt.protein }}g / F: {{ amt.fat }}g / C:
                 {{ amt.carbohydrate }}g
-              </span>
+              </span> -->
             </div>
           </div>
         </v-form>
