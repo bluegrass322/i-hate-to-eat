@@ -34,7 +34,11 @@ class User < ApplicationRecord
     validates :email, uniqueness: { case_sensitive: false }
     validates :role
     validates :gender
-    validates :height, numericality: { only_integer: true }
+
+    with_options numericality: { only_integer: true } do
+      validates :height
+      validates :health_savings
+    end
 
     with_options numericality: true do
       validates :weight
