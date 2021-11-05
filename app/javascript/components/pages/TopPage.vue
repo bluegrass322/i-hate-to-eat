@@ -13,7 +13,7 @@
         また本日の食事内容をランダムに生成、それらの合計栄養素と、栄養毎の1日の摂取目標に対する達成度が確認できます。
       </span>
       <span>
-        ブラウザバック、またはページをリロードするとフォームの入力内容はリセットされます
+        なお、ブラウザバック、またはページをリロードするとフォームの入力内容はリセットされます
       </span>
     </v-row>
     <v-row>
@@ -47,9 +47,7 @@
       </v-col>
     </v-row>
     <v-row class="base--text">
-      <router-link to="/register"
-        >ユーザー登録してすべての機能を使用する</router-link
-      >
+      <router-link to="/register">ユーザー登録してすべての機能を使用する</router-link>
     </v-row>
   </v-container>
 </template>
