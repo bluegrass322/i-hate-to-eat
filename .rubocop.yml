@@ -21,6 +21,7 @@ Rails:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+    - 'lib/tasks/scheduler.rake'
   Max: 85
 
 Metrics/ClassLength:
