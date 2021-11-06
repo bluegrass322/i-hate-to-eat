@@ -4,21 +4,21 @@ module Api
   module V1
     class HomesController < Api::V1::BaseController
       def show
-        record = current_user.meal_records.for_today.take
+        savings = current_user.health_savings
+        response = { savings: savings }
 
+        record = current_user.meal_records.for_today.take
         if record.present?
-          savings = current_user.health_savings
           foods = record.recorded_foods.pluck(:id, :name, :subname, :reference_amount)
-          response = { savings: savings, foods: foods }
+          record_data = { foods: foods }
 
           achv = get_achievement(record, current_user)
           chart_data = get_chart_data(achv)
+          record_data = record_data.merge(chart_data)
 
-          response.merge(chart_data)
-          render json: response
-        else
-          render404(nil, "本日の食事メニューは存在しません")
+          response.store("record", record_data)
         end
+        render json: response
       end
 
       private

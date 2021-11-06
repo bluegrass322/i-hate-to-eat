@@ -201,11 +201,12 @@ export default {
           const r = res.data;
 
           this.savings = r.savings;
-          this.$set(this.radarChart.data.datasets[0], 'data', r.macros);
-          this.setBarChartVitamins(r.vitamins);
-          this.setBarChartMinerals(r.minerals);
-
-          this.chartLoaded = true;
+          if (r.record) {
+            this.$set(this.radarChart.data.datasets[0], 'data', r.record.macros);
+            this.setBarChartVitamins(r.record.vitamins);
+            this.setBarChartMinerals(r.record.minerals);
+            this.chartLoaded = true;
+          };
         })
         .catch((e) => {
           console.log(e.response.status);
