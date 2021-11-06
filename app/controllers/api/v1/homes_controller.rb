@@ -7,6 +7,7 @@ module Api
         record = current_user.meal_records.for_today.take
 
         if record.present?
+          savings = current_user.health_savings
           foods = record.recorded_foods.pluck(:name, :subname, :reference_amount)
 
           amt_pfc = current_user.set_attributes_for_pfc[:amt]
@@ -17,7 +18,7 @@ module Api
           vitamin = get_barchart_data(vitamins_label, achv)
           mineral = get_barchart_data(minerals_label, achv)
 
-          render json: { foods: foods, macros: macro, vitamins: vitamin, minerals: mineral }
+          render json: { savings: savings,foods: foods, macros: macro, vitamins: vitamin, minerals: mineral }
         else
           render404(nil, "本日の食事メニューは存在しません")
         end
