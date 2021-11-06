@@ -4,14 +4,10 @@
       <span class="date-text text-h5">
         {{ date }}
       </span>
-      <span class="health-savings">
-        健康貯金の総額 - ¥{{ savings }}
-      </span>
+      <span class="health-savings"> 健康貯金の総額 - ¥{{ savings }} </span>
     </div>
     <div v-if="chartLoaded" class="meal-record-charts">
-      <div>
-        本日の栄養摂取達成度
-      </div>
+      <div>本日の栄養摂取達成度</div>
       <radar-chart
         :chart-data="radarChart.data"
         :options="radarChart.options"

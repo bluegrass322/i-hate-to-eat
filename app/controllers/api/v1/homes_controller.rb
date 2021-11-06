@@ -8,17 +8,14 @@ module Api
 
         if record.present?
           savings = current_user.health_savings
-          foods = record.recorded_foods.pluck(:name, :subname, :reference_amount)
+          foods = record.recorded_foods.pluck(:id, :name, :subname, :reference_amount)
+          response = { savings: savings, foods: foods }
 
-          amt_pfc = current_user.set_attributes_for_pfc[:amt]
-          achv = get_achievement(record, current_user.bmr, amt_pfc,
-                                 current_user.dietary_reference_intake)
+          achv = get_achievement(record, current_user)
+          chart_data = get_chart_data(achv)
 
-          macro = get_radarchart_data(achv)
-          vitamin = get_barchart_data(vitamins_label, achv)
-          mineral = get_barchart_data(minerals_label, achv)
-
-          render json: { savings: savings,foods: foods, macros: macro, vitamins: vitamin, minerals: mineral }
+          response.merge(chart_data)
+          render json: response
         else
           render404(nil, "本日の食事メニューは存在しません")
         end
@@ -26,9 +23,20 @@ module Api
 
       private
 
-        def get_achievement(total, bmr, pfc, dri)
+        def get_achievement(record, user)
+          amt_pfc = user.set_attributes_for_pfc[:amt]
+
           achv = IntakeAchievement.new
-          achv.calc_intake_achievement(total, bmr, pfc, dri)
+          achv.calc_intake_achievement(record, user.bmr, amt_pfc,
+                                       user.dietary_reference_intake)
+        end
+
+        def get_chart_data(achv)
+          macro = get_radarchart_data(achv)
+          vitamin = get_barchart_data(vitamins_label, achv)
+          mineral = get_barchart_data(minerals_label, achv)
+
+          { macros: macro, vitamins: vitamin, minerals: mineral }
         end
 
         def get_radarchart_data(achv)

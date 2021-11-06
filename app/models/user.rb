@@ -112,9 +112,9 @@ class User < ApplicationRecord
   # LINE自動通知機能用
   # 1週間分のhealth_savinsを合算して送信
   def set_health_savings_this_week
-    total = self.calc_health_savings_this_week
+    total = calc_health_savings_this_week
     { type: "text",
-      text: "今週の健康貯金\n" + "+ ¥#{total}"}
+      text: "今週の健康貯金\n+ ¥#{total}" }
   end
 
   # LINE自動通知機能用
@@ -146,7 +146,7 @@ class User < ApplicationRecord
     end
 
     def calc_health_savings_this_week
-      records = self.meal_records.this_week
+      records = meal_records.this_week
       total = 0
       return total if records.blank?
 

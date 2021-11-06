@@ -71,19 +71,19 @@ namespace :scheduler do
     require 'line/bot'
 
     # 週1回、特定の曜日にのみ通知が行われるよう
-    next unless Time.zone.today.wday == 0
+    next unless Time.zone.today.wday.zero?
 
     User.wish_line_notice.find_each do |user|
-        to_id = user.line_user_id
+      to_id = user.line_user_id
 
-        message = user.set_health_savings_this_week
+      message = user.set_health_savings_this_week
 
-        client = Line::Bot::Client.new do |config|
-          config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
-          config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
-        end
-        response = client.push_message(to_id, message)
-        p response
+      client = Line::Bot::Client.new do |config|
+        config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
+        config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
+      end
+      response = client.push_message(to_id, message)
+      p response
     end
   end
 
