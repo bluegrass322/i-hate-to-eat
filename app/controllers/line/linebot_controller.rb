@@ -91,6 +91,8 @@ module Line
           donot_eat_meals(user)
         when "食べる"
           eat_meals(user)
+        when "健康貯金"
+          set_users_health_savings(user)
         else
           # 所定の文言以外にはエラーメッセージを返す
           set_reply_text("ちょっと何言ってるかわからない")
@@ -145,6 +147,13 @@ module Line
 
       def set_users_suggested_foods(user)
         text = user.make_meal_menu_for_line
+        set_reply_text(text)
+      end
+
+      def set_users_health_savings(user)
+        total = user.health_savings
+        text = "現在の健康貯金総額\n" + "¥#{total}"
+
         set_reply_text(text)
       end
 

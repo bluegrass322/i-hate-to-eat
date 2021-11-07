@@ -4,30 +4,39 @@ module Api
   module V1
     class HomesController < Api::V1::BaseController
       def show
+        savings = current_user.health_savings
+        response = { savings: savings }
+
         record = current_user.meal_records.for_today.take
-
         if record.present?
-          foods = record.recorded_foods.pluck(:name, :subname, :reference_amount)
+          foods = record.recorded_foods.pluck(:id, :name, :subname, :reference_amount)
+          record_data = { foods: foods }
 
-          amt_pfc = current_user.set_attributes_for_pfc[:amt]
-          achv = get_achievement(record, current_user.bmr, amt_pfc,
-                                 current_user.dietary_reference_intake)
+          achv = get_achievement(record, current_user)
+          chart_data = get_chart_data(achv)
+          record_data = record_data.merge(chart_data)
 
-          macro = get_radarchart_data(achv)
-          vitamin = get_barchart_data(vitamins_label, achv)
-          mineral = get_barchart_data(minerals_label, achv)
-
-          render json: { foods: foods, macros: macro, vitamins: vitamin, minerals: mineral }
-        else
-          render404(nil, "本日の食事メニューは存在しません")
+          response.store("record", record_data)
         end
+        render json: response
       end
 
       private
 
-        def get_achievement(total, bmr, pfc, dri)
+        def get_achievement(record, user)
+          amt_pfc = user.set_attributes_for_pfc[:amt]
+
           achv = IntakeAchievement.new
-          achv.calc_intake_achievement(total, bmr, pfc, dri)
+          achv.calc_intake_achievement(record, user.bmr, amt_pfc,
+                                       user.dietary_reference_intake)
+        end
+
+        def get_chart_data(achv)
+          macro = get_radarchart_data(achv)
+          vitamin = get_barchart_data(vitamins_label, achv)
+          mineral = get_barchart_data(minerals_label, achv)
+
+          { macros: macro, vitamins: vitamin, minerals: mineral }
         end
 
         def get_radarchart_data(achv)

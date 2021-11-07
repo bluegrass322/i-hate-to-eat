@@ -18,6 +18,7 @@ module MealRecordCreatable
       Suggestion.transaction do
         record = create_meal_record(user, params)
         create_eaten_foods(record, foods)
+        adding_health_savings(user, record)
         destroy_suggestions_all(suggestions)
         true
       end
@@ -29,6 +30,11 @@ module MealRecordCreatable
   end
 
   private
+
+    def adding_health_savings(user, record)
+      user.health_savings += record.calorie.to_i
+      user.save!
+    end
 
     def create_meal_record(user, params)
       rec = user.meal_records.new(ate_at: @today)

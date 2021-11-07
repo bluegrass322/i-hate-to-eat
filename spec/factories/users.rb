@@ -16,6 +16,7 @@ end
 #  email_bidx                  :string           not null
 #  email_ciphertext            :text             not null
 #  gender                      :integer          default("female"), not null
+#  health_savings              :integer          default(0), not null
 #  height                      :integer          default(0), not null
 #  line_nonce                  :string
 #  line_notification_enabled   :boolean          default(FALSE), not null

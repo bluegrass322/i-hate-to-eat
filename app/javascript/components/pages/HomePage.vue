@@ -1,11 +1,13 @@
 <template>
   <v-container class="container">
-    <div class="date">
-      <span class="date-text text-h5 primary--text">
+    <div class="date-and-savings base--text">
+      <span class="date-text text-h5">
         {{ date }}
       </span>
+      <span class="health-savings"> 健康貯金の総額 - ¥{{ savings }} </span>
     </div>
     <div v-if="chartLoaded" class="meal-record-charts">
+      <div>本日の栄養摂取達成度</div>
       <radar-chart
         :chart-data="radarChart.data"
         :options="radarChart.options"
@@ -65,7 +67,8 @@ export default {
   },
   data() {
     return {
-      date: '',
+      date: null,
+      savings: null,
       chartLoaded: false,
       noneMessage: '本日は食事をとっていません',
       radarChart: {
@@ -180,7 +183,7 @@ export default {
   },
   mounted() {
     this.setDate();
-    this.setChartData();
+    this.setData();
   },
   methods: {
     setDate() {
@@ -190,17 +193,20 @@ export default {
       const today = dayjs();
       this.date = today.tz('Asia/Tokyo').format('YYYY.MM.DD');
     },
-    setChartData() {
+    setData() {
       this.axios
         .get('/api/v1/home')
         .then((res) => {
           console.log(res.status);
+          const r = res.data;
 
-          this.$set(this.radarChart.data.datasets[0], 'data', res.data.macros);
-          this.setBarChartVitamins(res.data.vitamins);
-          this.setBarChartMinerals(res.data.minerals);
-
-          this.chartLoaded = true;
+          this.savings = r.savings;
+          if (r.record) {
+            this.$set(this.radarChart.data.datasets[0], 'data', r.record.macros);
+            this.setBarChartVitamins(r.record.vitamins);
+            this.setBarChartMinerals(r.record.minerals);
+            this.chartLoaded = true;
+          };
         })
         .catch((e) => {
           console.log(e.response.status);
@@ -304,10 +310,10 @@ const barChartUnachv = {
   padding: 0;
 }
 
-.date {
+.date-and-savings {
   margin-top: 20px;
   height: 30;
-  border-bottom: medium solid #5a7899;
+  border-bottom: medium solid #f5f5f6;
 }
 
 .date-text {

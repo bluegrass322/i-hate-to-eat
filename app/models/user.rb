@@ -34,7 +34,11 @@ class User < ApplicationRecord
     validates :email, uniqueness: { case_sensitive: false }
     validates :role
     validates :gender
-    validates :height, numericality: { only_integer: true }
+
+    with_options numericality: { only_integer: true } do
+      validates :height
+      validates :health_savings
+    end
 
     with_options numericality: true do
       validates :weight
@@ -99,14 +103,22 @@ class User < ApplicationRecord
   end
 
   # LINE自動通知機能用
-  # confirmあり
+  # 当日の食事内容を送信（confirmあり）
   def set_line_notification_cofirm
     text = make_meal_menu_for_line
     set_line_confirm_eat_or_not(text)
   end
 
   # LINE自動通知機能用
-  # confirmなし
+  # 1週間分のhealth_savinsを合算して送信
+  def set_health_savings_this_week
+    total = calc_health_savings_this_week
+    { type: "text",
+      text: "今週の健康貯金\n+ ¥#{total}" }
+  end
+
+  # LINE自動通知機能用
+  # 当日の食事内容を送信（confirmなし）
   def make_meal_menu_for_line
     text = Time.zone.today.to_s
     total_cal = 0
@@ -131,6 +143,17 @@ class User < ApplicationRecord
 
     def calc_amount_carbo
       bmr * percentage_carbohydrate / 4
+    end
+
+    def calc_health_savings_this_week
+      records = meal_records.this_week
+      total = 0
+      return total if records.blank?
+
+      records.each do |r|
+        total += r.calorie
+      end
+      total.floor
     end
 
     def new_or_changes_password
@@ -174,6 +197,7 @@ end
 #  email_bidx                  :string           not null
 #  email_ciphertext            :text             not null
 #  gender                      :integer          default("female"), not null
+#  health_savings              :integer          default(0), not null
 #  height                      :integer          default(0), not null
 #  line_nonce                  :string
 #  line_notification_enabled   :boolean          default(FALSE), not null

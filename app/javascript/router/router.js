@@ -77,10 +77,14 @@ router.beforeEach((to, from, next) => {
   }
 });
 
-Vue.use(VueGtag, {
-  config: { id: 'UA-212123833-1'},
-  appName: 'I Hate To Eat',
-  pageTrackerScreenviewEnabled: true,
-}, router);
+Vue.use(
+  VueGtag,
+  {
+    config: { id: 'UA-212123833-1' },
+    appName: 'I Hate To Eat',
+    pageTrackerScreenviewEnabled: true,
+  },
+  router
+);
 
 export default router;
