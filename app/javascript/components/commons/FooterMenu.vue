@@ -1,5 +1,14 @@
 <template>
-  <v-app-bar app bottom color="primary" fixed flat class="footer-menu">
+  <v-app-bar
+    app
+    bottom
+    color="primary"
+    fixed
+    flat
+    :height="height"
+    class="pa-0"
+    style="border: 3px solid #89a7ca !important"
+  >
     <footer-menu-items-after-login v-if="isLoggedIn" />
     <footer-menu-items-before-login v-else />
   </v-app-bar>
@@ -7,6 +16,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
+
 import FooterMenuItemsAfterLogin from './FooterMenuItemsAfterLogin';
 import FooterMenuItemsBeforeLogin from './FooterMenuItemsBeforeLogin';
 
@@ -17,12 +27,20 @@ export default {
   },
   computed: {
     ...mapGetters('authUser', ['isLoggedIn']),
+    height() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 50;
+        default:
+          return 70;
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-.footer-menu {
-  padding: 0;
+/deep/ .v-toolbar__content {
+  padding: 0px !important;
 }
 </style>

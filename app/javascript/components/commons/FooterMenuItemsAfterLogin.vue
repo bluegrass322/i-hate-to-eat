@@ -1,54 +1,131 @@
 <template>
-  <div id="menu-items">
+  <v-container class="d-flex align-center ma-0 pa-0">
     <v-btn
       to="/home"
-      color="base"
+      color="accent"
       text
       tile
-      min-height="56"
-      width="56"
-      class="ma-0"
+      :height="height"
+      :min-height="minHeight"
+      :max-height="maxHeight"
+      :min-width="minWidth"
+      class="footer-btn ma-0 pa-0 pb-2 pl-2 pr-4 flex-grow-1 flex-shrink-0"
     >
       home
     </v-btn>
     <v-btn
-      color="base"
+      to="/suggestion"
+      color="accent"
       text
       tile
-      min-height="56"
-      width="100"
-      class="ma-0"
-      @click="logoutUser"
+      :height="height"
+      :min-height="minHeight"
+      :max-height="maxHeight"
+      :min-width="minWidth"
+      class="footer-btn ma-0 pa-0 pb-2 pl-2 pr-8 flex-grow-1 flex-shrink-0"
     >
-      logout
+      today's meal
     </v-btn>
-    <v-menu offset-y tile top>
+    <v-menu
+      transition="scroll-y-reverse-transition"
+      :nudge-top="nudgeTop"
+      offset-y
+      tile
+      top
+    >
       <template #activator="{ on, attrs }">
-        <div class="menu-icon">
-          <v-app-bar-nav-icon v-bind="attrs" v-on="on" />
+        <div class="menu-icon pb-1 flex-grow-0 flex-shrink-0">
+          <v-app-bar-nav-icon v-bind="attrs" color="accent" v-on="on" />
         </div>
       </template>
 
-      <v-list :color="menuBack" flat min-width="150px" outlined tile>
-        <v-list-item-group color="base">
+      <v-list :color="menuBack" elevation="0" flat outlined tile>
+        <v-list-item-group>
           <v-list-item to="/mypage">
-            <v-list-item-title>mypage</v-list-item-title>
+            <v-list-item-title>
+              <span class="accent--text text-body-1">マイページ</span>
+            </v-list-item-title>
           </v-list-item>
-          <v-list-item to="/suggestion">
-            <v-list-item-title>today's meal</v-list-item-title>
+          <v-list-item>
+            <v-list-item-title @click="logoutUser">
+              <span class="accent--text text-body-1">ログアウト</span>
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item to="/">
+            <v-list-item-title>
+              <span class="accent--text text-body-1">サービス概要</span>
+            </v-list-item-title>
+          </v-list-item>
+
+          <!-- 以下、文字サイズ小のアイテム -->
+          <v-list-item to="/" class="small">
+            <v-list-item-title>
+              <span class="accent--text text-caption">利用規約</span>
+            </v-list-item-title>
+          </v-list-item>
+          <v-list-item to="/" class="small">
+            <v-list-item-title>
+              <span class="accent--text text-caption">お問い合わせ</span>
+            </v-list-item-title>
           </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-menu>
-  </div>
+  </v-container>
 </template>
 
 <script>
 export default {
   data() {
     return {
-      menuBack: 'rgba(72, 96, 122, 0.7)',
+      maxHeight: 70,
+      minHeight: 50,
+      minWidth: 50,
+      maxWidth: 150,
+      menuBack: 'rgba(90, 120, 153, 0.7)',
     };
+  },
+  computed: {
+    nudgeTop() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 7;
+        default:
+          return 18;
+      }
+    },
+    height() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 50;
+        default:
+          return 70;
+      }
+    },
+    widthS() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 50;
+        default:
+          return 100;
+      }
+    },
+    widthM() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 80;
+        default:
+          return 140;
+      }
+    },
+    widthL() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return 100;
+        default:
+          return 170;
+      }
+    },
   },
   methods: {
     logoutUser() {
@@ -79,19 +156,22 @@ export default {
 </script>
 
 <style scoped>
-* {
+.v-btn.footer-btn {
+  align-items: end;
+  justify-content: start;
   text-transform: none !important;
 }
 
-#menu-items {
-  display: flex;
-  margin: 0;
-  padding: 0;
+.v-list-item.small {
+  min-height: 25px !important;
+}
+
+.footer-btn {
+  border-right: 3px solid #89a7ca;
 }
 
 .menu-icon {
-  height: 56px;
   text-align: center;
-  width: 56px;
+  width: 50px;
 }
 </style>
