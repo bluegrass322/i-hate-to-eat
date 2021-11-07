@@ -1,5 +1,5 @@
 <template>
-  <v-app class="app">
+  <v-app>
     <v-main>
       <common-header />
       <router-view />
@@ -23,5 +23,10 @@ export default {
 <style scoped>
 #app {
   background-color: #2c4c6b;
+}
+
+/deep/ .v-main {
+  border: 3px solid #89a7ca;
+  box-sizing: border-box;
 }
 </style>
