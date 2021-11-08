@@ -1,8 +1,10 @@
 <template>
   <v-app>
+    <common-header />
     <v-main>
-      <common-header />
-      <router-view />
+      <v-container class="ma-0 pa-0">
+        <router-view />
+      </v-container>
     </v-main>
     <footer-menu />>
   </v-app>
