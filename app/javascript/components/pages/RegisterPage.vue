@@ -1,15 +1,24 @@
 <template>
-  <v-container id="register-form">
-    <div class="text-h6 base--text">新規ユーザー登録</div>
+  <div id="register-form" class="d-block mx-7 my-10 pa-0">
+    <div class="form-title mb-8">
+      <span class="text-h6 accent--text">新規ユーザー登録</span>
+    </div>
+
     <validation-observer ref="observer" v-slot="{ handleSubmit }">
       <v-form @submit.prevent="handleSubmit(createUser)">
         <template v-if="railsErrors.show">
-          <v-alert class="text-center" dense type="error">
-            <template v-for="e in railsErrors.errorMessages">
-              <p :key="e">{{ e }}</p>
-            </template>
-          </v-alert>
+          <template v-for="e in railsErrors.errorMessages">
+            <v-alert
+              :key="e"
+              class="text-center text-body-2 text-sm-body-1"
+              dense
+              type="error"
+            >
+              {{ e }}
+            </v-alert>
+          </template>
         </template>
+
         <validation-provider
           v-slot="{ errors }"
           name="ユーザーネーム"
@@ -18,11 +27,15 @@
           <v-text-field
             v-model="user.name"
             :error-messages="errors"
-            color="base"
             dark
+            dense
             type="text"
             label="ユーザーネーム"
+            outlined
+            single-line
+            prepend-inner-icon="mdi-account-outline"
             required
+            class="form-item mb-1"
           />
         </validation-provider>
         <validation-provider
@@ -33,47 +46,17 @@
           <v-text-field
             v-model="user.email"
             :error-messages="errors"
-            color="base"
             dark
+            dense
             type="email"
             label="メールアドレス"
+            outlined
+            single-line
             required
+            prepend-inner-icon="mdi-email-outline"
+            class="form-item mb-1"
           />
         </validation-provider>
-        <v-radio-group
-          v-model="user.gender"
-          label="性別"
-          dark
-          row
-          mandatory
-          class="radio-group"
-        >
-          <div class="radio-btns">
-            <v-radio color="base" label="女性" value="female" />
-            <v-radio color="base" label="男性" value="male" />
-          </div>
-        </v-radio-group>
-        <v-menu v-model="birthInput" :close-on-content-click="false">
-          <template #activator="{ on }">
-            <validation-provider
-              v-slot="{ errors }"
-              name="生年月日"
-              rules="required|abailable_age"
-            >
-              <v-text-field
-                v-model="user.birth"
-                :error-messages="errors"
-                color="base"
-                dark
-                label="生年月日"
-                type="date"
-                readonly
-                v-on="on"
-              />
-            </validation-provider>
-          </template>
-          <v-date-picker v-model="user.birth" @input="birthInput = false" />
-        </v-menu>
         <validation-provider
           v-slot="{ errors }"
           name="パスワード"
@@ -83,11 +66,15 @@
           <v-text-field
             v-model="user.password"
             :error-messages="errors"
-            color="base"
             dark
+            dense
             type="password"
             label="パスワード"
+            outlined
+            single-line
+            prepend-inner-icon="mdi-lock-outline"
             required
+            class="form-item mb-1"
           />
         </validation-provider>
         <validation-provider
@@ -98,19 +85,30 @@
           <v-text-field
             v-model="user.password_confirmation"
             :error-messages="errors"
-            color="base"
             dark
+            dense
             type="password"
             label="パスワード（確認）"
+            outlined
+            single-line
+            prepend-inner-icon="mdi-lock-outline"
             required
+            class="form-item mb-1"
           />
         </validation-provider>
-        <v-btn type="submit" color="base" outlined tile small width="120"
+
+        <v-btn
+          type="submit"
+          color="rgba(245, 245, 246, 0.7)"
+          tile
+          outlined
+          width="240"
+          class="mt-2"
           >登録</v-btn
         >
       </v-form>
     </validation-observer>
-  </v-container>
+  </div>
 </template>
 
 <script>
@@ -168,20 +166,16 @@ export default {
 </script>
 
 <style scoped>
-#register-form {
-  padding: 40px 25px 30px 25px;
-  text-align: center;
-}
-
-.actions {
-  text-align: center;
-}
-
 .v-text-field {
   max-width: 350px;
+  padding: 0;
 }
 
-.radio-btns {
-  display: flex;
+.v-input.form-item {
+  margin: 0 auto;
+}
+
+#register-form {
+  text-align: center;
 }
 </style>
