@@ -1,56 +1,75 @@
 <template>
-  <v-card id="login-form" color="primary" flat tile>
-    <v-card-title>
-      <div class="text-h6 base--text">ログイン</div>
-    </v-card-title>
+  <div id="login-form" class="d-block mx-7 my-10 pa-0">
+    <div class="form-title mb-8">
+      <span class="text-h6 accent--text">ログイン</span>
+    </div>
+
     <validation-observer ref="observer" v-slot="{ handleSubmit }">
       <v-form @submit.prevent="handleSubmit(loginUser)">
-        <v-card-text>
-          <template v-if="railsErrors.show">
-            <v-alert class="text-center" dense type="error">
-              <template v-for="e in railsErrors.errorMessages">
-                <p :key="e">{{ e }}</p>
-              </template>
+        <template v-if="railsErrors.show">
+          <template v-for="e in railsErrors.errorMessages">
+            <v-alert
+              :key="e"
+              class="text-center text-body-2 text-sm-body-1"
+              dense
+              type="error"
+            >
+              {{ e }}
             </v-alert>
           </template>
-          <validation-provider
-            v-slot="{ errors }"
-            name="ユーザーネーム"
-            rules="required"
-          >
-            <v-text-field
-              v-model="name"
-              :error-messages="errors"
-              color="base"
-              dark
-              type="name"
-              label="ユーザーネーム"
-              required
-            />
-          </validation-provider>
-          <validation-provider
-            v-slot="{ errors }"
-            name="パスワード"
-            rules="alpha_num|min:5|required"
-            vid="confirmation"
-          >
-            <v-text-field
-              v-model="password"
-              :error-messages="errors"
-              color="base"
-              dark
-              type="password"
-              label="パスワード"
-              required
-            />
-          </validation-provider>
-        </v-card-text>
-        <v-card-actions>
-          <v-btn type="submit" color="base" outlined>ログイン</v-btn>
-        </v-card-actions>
+        </template>
+
+        <validation-provider
+          v-slot="{ errors }"
+          name="ユーザーネーム"
+          rules="required"
+        >
+          <v-text-field
+            v-model="name"
+            :error-messages="errors"
+            dark
+            dense
+            type="text"
+            label="ユーザーネーム"
+            outlined
+            single-line
+            prepend-inner-icon="mdi-account-outline"
+            required
+            class="form-item mb-1"
+          />
+        </validation-provider>
+        <validation-provider
+          v-slot="{ errors }"
+          name="パスワード"
+          rules="alpha_num|min:5|required"
+          vid="confirmation"
+        >
+          <v-text-field
+            v-model="password"
+            :error-messages="errors"
+            dark
+            dense
+            type="password"
+            label="パスワード"
+            outlined
+            single-line
+            prepend-inner-icon="mdi-lock-outline"
+            required
+            class="form-item mb-1"
+          />
+        </validation-provider>
+        <v-btn
+          type="submit"
+          color="rgba(245, 245, 246, 0.7)"
+          tile
+          outlined
+          width="240"
+          class="mt-2"
+          >ログイン</v-btn
+        >
       </v-form>
     </validation-observer>
-  </v-card>
+  </div>
 </template>
 
 <script>
@@ -104,11 +123,16 @@ export default {
 </script>
 
 <style scoped>
-#login-form {
-  margin: 30px 40px;
+.v-text-field {
+  max-width: 350px;
+  padding: 0;
 }
 
-.actions {
+.v-input.form-item {
+  margin: 0 auto;
+}
+
+#login-form {
   text-align: center;
 }
 </style>
