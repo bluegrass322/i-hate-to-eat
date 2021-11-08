@@ -8,9 +8,7 @@ module Api
 
       def create
         user = User.new(user_params)
-
-        dri = set_reference_intake(user)
-        user.dietary_reference_intake_id = dri.id
+        user.dietary_reference_intake_id = DietaryReferenceIntake.first.id
 
         if user.save
           head :ok
@@ -22,7 +20,7 @@ module Api
       private
 
         def user_params
-          params.require(:user).permit(:name, :email, :gender, :birth, :password, :password_confirmation)
+          params.require(:user).permit(:name, :email, :password, :password_confirmation)
         end
     end
   end
