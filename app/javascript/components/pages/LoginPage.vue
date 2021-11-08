@@ -1,6 +1,6 @@
 <template>
-  <div id="login-form" class="d-block mx-7 my-10 pa-0">
-    <div class="form-title mb-8">
+  <v-row id="login-form" class="d-block mx-7 my-10 pa-0">
+    <div class="form-title mb-6">
       <span class="text-h6 accent--text">ログイン</span>
     </div>
 
@@ -69,7 +69,7 @@
         >
       </v-form>
     </validation-observer>
-  </div>
+  </v-row>
 </template>
 
 <script>

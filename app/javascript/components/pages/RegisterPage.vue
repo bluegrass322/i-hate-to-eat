@@ -1,5 +1,5 @@
 <template>
-  <div id="register-form" class="d-block mx-7 my-10 pa-0">
+  <v-row id="register-form" class="d-block mx-7 my-10 pa-0">
     <div class="form-title mb-8">
       <span class="text-h6 accent--text">新規ユーザー登録</span>
     </div>
@@ -108,7 +108,7 @@
         >
       </v-form>
     </validation-observer>
-  </div>
+  </v-row>
 </template>
 
 <script>
