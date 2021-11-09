@@ -167,7 +167,8 @@ export default {
 }
 
 .footer-btn {
-  border-right: 3px solid #89a7ca;
+  /* info */
+  border-right: 3px solid rgba(137, 167, 202, 1.0);
 }
 
 .menu-icon {

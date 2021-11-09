@@ -24,11 +24,13 @@ export default {
 
 <style scoped>
 #app {
-  background-color: #2c4c6b;
+  /* secondary */
+  background-color: rgba(44, 76, 107, 1.0);
 }
 
 /deep/ .v-main {
-  border: 3px solid #89a7ca;
+  /* info */
+  border: 3px solid rgba(137, 167, 202, 1.0);
   box-sizing: border-box;
 }
 </style>
