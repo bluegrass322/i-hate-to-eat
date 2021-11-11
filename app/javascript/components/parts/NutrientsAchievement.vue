@@ -1,124 +1,155 @@
 <template>
-  <v-tabs background-color="primary" color="base" dark center-active grow>
-    <v-tab class="tabs">Macro</v-tab>
-    <v-tab class="tabs">Vitamin</v-tab>
-    <v-tab class="tabs-end">Mineral</v-tab>
+  <div id="achv-tabs">
+    <v-tabs
+      background-color="secondary"
+      color="accent"
+      center-active
+      dark
+      grow
+      class="ma-0 pa-0"
+    >
+      <v-tab class="tabs text-body-2">Macro</v-tab>
+      <v-tab class="tabs text-body-2">Vitamin</v-tab>
+      <v-tab class="tabs-end text-body-2">Mineral</v-tab>
 
-    <v-tab-item class="tab-item">
-      <template v-for="m in macro">
-        <v-sheet :key="m.key" color="base" class="nutrients-card">
-          <v-card
-            color="primary"
-            flat
-            tile
-            height="80"
-            width="130"
-            class="nutrients-card-contents"
-          >
-            <v-card-text class="pa-0 text-caption text-left base--text">
-              <div class="font-weight-medium">{{ m.label }}</div>
-              <div>
-                Total:<span class="text-body-2">{{ m.total }}</span
-                >{{ m.unit }}
-              </div>
-              <div>
-                Achv:<span class="text-body-2">{{ m.achv }}</span
-                >%
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-sheet>
-      </template>
-    </v-tab-item>
-    <v-tab-item class="tab-item">
-      <template v-for="v in vitamins">
-        <v-sheet :key="v.key" class="nutrients-card">
-          <v-card
-            color="primary"
-            flat
-            tile
-            height="80"
-            width="130"
-            class="nutrients-card-contents"
-          >
-            <v-card-text class="pa-0 text-caption text-left base--text">
-              <div class="font-weight-medium">{{ v.label }}</div>
-              <div>
-                Total:<span class="text-body-2">{{ v.total }}</span
-                >{{ v.unit }}
-              </div>
-              <div>
-                Achv:<span class="text-body-2">{{ v.achv }}</span
-                >%
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-sheet>
-      </template>
-    </v-tab-item>
-    <v-tab-item class="tab-item">
-      <template v-for="m in minerals">
-        <v-sheet :key="m.key" class="nutrients-card">
-          <v-card
-            color="primary"
-            flat
-            tile
-            height="80"
-            width="130"
-            class="nutrients-card-contents"
-          >
-            <v-card-text class="pa-0 text-caption text-left base--text">
-              <div class="font-weight-medium">{{ m.label }}</div>
-              <div>
-                Total:<span class="text-body-2">{{ m.total }}</span
-                >{{ m.unit }}
-              </div>
-              <div>
-                Achv:<span class="text-body-2">{{ m.achv }}</span
-                >%
-              </div>
-            </v-card-text>
-          </v-card>
-        </v-sheet>
-      </template>
-    </v-tab-item>
-  </v-tabs>
+      <v-tab-item class="tab-items">
+        <div class="d-flex flex-wrap">
+          <template v-for="mac in macro">
+            <v-sheet :key="mac.key" color="#a3b0c1" :width="cardWidth" outlined>
+              <v-card
+                color="secondary"
+                flat
+                :height="cardHeight"
+                tile
+                class="d-flex flex-column justify-center align-center"
+              >
+                <v-card-text class="pa-0 accent--text text-caption">
+                  <div class="text-body-2 font-weight-medium">
+                    {{ mac.label }}
+                  </div>
+                  <div>
+                    Total: <span class="text-body-2">{{ mac.total }}</span
+                    >{{ mac.unit }}
+                  </div>
+                  <div>
+                    Achv: <span class="text-body-2">{{ mac.achv }}</span
+                    >%
+                  </div>
+                </v-card-text>
+              </v-card>
+            </v-sheet>
+          </template>
+        </div>
+      </v-tab-item>
+      <v-tab-item class="tab-items">
+        <div class="d-flex flex-wrap">
+          <template v-for="vit in vitamins">
+            <v-sheet :key="vit.key" color="#a3b0c1" :width="cardWidth" outlined>
+              <v-card
+                color="secondary"
+                flat
+                :height="cardHeight"
+                tile
+                class="d-flex flex-column justify-center align-center"
+              >
+                <v-card-text class="accent--text text-caption pa-0">
+                  <div class="text-body-2 mb-2">{{ vit.label }}</div>
+                  <div>
+                    Total: <span class="text-subtitle-2">{{ vit.total }}</span
+                    >{{ vit.unit }}
+                  </div>
+                  <div>
+                    Achv: <span class="text-subtitle-2">{{ vit.achv }}</span
+                    >%
+                  </div>
+                </v-card-text>
+              </v-card>
+            </v-sheet>
+          </template>
+        </div>
+      </v-tab-item>
+      <v-tab-item class="tab-items">
+        <div class="d-flex flex-wrap">
+          <template v-for="min in minerals">
+            <v-sheet :key="min.key" color="#a3b0c1" :width="cardWidth" outlined>
+              <v-card
+                color="secondary"
+                flat
+                :height="cardHeight"
+                tile
+                class="d-flex flex-column justify-center align-center"
+              >
+                <v-card-text class="accent--text text-caption pa-0">
+                  <div class="text-body-2 font-weight-medium">
+                    {{ min.label }}
+                  </div>
+                  <div>
+                    Total: <span class="text-body-2">{{ min.total }}</span
+                    >{{ min.unit }}
+                  </div>
+                  <div>
+                    Achv: <span class="text-body-2">{{ min.achv }}</span
+                    >%
+                  </div>
+                </v-card-text>
+              </v-card>
+            </v-sheet>
+          </template>
+        </div>
+      </v-tab-item>
+    </v-tabs>
+  </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex';
 
 export default {
+  data() {
+    return {
+      cardHeight: 90,
+    };
+  },
   computed: {
     ...mapGetters('nutrientsAchievements', ['macro', 'vitamins', 'minerals']),
+    cardWidth() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return '50%';
+        case 'sm':
+          return '25%';
+        default:
+          return '50%';
+      }
+    },
   },
 };
 </script>
 
 <style scoped>
-.nutrients-card {
-  border: 1px solid #f5f5f6;
+.v-tab {
+  min-width: 80px;
+  text-transform: none !important;
 }
 
-.nutrients-card-contents {
-  padding: 8px 8px;
+#achv-tabs {
+  text-align: center;
+}
+
+.achv-tabs {
+  width: 200px;
 }
 
 .tabs {
   border-right: 1px solid #f5f5f6;
-  border-top: 1px solid #f5f5f6;
   border-bottom: 1px solid #f5f5f6;
 }
 
 .tabs-end {
-  border-top: 1px solid #f5f5f6;
   border-bottom: 1px solid #f5f5f6;
 }
 
-.tab-item {
-  background-color: #5a7899;
-  padding: 20px 15px 40px 15px;
-  display: flex;
-  flex-wrap: wrap;
+.tab-items {
+  background-color: rgba(44, 76, 107, 1);
 }
 </style>
