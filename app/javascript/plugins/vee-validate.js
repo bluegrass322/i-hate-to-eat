@@ -13,7 +13,9 @@ import {
   confirmed,
   email,
   numeric,
+  max_value,
   min,
+  min_value,
   required,
 } from 'vee-validate/dist/rules';
 
@@ -42,9 +44,19 @@ extend('numeric', {
   message: '数字で入力してください',
 });
 
+extend('max_value', {
+  ...max_value,
+  message: '{max}以上の数値は入力できません',
+});
+
 extend('min', {
   ...min,
   message: '{length}文字以上で入力してください',
+});
+
+extend('min_value', {
+  ...min_value,
+  message: '{min}以下の数値は入力できません',
 });
 
 extend('required', {
