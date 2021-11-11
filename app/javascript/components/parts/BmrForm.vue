@@ -1,134 +1,144 @@
 <template>
-  <div>
-    <v-card id="bmr-form" color="primary" flat tile>
-      <validation-observer ref="observer" v-slot="{ handleSubmit }">
-        <v-form @submit.prevent="handleSubmit($emit('click'))">
-          <div v-if="railsErrors.show">
+  <div id="bmr-form">
+    <validation-observer ref="observer" v-slot="{ handleSubmit }">
+      <v-form @submit.prevent="handleSubmit($emit('click'))">
+        <template v-if="railsErrors.show">
+          <template v-for="e in railsErrors.errorMessages">
             <v-alert
-              v-for="e in railsErrors.errorMessages"
               :key="e"
-              class="text-center"
+              class="text-center text-body-2 text-sm-body-1"
               dense
               type="error"
             >
               {{ e }}
             </v-alert>
-          </div>
-          <div class="with-btn">
-            <v-radio-group
-              v-model="gender"
-              label="性別"
-              dark
-              row
-              mandatory
-              :disabled="disableGender"
-              class="with-btn-input"
+          </template>
+        </template>
+
+        <v-radio-group
+          v-model="gender"
+          label="性別"
+          dark
+          row
+          mandatory
+          hide-details
+          class="form-item raido-btn-outline pl-3 py-1 mb-7"
+        >
+          <v-radio
+            color="base"
+            label="女性"
+            value="female"
+            class="radio-btn ma-1"
+          />
+          <v-radio
+            color="base"
+            label="男性"
+            value="male"
+            class="radio-btn ma-1"
+          />
+        </v-radio-group>
+        <v-menu v-model="birthInput" :close-on-content-click="false">
+          <template #activator="{ on }">
+            <validation-provider
+              v-slot="{ errors }"
+              name="生年月日"
+              rules="required|abailable_age"
             >
-              <v-radio color="base" label="女性" value="female" />
-              <v-radio color="base" label="男性" value="male" />
-            </v-radio-group>
-            <v-btn
-              v-show="disableGender"
-              color="base"
-              outlined
-              small
-              tile
-              class="disable-btn"
-              @click="changeGender"
-            >
-              変更
-            </v-btn>
-          </div>
-          <div class="with-btn">
-            <v-menu v-model="birthInput" :close-on-content-click="false">
-              <template #activator="{ on }">
-                <validation-provider
-                  v-slot="{ errors }"
-                  name="生年月日"
-                  rules="required|abailable_age"
-                >
-                  <v-text-field
-                    v-model="birth"
-                    :error-messages="errors"
-                    color="base"
-                    dark
-                    label="生年月日"
-                    type="date"
-                    readonly
-                    :disabled="disableBirth"
-                    class="with-btn-input"
-                    v-on="on"
-                  />
-                </validation-provider>
-              </template>
-              <v-date-picker v-model="birth" @input="birthInput = false" />
-            </v-menu>
-            <v-btn
-              v-show="disableBirth"
-              color="base"
-              outlined
-              small
-              tile
-              class="disable-btn"
-              @click="changeBirth"
-            >
-              変更
-            </v-btn>
-          </div>
-          <validation-provider
-            v-slot="{ errors }"
-            name="身長"
-            rules="required|numeric"
+              <v-text-field
+                v-model="birth"
+                :error-messages="errors"
+                dark
+                dense
+                label="生年月日"
+                type="date"
+                readonly
+                outlined
+                single-line
+                class="form-item mb-1"
+                v-on="on"
+              />
+            </validation-provider>
+          </template>
+          <v-date-picker v-model="birth" @input="birthInput = false" />
+        </v-menu>
+        <validation-provider
+          v-slot="{ errors }"
+          name="身長"
+          rules="required|numeric|max_value:200|min_value:0"
+        >
+          <v-text-field
+            v-model.number="height"
+            :error-messages="errors"
+            dark
+            dense
+            label="身長"
+            max="200"
+            min="0"
+            outlined
+            single-line
+            type="number"
+            suffix="cm"
+            class="form-item mb-1"
+          />
+        </validation-provider>
+        <validation-provider
+          v-slot="{ errors }"
+          name="体重"
+          rules="required|numeric|max_value:100|min_value:0"
+        >
+          <v-text-field
+            v-model.number="weight"
+            :error-messages="errors"
+            dark
+            dense
+            label="体重"
+            max="100"
+            min="0"
+            type="number"
+            outlined
+            single-line
+            suffix="kg"
+            class="form-item mb-1"
+          />
+        </validation-provider>
+
+        <div class="result d-flex align-center mx-auto pa-0">
+          <v-btn
+            type="submit"
+            color="accent"
+            depressed
+            height="40"
+            max-width="90"
+            outlined
+            tile
+            small
+            class="resut-btn text-h6 ma-0 px-1 pb-1 flex-grow-1 flex-shrink-0"
           >
-            <v-text-field
-              v-model.number="height"
-              :error-messages="errors"
-              color="base"
-              dark
-              type="number"
-              suffix="cm"
-              label="身長"
-            />
-          </validation-provider>
-          <validation-provider
-            v-slot="{ errors }"
-            name="体重"
-            rules="required|numeric"
+            =
+          </v-btn>
+          <div
+            class="result-text accent--text ma-0 py-1 flex-grow-1 flex-shrink-0"
           >
-            <v-text-field
-              v-model.number="weight"
-              :error-messages="errors"
-              color="base"
-              dark
-              type="number"
-              suffix="kg"
-              label="体重"
-            />
-          </validation-provider>
-          <div class="result">
-            <v-btn type="submit" color="base" outlined tile small class="mt-1"
-              >=</v-btn
-            >
-            <div class="base--text result-text">
-              基礎代謝量: <span class="text-h5 result-bmr">{{ bmr }}</span
-              >kcal<br />
-              <!-- TODO: PFCの内訳は仮置き -->
-              <!-- <span class="text-body-2">
-                P: {{ amt.protein }}g / F: {{ amt.fat }}g / C:
-                {{ amt.carbohydrate }}g
-              </span> -->
-            </div>
+            <span class="text-h6">
+              {{ bmr }}
+            </span>
+            <span class="text-body-2"> kcal/日 </span>
+            <!-- TODO: PFCの内訳は仮置き -->
+            <!-- <span class="text-body-2">
+              P: {{ amt.protein }}g / F: {{ amt.fat }}g / C:
+              {{ amt.carbohydrate }}g
+            </span> -->
           </div>
-        </v-form>
-      </validation-observer>
-    </v-card>
-    <div class="caption">
-      <p class="text-caption primary--text">
-        BMRの算出には国立健康・栄養研究所の式を採用しています。
-      </p>
-      <p class="text-caption primary--text">
-        日常的に家事・通勤などにおける歩行運動またはスポーツなどの身体活動を行なっている場合は、必要なエネルギー量は多くなります。
-      </p>
+        </div>
+      </v-form>
+    </validation-observer>
+
+    <div class="captions text-caption accent--text mt-6">
+      <div class="pb-2">※ 国立健康・栄養研究所の式を採用し算出。</div>
+      <div>
+        ※
+        日常的に家事・通勤などでの歩行運動やスポーツなどの身体活動を行なっている場合は、必要なエネルギー量は多くなります。
+      </div>
     </div>
   </div>
 </template>
@@ -144,8 +154,6 @@ export default {
         message: '',
         errorMessages: [],
       },
-      disableGender: true,
-      disableBirth: true,
       birthInput: false,
     };
   },
@@ -193,47 +201,51 @@ export default {
       },
     },
   },
-  methods: {
-    changeGender() {
-      this.disableGender = !this.disableGender;
-    },
-    changeBirth() {
-      this.disableBirth = !this.disableBirth;
-    },
-  },
 };
 </script>
 
 <style scoped>
+.v-text-field {
+  max-width: 350px;
+  padding: 0;
+}
+
+.v-input.form-item {
+  margin: 0 auto;
+}
+
+.v-btn.resut-btn {
+  background-color: rgba(137, 167, 202, 0.3);
+  border: 1px solid rgba(245, 245, 246, 0.6);
+  box-sizing: border-box;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+}
+
 #bmr-form {
-  padding: 15px 30px;
-}
-
-.caption {
-  margin: 30px 20px 15px 15px;
-}
-
-.disable-btn {
-  margin-left: 25px;
-}
-
-.result {
-  align-items: flex-start;
-  display: flex;
-  margin-top: 10px;
-}
-
-.result-text {
-  margin-left: 20px;
   text-align: center;
 }
 
-.result-bmr {
-  margin: 0 5px;
+.raido-btn-outline {
+  border: 1px solid rgba(245, 245, 246, 0.3);
+  border-radius: 3px;
+  max-width: 350px;
+  height: 40px;
 }
 
-.with-btn {
-  align-items: center;
-  display: flex;
+.result {
+  max-width: 350px;
+}
+
+.result-text {
+  border: 1px solid rgba(245, 245, 246, 0.6);
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+  min-width: 150px;
+  height: 40px;
+}
+
+.captions {
+  text-align: start;
 }
 </style>
