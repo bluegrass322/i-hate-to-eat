@@ -77,12 +77,12 @@ export default {
   computed: {
     cardWidth() {
       switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-          return '50%';
-        case 'sm':
-          return '25%';
-        default:
-          return '50%';
+      case 'xs':
+        return '50%';
+      case 'sm':
+        return '25%';
+      default:
+        return '50%';
       }
     },
   },

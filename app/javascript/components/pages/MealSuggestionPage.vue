@@ -9,9 +9,7 @@
 
         <div v-if="suggestionsExists" class="suggestion-item">
           <food-card :suggestions="suggestions" />
-          <div class="arrow-text text-subtitle-2 my-7">
-            食べてみますか？
-          </div>
+          <div class="arrow-text text-subtitle-2 my-7">食べてみますか？</div>
           <div class="d-flex flex-wrap justify-center align-center">
             <v-btn
               color="accent"
@@ -41,7 +39,17 @@
             </v-btn>
           </div>
         </div>
-        <div v-else class="suggestions-placeholder d-flex justify-center align-center text-body-2 accent--text">
+        <div
+          v-else
+          class="
+            suggestions-placeholder
+            d-flex
+            justify-center
+            align-center
+            text-body-2
+            accent--text
+          "
+        >
           <div>{{ noneMessage }}</div>
         </div>
       </v-col>
@@ -79,10 +87,10 @@ export default {
   computed: {
     btnWidth() {
       switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-          return '100%';
-        default:
-          return '50%';
+      case 'xs':
+        return '100%';
+      default:
+        return '50%';
       }
     },
   },

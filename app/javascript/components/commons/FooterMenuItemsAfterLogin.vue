@@ -88,42 +88,42 @@ export default {
   computed: {
     nudgeTop() {
       switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-          return 7;
-        default:
-          return 18;
+      case 'xs':
+        return 7;
+      default:
+        return 18;
       }
     },
     height() {
       switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-          return 50;
-        default:
-          return 70;
+      case 'xs':
+        return 50;
+      default:
+        return 70;
       }
     },
     widthS() {
       switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-          return 50;
-        default:
-          return 100;
+      case 'xs':
+        return 50;
+      default:
+        return 100;
       }
     },
     widthM() {
       switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-          return 80;
-        default:
-          return 140;
+      case 'xs':
+        return 80;
+      default:
+        return 140;
       }
     },
     widthL() {
       switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-          return 100;
-        default:
-          return 170;
+      case 'xs':
+        return 100;
+      default:
+        return 170;
       }
     },
   },

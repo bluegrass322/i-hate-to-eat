@@ -11,7 +11,7 @@
             <div class="d-flex align-end secondary--text mb-2">
               <div class="title-big">I</div>
               <div class="title-small">
-                hate<br/>
+                hate<br />
                 to eat.
               </div>
             </div>
@@ -26,7 +26,10 @@
                 少しでも削減したいと思いませんか？
               </div>
               <div class="mt-3 ml-9">
-                <router-link to="/" class="about-link d-flex flex-column align-start">
+                <router-link
+                  to="/"
+                  class="about-link d-flex flex-column align-start"
+                >
                   サービスの概要はこちら
                   <div class="about-link arrow"></div>
                 </router-link>
@@ -34,10 +37,6 @@
             </div>
           </div>
         </v-sheet>
-      </v-col>
-    </v-row>
-    <v-row>
-      <v-col cols="12" >
       </v-col>
     </v-row>
 
@@ -79,7 +78,16 @@
           <!-- 提案未作成時に表示 -->
           <div
             v-else
-            class="suggestion-placeholder d-flex justify-center align-center text-h6 info--text py-4 px-7"
+            class="
+              suggestion-placeholder
+              d-flex
+              justify-center
+              align-center
+              text-h6
+              info--text
+              py-4
+              px-7
+            "
           >
             <div>未生成</div>
           </div>
@@ -92,7 +100,8 @@
             Step.3
           </div>
           <div class="cutting-line step-desc ma-0 pt-3 pb-5 px-4">
-            Step.2 でレコメンドした食材から摂取できる栄養素ごとの合計量と、1日の摂取目標に対する達成度が確認できます。
+            Step.2
+            でレコメンドした食材から摂取できる栄養素ごとの合計量と、1日の摂取目標に対する達成度が確認できます。
           </div>
           <nutrients-achievement />
         </v-col>
@@ -107,7 +116,13 @@
           tile
           height="20"
           :min-width="minBtnWidth"
-          class="register-link text-caption text-sm-body-1 ma-0 py-5 py-sm-7 flex-grow-1 flex-shrink-0"
+          class="
+            register-link
+            text-caption text-sm-body-1
+            ma-0
+            py-5 py-sm-7
+            flex-grow-1 flex-shrink-0
+          "
         >
           ユーザー登録してすべての機能を使用する
         </v-btn>
@@ -142,14 +157,14 @@ export default {
     },
     siteDescHeight() {
       switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-          return 200;
-        default:
-          return 350;
+      case 'xs':
+        return 200;
+      default:
+        return 350;
       }
     },
     siteDescWidth() {
-      this.$vuetify.breakpoint.width;
+      return this.$vuetify.breakpoint.width;
     },
   },
   methods: {
