@@ -9,6 +9,10 @@ import LoginPage from '../components/pages/LoginPage';
 import MealSuggestionPage from '../components/pages/MealSuggestionPage';
 import HomePage from '../components/pages/HomePage';
 import MyPage from '../components/pages/MyPage';
+import MyPageAccount from '../components/parts/MyPageAccount';
+import MyPageSetting from '../components/parts/MyPageSetting';
+import MyPageWithdrawal from '../components/parts/MyPageWithdrawal';
+
 import NotFound from '../components/pages/NotFound';
 
 Vue.use(VueRouter);
@@ -43,7 +47,23 @@ const router = new VueRouter({
     {
       path: '/mypage',
       component: MyPage,
-      name: 'MyPage',
+      children: [
+        {
+          path: 'setting',
+          component: MyPageSetting,
+          name: 'MyPageSetting',
+        },
+        {
+          path: 'account',
+          component: MyPageAccount,
+          name: 'MyPageAccount'
+        },
+        {
+          path: 'withdrawal',
+          component: MyPageWithdrawal,
+          name: 'MyPageWithdrawal',
+        },
+      ]
     },
     {
       path: '/suggestion',

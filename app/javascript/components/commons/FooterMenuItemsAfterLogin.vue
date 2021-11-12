@@ -41,7 +41,7 @@
 
       <v-list :color="menuBack" elevation="0" flat outlined tile>
         <v-list-item-group>
-          <v-list-item to="/mypage">
+          <v-list-item to="/mypage/setting">
             <v-list-item-title>
               <span class="accent--text text-body-1">マイページ</span>
             </v-list-item-title>

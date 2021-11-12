@@ -1,142 +1,78 @@
 <template>
-  <v-container class="container">
-    <v-tabs background-color="primary" color="base" dark grow>
-      <v-tab> 栄養摂取基準設定 </v-tab>
-      <v-tab> アカウント設定 </v-tab>
-      <v-tab> 退会 </v-tab>
-
-      <v-tab-item class="tab-item">
-        <v-row>
-          <v-col cols="12" md="4" class="mypage-items">
-            <bmr-form @click="updateBmrAndReference" />
-          </v-col>
-          <v-col cols="12" md="4" class="mypage-items">
-            <my-page-dri-index />
-          </v-col>
-        </v-row>
-      </v-tab-item>
-      <v-tab-item class="tab-item">
-        <my-page-account-form />
-      </v-tab-item>
-      <v-tab-item class="tab-item">
-        <my-page-withdrawal-form />
-      </v-tab-item>
-    </v-tabs>
-  </v-container>
+  <div id="mypage" class="ma-0 pa-0">
+    <v-row class="header-btns">
+      <v-col cols="12" class="d-flex justify-center">
+        <v-btn
+          to="/mypage/setting"
+          color="accent"
+          text
+          tile
+          :height="btnHeight"
+          :width="btnWidth"
+          class="footer-btn ma-0 px-2 flex-grow-1 text-caption text-sm-suubtitle-1"
+        >
+          栄養摂取基準設定
+        </v-btn>
+        <v-btn
+          to="/mypage/account"
+          color="accent"
+          text
+          tile
+          :height="btnHeight"
+          :width="btnWidth"
+          class="footer-btn ma-0 px-2 flex-grow-1 text-caption text-sm-suubtitle-1"
+        >
+          アカウント設定
+        </v-btn>
+        <v-btn
+          to="/mypage/withdrawal"
+          color="accent"
+          text
+          tile
+          :height="btnHeight"
+          :width="btnWidthS"
+          class="footer-btn ma-0 px-2 flex-grow-1 text-caption text-sm-suubtitle-1"
+        >
+          退会
+        </v-btn>
+      </v-col>
+    </v-row>
+    <v-row>
+      <v-col>
+        <router-view />
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
-import BmrForm from '../parts/BmrForm';
-import MyPageDriIndex from '../parts/MyPageDriIndex';
-import MyPageAccountForm from '../parts/MyPageAccountForm';
-import MyPageWithdrawalForm from '../parts/MyPageWithdrawalForm';
-
 export default {
-  components: {
-    BmrForm,
-    MyPageDriIndex,
-    MyPageAccountForm,
-    MyPageWithdrawalForm,
-  },
-  mounted() {
-    this.setData();
-  },
-  methods: {
-    // BMRフォーム用のメソッド
-    setData() {
-      this.axios
-        .get('/api/v1/mypage')
-        .then((res) => {
-          console.log(res.status);
-
-          const r = res.data;
-          this.dispatchBmr(r.bmr_params);
-          this.dispatchPfc(r.pfc_params);
-          this.dispatchDri(r.dri_params);
-        })
-        .catch((e) => {
-          console.log(e.response.status);
-        });
-    },
-    dispatchBmr(params) {
-      this.$store.dispatch('bmrParams/setAttributes', params);
-    },
-    dispatchPfc(params) {
-      this.$store.dispatch('pfcBalance/setAttributes', params);
-    },
-    dispatchDri(params) {
-      this.$store.dispatch('referenceIntakes/setAttributes', params);
-    },
-    // TODO: 要リファクタリング
-    updateBmrAndReference() {
-      this.axios
-        .patch('/api/v1/bmr', { user: this.$store.state.bmrParams.user })
-        .then((res) => {
-          console.log(res.status);
-
-          this.$store.commit('bmrParams/updateBmr', res.data.bmr);
-          this.dispatchPfc(res.data.pfc_params);
-
-          // TODO: genderまたはbirthの値に変更がある時のみ実行するよう
-          this.updateReferenceIntake();
-        })
-        .catch((error) => {
-          let e = error.response;
-          console.error(e.status);
-
-          if (e.data.errors) {
-            this.railsErrors.errorMessages = e.data.errors;
-          }
-          if (this.railsErrors.errorMessages.length != 0) {
-            this.railsErrors.show = true;
-            setTimeout(() => {
-              this.railsErrors.show = false;
-            }, 5000);
-          }
-        });
-    },
-    updateReferenceIntake() {
-      this.axios
-        .patch('/api/v1/users_dietary_reference_intake')
-        .then((res) => {
-          console.log(res.status);
-
-          this.$store.dispatch(
-            'referenceIntakes/setAttributes',
-            res.data.data.attributes
-          );
-        })
-        .catch((error) => {
-          let e = error.response;
-          console.error(e.status);
-
-          if (e.data.errors) {
-            this.railsErrors.errorMessages = e.data.errors;
-          }
-          if (this.railsErrors.errorMessages.length != 0) {
-            this.railsErrors.show = true;
-            setTimeout(() => {
-              this.railsErrors.show = false;
-            }, 5000);
-          }
-        });
-    },
+  data() {
+    return {
+      btnHeight: '60',
+      btnWidth: '38%',
+      btnWidthS: '24%',
+    };
   },
 };
 </script>
 
 <style scoped>
-.container {
-  margin: 0;
-  padding: 0;
+#mypage {
+  width: 100%;
 }
 
-.mypage-items {
-  margin-bottom: 30px;
+.v-btn.footer-btn {
+  align-items: center;
+  justify-content: center;
 }
 
-.tab-item {
-  background-color: #2c4c6b;
-  padding: 30px 25px;
+.v-list-item.small {
+  min-height: 25px !important;
+}
+
+.footer-btn {
+  /* info */
+  border-right: 3px solid rgba(137, 167, 202, 1);
 }
 </style>
