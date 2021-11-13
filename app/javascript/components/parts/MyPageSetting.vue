@@ -1,12 +1,23 @@
 <template>
-  <div>
+  <div id="bmr-and-dri ma-0 pa-0">
     <v-row>
-      <v-col cols="12" md="6" class="mypage-items">
-        <bmr-form @click="updateBmrAndReference" />
+      <!-- BMRフォーム ここから -->
+      <v-col cols="12" md="6" class="mypage-item mb- pa-0">
+        <div class="cutting-line accent--text font-weight-bold mb-2 pt-3 pb-1 pl-4">
+          BMR設定
+        </div>
+        <bmr-form @click="updateBmrAndReference" class="my-8 mx-7" />
       </v-col>
-      <v-col cols="12" md="6" class="mypage-items">
+      <!-- BMRフォーム ここまで -->
+
+      <!-- DRI一覧 ここから -->
+      <v-col cols="12" md="6" class="mypage-item pa-0 mt-7 mt-md-0">
+        <div class="cutting-line accent--text font-weight-bold ma-0 pt-3 pb-1 pl-4">
+          あなたの栄養摂取基準
+        </div>
         <my-page-dri-index />
       </v-col>
+      <!-- DRI一覧 ここまで -->
     </v-row>
   </div>
 </template>
@@ -105,3 +116,13 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.cutting-line {
+  border-bottom: 1px dashed rgba(245, 245, 246, 1);
+}
+
+.mypage-item {
+  border: 1px solid rgba(245, 245, 246, 1);
+}
+</style>
