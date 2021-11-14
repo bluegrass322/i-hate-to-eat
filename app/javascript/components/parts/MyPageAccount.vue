@@ -82,9 +82,7 @@
                   v-bind="attrs"
                   v-on="on"
                 ></v-text-field>
-                <div class="line-time-desc accent--text text-caption">
-                  
-                </div>
+                <div class="line-time-desc accent--text text-caption"></div>
               </template>
               <v-time-picker
                 v-show="timePicker"
@@ -220,9 +218,11 @@ export default {
 #account-page {
   text-align: center;
   margin: 0 auto;
+  padding: 0;
 }
 
-.v-input.form-item, .line-form-group {
+.v-input.form-item,
+.line-form-group {
   margin: 0 auto;
 }
 
@@ -293,8 +293,6 @@ export default {
   border-radius: 0;
   border: 1px solid rgb(245, 245, 246);
 }
-
-
 
 /* 入力前のプレースホルダー */
 /* .v-text-field >>> .v-label {

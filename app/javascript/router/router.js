@@ -56,14 +56,14 @@ const router = new VueRouter({
         {
           path: 'account',
           component: MyPageAccount,
-          name: 'MyPageAccount'
+          name: 'MyPageAccount',
         },
         {
           path: 'withdrawal',
           component: MyPageWithdrawal,
           name: 'MyPageWithdrawal',
         },
-      ]
+      ],
     },
     {
       path: '/suggestion',

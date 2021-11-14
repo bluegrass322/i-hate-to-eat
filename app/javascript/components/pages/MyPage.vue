@@ -86,7 +86,6 @@ export default {
   margin: 120px 36px 64px 36px;
 }
 
-
 // .top-row {
 //   position: absolute;
 //   top: 0;

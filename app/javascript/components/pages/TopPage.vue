@@ -157,10 +157,10 @@ export default {
     },
     siteDescHeight() {
       switch (this.$vuetify.breakpoint.name) {
-      case 'xs':
-        return 200;
-      default:
-        return 350;
+        case 'xs':
+          return 200;
+        default:
+          return 350;
       }
     },
     siteDescWidth() {

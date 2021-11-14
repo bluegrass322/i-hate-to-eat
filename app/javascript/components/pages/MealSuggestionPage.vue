@@ -87,10 +87,10 @@ export default {
   computed: {
     btnWidth() {
       switch (this.$vuetify.breakpoint.name) {
-      case 'xs':
-        return '100%';
-      default:
-        return '50%';
+        case 'xs':
+          return '100%';
+        default:
+          return '50%';
       }
     },
   },

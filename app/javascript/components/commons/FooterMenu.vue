@@ -29,10 +29,10 @@ export default {
     ...mapGetters('authUser', ['isLoggedIn']),
     height() {
       switch (this.$vuetify.breakpoint.name) {
-      case 'xs':
-        return 50;
-      default:
-        return 70;
+        case 'xs':
+          return 50;
+        default:
+          return 70;
       }
     },
   },
