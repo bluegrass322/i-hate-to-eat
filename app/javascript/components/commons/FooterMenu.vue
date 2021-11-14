@@ -7,7 +7,7 @@
     flat
     :height="height"
     class="pa-0"
-    style="border: 3px solid #89a7ca !important"
+    style="border: 2px solid #89a7ca !important"
   >
     <footer-menu-items-after-login v-if="isLoggedIn" />
     <footer-menu-items-before-login v-else />

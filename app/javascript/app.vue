@@ -1,24 +1,21 @@
 <template>
   <v-app>
     <flash-message class="flash-alert" />
-    <common-header />
     <v-main>
       <v-container fluid fill-height class="ma-0 pa-0">
         <router-view />
       </v-container>
     </v-main>
-    <footer-menu />>
+    <footer-menu />
   </v-app>
 </template>
 
 <script>
-import CommonHeader from './components/commons/CommonHeader';
 import FlashMessage from './components/commons/FlashMessage';
 import FooterMenu from './components/commons/FooterMenu';
 
 export default {
   components: {
-    CommonHeader,
     FlashMessage,
     FooterMenu,
   },
@@ -27,13 +24,12 @@ export default {
 
 <style scoped>
 #app {
-  /* secondary */
-  background-color: rgba(44, 76, 107, 1);
+  background-color: rgba(55, 56, 56, 1); /* #373838 */
 }
 
 /deep/ .v-main {
   /* info */
-  border: 3px solid rgba(137, 167, 202, 1);
+  border: 2px solid rgba(137, 167, 202, 1);
   box-sizing: border-box;
 }
 

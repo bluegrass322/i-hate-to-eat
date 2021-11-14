@@ -130,7 +130,7 @@ export default {
   methods: {
     logoutUser() {
       this.axios
-        .delete('api/v1/authentication')
+        .delete('/api/v1/authentication')
         .then((response) => {
           console.log(response.status);
 
@@ -168,7 +168,7 @@ export default {
 
 .footer-btn {
   /* info */
-  border-right: 3px solid rgba(137, 167, 202, 1);
+  border-right: 1px solid rgba(137, 167, 202, 1);
 }
 
 .menu-icon {
