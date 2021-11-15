@@ -1,54 +1,80 @@
 <template>
-  <div>
-    <div>
-      <span class="base--text">
-        ユーザー情報（メールアドレス・LINE
-        IDなどの情報を含む）を削除し、サービスの利用を中止します。
-      </span>
-      <v-btn
-        color="base"
-        dark
-        text
-        outlined
-        @click.stop="
-          setUserName();
-          confirmModal = true;
-        "
-      >
-        退会
-      </v-btn>
+  <div
+    id="withdrawal-page"
+    class="d-flex flex-column align-center ma-0 mt-5 pa-0"
+  >
+    <div
+      class="desc-text accent--text text-body-2 text-sm-body-1 ma-0 ml-7 pa-0"
+    >
+      <div class="text-item d-flex align-end ma-0 mb-4 mb-sm-6 pa-0">
+        退会する
+        <div class="under-line line-title" />
+      </div>
+      <div class="text-item ma-0 mb-4 mb-sm-6 pa-0">
+        メールアドレス・LINE
+        IDなどのすべてのユーザー情報を削除し、サービスの利用を中止します。
+      </div>
+      <div class="text-item ma-0 mb-8 mb-sm-10 pa-0">
+        なお、過去の記録の復元は不可能となりますので、あらかじめご了承ください。
+      </div>
+      <div class="under-line-spacer" />
     </div>
 
-    <v-dialog v-model="confirmModal">
-      <v-card flat tile color="primary" width="120" class="foods-card-contents">
-        <v-card-text class="pa-0 text-caption text-center base--text">
-          <div>{{ user.name }}さん</div>
-          <div></div>
+    <v-dialog v-model="confirmModal" max-width="350">
+      <template #activator="{ on, attrs }">
+        <v-btn
+          color="accent"
+          height="30"
+          outlined
+          tile
+          class="withdrawal-btn mt-12"
+          v-bind="attrs"
+          v-on="on"
+          @click.stop="setUserName()"
+        >
+          退会
+        </v-btn>
+      </template>
+
+      <v-card flat tile color="primary" class="py-5 px-8">
+        <v-card-text
+          class="d-flex justify-center text-body-2 accent--text pa-0"
+        >
+          <div class="dialog-text-items mb-3">
+            <div class="d-flex mb-3">
+              {{ user.name }}さん
+              <div class="under-line dialog-text-item" />
+            </div>
+            <p class="mt-3 mb-0">退会処理を確定します</p>
+            <p>よろしいですか？</p>
+          </div>
         </v-card-text>
-        <v-card-actions>
-          <v-btn
-            color="base"
-            dark
-            text
-            outlined
-            small
-            @click.stop="closeModal()"
-          >
-            キャンセル
-          </v-btn>
-          <v-btn
-            color="base"
-            dark
-            text
-            outlined
-            small
-            @click.stop="
-              acceptWithdrawal(user.id);
-              closeModal();
-            "
-          >
-            退会する
-          </v-btn>
+        <v-card-actions class="dialog-btn-group pa-0">
+          <div class="dialog-btn-items">
+            <v-btn
+              color="accent"
+              outlined
+              small
+              tile
+              class="dialog-btn ma-0 mr-3"
+              @click.stop="closeModal()"
+            >
+              Cancel
+            </v-btn>
+            <v-btn
+              color="accent"
+              outlined
+              small
+              tile
+              class="dialog-btn ma-0"
+              @click.stop="
+                acceptWithdrawal(user.id);
+                closeModal();
+              "
+            >
+              OK
+            </v-btn>
+          </div>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -60,10 +86,11 @@ export default {
   data() {
     return {
       user: {
-        id: '',
-        name: '',
+        id: null,
+        name: null,
       },
       confirmModal: false,
+      dialogBtnWidth: '30%',
     };
   },
   mounted() {
@@ -111,7 +138,67 @@ export default {
 </script>
 
 <style scoped>
-.v-btn {
-  width: 120px;
+#withdrawal-page {
+  text-align: center;
+}
+
+.confirm-text-group {
+  width: 100%;
+}
+
+.desc-text {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.dialog-btn-items {
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.dialog-text-items {
+  text-align: start;
+}
+
+.under-line {
+  border-bottom: 1px solid rgb(245, 245, 246);
+  margin-left: 5px;
+  position: relative;
+  top: -5px;
+  left: -1px;
+}
+
+.under-line-spacer {
+  border-bottom: 1px solid rgb(245, 245, 246);
+  width: 15px;
+}
+
+.under-line.dialog-text-item {
+  width: 10px;
+}
+
+.line-title {
+  width: 35px;
+}
+
+.text-item {
+  text-align: start;
+  width: 90%;
+  max-width: 350px;
+}
+
+.v-btn.dialog-btn {
+  text-transform: none !important;
+  width: 30%;
+}
+
+.v-btn.withdrawal-btn {
+  /* border-top: none;
+  border-right: none;
+  border-left: none; */
+  width: 80%;
+  max-width: 330px;
 }
 </style>
