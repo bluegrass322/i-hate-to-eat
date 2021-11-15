@@ -130,16 +130,15 @@
             </span> -->
           </div>
         </div>
+
+        <div class="captions text-caption accent--text mt-6">
+          <p>※ 国立健康・栄養研究所の式を採用し算出。</p>
+          <p>
+            ※ 日常的に家事・通勤などでの歩行運動やスポーツなどの身体活動を行なっている場合は、必要なエネルギー量は多くなります。
+          </p>
+        </div>
       </v-form>
     </validation-observer>
-
-    <div class="captions text-caption accent--text mt-6">
-      <div class="pb-2">※ 国立健康・栄養研究所の式を採用し算出。</div>
-      <div>
-        ※
-        日常的に家事・通勤などでの歩行運動やスポーツなどの身体活動を行なっている場合は、必要なエネルギー量は多くなります。
-      </div>
-    </div>
   </div>
 </template>
 
@@ -205,6 +204,10 @@ export default {
 </script>
 
 <style scoped>
+.form-group {
+  text-align: center;
+}
+
 .v-text-field {
   max-width: 350px;
   padding: 0;
@@ -215,20 +218,13 @@ export default {
 }
 
 .v-btn.resut-btn {
-  background-color: rgba(137, 167, 202, 0.3);
-  border: 1px solid rgba(245, 245, 246, 0.6);
+  background-color: rgb(44, 76, 107);
+  border: 2px solid rgba(245, 245, 246, 0.6);
   box-sizing: border-box;
-  border-top-left-radius: 3px;
-  border-bottom-left-radius: 3px;
-}
-
-#bmr-form {
-  text-align: center;
 }
 
 .raido-btn-outline {
-  border: 1px solid rgba(245, 245, 246, 0.3);
-  border-radius: 3px;
+  border: 1.5px solid rgb(245, 245, 246);
   max-width: 350px;
   height: 40px;
 }
@@ -238,14 +234,26 @@ export default {
 }
 
 .result-text {
-  border: 1px solid rgba(245, 245, 246, 0.6);
-  border-top-right-radius: 3px;
-  border-bottom-right-radius: 3px;
+  border-top: 1px solid rgb(245, 245, 246);
+  border-bottom: 1px solid rgb(245, 245, 246);
+  border-right: 1px solid rgb(245, 245, 246);
+  text-align: center;
   min-width: 150px;
   height: 40px;
 }
 
 .captions {
+  margin: 0 auto;
+  max-width: 350px;
   text-align: start;
+  /* 2行目以降を1字下げ */
+  padding-left: 1em;
+  text-indent: -1em;
+}
+
+/* outlinedの場合 */
+.v-text-field.form-item >>> .v-input__slot {
+  border-radius: 0;
+  border: 1px solid rgb(245, 245, 246);
 }
 </style>

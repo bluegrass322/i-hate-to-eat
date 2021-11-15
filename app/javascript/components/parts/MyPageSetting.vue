@@ -1,21 +1,43 @@
 <template>
-  <div id="bmr-and-dri ma-0 pa-0">
-    <v-row>
+  <div id="bmr-and-dri">
+    <v-row class="mt-12">
       <!-- BMRフォーム ここから -->
-      <v-col cols="12" md="6" class="mypage-item mb- pa-0">
-        <div class="cutting-line accent--text font-weight-bold mb-2 pt-3 pb-1 pl-4">
-          BMR設定
+      <v-col cols="12" md="6" class="mypage-items d-flex flex-column align-center mb-15 mb-md-0 pa-0">
+        <div class="item-desc">
+          <div class="desc-content desc-right d-flex flex-wrap flex-column align-start">
+            <div
+              class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
+            >
+              <div class="under-line line-left" />
+              BMR設定
+            </div>
+            <div class="text-caption">
+              以下のフォームから、1日に必要な最低限のエネルギー量（BMR）を計算します。
+            </div>
+          </div>
         </div>
-        <bmr-form @click="updateBmrAndReference" class="my-8 mx-7" />
+        <div class="under-line-spacer line-long mt-8 mb-9" />
+        <bmr-form @click="updateBmrAndReference" />
       </v-col>
       <!-- BMRフォーム ここまで -->
 
       <!-- DRI一覧 ここから -->
-      <v-col cols="12" md="6" class="mypage-item pa-0 mt-7 mt-md-0">
-        <div class="cutting-line accent--text font-weight-bold ma-0 pt-3 pb-1 pl-4">
-          あなたの栄養摂取基準
+      <v-col cols="12" md="6" class="mypage-items d-flex flex-column align-center ma-0 mt-16 mt-md-0 pa-0">
+        <div class="item-desc" :style="driWidth">
+          <div class="desc-content desc-left d-flex flex-wrap flex-column align-start">
+            <div
+              class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
+            >
+              あなたの栄養摂取基準
+              <div class="under-line line-right" />
+            </div>
+            <div class="text-caption">
+              厚生労働省制定の「日本人の食事摂取基準（2020年版）」をもとに、栄養素ごとの摂取目標量/日が設定されます。
+            </div>
+          </div>
         </div>
-        <my-page-dri-index />
+        <div class="under-line-spacer line-long mt-8 mb-9" :style="driWidth" />
+        <my-page-setting-dri-index class="dri-index" :style="driWidth"/>
       </v-col>
       <!-- DRI一覧 ここまで -->
     </v-row>
@@ -24,12 +46,23 @@
 
 <script>
 import BmrForm from './BmrForm';
-import MyPageDriIndex from './MyPageDriIndex';
+import MyPageSettingDriIndex from './MyPageSettingDriIndex';
 
 export default {
   components: {
     BmrForm,
-    MyPageDriIndex,
+    MyPageSettingDriIndex,
+  },
+  computed: {
+    driWidth() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'lg':
+        case 'xl':
+          return 'max-width: 650px;';
+        default:
+          return 'max-width: 350px;';
+      }
+    },
   },
   mounted() {
     this.setData();
@@ -114,15 +147,68 @@ export default {
         });
     },
   },
-}
+};
 </script>
 
-<style scoped>
-.cutting-line {
-  border-bottom: 1px dashed rgba(245, 245, 246, 1);
+<style scoped lang="scss">
+.mypage-items {
+  width: 100%;
 }
 
-.mypage-item {
-  border: 1px solid rgba(245, 245, 246, 1);
+// .dri-index {
+//   max-width: 350px;
+// }
+
+.item-desc {
+  width: 100%;
+  max-width: 350px;
+}
+
+.desc-content {
+  max-width: 240px;
+}
+
+.desc-content.desc-right {
+  margin-left: auto;
+  position: relative;
+  top: 0;
+  left: 10px;
+}
+
+.desc-content.desc-left {
+  margin-right: auto;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+.under-line {
+  border-bottom: 1px solid rgb(245, 245, 246);
+  position: relative;
+  top: -6px;
+}
+
+.under-line.line-left {
+  margin-right: 5px;
+}
+
+.under-line.line-right {
+  margin-left: 5px;
+}
+
+.item-title {
+  .under-line {
+    width: 18px;
+  }
+}
+
+.under-line-spacer {
+  border-bottom: 1px solid rgb(245, 245, 246);
+  width: 15px;
+}
+
+.under-line-spacer.line-long {
+  width: 100%;
+  max-width: 350px;
 }
 </style>
