@@ -257,8 +257,8 @@ export default {
 }
 
 .v-btn.footer-btn {
-  align-items: end;
-  justify-content: start;
+  align-items: flex-end;
+  justify-content: flex-start;
   text-transform: none !important;
 }
 </style>
