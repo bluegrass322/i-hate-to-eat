@@ -59,7 +59,7 @@
               />
             </validation-provider>
           </template>
-          <v-date-picker v-model="birth" @input="birthInput = false" />
+          <v-date-picker v-model="birth" @input="birthInput = false" color="primary" />
         </v-menu>
         <validation-provider
           v-slot="{ errors }"

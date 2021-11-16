@@ -61,7 +61,7 @@
               class="switch ma-0"
             ></v-switch>
           </div>
-          <div v-show="user.line_notification_enabled" class="py-5 px-7">
+          <div v-show="user.line_notification_enabled" class="py-8 px-7">
             <v-dialog
               ref="dialog"
               v-model="timePicker"
@@ -283,7 +283,7 @@ export default {
 
 /* prepend-inner-icon */
 .v-text-field.form-item >>> .v-input__prepend-inner {
-  background-color: rgb(90, 120, 153);
+  background-color: rgba(44, 76, 107);
   margin: 0 15px 0 0 !important;
   padding: 7px;
 }

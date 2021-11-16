@@ -29,7 +29,7 @@
     </v-row>
 
     <v-row>
-      <v-col class="mypage-content px-6">
+      <v-col class="mypage-content px-6 py-0">
         <router-view />
       </v-col>
     </v-row>
