@@ -180,14 +180,10 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .mypage-items {
   width: 100%;
 }
-
-// .dri-index {
-//   max-width: 350px;
-// }
 
 .item-desc {
   width: 100%;
@@ -220,16 +216,12 @@ export default {
 
 .under-line.line-left {
   margin-right: 5px;
+  width: 18px;
 }
 
 .under-line.line-right {
   margin-left: 5px;
-}
-
-.item-title {
-  .under-line {
-    width: 18px;
-  }
+  width: 18px;
 }
 
 .under-line-spacer {

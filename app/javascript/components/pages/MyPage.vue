@@ -48,7 +48,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 #mypage {
   width: 100%;
 }
@@ -85,10 +85,4 @@ export default {
 .mypage-content {
   margin: 120px 36px 64px 36px;
 }
-
-// .top-row {
-//   position: absolute;
-//   top: 0;
-//   left: 0;
-// }
 </style>
