@@ -39,41 +39,59 @@
     >
       login
     </v-btn>
-    <v-menu
-      transition="scroll-y-reverse-transition"
-      :nudge-top="nudgeTop"
-      offset-y
-      tile
-      top
+
+    <div class="menu-icon pb-1 flex-grow-0 flex-shrink-0">
+      <v-app-bar-nav-icon color="accent" @click.stop="clickNavIcon()" />
+    </div>
+    <!-- xsの場合のみフルスクリーン -->
+    <v-dialog
+      v-model="listMenuShow"
+      :fullscreen="$vuetify.breakpoint.xsOnly"
+      :hide-overlay="$vuetify.breakpoint.xsOnly"
+      transition="dialog-bottom-transition"
+      style="z-index: 201"
     >
-      <template #activator="{ on, attrs }">
-        <div class="menu-icon pb-1 flex-grow-0 flex-shrink-0">
-          <v-app-bar-nav-icon v-bind="attrs" color="accent" v-on="on" />
-        </div>
-      </template>
+      <v-list
+        :color="listMenuBack"
+        elevation="0"
+        :height="listMenuHeigt"
+        :width="listMenuWidth"
+        flat
+        outlined
+        tile
+        class="listmenu-group d-flex flex-column justify-center align-end align-sm-center pr-10 pr-sm-5"
+      >
+        <v-list-item-group class="d-flex flex-column justify-center align-start">
+          <div class="d-flex align-end text-h5 font-weight-black mb-5">
+            Menu
+          </div>
 
-      <v-list :color="menuBack" elevation="0" flat outlined tile>
-        <v-list-item-group>
-          <v-list-item to="/">
-            <v-list-item-title>
-              <span class="accent--text text-body-1">サービス概要</span>
-            </v-list-item-title>
-          </v-list-item>
+          <div class="under-line-spacer mt-6 mb-10" />
 
-          <!-- 以下、文字サイズ小のアイテム -->
-          <v-list-item to="/" class="small text-caption">
-            <v-list-item-title>
-              <span class="accent--text text-caption">利用規約</span>
-            </v-list-item-title>
-          </v-list-item>
-          <v-list-item to="/" class="small">
-            <v-list-item-title>
-              <span class="accent--text text-caption">お問い合わせ</span>
-            </v-list-item-title>
-          </v-list-item>
+          <!-- 文字サイズ大のアイテム -->
+          <template v-for="(item, index) in listItemLarge">
+            <v-list-item :to="item.to" :key="`large-${index}`" @click.stop="clickNavIcon()" dense class="mb-6 pa-0">
+              <!-- TODO: styleは実装完了とともに消す -->
+              <v-list-item-title class="accent--text font-weight-bold text-h6" :style="`${item.style}`">
+                <span class="list-item">{{item.name}}</span>
+              </v-list-item-title>
+            </v-list-item>
+          </template>
+
+          <div class="under-line-spacer mt-14 mb-10" />
+
+          <!-- 文字サイズ小のアイテム -->
+          <template v-for="(item, index) in listItemSmall">
+            <v-list-item :to="item.to" :key="`small-${index}`" @click.stop="clickNavIcon()" dense class="ma-0 pa-0">
+              <v-list-item-title class="accent--text text-body-2 font-weight-medium" :style="`${item.style}`">
+                <span class="list-item">{{item.name}}</span>
+              </v-list-item-title>
+            </v-list-item>
+          </template>
+          <!-- ここまで -->
         </v-list-item-group>
       </v-list>
-    </v-menu>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -84,16 +102,32 @@ export default {
       maxHeight: 70,
       minHeight: 50,
       minWidth: 50,
-      menuBack: 'rgba(90, 120, 153, 0.7)',
+      listMenuShow: false,
+      listMenuBack: 'rgba(44, 76, 107, 0.8)',
+      listItemLarge: [
+        { name: "about", to: "/", style: "text-decoration: line-through;"},
+      ],
+      listItemSmall: [
+        { name: "terms of use", to: "/", style: "text-decoration: line-through;" },
+        { name: "contact", to: "/", style: "text-decoration: line-through;" },
+      ],
     };
   },
   computed: {
-    nudgeTop() {
+    listMenuHeigt() {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs':
-          return 7;
+          return this.$vuetify.breakpoint.height - 50;
         default:
-          return 18;
+          return this.$vuetify.breakpoint.height - 70;
+      }
+    },
+    listMenuWidth() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return this.$vuetify.breakpoint.width;
+        default:
+          return 300;
       }
     },
     height() {
@@ -129,10 +163,36 @@ export default {
       }
     },
   },
+  methods: {
+    clickNavIcon() {
+      this.listMenuShow = !this.listMenuShow;
+    },
+  }
 };
 </script>
 
 <style scoped>
+.footer-btn {
+  /* info */
+  border-right: 1px solid rgba(137, 167, 202, 1);
+}
+
+.listmenu-group {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.menu-icon {
+  text-align: center;
+  width: 50px;
+}
+
+.under-line-spacer {
+  border-bottom: 1px solid rgb(245, 245, 246);
+  width: 15px;
+}
+
 .v-btn.footer-btn {
   align-items: end;
   justify-content: start;
@@ -141,15 +201,5 @@ export default {
 
 .v-list-item.small {
   min-height: 25px !important;
-}
-
-.footer-btn {
-  /* info */
-  border-right: 1px solid rgba(137, 167, 202, 1);
-}
-
-.menu-icon {
-  text-align: center;
-  width: 50px;
 }
 </style>

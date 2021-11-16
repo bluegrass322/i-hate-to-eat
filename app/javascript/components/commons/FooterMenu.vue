@@ -6,8 +6,7 @@
     fixed
     flat
     :height="height"
-    class="pa-0"
-    style="border: 2px solid #89a7ca !important"
+    id="footer-menu"
   >
     <footer-menu-items-after-login v-if="isLoggedIn" />
     <footer-menu-items-before-login v-else />
@@ -40,7 +39,13 @@ export default {
 </script>
 
 <style scoped>
-/deep/ .v-toolbar__content {
-  padding: 0px !important;
+#footer-menu {
+  z-index: 999;
+}
+
+.v-app-bar >>> .v-toolbar__content {
+  padding: 0;
+  border: 2px solid #89a7ca;
+  z-index: 999;
 }
 </style>
