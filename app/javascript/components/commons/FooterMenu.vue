@@ -1,12 +1,12 @@
 <template>
   <v-app-bar
+    id="footer-menu"
     app
     bottom
     color="primary"
     fixed
     flat
     :height="height"
-    id="footer-menu"
   >
     <footer-menu-items-after-login v-if="isLoggedIn" />
     <footer-menu-items-before-login v-else />

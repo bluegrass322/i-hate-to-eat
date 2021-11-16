@@ -2,9 +2,20 @@
   <div id="bmr-and-dri">
     <v-row class="mt-12">
       <!-- BMRフォーム ここから -->
-      <v-col cols="12" md="6" class="mypage-items d-flex flex-column align-center mb-15 mb-md-0 pa-0">
+      <v-col
+        cols="12"
+        md="6"
+        class="mypage-items d-flex flex-column align-center mb-15 mb-md-0 pa-0"
+      >
         <div class="item-desc">
-          <div class="desc-content desc-right d-flex flex-wrap flex-column align-start">
+          <div
+            class="
+              desc-content desc-right
+              d-flex
+              flex-wrap flex-column
+              align-start
+            "
+          >
             <div
               class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
             >
@@ -22,9 +33,28 @@
       <!-- BMRフォーム ここまで -->
 
       <!-- DRI一覧 ここから -->
-      <v-col cols="12" md="6" class="mypage-items d-flex flex-column align-center ma-0 mt-16 mt-md-0 pa-0">
+      <v-col
+        cols="12"
+        md="6"
+        class="
+          mypage-items
+          d-flex
+          flex-column
+          align-center
+          ma-0
+          mt-16 mt-md-0
+          pa-0
+        "
+      >
         <div class="item-desc" :style="driWidth">
-          <div class="desc-content desc-left d-flex flex-wrap flex-column align-start">
+          <div
+            class="
+              desc-content desc-left
+              d-flex
+              flex-wrap flex-column
+              align-start
+            "
+          >
             <div
               class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
             >
@@ -37,7 +67,7 @@
           </div>
         </div>
         <div class="under-line-spacer line-long mt-8 mb-9" :style="driWidth" />
-        <my-page-setting-dri-index class="dri-index" :style="driWidth"/>
+        <my-page-setting-dri-index class="dri-index" :style="driWidth" />
       </v-col>
       <!-- DRI一覧 ここまで -->
     </v-row>

@@ -59,7 +59,11 @@
               />
             </validation-provider>
           </template>
-          <v-date-picker v-model="birth" @input="birthInput = false" color="primary" />
+          <v-date-picker
+            v-model="birth"
+            color="primary"
+            @input="birthInput = false"
+          />
         </v-menu>
         <validation-provider
           v-slot="{ errors }"
@@ -134,7 +138,8 @@
         <div class="captions text-caption accent--text mt-6">
           <p>※ 国立健康・栄養研究所の式を採用し算出。</p>
           <p>
-            ※ 日常的に家事・通勤などでの歩行運動やスポーツなどの身体活動を行なっている場合は、必要なエネルギー量は多くなります。
+            ※
+            日常的に家事・通勤などでの歩行運動やスポーツなどの身体活動を行なっている場合は、必要なエネルギー量は多くなります。
           </p>
         </div>
       </v-form>

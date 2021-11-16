@@ -27,7 +27,6 @@
       today's meal
     </v-btn>
 
-
     <div class="menu-icon pb-1 flex-grow-0 flex-shrink-0">
       <v-app-bar-nav-icon color="accent" @click.stop="clickNavIcon()" />
     </div>
@@ -47,9 +46,18 @@
         flat
         outlined
         tile
-        class="listmenu-group d-flex flex-column justify-center align-end align-sm-center pr-10 pr-sm-5"
+        class="
+          listmenu-group
+          d-flex
+          flex-column
+          justify-center
+          align-end align-sm-center
+          pr-10 pr-sm-5
+        "
       >
-        <v-list-item-group class="d-flex flex-column justify-center align-start">
+        <v-list-item-group
+          class="d-flex flex-column justify-center align-start"
+        >
           <div class="d-flex align-end text-h5 font-weight-black mb-5">
             Menu
           </div>
@@ -58,16 +66,31 @@
 
           <!-- 文字サイズ大のアイテム -->
           <template v-for="(item, index) in listItemLarge">
-            <v-list-item :to="item.to" :key="`large-${index}`" @click.stop="clickNavIcon()" dense class="mb-6 pa-0">
+            <v-list-item
+              :key="`large-${index}`"
+              :to="item.to"
+              dense
+              class="mb-6 pa-0"
+              @click.stop="clickNavIcon()"
+            >
               <!-- TODO: styleは実装完了とともに消す -->
-              <v-list-item-title class="accent--text font-weight-bold text-h6" :style="`${item.style}`">
-                <span class="list-item">{{item.name}}</span>
+              <v-list-item-title
+                class="accent--text font-weight-bold text-h6"
+                :style="`${item.style}`"
+              >
+                <span class="list-item">{{ item.name }}</span>
               </v-list-item-title>
             </v-list-item>
           </template>
           <!-- ログアウトボタンのみ固定配置 -->
           <v-list-item class="ma-0 pa-0" dense>
-            <v-list-item-title @click="clickNavIcon(); logoutUser();" class="accent--text text-h6 font-weight-bold">
+            <v-list-item-title
+              class="accent--text text-h6 font-weight-bold"
+              @click="
+                clickNavIcon();
+                logoutUser();
+              "
+            >
               <span class="list-item">logout</span>
             </v-list-item-title>
           </v-list-item>
@@ -77,10 +100,19 @@
 
           <!-- 文字サイズ小のアイテム -->
           <template v-for="(item, index) in listItemSmall">
-            <v-list-item :to="item.to" :key="`small-${index}`" @click.stop="clickNavIcon()" dense class="ma-0 pa-0">
+            <v-list-item
+              :key="`small-${index}`"
+              :to="item.to"
+              dense
+              class="ma-0 pa-0"
+              @click.stop="clickNavIcon()"
+            >
               <!-- TODO: styleは実装完了とともに消す -->
-              <v-list-item-title class="accent--text text-body-2 font-weight-medium" :style="`${item.style}`">
-                <span class="list-item">{{item.name}}</span>
+              <v-list-item-title
+                class="accent--text text-body-2 font-weight-medium"
+                :style="`${item.style}`"
+              >
+                <span class="list-item">{{ item.name }}</span>
               </v-list-item-title>
             </v-list-item>
           </template>
@@ -103,12 +135,16 @@ export default {
       listMenuBack: 'rgba(44, 76, 107, 0.8)',
       // TODO: styleは実装完了とともに消す
       listItemLarge: [
-        { name: "mypage", to: "/mypage/setting", style: null },
-        { name: "about", to: "/", style: "text-decoration: line-through;"},
+        { name: 'mypage', to: '/mypage/setting', style: null },
+        { name: 'about', to: '/', style: 'text-decoration: line-through;' },
       ],
       listItemSmall: [
-        { name: "terms of use", to: "/", style: "text-decoration: line-through;" },
-        { name: "contact", to: "/", style: "text-decoration: line-through;" },
+        {
+          name: 'terms of use',
+          to: '/',
+          style: 'text-decoration: line-through;',
+        },
+        { name: 'contact', to: '/', style: 'text-decoration: line-through;' },
       ],
       // TODO: ここまで
     };
@@ -200,15 +236,19 @@ export default {
   border-right: 1px solid rgba(137, 167, 202, 1);
 }
 
-.menu-icon {
-  text-align: center;
-  width: 50px;
+.list-item {
+  line-height: 1.5rem;
 }
 
 .listmenu-group {
   position: absolute;
   top: 0;
   right: 0;
+}
+
+.menu-icon {
+  text-align: center;
+  width: 50px;
 }
 
 .under-line-spacer {
@@ -221,20 +261,4 @@ export default {
   justify-content: start;
   text-transform: none !important;
 }
-
-.list-item {
-  line-height: 1.5rem;
-}
 </style>
-
-
-.under-line {
-  border-bottom: 1px solid rgb(245, 245, 246);
-  position: relative;
-  top: -6px;
-}
-
-.under-line.line-title {
-  margin-right: 5px;
-  width: 50px;
-}
