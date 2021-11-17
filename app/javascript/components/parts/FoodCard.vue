@@ -24,7 +24,9 @@
             <div class="font-weight-bold text-caption text-md-body-2">
               {{ f.name }}
             </div>
-            <div class="text-caption font-weight-bold mb-2">{{ f.subname }}</div>
+            <div class="text-caption font-weight-bold mb-2">
+              {{ f.subname }}
+            </div>
             <div class="text-caption">{{ f.reference_amount * 100 }}g</div>
           </v-card-text>
           <v-card-actions class="actions pa-0">

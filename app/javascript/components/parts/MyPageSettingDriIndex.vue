@@ -72,8 +72,6 @@ export default {
     ...mapGetters('referenceIntakes', ['vitamins', 'minerals']),
     cardWidth() {
       switch (this.$vuetify.breakpoint.name) {
-        // case 'xs':
-        //   return '50%';
         case 'lg':
         case 'xl':
           return '25%';

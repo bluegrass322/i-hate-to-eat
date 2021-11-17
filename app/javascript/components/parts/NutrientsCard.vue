@@ -1,12 +1,6 @@
 <template>
   <v-sheet color="#f5f5f6" outlined :width="cardWidth">
-    <v-card
-      color="back"
-      flat
-      tile
-      height="70"
-      class="d-flex align-center"
-    >
+    <v-card color="back" flat tile height="70" class="d-flex align-center">
       <v-card-text class="card-text pa-0 accent--text">
         <div class="text-item d-flex flex-column justify-center align-center">
           <div class="text-subtitle-2 font-weight-medium">
@@ -16,7 +10,7 @@
         </div>
       </v-card-text>
     </v-card>
-  </v-sheet> 
+  </v-sheet>
 </template>
 
 <script>
@@ -53,5 +47,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

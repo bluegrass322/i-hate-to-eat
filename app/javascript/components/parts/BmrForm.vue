@@ -252,8 +252,8 @@ export default {
   max-width: 350px;
   text-align: start;
   /* 2行目以降を1字下げ */
-  padding-left: 1em;
-  text-indent: -1em;
+  padding-left: 1rem;
+  text-indent: -1rem;
 }
 
 /* outlinedの場合 */

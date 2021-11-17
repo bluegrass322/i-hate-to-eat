@@ -1,12 +1,16 @@
 <template>
   <v-sheet color="#f5f5f6" outlined max-height="500">
     <v-card color="back" flat tile outlined class="ma-0 pa-0">
-      <v-card-title class="d-flex align-end accent--text my-3" >
+      <v-card-title class="d-flex align-end accent--text my-3">
         <div class="d-flex">
           <div class="text-subtitle-2">{{ basicInfo.name }}</div>
-          <div class="text-caption font-weight-midium ml-1">{{ basicInfo.subname }}</div>
+          <div class="text-caption font-weight-midium ml-1">
+            {{ basicInfo.subname }}
+          </div>
         </div>
-        <div class="text-body-2 ml-2">{{ basicInfo.reference_amount * 100 }}g</div>
+        <div class="text-body-2 ml-2">
+          {{ basicInfo.reference_amount * 100 }}g
+        </div>
       </v-card-title>
 
       <v-card-text class="ma-0 pa-0">

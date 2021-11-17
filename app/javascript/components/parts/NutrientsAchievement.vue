@@ -23,7 +23,17 @@
                 tile
                 class="d-flex flex-column justify-center align-center"
               >
-                <v-card-text class="d-flex flex-column align-center pa-0 accent--text text-caption pa-0">
+                <v-card-text
+                  class="
+                    d-flex
+                    flex-column
+                    align-center
+                    pa-0
+                    accent--text
+                    text-caption
+                    pa-0
+                  "
+                >
                   <div class="text-subtitle-2 mb-2">
                     {{ mac.label }}
                   </div>
@@ -54,7 +64,16 @@
                 tile
                 class="d-flex flex-column justify-center align-center"
               >
-                <v-card-text class="d-flex flex-column align-center accent--text text-caption pa-0">
+                <v-card-text
+                  class="
+                    d-flex
+                    flex-column
+                    align-center
+                    accent--text
+                    text-caption
+                    pa-0
+                  "
+                >
                   <div class="text-subtitle-2 mb-2">{{ vit.label }}</div>
                   <div class="d-flex flex-column align-start">
                     <div>
@@ -83,7 +102,16 @@
                 tile
                 class="d-flex flex-column justify-center align-center"
               >
-                <v-card-text class="d-flex flex-column align-center accent--text text-caption pa-0">
+                <v-card-text
+                  class="
+                    d-flex
+                    flex-column
+                    align-center
+                    accent--text
+                    text-caption
+                    pa-0
+                  "
+                >
                   <div class="text-subtitle-2 mb-2">
                     {{ min.label }}
                   </div>
@@ -105,9 +133,16 @@
       </v-tab-item>
     </v-tabs>
     <div class="captions text-caption accent--text mt-6">
-      <div class="mb-1">※ マクロ栄養素のの合計量（Total）は、計算結果の少数を切り捨てて表示。</div>
-      <div class="mb-1">※ ビタミンおよびミネラルの合計量（Total）は、計算結果の少数第3位以下を切り捨てて表示。</div>
-      <div>※ 計算の過程で実際の栄養量との間に誤差が発生することがあります。</div>
+      <div class="mb-1">
+        ※ マクロ栄養素のの合計量（Total）は、計算結果の少数を切り捨てて表示。
+      </div>
+      <div class="mb-1">
+        ※
+        ビタミンおよびミネラルの合計量（Total）は、計算結果の少数第3位以下を切り捨てて表示。
+      </div>
+      <div>
+        ※ 計算の過程で実際の栄養量との間に誤差が発生することがあります。
+      </div>
     </div>
   </div>
 </template>
@@ -160,11 +195,11 @@ export default {
   border-top: 1px solid #f5f5f6;
   border-left: 1px solid #f5f5f6;
   border-right: 1px solid #f5f5f6;
-  border-bottom: 1px solid #f5f5f6
+  border-bottom: 1px solid #f5f5f6;
 }
 
 .tab-items {
-  background-color:  rgb(55, 56, 56);
+  background-color: rgb(55, 56, 56);
 }
 
 .v-tab {

@@ -5,7 +5,15 @@
       <v-col
         cols="12"
         md="6"
-        class="mypage-items d-flex flex-column align-center mb-15 mb-md-0 pa-0 flex-grow-1 flex-shrink-1"
+        class="
+          mypage-items
+          d-flex
+          flex-column
+          align-center
+          mb-15 mb-md-0
+          pa-0
+          flex-grow-1 flex-shrink-1
+        "
       >
         <div class="item-desc">
           <div
@@ -136,7 +144,7 @@ export default {
       suggestionsExists: false,
       noneMessage: '存在しません',
       btnHeihgt: '30',
-      btnWidth: '40%'
+      btnWidth: '40%',
     };
   },
   computed: {
