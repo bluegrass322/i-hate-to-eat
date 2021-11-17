@@ -1,19 +1,22 @@
 <template>
-  <v-card
-    color="primary"
-    flat
-    tile
-    height="60"
-    width="115"
-    class="nutrients-card"
-  >
-    <v-card-text class="pa-0 text-caption text-center base--text">
-      <div class="font-weight-medium">
-        {{ label }}
-      </div>
-      <div>{{ amount }} {{ unit }}</div>
-    </v-card-text>
-  </v-card>
+  <v-sheet color="#f5f5f6" outlined :width="cardWidth">
+    <v-card
+      color="back"
+      flat
+      tile
+      height="70"
+      class="d-flex align-center"
+    >
+      <v-card-text class="card-text pa-0 accent--text">
+        <div class="text-item d-flex flex-column justify-center align-center">
+          <div class="text-subtitle-2 font-weight-medium">
+            {{ label }}
+          </div>
+          <div class="text-body-2">{{ amount }} {{ unit }}</div>
+        </div>
+      </v-card-text>
+    </v-card>
+  </v-sheet> 
 </template>
 
 <script>
@@ -36,11 +39,19 @@ export default {
       default: 'mg',
     },
   },
+  computed: {
+    cardWidth() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'lg':
+        case 'xl':
+          return '25%';
+        default:
+          return '50%';
+      }
+    },
+  },
 };
 </script>
 
 <style scoped>
-.nutrients-card {
-  padding: 8px 8px;
-}
 </style>

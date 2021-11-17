@@ -1,68 +1,122 @@
 <template>
-  <div id="suggestions-page" class="mx-9 my-9 pa-0">
-    <v-row class="text-body-1 accent--text">
-      <!-- 食材一覧 ここから -->
-      <v-col cols="12" md="6" class="suggestions-item pa-0">
-        <div class="cutting-line font-weight-bold pt-3 pb-2 pl-4">
-          本日の食材
-        </div>
-
-        <div v-if="suggestionsExists" class="suggestion-item">
-          <food-card :suggestions="suggestions" />
-          <div class="arrow-text text-subtitle-2 my-7">食べてみますか？</div>
-          <div class="d-flex flex-wrap justify-center align-center">
-            <v-btn
-              color="accent"
-              dark
-              :height="btnHeihgt"
-              small
-              tile
-              outlined
-              :width="btnWidth"
-              class="confirm-btn"
-              @click.stop="destroySuggestions()"
+  <div id="bmr-and-dri">
+    <v-row class="my-12 mx-9">
+      <!-- BMRフォーム ここから -->
+      <v-col
+        cols="12"
+        md="6"
+        class="mypage-items d-flex flex-column align-center mb-15 mb-md-0 pa-0 flex-grow-1 flex-shrink-1"
+      >
+        <div class="item-desc">
+          <div
+            class="
+              desc-content desc-left
+              d-flex
+              flex-wrap flex-column
+              align-start
+            "
+          >
+            <div
+              class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
             >
-              キャンセル
-            </v-btn>
-            <v-btn
-              color="accent"
-              dark
-              :height="btnHeihgt"
-              small
-              tile
-              outlined
-              :width="btnWidth"
-              class="confirm-btn"
-              @click.stop="createMealRecord()"
-            >
-              食べる
-            </v-btn>
+              本日の食材
+              <div class="under-line line-right-long" />
+            </div>
           </div>
         </div>
+
+        <template v-if="suggestionsExists" class="ma-0 pa-0">
+          <food-card :suggestions="suggestions" :style="contentWidth" />
+          <div class="confirm-group d-flex flex-column align-center mt-13">
+            <div class="d-flex align-end text-subtitle-2 mb-10">
+              食べてみますか？
+              <div class="under-line line-right" />
+            </div>
+            <div class="d-flex justify-center align-center">
+              <v-btn
+                color="accent"
+                :height="btnHeihgt"
+                small
+                tile
+                outlined
+                :width="btnWidth"
+                class="confirm-btn mx-5 px-5 flex-grow-1"
+                @click.stop="destroySuggestions()"
+              >
+                No
+              </v-btn>
+              <v-btn
+                color="accent"
+                :height="btnHeihgt"
+                small
+                tile
+                outlined
+                :width="btnWidth"
+                class="confirm-btn mx-5 px-5 flex-grow-1"
+                @click.stop="createMealRecord()"
+              >
+                Yes
+              </v-btn>
+            </div>
+          </div>
+        </template>
         <div
           v-else
           class="
-            suggestions-placeholder
             d-flex
             justify-center
             align-center
             text-body-2
             accent--text
+            mt-15
           "
         >
-          <div>{{ noneMessage }}</div>
+          <div class="suggestions-placeholder d-flex align-center">
+            <div class="under-line line-vertical" />
+            <span class="ml-1">{{ noneMessage }}</span>
+          </div>
         </div>
       </v-col>
-      <!-- 食材一覧 ここまで -->
+      <!-- BMRフォーム ここまで -->
 
-      <!-- 栄養素合計 ここから -->
-      <v-col cols="12" md="6" class="suggestions-item mt-7 mt-md-0 pa-0">
-        <div class="cutting-line font-weight-bold pt-3 pb-2 pl-4">
-          摂取できる栄養
+      <!-- DRI一覧 ここから -->
+      <v-col
+        cols="12"
+        md="6"
+        class="
+          mypage-items
+          d-flex
+          flex-column
+          align-center
+          ma-0
+          mt-16 mt-md-0
+          ml-0 ml-md-5
+          pa-0
+          flex-grow-1 flex-shrink-1
+        "
+        :style="contentWidth"
+      >
+        <div class="item-desc">
+          <div
+            class="
+              desc-content desc-left
+              d-flex
+              flex-wrap flex-column
+              align-start
+            "
+            :style="contentWidth"
+          >
+            <div
+              class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
+            >
+              摂取できる栄養
+              <div class="under-line line-right" />
+            </div>
+          </div>
         </div>
-        <nutrients-achievement />
+        <nutrients-achievement :style="contentWidth" />
       </v-col>
-      <!-- 栄養素合計 ここまで -->
+      <!-- DRI一覧 ここまで -->
     </v-row>
   </div>
 </template>
@@ -81,16 +135,17 @@ export default {
       suggestions: null,
       suggestionsExists: false,
       noneMessage: '存在しません',
-      btnHeihgt: '45',
+      btnHeihgt: '30',
+      btnWidth: '40%'
     };
   },
   computed: {
-    btnWidth() {
+    contentWidth() {
       switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-          return '100%';
+        case 'sm':
+          return 'max-width: 700px;';
         default:
-          return '50%';
+          return 'max-width: 530px;';
       }
     },
   },
@@ -153,53 +208,60 @@ export default {
 </script>
 
 <style scoped>
-.v-btn.confirm-btn {
-  color: white;
-  background-color: rgba(90, 120, 153, 0.3);
-  border: 1.5px solid #f5f5f6;
-  box-sizing: border-box;
-  text-transform: none !important;
-}
-
-#suggestions-page {
+.mypage-items {
   width: 100%;
 }
 
-.arrow-text {
-  text-align: center;
-  vertical-align: middle;
+.item-desc {
+  width: 100%;
 }
 
-.cutting-line {
-  border-bottom: 1px dashed rgba(245, 245, 246, 1);
-}
+/* .desc-content {
+  max-width: 240px;
+} */
 
-.meal-menus {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.foods-card-contents {
-  padding: 8px 8px;
-}
-
-.suggestions-item {
-  border: 2px solid rgba(245, 245, 246, 1);
+.desc-content.desc-left {
+  margin-right: auto;
+  position: relative;
+  top: 0;
+  left: 0;
 }
 
 .suggestions-placeholder {
-  height: 150px;
+  color: rgba(245, 245, 246, 0.5);
 }
 
-.tabs {
-  border-right: 1px solid #f5f5f6;
-  border-bottom: 1px solid #f5f5f6;
-  border-top: 1px solid #f5f5f6;
+.under-line {
+  border-bottom: 1px solid rgb(245, 245, 246);
+  position: relative;
+  top: -6px;
 }
 
-.tabs-end {
-  border-bottom: 1px solid #f5f5f6;
-  border-top: 1px solid #f5f5f6;
+.under-line.line-left {
+  margin-right: 5px;
+  width: 18px;
+}
+
+.under-line.line-right {
+  margin-left: 5px;
+  width: 18px;
+}
+
+.under-line.line-right-long {
+  margin-left: 5px;
+  width: 90px;
+}
+
+.under-line.line-vertical {
+  border-color: rgba(245, 245, 246, 0.4);
+  position: relative;
+  top: 0px;
+  left: 0;
+  transform: rotate(90deg);
+  width: 15px;
+}
+
+.v-btn.confirm-btn {
+  text-transform: none !important;
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
   <div id="suggested-foods" class="d-flex flex-wrap">
     <template v-for="f in suggestions">
-      <v-sheet :key="f.id" color="#a3b0c1" :width="cardWidth" outlined>
+      <v-sheet :key="f.id" color="#f5f5f6" :width="cardWidth" outlined>
         <v-card
-          color="secondary"
+          color="back"
           flat
           tile
           :height="cardHeight"
@@ -16,23 +16,23 @@
               flex-column
               justify-center
               align-center
-              pa-0
+              py-4
               accent--text
               text-caption
             "
           >
-            <div class="font-weight-medium text-body-2">
+            <div class="font-weight-bold text-caption text-md-body-2">
               {{ f.name }}
             </div>
-            <div>{{ f.subname }}</div>
-            <div>{{ f.reference_amount * 100 }}g</div>
+            <div class="text-caption font-weight-bold mb-2">{{ f.subname }}</div>
+            <div class="text-caption">{{ f.reference_amount * 100 }}g</div>
           </v-card-text>
           <v-card-actions class="actions pa-0">
             <v-btn
-              color="secondary"
+              color="accent"
               depressed
               tile
-              height="30"
+              height="25"
               :width="btnWidth"
               class="detail-btn"
               small
@@ -43,7 +43,7 @@
             >
               詳細
             </v-btn>
-            <v-dialog v-model="showDetail" scrollable>
+            <v-dialog v-model="showDetail" max-width="400" scrollable>
               <food-detail />
             </v-dialog>
           </v-card-actions>
@@ -70,7 +70,7 @@ export default {
   data() {
     return {
       showDetail: false,
-      cardHeight: 110,
+      cardHeight: 145,
       btnWidth: '100%',
     };
   },
@@ -106,17 +106,18 @@ export default {
 </script>
 
 <style scoped>
-.v-btn.detail-btn {
-  color: rgba(78, 102, 129, 1);
-}
-
 .actions {
-  border-top: 1px solid rgba(245, 245, 246, 0.6);
   margin-top: auto;
   width: 100%;
 }
 
 .card-text {
   margin-top: auto;
+}
+
+.v-btn.detail-btn {
+  background-color: rgb(55, 56, 56) !important;
+  border-top: 1.5px solid #f5f5f6;
+  box-sizing: border-box;
 }
 </style>

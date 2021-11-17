@@ -1,7 +1,7 @@
 <template>
   <div id="achv-tabs">
     <v-tabs
-      background-color="secondary"
+      background-color="back"
       color="accent"
       center-active
       dark
@@ -15,25 +15,27 @@
       <v-tab-item class="tab-items">
         <div class="d-flex flex-wrap">
           <template v-for="mac in macro">
-            <v-sheet :key="mac.key" color="#a3b0c1" :width="cardWidth" outlined>
+            <v-sheet :key="mac.key" color="#f5f5f6" :width="cardWidth" outlined>
               <v-card
-                color="secondary"
+                color="back"
                 flat
                 :height="cardHeight"
                 tile
                 class="d-flex flex-column justify-center align-center"
               >
-                <v-card-text class="pa-0 accent--text text-caption">
-                  <div class="text-body-2 font-weight-medium">
+                <v-card-text class="d-flex flex-column align-center pa-0 accent--text text-caption pa-0">
+                  <div class="text-subtitle-2 mb-2">
                     {{ mac.label }}
                   </div>
-                  <div>
-                    Total: <span class="text-body-2">{{ mac.total }}</span
-                    >{{ mac.unit }}
-                  </div>
-                  <div>
-                    Achv: <span class="text-body-2">{{ mac.achv }}</span
-                    >%
+                  <div class="d-flex flex-column align-start">
+                    <div>
+                      Total: <span class="text-body-2">{{ mac.total }}</span
+                      >{{ mac.unit }}
+                    </div>
+                    <div>
+                      Achv: <span class="text-body-2">{{ mac.achv }}</span
+                      >%
+                    </div>
                   </div>
                 </v-card-text>
               </v-card>
@@ -44,23 +46,25 @@
       <v-tab-item class="tab-items">
         <div class="d-flex flex-wrap">
           <template v-for="vit in vitamins">
-            <v-sheet :key="vit.key" color="#a3b0c1" :width="cardWidth" outlined>
+            <v-sheet :key="vit.key" color="#f5f5f6" :width="cardWidth" outlined>
               <v-card
-                color="secondary"
+                color="back"
                 flat
                 :height="cardHeight"
                 tile
                 class="d-flex flex-column justify-center align-center"
               >
-                <v-card-text class="accent--text text-caption pa-0">
-                  <div class="text-body-2 mb-2">{{ vit.label }}</div>
-                  <div>
-                    Total: <span class="text-subtitle-2">{{ vit.total }}</span
-                    >{{ vit.unit }}
-                  </div>
-                  <div>
-                    Achv: <span class="text-subtitle-2">{{ vit.achv }}</span
-                    >%
+                <v-card-text class="d-flex flex-column align-center accent--text text-caption pa-0">
+                  <div class="text-subtitle-2 mb-2">{{ vit.label }}</div>
+                  <div class="d-flex flex-column align-start">
+                    <div>
+                      Total: <span class="text-subtitle-2">{{ vit.total }}</span
+                      >{{ vit.unit }}
+                    </div>
+                    <div>
+                      Achv: <span class="text-subtitle-2">{{ vit.achv }}</span
+                      >%
+                    </div>
                   </div>
                 </v-card-text>
               </v-card>
@@ -71,25 +75,27 @@
       <v-tab-item class="tab-items">
         <div class="d-flex flex-wrap">
           <template v-for="min in minerals">
-            <v-sheet :key="min.key" color="#a3b0c1" :width="cardWidth" outlined>
+            <v-sheet :key="min.key" color="#f5f5f6" :width="cardWidth" outlined>
               <v-card
-                color="secondary"
+                color="back"
                 flat
                 :height="cardHeight"
                 tile
                 class="d-flex flex-column justify-center align-center"
               >
-                <v-card-text class="accent--text text-caption pa-0">
-                  <div class="text-body-2 font-weight-medium">
+                <v-card-text class="d-flex flex-column align-center accent--text text-caption pa-0">
+                  <div class="text-subtitle-2 mb-2">
                     {{ min.label }}
                   </div>
-                  <div>
-                    Total: <span class="text-body-2">{{ min.total }}</span
-                    >{{ min.unit }}
-                  </div>
-                  <div>
-                    Achv: <span class="text-body-2">{{ min.achv }}</span
-                    >%
+                  <div class="d-flex flex-column align-start">
+                    <div>
+                      Total: <span class="text-body-2">{{ min.total }}</span
+                      >{{ min.unit }}
+                    </div>
+                    <div>
+                      Achv: <span class="text-body-2">{{ min.achv }}</span
+                      >%
+                    </div>
                   </div>
                 </v-card-text>
               </v-card>
@@ -98,6 +104,11 @@
         </div>
       </v-tab-item>
     </v-tabs>
+    <div class="captions text-caption accent--text mt-6">
+      <div class="mb-1">※ マクロ栄養素のの合計量（Total）は、計算結果の少数を切り捨てて表示。</div>
+      <div class="mb-1">※ ビタミンおよびミネラルの合計量（Total）は、計算結果の少数第3位以下を切り捨てて表示。</div>
+      <div>※ 計算の過程で実際の栄養量との間に誤差が発生することがあります。</div>
+    </div>
   </div>
 </template>
 
@@ -107,7 +118,7 @@ import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
-      cardHeight: 90,
+      cardHeight: 100,
     };
   },
   computed: {
@@ -127,29 +138,36 @@ export default {
 </script>
 
 <style scoped>
-.v-tab {
-  min-width: 80px;
-  text-transform: none !important;
-}
-
 #achv-tabs {
   text-align: center;
 }
 
-.achv-tabs {
-  width: 200px;
+.captions {
+  margin: 0 auto;
+  text-align: start;
+  /* 2行目以降を1字下げ */
+  padding-left: 1rem;
+  text-indent: -1rem;
 }
 
 .tabs {
-  border-right: 1px solid #f5f5f6;
+  border-top: 1px solid #f5f5f6;
+  border-left: 1px solid #f5f5f6;
   border-bottom: 1px solid #f5f5f6;
 }
 
 .tabs-end {
-  border-bottom: 1px solid #f5f5f6;
+  border-top: 1px solid #f5f5f6;
+  border-left: 1px solid #f5f5f6;
+  border-right: 1px solid #f5f5f6;
+  border-bottom: 1px solid #f5f5f6
 }
 
 .tab-items {
-  background-color: rgba(44, 76, 107, 1);
+  background-color:  rgb(55, 56, 56);
+}
+
+.v-tab {
+  text-transform: none !important;
 }
 </style>
