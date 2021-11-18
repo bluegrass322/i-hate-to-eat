@@ -1,11 +1,7 @@
 <template>
-  <v-row>
-    <v-col cols="12" class="d-block date pa-0 pl-8">
-      <span class="text-h5 accent--text pa-0">
-        {{ date }}
-      </span>
-    </v-col>
-  </v-row>
+  <div class="accent--text ma-0 pa-0">
+    {{ date }}
+  </div>
 </template>
 
 <script>
@@ -33,9 +29,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.date {
-  border-bottom: 1px solid #f5f5f6;
-}
-</style>
