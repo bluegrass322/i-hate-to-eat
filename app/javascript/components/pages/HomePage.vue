@@ -4,12 +4,12 @@
       <v-col cols="12" class="ma-0 pa-0">
         <div class="d-flex flex-column align-start accent--text ma-0 mr-4 pa-0">
           <div class="line-first d-flex flex-column justify-end align-end ma-0">
-            <div class="text-caption pr-2">
-              あなたの健康貯金
-            </div>
+            <div class="text-caption pr-2">あなたの健康貯金</div>
             <div class="underline underline-left underline-first" />
           </div>
-          <div class="line-second d-flex flex-column justify-end align-end ma-0">
+          <div
+            class="line-second d-flex flex-column justify-end align-end ma-0"
+          >
             <div class="text-h6 pr-3">
               <span class="text-subtitle-1">¥</span>
               <span class="font-weight-medium">99,999</span>
@@ -24,10 +24,28 @@
       </v-col>
     </v-row>
 
-    <v-row v-if="chartLoaded" class="d-flex flex-wrap justify-center align-start my-16 mx-5">
-      <v-col cols="12" md="6" class="d-flex flex-column justify-center align-center ma-0 pa-0">
+    <v-row
+      v-if="chartLoaded"
+      class="d-flex flex-wrap justify-center align-start my-16 mx-5"
+    >
+      <v-col
+        cols="12"
+        md="6"
+        class="d-flex flex-column justify-center align-center ma-0 pa-0"
+      >
         <div class="d-flex flex-column align-start">
-          <div class="item-title d-flex justify-start align-end accent--text ma-0 pa-0 mb-5 mb-md-7">
+          <div
+            class="
+              item-title
+              d-flex
+              justify-start
+              align-end
+              accent--text
+              ma-0
+              pa-0
+              mb-5 mb-md-7
+            "
+          >
             <div class="d-flex align-end">
               <date-card class="date-card text-subtitle-1 text-md-h6 mr-1" />
               <span class="text-body-2 text-md-body-1">の栄養摂取達成度</span>
@@ -35,7 +53,16 @@
             <div class="underline underline-right" />
           </div>
 
-          <div class="cahrt-back radar-title d-flex justify-center align-center text-boty-2">
+          <div
+            class="
+              cahrt-back
+              radar-title
+              d-flex
+              justify-center
+              align-center
+              text-boty-2
+            "
+          >
             <div>Macro</div>
           </div>
           <radar-chart
@@ -47,14 +74,20 @@
         </div>
       </v-col>
 
-      <v-col cols="12" md="6" class="cahrt-back charts d-flex justify-center ml-md-7 mt-7 mt-md-14 pa-0">
-        <v-tabs
-          background-color="back"
-          color="accent"
-          dark
-          center-active
-          grow
-        >
+      <v-col
+        cols="12"
+        md="6"
+        class="
+          cahrt-back
+          charts
+          d-flex
+          justify-center
+          ml-md-7
+          mt-7 mt-md-14
+          pa-0
+        "
+      >
+        <v-tabs background-color="back" color="accent" dark center-active grow>
           <v-tab class="tabs cahrt-back text-boty-2">Vitamin</v-tab>
           <v-tab class="tabs-end cahrt-back text-boty-2">Mineral</v-tab>
 
@@ -219,12 +252,12 @@ export default {
     thirdLineWidth() {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs':
-          return 'width: 70%;' 
-        case 'sm': 
+          return 'width: 70%;';
+        case 'sm':
         case 'md':
         case 'lg':
         case 'xl':
-          return 'width: 90%;' 
+          return 'width: 90%;';
         default:
           return 'max-width: 350px;';
       }
@@ -444,7 +477,6 @@ const barChartUnachv = {
   margin-left: 5px;
   width: 15px;
 }
-
 
 .underline.underline-first {
   margin-top: 4px;
