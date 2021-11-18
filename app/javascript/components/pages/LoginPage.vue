@@ -1,7 +1,10 @@
 <template>
   <v-row id="login-form" class="d-block mx-7 mb-10 pa-0">
-    <div class="form-title mb-6">
-      <span class="text-h6 accent--text">ログイン</span>
+    <div class="page-title mb-6">
+      <div class="d-flex align-end text-subtitle-1 text-sm-h6 accent--text ma-0 pa-0 mb-5">
+        新規ユーザー登録
+        <div class="under-line line-right" />
+      </div>
     </div>
 
     <validation-observer ref="observer" v-slot="{ handleSubmit }">
@@ -27,7 +30,7 @@
           <v-text-field
             v-model="name"
             :error-messages="errors"
-            dark
+            color="accent"
             dense
             type="text"
             label="ユーザーネーム"
@@ -47,7 +50,7 @@
           <v-text-field
             v-model="password"
             :error-messages="errors"
-            dark
+            color="accent"
             dense
             type="password"
             label="パスワード"
@@ -60,11 +63,12 @@
         </validation-provider>
         <v-btn
           type="submit"
-          color="rgba(245, 245, 246, 0.7)"
+          color="accent"
+          height="40"
           tile
           outlined
-          width="240"
-          class="mt-2"
+          small
+          class="submit-btn mt-10"
           >ログイン</v-btn
         >
       </v-form>
@@ -123,16 +127,54 @@ export default {
 </script>
 
 <style scoped>
-.v-text-field {
+#login-form {
+  text-align: center;
+}
+
+.page-title, .v-text-field, .v-btn.submit-btn {
   max-width: 350px;
   padding: 0;
+}
+
+.page-title, .v-input.form-item {
+  margin: 0 auto;
+}
+
+.under-line {
+  border-bottom: 1px solid rgb(245, 245, 246);
+  position: relative;
+  top: -6px;
+}
+
+.under-line.line-right {
+  margin-left: 5px;
+  width: 13px;
+}
+
+.v-btn.submit-btn {
+  width: 100%;
 }
 
 .v-input.form-item {
   margin: 0 auto;
 }
 
-#login-form {
-  text-align: center;
+/* アイコン・入力値含むテキストフィールド */
+.v-text-field.form-item >>> .v-input__slot {
+  padding: 0 10px 0 0 !important;
+  color: rgba(90, 120, 153, 1) !important;
+}
+
+/* prepend-inner-icon */
+.v-text-field.form-item >>> .v-input__prepend-inner {
+  background-color: rgba(44, 76, 107);
+  margin: 0 15px 0 0 !important;
+  padding: 7px;
+}
+
+/* outlinedの場合 */
+.v-text-field.form-item >>> .v-input__slot {
+  border-radius: 0;
+  border: 1px solid rgb(245, 245, 246);
 }
 </style>

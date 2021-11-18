@@ -1,7 +1,10 @@
 <template>
   <v-row id="register-form" class="d-block mx-7 my-10 pa-0">
-    <div class="form-title mb-8">
-      <span class="text-h6 accent--text">新規ユーザー登録</span>
+    <div class="page-title mb-6">
+      <div class="d-flex align-end text-subtitle-1 text-sm-h6 accent--text ma-0 pa-0 mb-5">
+        新規ユーザー登録
+        <div class="under-line line-right" />
+      </div>
     </div>
 
     <validation-observer ref="observer" v-slot="{ handleSubmit }">
@@ -27,7 +30,7 @@
           <v-text-field
             v-model="user.name"
             :error-messages="errors"
-            dark
+            color="accent"
             dense
             type="text"
             label="ユーザーネーム"
@@ -35,7 +38,7 @@
             single-line
             prepend-inner-icon="mdi-account-outline"
             required
-            class="form-item mb-1"
+            class="form-item mb-2"
           />
         </validation-provider>
         <validation-provider
@@ -46,7 +49,7 @@
           <v-text-field
             v-model="user.email"
             :error-messages="errors"
-            dark
+            color="accent"
             dense
             type="email"
             label="メールアドレス"
@@ -54,7 +57,7 @@
             single-line
             required
             prepend-inner-icon="mdi-email-outline"
-            class="form-item mb-1"
+            class="form-item mb-2"
           />
         </validation-provider>
         <validation-provider
@@ -66,7 +69,7 @@
           <v-text-field
             v-model="user.password"
             :error-messages="errors"
-            dark
+            color="accent"
             dense
             type="password"
             label="パスワード"
@@ -74,7 +77,7 @@
             single-line
             prepend-inner-icon="mdi-lock-outline"
             required
-            class="form-item mb-1"
+            class="form-item mb-2"
           />
         </validation-provider>
         <validation-provider
@@ -85,7 +88,7 @@
           <v-text-field
             v-model="user.password_confirmation"
             :error-messages="errors"
-            dark
+            color="accent"
             dense
             type="password"
             label="パスワード（確認）"
@@ -93,17 +96,18 @@
             single-line
             prepend-inner-icon="mdi-lock-outline"
             required
-            class="form-item mb-1"
+            class="form-item"
           />
         </validation-provider>
 
         <v-btn
           type="submit"
-          color="rgba(245, 245, 246, 0.7)"
-          tile
+          color="accent"
+          height="40"
           outlined
-          width="240"
-          class="mt-2"
+          tile
+          small
+          class="submit-btn mt-5"
           >登録</v-btn
         >
       </v-form>
@@ -166,16 +170,50 @@ export default {
 </script>
 
 <style scoped>
-.v-text-field {
+#register-form {
+  text-align: center;
+}
+
+.under-line {
+  border-bottom: 1px solid rgb(245, 245, 246);
+  position: relative;
+  top: -6px;
+}
+
+.under-line.line-right {
+  margin-left: 5px;
+  width: 13px;
+}
+
+.page-title, .v-text-field, .v-btn.submit-btn {
   max-width: 350px;
   padding: 0;
 }
 
-.v-input.form-item {
+.page-title, .v-input.form-item {
   margin: 0 auto;
 }
 
-#register-form {
-  text-align: center;
+.v-btn.submit-btn {
+  width: 100%;
+}
+
+/* アイコン・入力値含むテキストフィールド */
+.v-text-field.form-item >>> .v-input__slot {
+  padding: 0 10px 0 0 !important;
+  color: rgba(90, 120, 153, 1) !important;
+}
+
+/* prepend-inner-icon */
+.v-text-field.form-item >>> .v-input__prepend-inner {
+  background-color: rgba(44, 76, 107);
+  margin: 0 15px 0 0 !important;
+  padding: 7px;
+}
+
+/* outlinedの場合 */
+.v-text-field.form-item >>> .v-input__slot {
+  border-radius: 0;
+  border: 1px solid rgb(245, 245, 246);
 }
 </style>
