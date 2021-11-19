@@ -13,7 +13,7 @@ import MyPageAccount from '../components/parts/MyPageAccount';
 import MyPageSetting from '../components/parts/MyPageSetting';
 import MyPageWithdrawal from '../components/parts/MyPageWithdrawal';
 
-import NotFound from '../components/pages/NotFound';
+import NotFoundPage from '../components/pages/NotFoundPage';
 
 Vue.use(VueRouter);
 
@@ -73,7 +73,7 @@ const router = new VueRouter({
     // 404 not found
     {
       path: '*',
-      component: NotFound,
+      component: NotFoundPage,
       meta: { isPublic: true },
     },
   ],
