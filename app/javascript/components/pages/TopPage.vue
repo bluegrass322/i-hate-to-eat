@@ -1,46 +1,94 @@
 <template>
   <div class="ma-0 pa-0">
-    <v-row class="mt-8 mx-0 pa-0">
-      <v-col cols="12" class="ma-0 mb-10 pa-0 primary--text">
-        <v-sheet
-          color="primary"
-          :width="siteDescWidth"
-          class="site-title d-flex justify-center pt-2 pb-5 px-5"
+    <v-row
+      class="title-row d-felx justify-center ma-0 pt-10 pb-16 px-7"
+      :style="titleRow"
+    >
+      <v-col
+        cols="12"
+        class="
+          title-col
+          d-flex
+          flex-column-reverse flex-sm-row
+          justify-center
+          align-center
+          ma-0
+          pa-0
+        "
+        :style="titleCol"
+      >
+        <div
+          class="d-flex flex-row flex-sm-column align-end align-sm-center"
+          :style="titleGroup"
         >
-          <div class="d-flex flex-wrap flex-start align-end">
-            <div class="d-flex align-end secondary--text mb-2">
-              <div class="title-big">I</div>
-              <div class="title-small">
-                hate<br />
-                to eat.
-              </div>
-            </div>
-
-            <div class="title-desc secondary--text mt-4 mt-sm-0 ml-1 ml-sm-7">
-              <div>
-                食事は嫌い、けれど生きるためには<br />
-                栄養を取らなければいけない。
-              </div>
-              <div class="mt-2">
-                ならせめて食事について考える時間を<br />
-                少しでも削減したいと思いませんか？
-              </div>
-              <div class="mt-3 ml-9">
-                <router-link
-                  to="/"
-                  class="about-link d-flex flex-column align-start"
-                >
-                  サービスの概要はこちら
-                  <div class="about-link arrow"></div>
-                </router-link>
-              </div>
+          <div class="d-flex align-end info--text">
+            <div class="site-title" :style="titleBig">Eat</div>
+            <div class="site-title" :style="titleSmall">
+              this<br />
+              for now!
             </div>
           </div>
-        </v-sheet>
+          <div class="ml-4 ml-sm-0 mt-sm-4">
+            <router-link
+              to="/"
+              class="about-link d-flex flex-column align-center"
+              style="text-decoration: line-through"
+            >
+              <span class="link-text" :style="aboutLinkText"
+                >about service</span
+              >
+              <div :style="aboutLinkArrow"></div>
+            </router-link>
+          </div>
+        </div>
+
+        <div
+          class="
+            d-flex
+            flex-md-column-reverse
+            justify-start
+            text-caption text-sm-subtitle-2
+            info--text
+            mt-0 mt-md-5
+          "
+          :style="titleDescGroup"
+        >
+          <div
+            class="site-title site-title-copy mt-1 mt-md-0"
+            :style="titleDesc"
+          >
+            <ruby>"Eat this for now !"<rt>とりあえずこれ食っとけ</rt></ruby>
+          </div>
+          <div class="site-title mb-md-5 ml-5 ml-md-0" :style="titleDesc">
+            そんな悩みを持つ人のための、食材提案 ＆ リマインドサービス。
+          </div>
+          <div class="site-title mb-md-5 ml-5 ml-md-0" :style="titleDesc">
+            食事について考える時間を、ほんの少しだけでも削減したいけれど<br />
+            生きるためには栄養は摂らなければならない。<br />
+          </div>
+          <div class="site-title mb-md-3 ml-3 ml-md-0" :style="titleDesc">
+            食事が嫌い、何を食べるか考えることすら面倒くさい。<br />
+            というかそもそも、食事を取ることを忘れてしまう。
+          </div>
+        </div>
       </v-col>
     </v-row>
 
-    <div class="trial mx-9 pa-0">
+    <!-- sm以下の時のみ表示 -->
+    <v-row
+      v-if="$vuetify.breakpoint.xsOnly"
+      class="d-felx justify-center pr-7 pl-8"
+    >
+      <v-col
+        cols="12"
+        class="trial-arrow-group d-flex justify-start align-start"
+      >
+        <div class="arrow-vertical"></div>
+        <div class="link-text link-trial">trial</div>
+      </v-col>
+    </v-row>
+
+    <div id="trial-top" class="trial mx-9 pa-0">
       <v-row class="text-body-1 accent--text">
         <!-- Step.1 ここから -->
         <v-col cols="12" md="4" class="trial-item pa-0">
@@ -84,7 +132,7 @@
               justify-center
               align-center
               text-h6
-              info--text
+              accent--text
               py-4
               px-7
             "
@@ -155,16 +203,142 @@ export default {
         return this.$store.state.bmrParams.bmr;
       },
     },
-    siteDescHeight() {
+    // style系
+    aboutLinkArrow() {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs':
-          return 200;
+          return {
+            width: '110px',
+            height: '5px',
+            borderBottom: '1px solid rgb(137, 167, 202)',
+            borderRight: '2px solid rgb(137, 167, 202)',
+            transform: 'skew(45deg)',
+          };
         default:
-          return 350;
+          return {
+            width: '150px',
+            height: '8px',
+            borderBottom: '2px solid rgb(137, 167, 202)',
+            borderRight: '2px solid rgb(137, 167, 202)',
+            transform: 'skew(45deg)',
+          };
       }
     },
-    siteDescWidth() {
-      return this.$vuetify.breakpoint.width;
+    aboutLinkText() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return {
+            fontSize: '0.8rem',
+            lineHeight: '0.8rem',
+            position: 'relative',
+            top: '1px',
+            left: '-5px',
+          };
+        default:
+          return {
+            fontSize: '1rem',
+            lineHeight: '1rem',
+            position: 'relative',
+            top: '2px',
+            left: '-3px',
+          };
+      }
+    },
+    titleRow() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+        case 'sm':
+          return {
+            height: `${this.$vuetify.breakpoint.height * 0.98}px`,
+          };
+        default:
+          return {
+            height: `${this.$vuetify.breakpoint.height * 0.5}px`,
+          };
+      }
+    },
+    titleCol() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return {
+            maxWidth: '400px',
+            height: '100%',
+            width: '100%',
+          };
+        default:
+          return {
+            maxWidth: '900px',
+            height: '100%',
+            width: '100%',
+          };
+      }
+    },
+    titleGroup() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return {
+            alignSelf: 'start',
+            marginRight: 'auto',
+          };
+        default:
+          return { marginRight: '80px' };
+      }
+    },
+    titleDescGroup() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return {
+            alignSelf: 'end',
+            marginBottom: 'auto',
+          };
+        default:
+          return null;
+      }
+    },
+    titleBig() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return {
+            fontSize: '3rem',
+            lineHeight: '3rem',
+            position: 'relative',
+            top: '2px',
+          };
+        default:
+          return {
+            fontSize: '5rem',
+            lineHeight: '5rem',
+            position: 'relative',
+            top: '3px',
+          };
+      }
+    },
+    titleSmall() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+          return {
+            fontSize: '1.1rem',
+            lineHeight: '1.1rem',
+            marginLeft: '7px',
+          };
+        default:
+          return {
+            fontSize: '1.8rem',
+            lineHeight: '1.8rem',
+            marginLeft: '10px',
+          };
+      }
+    },
+    titleDesc() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs':
+        case 'sm':
+          return {
+            writingMode: 'vertical-rl',
+          };
+        default:
+          return {};
+      }
     },
   },
   methods: {
@@ -193,20 +367,12 @@ export default {
 </script>
 
 <style scoped>
-.about-link {
-  color: rgba(44, 76, 107, 1);
-  text-decoration: none;
-}
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP&family=Zen+Antique&display=swap');
 
-.about-link.arrow {
-  position: relative;
-  top: -5px;
-  left: -5px;
-  width: 180px;
-  height: 8px;
-  border-bottom: 2px solid rgba(44, 76, 107, 1);
-  border-right: 2px solid rgba(44, 76, 107, 1);
-  transform: skew(45deg);
+.about-link,
+.link-trial {
+  color: rgba(137, 167, 202, 1);
+  text-decoration: none;
 }
 
 .foods-card {
@@ -221,14 +387,24 @@ export default {
   border-bottom: 1px dashed rgba(245, 245, 246, 1);
 }
 
+.link-trial {
+  font-size: 0.9rem;
+  transform: rotate(90deg);
+  line-height: 0.8rem;
+}
+
 .register-link {
   color: rgba(245, 245, 246, 1);
   border: 1px solid rgba(245, 245, 246, 1);
 }
 
-.site-title {
-  font-family: 'Zen Antique', serif;
-  width: 100%;
+.site-title,
+.link-text {
+  font-family: 'Zen Antique', serif, 'Noto Serif JP', serif;
+}
+
+.site-title-copy {
+  font-size: 1.3rem;
 }
 
 .step-desc {
@@ -237,6 +413,10 @@ export default {
 
 .suggestion-placeholder {
   height: 150px;
+}
+
+.text-vertical {
+  writing-mode: vertical-rl;
 }
 
 .title-big {
@@ -248,11 +428,22 @@ export default {
   font-size: 0.9rem;
 }
 
-.title-small {
-  font-size: 3.6rem;
-  line-height: 3rem;
-  margin-bottom: 1px;
-  margin-left: 5px;
+.trial-arrow-group {
+  max-width: 400px;
+  position: relative;
+  top: -45px;
+  left: 0;
+}
+
+.arrow-vertical {
+  position: relative;
+  top: -12px;
+  left: 10px;
+  height: 100px;
+  width: 5px;
+  border-left: 1px solid rgba(137, 167, 202, 1);
+  border-bottom: 2px solid rgba(137, 167, 202, 1);
+  transform: skewY(-45deg);
 }
 
 .trial-item {
