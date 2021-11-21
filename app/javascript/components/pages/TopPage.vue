@@ -274,7 +274,7 @@ export default {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs':
           return {
-            alignSelf: 'start',
+            alignSelf: 'flex-start',
             marginRight: 'auto',
           };
         default:
@@ -285,7 +285,7 @@ export default {
       switch (this.$vuetify.breakpoint.name) {
         case 'xs':
           return {
-            alignSelf: 'end',
+            alignSelf: 'flex-end',
             marginBottom: 'auto',
           };
         default:
