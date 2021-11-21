@@ -40,7 +40,7 @@
       login
     </v-btn>
 
-    <div class="menu-icon pb-1 flex-grow-0 flex-shrink-0">
+    <div class="menu-icon pt-1 flex-grow-0 flex-shrink-0">
       <v-app-bar-nav-icon color="accent" @click.stop="clickNavIcon()" />
     </div>
     <!-- xsの場合のみフルスクリーン -->

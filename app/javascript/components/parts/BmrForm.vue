@@ -224,7 +224,7 @@ export default {
 
 .v-btn.resut-btn {
   background-color: rgb(44, 76, 107);
-  border: 2px solid rgba(245, 245, 246, 0.6);
+  border: 1px solid rgb(245, 245, 246);
   box-sizing: border-box;
 }
 

@@ -60,11 +60,8 @@
             <ruby>"Eat this for now !"<rt>とりあえずこれ食っとけ</rt></ruby>
           </div>
           <div class="site-title mb-md-5 ml-5 ml-md-0" :style="titleDesc">
+            それでも生きるためには栄養は摂らなければならない。<br />
             そんな悩みを持つ人のための、食材提案 ＆ リマインドサービス。
-          </div>
-          <div class="site-title mb-md-5 ml-5 ml-md-0" :style="titleDesc">
-            食事について考える時間を、ほんの少しだけでも削減したいけれど<br />
-            生きるためには栄養は摂らなければならない。<br />
           </div>
           <div class="site-title mb-md-3 ml-3 ml-md-0" :style="titleDesc">
             食事が嫌い、何を食べるか考えることすら面倒くさい。<br />
@@ -95,14 +92,14 @@
           <div class="cutting-line font-weight-bold mb-2 pt-3 pb-1 pl-4">
             Step.1 基礎代謝量の算出
           </div>
-          <div class="cutting-line ma-0 pt-3 pb-5 px-4">
+          <div class="cutting-line ma-0 pt-8 pb-12 px-6">
             <div class="step-desc">
               以下のフォームから、1日に必要な最低限のエネルギー量<span
                 class="text-body-2"
                 >（基礎代謝量）</span
               >が計算できます。
             </div>
-            <div class="text-caption mt-2">
+            <div class="step-desc-caption text-caption mt-4">
               ※
               ブラウザバック、またはページをリロードするとフォームの入力内容はリセットされます。
             </div>
@@ -116,7 +113,7 @@
           <div class="cutting-line font-weight-bold mb-2 pt-3 pb-1 pl-4">
             Step.2 食材の提案
           </div>
-          <div class="cutting-line step-desc ma-0 pt-3 pb-5 px-4">
+          <div class="cutting-line step-desc ma-0 pt-8 pb-12 px-4">
             栄養価の高いおすすめの食材をランダムにレコメンド。食材の詳細な栄養情報も確認できます。
           </div>
 
@@ -147,7 +144,7 @@
           <div class="cutting-line font-weight-bold mb-2 pt-3 pb-1 pl-4">
             Step.3
           </div>
-          <div class="cutting-line step-desc ma-0 pt-3 pb-5 px-4">
+          <div class="cutting-line step-desc ma-0 pt-8 pb-12 px-4">
             Step.2
             でレコメンドした食材から摂取できる栄養素ごとの合計量と、1日の摂取目標に対する達成度が確認できます。
           </div>
@@ -409,6 +406,12 @@ export default {
 
 .step-desc {
   text-indent: 1rem;
+}
+
+.step-desc-caption {
+  /* 2行目以降を1字下げ */
+  padding-left: 1rem;
+  text-indent: -1rem;
 }
 
 .suggestion-placeholder {

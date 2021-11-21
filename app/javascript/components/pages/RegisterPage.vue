@@ -1,7 +1,17 @@
 <template>
-  <v-row id="register-form" class="d-block mx-7 my-10 pa-0">
+  <v-row id="register-form" class="d-block mx-16 my-10 pa-0">
     <div class="page-title mb-6">
-      <div class="d-flex align-end text-subtitle-1 text-sm-h6 accent--text ma-0 pa-0 mb-5">
+      <div
+        class="
+          d-flex
+          align-end
+          text-subtitle-1 text-sm-h6
+          accent--text
+          ma-0
+          pa-0
+          mb-5
+        "
+      >
         新規ユーザー登録
         <div class="under-line line-right" />
       </div>
@@ -103,7 +113,7 @@
         <v-btn
           type="submit"
           color="accent"
-          height="40"
+          height="30"
           outlined
           tile
           small
@@ -185,12 +195,15 @@ export default {
   width: 13px;
 }
 
-.page-title, .v-text-field, .v-btn.submit-btn {
+.page-title,
+.v-text-field,
+.v-btn.submit-btn {
   max-width: 350px;
   padding: 0;
 }
 
-.page-title, .v-input.form-item {
+.page-title,
+.v-input.form-item {
   margin: 0 auto;
 }
 
