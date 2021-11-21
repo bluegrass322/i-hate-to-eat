@@ -1,20 +1,23 @@
-<div id="line-login">
-  <div>以下のフォームから再度ログインしてください</div>
-
-  <div class="line-login-form">
-    <h4>LINE連携用ログイン</h4>
-    <!-- TODO: フォームは管理者用ログインと共有にする -->
+<div id="line-login-form">
+  <div class="form-group">
+    <div class="form-title">LINE連携用ログインフォーム</div>
     <%= form_with url: line_link_path, local: true do |f| %>
-      <div class="line-login-form-group">
-        <%= f.label :name, class: "line-login-form-label" %><br>
-        <%= f.text_field :name, class: "line-login-form-text" %>
+      <div class="form-item item-first">
+        <%= f.text_field :name, class: "line-form-text", placeholder: "ユーザー名" %>
       </div>
-      <div class="line-login-form-group">
-        <%= f.label :password, class: "line-login-form-label" %><br>
-        <%= f.password_field :password, class: "line-login-form-text" %>
+      <div class="form-item item-end">
+        <%= f.password_field :password, class: "line-login-form-text", placeholder: "パスワード" %>
       </div>
       <%= f.hidden_field :link_token, :value => @link_token %>
-      <%= f.submit "login", class: "line-login-form-btn" %>
+      <%= f.submit "ログイン", class: "submit-btn" %>
     <% end %>
+  </div>
+  <div class="desc-text-group">
+    <div class="desc-text">
+      ※ 上のフォームから、ログインすることでアカウントの連携が完了します（LINEのユーザー名・パスワードではありません）
+    </div>
+    <div class="desc-text">
+      ※ LINEのアカウント連携は、トーク画面のメニューからいつでも解除することができます。
+    </div>
   </div>
 </div>

@@ -7,12 +7,26 @@ Vue.use(Vuetify);
 
 export default new Vuetify({
   theme: {
+    dark: true,
     themes: {
       light: {
-        base: 'F5F5F6',
-        primary: '5A7899',
-        pLight: '89A7CA',
-        pDark: '2C4C6B',
+        primary: '#5a7899', // rgba(90, 120, 153, 1)
+        secondary: '#2c4c6b', // rgba(44, 76, 107, 1)
+        accent: '#f5f5f6', // rgba(245, 245, 246, 1)
+        error: '#f74a62', // rgba(247, 74, 97, 1)
+        warning: '#e5bc46', // rgba(229, 189, 70, 1)
+        info: '#89a7ca', // rgba(137, 167, 202, 1)
+        success: '#74a886', // rgba(116, 168, 134, 1)
+      },
+      dark: {
+        primary: '#2c4c6b', // rgba(44, 76, 107, 1)
+        secondary: '#5a7899', // rgba(90, 120, 153, 1)
+        accent: '#f5f5f6', // rgba(245, 245, 246, 1)
+        error: '#f74a62', // rgba(247, 74, 97, 1)
+        warning: '#e5bc46', // rgba(229, 189, 70, 1)
+        info: '#89a7ca', // rgba(137, 167, 202, 1)
+        success: '#74a886', // rgba(116, 168, 134, 1)
+        back: '#373838', //rgba(55, 56, 56, 1)
       },
     },
   },

@@ -50,19 +50,19 @@ const getters = {
 const mutations = {
   setMacro(state, { total, achv }) {
     Object.keys(state.macro).forEach((key) => {
-      state.macro[key].total = total[key];
+      state.macro[key].total = Math.trunc(total[key]);
       state.macro[key].achv = achv[key];
     });
   },
   setVitamins(state, { total, achv }) {
     Object.keys(state.vitamins).forEach((key) => {
-      state.vitamins[key].total = total[key];
+      state.vitamins[key].total = trunc2ndDec(total[key]);
       state.vitamins[key].achv = achv[key];
     });
   },
   setMinerals(state, { total, achv }) {
     Object.keys(state.minerals).forEach((key) => {
-      state.minerals[key].total = total[key];
+      state.minerals[key].total = trunc2ndDec(total[key]);
       state.minerals[key].achv = achv[key];
     });
   },
@@ -82,4 +82,13 @@ export default {
   getters,
   mutations,
   actions,
+};
+
+// 小数第二位以下切り捨て用の関数
+const trunc2ndDec = (original) => {
+  let midCalc = original * 100;
+  midCalc = Math.trunc(midCalc);
+  const result = midCalc / 100;
+
+  return result;
 };

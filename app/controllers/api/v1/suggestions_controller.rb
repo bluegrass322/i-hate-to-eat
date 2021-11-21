@@ -16,7 +16,7 @@ module Api
 
           render json: { meals: foods, total: total, achv: achv }
         else
-          render404(nil, "本日の食事メニューは存在しません")
+          head :not_found
         end
       end
 

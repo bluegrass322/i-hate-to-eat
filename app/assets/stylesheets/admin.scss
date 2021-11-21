@@ -1,9 +1,14 @@
 // 基本色
-$base-color: #F5F5F6;
-$primary-color: #5A7899;
-$plight-color: #89A7CA;
-$pdark-color: #2C4C6B;
-$error-color: #e05c74;
+$accent-color: rgba(245, 245, 246, 1);
+$back-coor: rgba(55, 56, 56, 1);
+$error-color: rgba(247, 74, 97, 1);
+$info-color: rgba(137, 167, 202, 1);
+$line-color: rgba(1, 185, 5, 1);
+$primary-color: rgba(44, 76, 107, 1);
+$secondary-color: rgba(90, 120, 153, 1);
+$success-color: rgba(116, 168, 134, 1);
+$warn-color: rgba(229, 189, 70, 1);
+
 
 html {
   height: 100%;
@@ -14,7 +19,7 @@ body {
 }
 
 #admin-body {
-  background-color: $base-color;
+  background-color: $accent-color;
   display: flex;
   flex-wrap: wrap;
   color: $primary-color;
@@ -33,7 +38,7 @@ body {
 
 .admin-sidemenu {
   &-text {
-    color: $base-color;
+    color: $accent-color;
     margin: 10px 0;
   }
 
@@ -53,7 +58,7 @@ body {
 }
 
 #admin-login {
-  background-color: $base-color;
+  background-color: $accent-color;
   height: 100%;
   padding: 20px 40px;
 }
@@ -61,7 +66,7 @@ body {
 .admin {
   &-login-form {
     background-color: $primary-color;
-    color: $base-color;
+    color: $accent-color;
     padding: 5px 80px;
     text-align: center;
 
@@ -86,25 +91,25 @@ body {
   }
 
   &-table {
-    border: solid 1px $plight-color;
+    border: solid 1px $info-color;
     border-collapse: collapse;
     padding: 0;
   }
 
   &-t-head {
     background-color: $primary-color;
-    border: solid 1px $plight-color;
-    color: $base-color;
+    border: solid 1px $info-color;
+    color: $accent-color;
     margin: 0;
     padding: 5px 10px;
   }
 
   &-t-row {
-    border: solid 1px $plight-color;
+    border: solid 1px $info-color;
   }
 
   &-t-data {
-    border: solid 1px $plight-color;
+    border: solid 1px $info-color;
     margin: 0;
     padding: 5px 15px;
   }
@@ -145,17 +150,8 @@ body {
 
   &-error-li {
     background-color: $error-color;
-    color: $base-color;
+    color: $accent-color;
     padding: 3px 5px;
-  }
-
-  &-flash {
-    background-color: $error-color;
-    color: $base-color;
-    height:25px;
-    padding: 5px 10px;
-    text-align: center;
-    vertical-align: middle;
   }
 
   &-pagenate {
@@ -182,4 +178,20 @@ body {
 // 共通設定
 a:visited{
   color: inherit;
+  height: 100%;
+  width: 100%;
+}
+
+.flash-message {
+  background-color: $error-color;
+  color: $accent-color;
+  height: 50px;
+  left: 0;
+  line-height: 50px;
+  padding: 5px 10px;
+  position: absolute;
+    top: 0;
+    left: 0;
+  text-align: center;
+  width: 100%;
 }

@@ -1,102 +1,161 @@
 <template>
-  <v-container class="container">
-    <v-row v-if="suggestionsExists" class="suggestion-row">
-      <v-col cols="12" md="6" class="pa-0">
-        <div class="suggestion-item">
-          <div class="base--text suggestion-items-title">
-            <span class="suggestion-items-title-text">Today's meal</span>
-          </div>
-          <div class="meal-menus">
-            <template v-for="f in suggestions">
-              <v-sheet :key="f.id" color="base" class="foods-card">
-                <v-card
-                  flat
-                  tile
-                  color="primary"
-                  width="120"
-                  class="foods-card-contents"
-                >
-                  <v-card-text class="pa-0 text-caption text-center base--text">
-                    <div class="font-weight-medium">{{ f.name }}</div>
-                    <div>{{ f.subname }}</div>
-                    <div>{{ f.reference_amount * 100 }}g</div>
-                  </v-card-text>
-                  <v-card-actions>
-                    <v-btn
-                      color="base"
-                      dark
-                      text
-                      outlined
-                      small
-                      @click.stop="
-                        setFoodDetails(f.food_category_id, f.id);
-                        showDetail = true;
-                      "
-                    >
-                      詳細
-                    </v-btn>
-                    <v-dialog v-model="showDetail" scrollable>
-                      <food-detail />
-                    </v-dialog>
-                  </v-card-actions>
-                </v-card>
-              </v-sheet>
-            </template>
-            <div>
-              <v-btn
-                color="base"
-                dark
-                text
-                outlined
-                small
-                @click.stop="createMealRecord()"
-              >
-                食べる
-              </v-btn>
-              <v-btn
-                color="base"
-                dark
-                text
-                outlined
-                small
-                @click.stop="destroySuggestions()"
-              >
-                食べない
-              </v-btn>
+  <div id="bmr-and-dri">
+    <v-row class="my-12 mx-9">
+      <!-- BMRフォーム ここから -->
+      <v-col
+        cols="12"
+        md="6"
+        class="
+          mypage-items
+          d-flex
+          flex-column
+          align-center
+          mb-15 mb-md-0
+          pa-0
+          flex-grow-1 flex-shrink-1
+        "
+      >
+        <div class="item-desc">
+          <div
+            class="
+              desc-content desc-left
+              d-flex
+              flex-wrap flex-column
+              align-start
+            "
+          >
+            <div
+              class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
+            >
+              本日の食材
+              <div class="under-line line-right-long" />
             </div>
           </div>
         </div>
-      </v-col>
-      <v-col cols="12" md="6" class="pa-0">
-        <div>
-          <nutrients-achievement />
+
+        <template v-if="suggestionsExists" class="ma-0 pa-0">
+          <food-card :suggestions="suggestions" :style="contentWidth" />
+          <div class="confirm-group d-flex flex-column align-center mt-13">
+            <div class="d-flex align-end text-subtitle-2 mb-10">
+              食べてみますか？
+              <div class="under-line line-right" />
+            </div>
+            <div class="d-flex justify-center align-center">
+              <v-btn
+                color="accent"
+                :height="btnHeihgt"
+                small
+                tile
+                outlined
+                :width="btnWidth"
+                class="confirm-btn mx-5 px-5 flex-grow-1"
+                @click.stop="destroySuggestions()"
+              >
+                No
+              </v-btn>
+              <v-btn
+                color="accent"
+                :height="btnHeihgt"
+                small
+                tile
+                outlined
+                :width="btnWidth"
+                class="confirm-btn mx-5 px-5 flex-grow-1"
+                @click.stop="createMealRecord()"
+              >
+                Yes
+              </v-btn>
+            </div>
+          </div>
+        </template>
+        <div
+          v-else
+          class="
+            d-flex
+            justify-center
+            align-center
+            text-body-2
+            accent--text
+            mt-15
+          "
+        >
+          <div class="suggestions-placeholder d-flex align-center">
+            <div class="under-line line-vertical" />
+            <span class="ml-1">{{ noneMessage }}</span>
+          </div>
         </div>
       </v-col>
+      <!-- BMRフォーム ここまで -->
+
+      <!-- DRI一覧 ここから -->
+      <v-col
+        cols="12"
+        md="6"
+        class="
+          mypage-items
+          d-flex
+          flex-column
+          align-center
+          ma-0
+          mt-16 mt-md-0
+          ml-0 ml-md-5
+          pa-0
+          flex-grow-1 flex-shrink-1
+        "
+        :style="contentWidth"
+      >
+        <div class="item-desc">
+          <div
+            class="
+              desc-content desc-left
+              d-flex
+              flex-wrap flex-column
+              align-start
+            "
+            :style="contentWidth"
+          >
+            <div
+              class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
+            >
+              摂取できる栄養
+              <div class="under-line line-right" />
+            </div>
+          </div>
+        </div>
+        <nutrients-achievement :style="contentWidth" />
+      </v-col>
+      <!-- DRI一覧 ここまで -->
     </v-row>
-    <v-row v-else class="none-message">
-      <div class="none-menus base--text">
-        <span>{{ noneMessage }}</span>
-      </div>
-    </v-row>
-  </v-container>
+  </div>
 </template>
 
 <script>
-import foodDetail from '../parts/FoodDetail';
+import FoodCard from '../parts/FoodCard';
 import NutrientsAchievement from '../parts/NutrientsAchievement';
 
 export default {
   components: {
-    foodDetail,
+    FoodCard,
     NutrientsAchievement,
   },
   data() {
     return {
-      suggestions: {},
+      suggestions: null,
       suggestionsExists: false,
-      showDetail: false,
-      noneMessage: '本日の食事メニューは存在しません',
+      noneMessage: '存在しません',
+      btnHeihgt: '30',
+      btnWidth: '40%',
     };
+  },
+  computed: {
+    contentWidth() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'sm':
+          return 'max-width: 700px;';
+        default:
+          return 'max-width: 530px;';
+      }
+    },
   },
   mounted() {
     this.setSuggestions();
@@ -148,20 +207,6 @@ export default {
           console.error(e.response.status);
         });
     },
-    setFoodDetails(categoryId, foodId) {
-      this.axios
-        .get(`/api/v1/food_categories/${categoryId}/foods/${foodId}`)
-        .then((res) => {
-          console.log(res.status);
-          this.$store.dispatch(
-            'foodDetails/setAttributes',
-            res.data.data.attributes
-          );
-        })
-        .catch((e) => {
-          console.error(e.response.status);
-        });
-    },
     initializeSuggestions() {
       this.suggestions = {};
       this.suggestionsExists = false;
@@ -171,52 +216,60 @@ export default {
 </script>
 
 <style scoped>
-.container {
-  margin: 0;
-  padding: 0;
+.mypage-items {
+  width: 100%;
 }
 
-.none-message {
-  margin: 30px 20px;
+.item-desc {
+  width: 100%;
 }
 
-.suggestion-row {
-  background-color: #5a7899;
-  margin: 30px 20px;
+/* .desc-content {
+  max-width: 240px;
+} */
+
+.desc-content.desc-left {
+  margin-right: auto;
+  position: relative;
+  top: 0;
+  left: 0;
 }
 
-.suggestion-item {
-  margin-bottom: 40px;
+.suggestions-placeholder {
+  color: rgba(245, 245, 246, 0.5);
 }
 
-.suggestion-items-title {
-  border-bottom: 1px solid #f5f5f6;
-  height: 48px;
-  margin-bottom: 15px;
+.under-line {
+  border-bottom: 1px solid rgb(245, 245, 246);
+  position: relative;
+  top: -6px;
 }
 
-.meal-menus {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+.under-line.line-left {
+  margin-right: 5px;
+  width: 18px;
 }
 
-.foods-card {
-  border: 1px solid #f5f5f6;
+.under-line.line-right {
+  margin-left: 5px;
+  width: 18px;
 }
 
-.foods-card-contents {
-  padding: 8px 8px;
+.under-line.line-right-long {
+  margin-left: 5px;
+  width: 90px;
 }
 
-.tabs {
-  border-right: 1px solid #f5f5f6;
-  border-bottom: 1px solid #f5f5f6;
-  border-top: 1px solid #f5f5f6;
+.under-line.line-vertical {
+  border-color: rgba(245, 245, 246, 0.4);
+  position: relative;
+  top: 0px;
+  left: 0;
+  transform: rotate(90deg);
+  width: 15px;
 }
 
-.tabs-end {
-  border-bottom: 1px solid #f5f5f6;
-  border-top: 1px solid #f5f5f6;
+.v-btn.confirm-btn {
+  text-transform: none !important;
 }
 </style>

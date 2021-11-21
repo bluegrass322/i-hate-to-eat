@@ -1,0 +1,98 @@
+// 基本色
+$accent-color: rgba(245, 245, 246, 1);
+$back-coor: rgba(55, 56, 56, 1);
+$error-color: rgba(247, 74, 97, 1);
+$info-color: rgba(137, 167, 202, 1);
+$line-color: rgba(1, 185, 5, 1);
+$primary-color: rgba(44, 76, 107, 1);
+$secondary-color: rgba(90, 120, 153, 1);
+$success-color: rgba(116, 168, 134, 1);
+$warn-color: rgba(229, 189, 70, 1);
+
+
+#line-body {
+  align-items: center;
+  background-color: rgb(55, 56, 56);
+  display: flex;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+}
+
+#line-login-form {
+  height: 100%;
+  width: 100%;
+
+  .form-group,
+  .desc-text-group {
+    max-width: 500px;
+    width: 60%;
+  }
+
+  .form-title,
+  .desc-text {
+    color: $accent-color;
+  }
+
+  .form-group {
+    background-color: $line-color;
+    margin: 0 auto;
+    min-width: 260px;
+    padding: 30px 10px 30px 10px;
+    text-align: center;
+
+    .form-item {
+      margin: 0 auto;
+    }
+
+    .item-first {
+      margin-bottom: 20px;
+    }
+
+    .item-end {
+      margin-bottom: 30px;
+    }
+
+    input[type="text" i],
+    input[type="password" i],
+    input[type="submit" i] {
+      background-color: transparent;
+      border-color: $accent-color;
+      border-style: solid;
+      border-width: 2px;
+      box-sizing: border-box;
+      color: $accent-color;
+      height: 30px;
+      width: 85%;
+    }
+
+    input[type="text" i],
+    input[type="password" i] {
+      padding: 1px 8px;
+    }
+    ::placeholder{
+      color: $accent-color;
+    }
+
+    .form-title {
+      font-size: 1rem;
+      margin-bottom: 30px;
+    }
+  }
+
+  .desc-text-group {
+    margin: 20px auto;
+    min-width: 260px;
+    padding: 10px;
+
+    .desc-text {
+      font-size: 0.8rem;
+      margin-bottom: 10px;
+      opacity: 0.7;
+
+      /* 2行目以降を1字下げ */
+      padding-left: 1rem;
+      text-indent: -1rem;
+    }
+  }
+}

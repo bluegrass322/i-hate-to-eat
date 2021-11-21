@@ -1,6 +1,6 @@
 const state = {
   type: 'success',
-  message: '',
+  message: null,
 };
 
 const getters = {
@@ -19,7 +19,7 @@ const mutations = {
 
     setTimeout(() => {
       state.type = 'success';
-      state.message = '';
+      state.message = null;
     }, timeout);
   },
 };

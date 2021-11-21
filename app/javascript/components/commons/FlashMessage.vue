@@ -1,5 +1,13 @@
 <template>
-  <v-alert v-show="message" dense height="70px" :type="type">
+  <v-alert
+    v-if="message"
+    elevation="0"
+    dense
+    height="70"
+    :type="type"
+    :width="alertWidth"
+    class="alert d-flex justify-center ma-0 flex-grow-1"
+  >
     {{ message }}
   </v-alert>
 </template>
@@ -10,6 +18,9 @@ import { mapGetters } from 'vuex';
 export default {
   computed: {
     ...mapGetters('flashMessage', ['type', 'message']),
+    alertWidth() {
+      return this.$vuetify.breakpoint.width;
+    },
   },
 };
 </script>
