@@ -38,6 +38,6 @@ export default {
   align-self: center;
   padding: 25px 15px;
   position: fixed;
-  z-index: 100;
+  z-index: 1000;
 }
 </style>
