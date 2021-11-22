@@ -1,7 +1,7 @@
 <template>
   <v-app>
     <flash-message class="flash-alert" />
-    <v-main>
+    <v-main id="main-group">
       <v-container fluid fill-height class="ma-0 pa-0">
         <router-view />
       </v-container>
@@ -27,8 +27,7 @@ export default {
   background-color: rgba(55, 56, 56, 1); /* #373838 */
 }
 
-/deep/ .v-main {
-  /* info */
+#main-group.v-main {
   border: 2px solid rgba(137, 167, 202, 1);
   box-sizing: border-box;
 }
