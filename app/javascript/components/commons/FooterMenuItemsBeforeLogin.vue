@@ -140,6 +140,7 @@ export default {
           to: '/',
           style: 'text-decoration: line-through;',
         },
+        { name: 'privacy policy（改装中）', to: '/privacy' },
         { name: 'contact', to: '/', style: 'text-decoration: line-through;' },
       ],
     };

@@ -3,15 +3,16 @@ import VueRouter from 'vue-router';
 import VueGtag from 'vue-gtag';
 import store from '../store/index';
 
-import TopPage from '../components/pages/TopPage';
-import RegisterPage from '../components/pages/RegisterPage';
+import HomePage from '../components/pages/HomePage';
 import LoginPage from '../components/pages/LoginPage';
 import MealSuggestionPage from '../components/pages/MealSuggestionPage';
-import HomePage from '../components/pages/HomePage';
 import MyPage from '../components/pages/MyPage';
 import MyPageAccount from '../components/parts/MyPageAccount';
 import MyPageSetting from '../components/parts/MyPageSetting';
 import MyPageWithdrawal from '../components/parts/MyPageWithdrawal';
+import PrivacyPolicyPage from '../components/pages/PrivacyPolicyPage';
+import RegisterPage from '../components/pages/RegisterPage';
+import TopPage from '../components/pages/TopPage';
 
 import NotFoundPage from '../components/pages/NotFoundPage';
 
@@ -36,6 +37,12 @@ const router = new VueRouter({
       path: '/login',
       component: LoginPage,
       name: 'LoginPage',
+      meta: { isPublic: true },
+    },
+    {
+      path: '/privacy',
+      component: PrivacyPolicyPage,
+      name: 'PrivacyPolicyPage',
       meta: { isPublic: true },
     },
     // 以下、要ログイン
