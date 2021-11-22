@@ -135,7 +135,7 @@ export default {
       listMenuBack: 'rgba(44, 76, 107, 0.8)',
       // TODO: styleは実装完了とともに消す
       listItemLarge: [
-        { name: 'mypage', to: '/mypage/setting', style: null },
+        { name: 'mypage', to: '/mypage/setting' },
         { name: 'about', to: '/', style: 'text-decoration: line-through;' },
       ],
       listItemSmall: [
@@ -144,6 +144,7 @@ export default {
           to: '/',
           style: 'text-decoration: line-through;',
         },
+        { name: 'privacy policy（改装中）', to: '/privacy' },
         { name: 'contact', to: '/', style: 'text-decoration: line-through;' },
       ],
       // TODO: ここまで
