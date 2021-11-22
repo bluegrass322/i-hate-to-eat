@@ -110,18 +110,39 @@
           />
         </validation-provider>
 
-        <v-btn
-          type="submit"
-          color="accent"
-          height="30"
-          outlined
-          tile
-          small
-          class="submit-btn mt-5"
-          >登録</v-btn
-        >
+        <div class="btn-group">
+          <v-btn
+            type="submit"
+            color="accent"
+            height="30"
+            outlined
+            tile
+            small
+            class="submit-btn mt-5"
+            >登録</v-btn
+          >
+        </div>
       </v-form>
     </validation-observer>
+    <div class="captions mt-12 px-1">
+      <div class="mb-4 d-flex flex-column align-center">
+        <router-link
+          to="/terms"
+          class="text-body-2 accent--text mb-2"
+        >
+          利用規約
+        </router-link>
+        <router-link
+          to="/privacy"
+          class="text-body-2 accent--text"
+        >
+          プライバシーポリシー
+        </router-link>
+      </div>
+      <p class="caption-indented text-caption accent--text">
+        ※ 登録ボタンをクリックし登録処理が確定した時点で、利用規約及びプライバシーポリシーを確認の上同意したものとみなします。
+      </p>
+    </div>
   </v-row>
 </template>
 
@@ -180,10 +201,6 @@ export default {
 </script>
 
 <style scoped>
-#register-form {
-  text-align: center;
-}
-
 .under-line {
   border-bottom: 1px solid rgb(245, 245, 246);
   position: relative;
@@ -197,6 +214,7 @@ export default {
 
 .page-title,
 .v-text-field,
+.btn-group,
 .v-btn.submit-btn {
   max-width: 350px;
   padding: 0;
@@ -205,6 +223,11 @@ export default {
 .page-title,
 .v-input.form-item {
   margin: 0 auto;
+}
+
+.btn-group {
+  margin: 0 auto;
+  width: 100%;
 }
 
 .v-btn.submit-btn {
@@ -228,5 +251,16 @@ export default {
 .v-text-field.form-item >>> .v-input__slot {
   border-radius: 0;
   border: 1px solid rgb(245, 245, 246);
+}
+
+.captions {
+  margin: 0 auto;
+  max-width: 350px;
+}
+
+.caption-indented {
+  /* 2行目以降を1字下げ */
+  padding-left: 1rem;
+  text-indent: -1rem;
 }
 </style>
