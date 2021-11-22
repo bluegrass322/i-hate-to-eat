@@ -12,6 +12,7 @@ import MyPageSetting from '../components/parts/MyPageSetting';
 import MyPageWithdrawal from '../components/parts/MyPageWithdrawal';
 import PrivacyPolicyPage from '../components/pages/PrivacyPolicyPage';
 import RegisterPage from '../components/pages/RegisterPage';
+import TermsOfUsePage from '../components/pages/TermsOfUsePage';
 import TopPage from '../components/pages/TopPage';
 
 import NotFoundPage from '../components/pages/NotFoundPage';
@@ -37,6 +38,12 @@ const router = new VueRouter({
       path: '/login',
       component: LoginPage,
       name: 'LoginPage',
+      meta: { isPublic: true },
+    },
+    {
+      path: '/terms',
+      component: TermsOfUsePage,
+      name: 'TermsOfUsePage',
       meta: { isPublic: true },
     },
     {
