@@ -135,7 +135,7 @@ export default {
         { name: 'about', to: '/', style: 'text-decoration: line-through;' },
       ],
       listItemSmall: [
-        { name: 'terms of use（改装中）', to: '/terms', },
+        { name: 'terms of use（改装中）', to: '/terms' },
         { name: 'privacy policy（改装中）', to: '/privacy' },
         { name: 'contact', to: '/', style: 'text-decoration: line-through;' },
       ],

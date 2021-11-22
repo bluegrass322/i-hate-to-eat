@@ -126,21 +126,16 @@
     </validation-observer>
     <div class="captions mt-12 px-1">
       <div class="mb-4 d-flex flex-column align-center">
-        <router-link
-          to="/terms"
-          class="text-body-2 accent--text mb-2"
-        >
+        <router-link to="/terms" class="text-body-2 accent--text mb-2">
           利用規約
         </router-link>
-        <router-link
-          to="/privacy"
-          class="text-body-2 accent--text"
-        >
+        <router-link to="/privacy" class="text-body-2 accent--text">
           プライバシーポリシー
         </router-link>
       </div>
       <p class="caption-indented text-caption accent--text">
-        ※ 登録ボタンをクリックし登録処理が確定した時点で、利用規約及びプライバシーポリシーを確認の上同意したものとみなします。
+        ※
+        登録ボタンをクリックし登録処理が確定した時点で、利用規約及びプライバシーポリシーを確認の上同意したものとみなします。
       </p>
     </div>
   </v-row>
