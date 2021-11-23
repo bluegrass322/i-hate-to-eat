@@ -44,13 +44,13 @@
             >
               詳細
             </v-btn>
-            <v-dialog v-model="showDetail" max-width="400" scrollable>
-              <food-detail />
-            </v-dialog>
           </v-card-actions>
         </v-card>
       </v-sheet>
     </template>
+    <v-dialog v-model="showDetail" max-width="400" scrollable>
+      <food-detail />
+    </v-dialog>
   </div>
 </template>
 
