@@ -8,6 +8,7 @@ class MealRecord < ApplicationRecord
 
   # Scopes
   scope :for_today, -> { where(ate_at: Time.zone.today) }
+  scope :this_week, -> { where(ate_at: 1.week.ago.beginning_of_day...Time.current) }
 
   # Validations
   with_options presence: true do
