@@ -71,7 +71,10 @@ namespace :scheduler do
     require 'line/bot'
 
     # 週1回、特定の曜日にのみ通知が行われるよう
-    next unless Time.zone.today.wday.zero?
+    # next unless Time.zone.today.wday.zero?
+
+    # TODO: デバッグ用、要削除
+    next unless Time.zone.today.wday == 2
 
     User.wish_line_notice.find_each do |user|
       to_id = user.line_user_id
