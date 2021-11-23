@@ -40,7 +40,6 @@
               small
               @click.stop="
                 setFoodDetails(f.food_category_id, f.id);
-                showDetail = true;
               "
             >
               詳細
@@ -98,6 +97,8 @@ export default {
             'foodDetails/setAttributes',
             res.data.data.attributes
           );
+
+          this.showDetail = true;
         })
         .catch((e) => {
           console.error(e.response.status);
