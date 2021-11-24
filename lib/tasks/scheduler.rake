@@ -18,7 +18,6 @@ def complete_message(task_name)
 end
 # ここまで
 
-
 namespace :scheduler do
   desc "期限切れのsuggestionを削除"
   task destroy_expired_suggestions: :environment do
