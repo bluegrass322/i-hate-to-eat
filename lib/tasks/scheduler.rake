@@ -109,7 +109,7 @@ namespace :scheduler do
     to_id = admin_line_id
     message = complete_message('notice_health_savings')
     response = client.push_message(to_id, message)
-    p response    
+    p response
   end
 
   # 以下動作テスト用のタスク
