@@ -14,7 +14,8 @@ def admin_line_id
 end
 
 def complete_message(task_name)
-  { type: "text", text: "#{task_name}が正常に終了" }
+  date_time = Time.current.strftime("%c")
+  { type: "text", text: "#{date_time}\n#{task_name}が正常に終了" }
 end
 # ここまで
 
