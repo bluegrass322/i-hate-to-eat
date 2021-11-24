@@ -93,10 +93,8 @@ namespace :scheduler do
   task notice_health_savings_for_this_week: :environment do
     require 'line/bot'
 
-    next unless Time.zone.today.wday == 3
-
-    # # 週1回、特定の曜日にのみ通知が行われるよう
-    # next unless Time.zone.today.wday.zero?
+    # 週1回、特定の曜日にのみ通知が行われるよう
+    next unless Time.zone.today.wday.zero?
 
     User.wish_line_notice.find_each do |user|
       to_id = user.line_user_id
