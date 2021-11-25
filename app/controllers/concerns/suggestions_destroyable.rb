@@ -4,9 +4,6 @@ module SuggestionsDestroyable
   extend ActiveSupport::Concern
 
   def destroy_suggestions_all(user)
-    # 要削除
-    Rails.logger.debug "destroy_suggestions_allメソッドに突入"
-
     suggestions = user.suggestions.where(target_date: Time.zone.today)
     return render404(nil, "Suggestionが存在しません") if suggestions.blank?
 
