@@ -88,7 +88,7 @@ module Line
         when "今日の食材"
           set_users_suggested_foods(user)
         when "食べない"
-          Rails.logger.debug "「食べない」メッセージを受け取り"
+          Rails.logger.debug "UserName: #{user.name}"
           donot_eat_meals(user)
         when "食べる"
           eat_meals(user)
@@ -162,8 +162,7 @@ module Line
       # 既にsuggestionが存在しない場合
       def donot_eat_meals(user)
         Rails.logger.debug "donot_eat_mealsメソッドに突入"
-        destroy_suggestions_all(user)
-        set_reply_text("OK!")
+        set_reply_text("OK!") if destroy_suggestions_all(user)
       end
 
       def eat_meals(user)
