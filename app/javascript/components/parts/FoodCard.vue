@@ -38,9 +38,7 @@
               :width="btnWidth"
               class="detail-btn"
               small
-              @click.stop="
-                setFoodDetails(f.food_category_id, f.id);
-              "
+              @click.stop="setFoodDetails(f.food_category_id, f.id)"
             >
               詳細
             </v-btn>
@@ -48,7 +46,7 @@
         </v-card>
       </v-sheet>
     </template>
-    <v-dialog v-model="showDetail" max-width="400" scrollable>
+    <v-dialog v-model="showDetail" max-width="600" scrollable>
       <food-detail />
     </v-dialog>
   </div>
