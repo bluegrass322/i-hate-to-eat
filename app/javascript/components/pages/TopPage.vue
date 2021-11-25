@@ -7,7 +7,7 @@
       <v-col
         cols="12"
         class="
-          title-col
+          transition-group
           d-flex
           flex-column-reverse flex-sm-row
           justify-center
@@ -25,13 +25,20 @@
             <div class="site-title" :style="titleBig">Eat</div>
             <div class="site-title" :style="titleSmall">
               this<br />
-              for now!
+              4 now!
             </div>
           </div>
-          <div class="ml-4 ml-sm-0 mt-sm-4">
+          <div class="d-flex flex-row">
             <router-link
               to="/"
-              class="about-link d-flex flex-column align-center"
+              class="
+                about-link
+                d-flex
+                flex-column
+                align-center
+                ml-5 ml-sm-0
+                mt-0 mt-sm-3
+              "
               style="text-decoration: line-through"
             >
               <span class="link-text" :style="aboutLinkText"
@@ -71,28 +78,42 @@
       </v-col>
     </v-row>
 
-    <!-- sm以下の時のみ表示 -->
+    <!-- xsの時のみ表示 -->
     <v-row
       v-if="$vuetify.breakpoint.xsOnly"
       class="d-felx justify-center pr-7 pl-8"
     >
       <v-col
         cols="12"
-        class="trial-arrow-group d-flex justify-start align-start"
+        class="
+          transition-group
+          trial-arrow-group
+          d-flex
+          justify-start
+          align-start
+        "
       >
-        <div class="arrow-vertical"></div>
-        <div class="link-text link-trial">trial</div>
+        <div class="trial-arrow"></div>
+        <div class="link-text trial-arrow-text">trial</div>
       </v-col>
     </v-row>
+    <!-- ここまで -->
 
-    <div id="trial-top" class="trial mx-9 pa-0">
+    <div id="trial-top" class="trial mx-9 mx-sm-15 pa-0">
+      <v-row v-if="$vuetify.breakpoint.smAndUp">
+        <v-col col="12" class="trial-title-col px-4">
+          <div class="trial-title-text text-h6 font-weight-bold">
+            お試し機能
+          </div>
+        </v-col>
+      </v-row>
       <v-row class="text-body-1 accent--text">
         <!-- Step.1 ここから -->
-        <v-col cols="12" md="4" class="trial-item pa-0">
+        <v-col cols="12" md="4" class="trial-item pa-0 flex-shrink-1">
           <div class="cutting-line font-weight-bold mb-2 pt-3 pb-1 pl-4">
             Step.1 基礎代謝量の算出
           </div>
-          <div class="cutting-line ma-0 pt-8 pb-12 px-6">
+          <div class="ma-0 pt-8 pb-8 px-6 px-md-8">
             <div class="step-desc">
               以下のフォームから、1日に必要な最低限のエネルギー量<span
                 class="text-body-2"
@@ -109,11 +130,15 @@
         <!-- Step.1 ここまで -->
 
         <!-- Step.2 ここから -->
-        <v-col cols="12" md="4" class="trial-item mt-7 mt-md-0 pa-0">
+        <v-col
+          cols="12"
+          md="4"
+          class="trial-item mt-7 mt-md-0 pa-0 flex-shrink-1"
+        >
           <div class="cutting-line font-weight-bold mb-2 pt-3 pb-1 pl-4">
             Step.2 食材の提案
           </div>
-          <div class="cutting-line step-desc ma-0 pt-8 pb-12 px-4">
+          <div class="step-desc ma-0 pt-8 pb-12 px-4 px-md-8">
             栄養価の高いおすすめの食材をランダムにレコメンド。食材の詳細な栄養情報も確認できます。
           </div>
 
@@ -121,30 +146,22 @@
             <food-card :suggestions="suggestions" />
           </template>
           <!-- 提案未作成時に表示 -->
-          <div
-            v-else
-            class="
-              suggestion-placeholder
-              d-flex
-              justify-center
-              align-center
-              text-h6
-              accent--text
-              py-4
-              px-7
-            "
-          >
-            <div>未生成</div>
+          <div v-else class="text-subtitle-1 accent--text">
+            <div class="suggestion-placeholder py-16">未生成</div>
           </div>
         </v-col>
         <!-- Step.2 ここまで -->
 
         <!-- Step.3 ここから -->
-        <v-col cols="12" md="4" class="trial-item mt-7 mt-md-0 pa-0">
+        <v-col
+          cols="12"
+          md="4"
+          class="trial-item mt-7 mt-md-0 pa-0 flex-shrink-1"
+        >
           <div class="cutting-line font-weight-bold mb-2 pt-3 pb-1 pl-4">
             Step.3
           </div>
-          <div class="cutting-line step-desc ma-0 pt-8 pb-12 px-4">
+          <div class="step-desc ma-0 pt-8 pb-12 px-4 px-md-8">
             Step.2
             でレコメンドした食材から摂取できる栄養素ごとの合計量と、1日の摂取目標に対する達成度が確認できます。
           </div>
@@ -213,7 +230,7 @@ export default {
           };
         default:
           return {
-            width: '150px',
+            width: '160px',
             height: '8px',
             borderBottom: '2px solid rgb(137, 167, 202)',
             borderRight: '2px solid rgb(137, 167, 202)',
@@ -236,23 +253,13 @@ export default {
             fontSize: '1rem',
             lineHeight: '1rem',
             position: 'relative',
-            top: '2px',
-            left: '-3px',
+            top: '3px',
+            left: '0',
           };
       }
     },
     titleRow() {
-      switch (this.$vuetify.breakpoint.name) {
-        case 'xs':
-        case 'sm':
-          return {
-            height: `${this.$vuetify.breakpoint.height * 0.98}px`,
-          };
-        default:
-          return {
-            height: `${this.$vuetify.breakpoint.height * 0.5}px`,
-          };
-      }
+      return { height: `${this.$vuetify.breakpoint.height * 0.98}px` };
     },
     titleCol() {
       switch (this.$vuetify.breakpoint.name) {
@@ -278,7 +285,9 @@ export default {
             marginRight: 'auto',
           };
         default:
-          return { marginRight: '80px' };
+          return {
+            marginRight: '80px',
+          };
       }
     },
     titleDescGroup() {
@@ -367,7 +376,7 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP&family=Zen+Antique&display=swap');
 
 .about-link,
-.link-trial {
+.trial-arrow-text {
   color: rgba(137, 167, 202, 1);
   text-decoration: none;
 }
@@ -382,12 +391,6 @@ export default {
 
 .cutting-line {
   border-bottom: 1px dashed rgba(245, 245, 246, 1);
-}
-
-.link-trial {
-  font-size: 0.9rem;
-  transform: rotate(90deg);
-  line-height: 0.8rem;
 }
 
 .register-link {
@@ -415,11 +418,25 @@ export default {
 }
 
 .suggestion-placeholder {
-  height: 150px;
+  text-align: center;
+  vertical-align: middle;
+  opacity: 0.6;
 }
 
 .text-vertical {
   writing-mode: vertical-rl;
+}
+
+.transition-group {
+  animation: fadein 3s forwards;
+}
+@keyframes fadein {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 .title-big {
@@ -431,25 +448,40 @@ export default {
   font-size: 0.9rem;
 }
 
+.trial-item {
+  border: 1px solid rgba(245, 245, 246, 1);
+}
+
 .trial-arrow-group {
   max-width: 400px;
   position: relative;
-  top: -45px;
+  top: -50px;
   left: 0;
 }
 
-.arrow-vertical {
+.trial-arrow {
   position: relative;
   top: -12px;
   left: 10px;
   height: 100px;
   width: 5px;
-  border-left: 1px solid rgba(137, 167, 202, 1);
-  border-bottom: 2px solid rgba(137, 167, 202, 1);
+  border-left: 1px solid rgb(137, 167, 202);
+  border-bottom: 2px solid rgb(137, 167, 202);
   transform: skewY(-45deg);
 }
 
-.trial-item {
-  border: 1px solid rgba(245, 245, 246, 1);
+.trial-arrow-text {
+  font-size: 0.9rem;
+  transform: rotate(90deg);
+  line-height: 0.8rem;
+}
+
+.trial-title-col {
+  border-top: 1px solid rgb(245, 245, 246);
+  border-left: 1px solid rgb(245, 245, 246);
+  border-right: 1px solid rgb(245, 245, 246);
+}
+
+.trial-title-text {
 }
 </style>
