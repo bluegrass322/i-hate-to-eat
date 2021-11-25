@@ -132,7 +132,7 @@
         </div>
       </v-tab-item>
     </v-tabs>
-    <div class="captions text-caption accent--text my-6 mx-2">
+    <div class="captions text-caption accent--text my-6 mx-5">
       <div class="mb-1">
         ※ マクロ栄養素の合計量（Total）は、計算結果の少数を切り捨てて表示。
       </div>
