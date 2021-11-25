@@ -160,8 +160,9 @@ module Line
       # 既にmeal_recrdが存在する
       # 既にsuggestionが存在しない場合
       def donot_eat_meals(user)
+        Rails.logger.debug "User: #{user}"
+        destroy_suggestions_all(user)
         set_reply_text("OK!")
-        # if destroy_suggestions_all(user)
       end
 
       def eat_meals(user)
