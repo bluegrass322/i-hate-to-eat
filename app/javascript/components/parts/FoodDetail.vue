@@ -1,5 +1,5 @@
 <template>
-  <v-card color="back" flat tile max-height="500" class="detail-card ma-0 pa-0">
+  <v-card color="back" flat tile :max-height="cardHeight" class="detail-card ma-0 pa-0">
     <v-card-title class="d-flex align-end accent--text my-3">
       <div class="d-flex">
         <div class="text-subtitle-2">{{ basicInfo.name }}</div>
@@ -81,6 +81,9 @@ export default {
       'vitamins',
       'minerals',
     ]),
+    cardHeight() {
+      return this.$vuetify.breakpoint.height * 0.75;
+    },
   },
 };
 </script>
