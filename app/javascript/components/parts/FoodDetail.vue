@@ -1,6 +1,5 @@
 <template>
-  <v-sheet color="#f5f5f6" outlined max-height="500">
-    <v-card color="back" flat tile outlined class="ma-0 pa-0">
+    <v-card color="back" flat tile max-height="500" class="detail-card ma-0 pa-0">
       <v-card-title class="d-flex align-end accent--text my-3">
         <div class="d-flex">
           <div class="text-subtitle-2">{{ basicInfo.name }}</div>
@@ -14,12 +13,12 @@
       </v-card-title>
 
       <v-card-text class="ma-0 pa-0">
-        <v-tabs background-color="pDark" color="base" dark center-active grow>
+        <v-tabs background-color="pDark" color="base" dark center-active grow class="ma-0 pa-0">
           <v-tab class="tabs">Macro</v-tab>
           <v-tab class="tabs">Vitamin</v-tab>
           <v-tab class="tabs-end">Mineral</v-tab>
 
-          <v-tab-item class="tab-items pa-0">
+          <v-tab-item class="tab-items ma-0 pa-0">
             <div class="d-flex flex-wrap align-center ma-0 pa-0">
               <template v-for="m in macro">
                 <nutrients-card
@@ -58,7 +57,6 @@
         </v-tabs>
       </v-card-text>
     </v-card>
-  </v-sheet>
 </template>
 
 <script>
@@ -82,16 +80,16 @@ export default {
 
 <style scoped>
 .tabs {
-  border-top: 1px solid #f5f5f6;
-  border-left: 1px solid #f5f5f6;
-  border-bottom: 1px solid #f5f5f6;
+  border-top: 1px solid rgb(245, 245, 246);
+  border-left: 1px solid rgb(245, 245, 246);
+  border-bottom: 1px solid rgb(245, 245, 246);
 }
 
 .tabs-end {
-  border-top: 1px solid #f5f5f6;
-  border-left: 1px solid #f5f5f6;
-  border-right: 1px solid #f5f5f6;
-  border-bottom: 1px solid #f5f5f6;
+  border-top: 1px solid rgb(245, 245, 246);
+  border-left: 1px solid rgb(245, 245, 246);
+  border-right: 1px solid rgb(245, 245, 246);
+  border-bottom: 1px solid rgb(245, 245, 246);
 }
 
 .tab-items {
@@ -101,5 +99,11 @@ export default {
 .v-tab {
   background-color: rgb(55, 56, 56);
   text-transform: none !important;
+}
+
+.v-sheet.v-card.detail-card {
+  border: 1px solid rgb(245, 245, 246) !important;
+  border-radius: 3px !important;
+  box-sizing: border-box;
 }
 </style>
