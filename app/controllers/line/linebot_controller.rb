@@ -83,11 +83,12 @@ module Line
         case event.message["text"]
         when "アカウント連携解除"
           disconnecting_accounts(user)
-        when "BMR & PFC"
+        when "BMR確認"
           set_users_bmr_pfc(user)
-        when "today's menu"
+        when "今日の食材"
           set_users_suggested_foods(user)
         when "食べない"
+          Rails.logger.debug "「食べない」メッセージを受け取り"
           donot_eat_meals(user)
         when "食べる"
           eat_meals(user)
@@ -160,6 +161,7 @@ module Line
       # 既にmeal_recrdが存在する
       # 既にsuggestionが存在しない場合
       def donot_eat_meals(user)
+        Rails.logger.debug "donot_eat_mealsメソッドに突入"
         destroy_suggestions_all(user)
         set_reply_text("OK!")
       end
