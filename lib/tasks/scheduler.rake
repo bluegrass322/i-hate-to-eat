@@ -82,7 +82,7 @@ namespace :scheduler do
     User.wish_line_notice.find_each do |user|
       if user.mealtime_first.strftime('%R') == time_now.strftime('%R')
         to_id = user.line_user_id
-        message = user.set_line_notification_cofirm
+        message = user.set_line_notification_template
 
         response = client.push_message(to_id, message)
         p response
