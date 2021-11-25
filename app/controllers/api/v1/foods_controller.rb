@@ -3,6 +3,8 @@
 module Api
   module V1
     class FoodsController < Api::V1::BaseController
+      skip_before_action :require_login
+
       def show
         food = Food.find_by(id: params[:id])
         json_string = FoodSerializer.new(food).serialized_json
