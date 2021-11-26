@@ -54,7 +54,7 @@
         <validation-provider
           v-slot="{ errors }"
           name="パスワード"
-          rules="alpha_num|min:5|required"
+          rules="alpha_num|min:7|required"
           vid="confirmation"
         >
           <v-text-field

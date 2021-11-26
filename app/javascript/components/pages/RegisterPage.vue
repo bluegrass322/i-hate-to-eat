@@ -73,7 +73,7 @@
         <validation-provider
           v-slot="{ errors }"
           name="パスワード"
-          rules="alpha_num|min:5|required"
+          rules="alpha_num|min:7|required"
           vid="confirmation"
         >
           <v-text-field
@@ -173,11 +173,13 @@ export default {
 
           this.$store.commit('flashMessage/setMessage', {
             type: 'success',
-            message: '登録に成功しました',
+            message: '登録成功、引き続き設定を行ってみましょう',
+            timeout: 1000 * 5,
           });
 
-          // TODO: 遷移先を一時的にTopに、後に修正
-          this.$router.push({ name: 'TopPage' });
+          // オートログイン
+          this.$store.commit('authUser/login', res.data);
+          this.$router.push({ name: 'MyPageSetting' });
         })
         .catch((error) => {
           let e = error.response;

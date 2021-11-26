@@ -185,6 +185,8 @@ export default {
             type: 'success',
             message: '記録を作成しました',
           });
+
+          this.$router.push({ name: 'HomePage' });
         })
         .catch((e) => {
           console.error(e.response.status);
