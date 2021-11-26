@@ -38,20 +38,17 @@
               :width="btnWidth"
               class="detail-btn"
               small
-              @click.stop="
-                setFoodDetails(f.food_category_id, f.id);
-                showDetail = true;
-              "
+              @click.stop="setFoodDetails(f.food_category_id, f.id)"
             >
               詳細
             </v-btn>
-            <v-dialog v-model="showDetail" max-width="400" scrollable>
-              <food-detail />
-            </v-dialog>
           </v-card-actions>
         </v-card>
       </v-sheet>
     </template>
+    <v-dialog v-model="showDetail" max-width="600" scrollable>
+      <food-detail />
+    </v-dialog>
   </div>
 </template>
 
@@ -98,6 +95,8 @@ export default {
             'foodDetails/setAttributes',
             res.data.data.attributes
           );
+
+          this.showDetail = true;
         })
         .catch((e) => {
           console.error(e.response.status);

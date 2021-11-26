@@ -12,8 +12,7 @@
           >
             <div class="text-h6 pr-3">
               <span class="text-subtitle-1">¥</span>
-              <span class="font-weight-medium">99,999</span>
-              <!-- {{savings}} -->
+              <span class="font-weight-medium">{{ savings }}</span>
             </div>
             <div class="underline underline-left underline-second" />
           </div>

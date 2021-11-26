@@ -1,96 +1,101 @@
 <template>
   <div id="bmr-and-dri">
     <v-row class="my-12 mx-9">
-      <!-- BMRフォーム ここから -->
+      <!-- 食材一覧 ここから -->
       <v-col
         cols="12"
-        md="6"
+        md="5"
         class="
           mypage-items
           d-flex
           flex-column
           align-center
           mb-15 mb-md-0
+          mx-0 mx-md-auto
           pa-0
           flex-grow-1 flex-shrink-1
         "
       >
-        <div class="item-desc">
+        <div :style="contentWidth">
+          <div class="item-desc">
+            <div
+              class="
+                desc-content desc-left
+                d-flex
+                flex-wrap flex-column
+                align-start
+              "
+            >
+              <div
+                class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
+              >
+                本日の食材
+                <div class="under-line line-right-long" />
+              </div>
+            </div>
+          </div>
+
+          <template v-if="suggestionsExists" class="ma-0 pa-0">
+            <div style="width: 100%">
+              <food-card :suggestions="suggestions" />
+            </div>
+            <div class="confirm-group d-flex flex-column align-center mt-13">
+              <div class="d-flex align-end text-subtitle-2 mb-10">
+                食べてみますか？
+                <div class="under-line line-right" />
+              </div>
+              <div class="d-flex justify-center align-center">
+                <v-btn
+                  color="accent"
+                  :height="btnHeihgt"
+                  small
+                  tile
+                  outlined
+                  :width="btnWidth"
+                  class="confirm-btn mx-5 px-5 flex-grow-1"
+                  @click.stop="destroySuggestions()"
+                >
+                  No
+                </v-btn>
+                <v-btn
+                  color="accent"
+                  :height="btnHeihgt"
+                  small
+                  tile
+                  outlined
+                  :width="btnWidth"
+                  class="confirm-btn mx-5 px-5 flex-grow-1"
+                  @click.stop="createMealRecord()"
+                >
+                  Yes
+                </v-btn>
+              </div>
+            </div>
+          </template>
           <div
+            v-else
             class="
-              desc-content desc-left
               d-flex
-              flex-wrap flex-column
-              align-start
+              justify-center
+              align-center
+              text-body-2
+              accent--text
+              mt-15
             "
           >
-            <div
-              class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
-            >
-              本日の食材
-              <div class="under-line line-right-long" />
+            <div class="suggestions-placeholder d-flex align-center">
+              <div class="under-line line-vertical" />
+              <span class="ml-1">{{ noneMessage }}</span>
             </div>
-          </div>
-        </div>
-
-        <template v-if="suggestionsExists" class="ma-0 pa-0">
-          <food-card :suggestions="suggestions" :style="contentWidth" />
-          <div class="confirm-group d-flex flex-column align-center mt-13">
-            <div class="d-flex align-end text-subtitle-2 mb-10">
-              食べてみますか？
-              <div class="under-line line-right" />
-            </div>
-            <div class="d-flex justify-center align-center">
-              <v-btn
-                color="accent"
-                :height="btnHeihgt"
-                small
-                tile
-                outlined
-                :width="btnWidth"
-                class="confirm-btn mx-5 px-5 flex-grow-1"
-                @click.stop="destroySuggestions()"
-              >
-                No
-              </v-btn>
-              <v-btn
-                color="accent"
-                :height="btnHeihgt"
-                small
-                tile
-                outlined
-                :width="btnWidth"
-                class="confirm-btn mx-5 px-5 flex-grow-1"
-                @click.stop="createMealRecord()"
-              >
-                Yes
-              </v-btn>
-            </div>
-          </div>
-        </template>
-        <div
-          v-else
-          class="
-            d-flex
-            justify-center
-            align-center
-            text-body-2
-            accent--text
-            mt-15
-          "
-        >
-          <div class="suggestions-placeholder d-flex align-center">
-            <div class="under-line line-vertical" />
-            <span class="ml-1">{{ noneMessage }}</span>
           </div>
         </div>
       </v-col>
-      <!-- BMRフォーム ここまで -->
+      <!-- 食材一覧 ここまで -->
 
       <!-- DRI一覧 ここから -->
       <v-col
         cols="12"
-        md="6"
+        md="7"
         class="
           mypage-items
           d-flex
@@ -98,31 +103,31 @@
           align-center
           ma-0
           mt-16 mt-md-0
-          ml-0 ml-md-5
+          mx-0 mx-md-auto
           pa-0
           flex-grow-1 flex-shrink-1
         "
-        :style="contentWidth"
       >
-        <div class="item-desc">
-          <div
-            class="
-              desc-content desc-left
-              d-flex
-              flex-wrap flex-column
-              align-start
-            "
-            :style="contentWidth"
-          >
+        <div :style="driWidth">
+          <div class="item-desc">
             <div
-              class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
+              class="
+                desc-content desc-left
+                d-flex
+                flex-wrap flex-column
+                align-start
+              "
             >
-              摂取できる栄養
-              <div class="under-line line-right" />
+              <div
+                class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
+              >
+                摂取できる栄養
+                <div class="under-line line-right" />
+              </div>
             </div>
           </div>
+          <nutrients-achievement style="width: 100%" />
         </div>
-        <nutrients-achievement :style="contentWidth" />
       </v-col>
       <!-- DRI一覧 ここまで -->
     </v-row>
@@ -154,6 +159,14 @@ export default {
           return 'max-width: 700px;';
         default:
           return 'max-width: 530px;';
+      }
+    },
+    driWidth() {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'sm':
+          return 'max-width: 700px;';
+        default:
+          return 'max-width: 650px;';
       }
     },
   },
@@ -216,6 +229,10 @@ export default {
 </script>
 
 <style scoped>
+#bmr-and-dri {
+  width: 100%;
+}
+
 .mypage-items {
   width: 100%;
 }
@@ -229,7 +246,6 @@ export default {
 } */
 
 .desc-content.desc-left {
-  margin-right: auto;
   position: relative;
   top: 0;
   left: 0;

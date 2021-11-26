@@ -83,9 +83,9 @@ module Line
         case event.message["text"]
         when "アカウント連携解除"
           disconnecting_accounts(user)
-        when "BMR & PFC"
+        when "BMR確認"
           set_users_bmr_pfc(user)
-        when "today's menu"
+        when "今日の食材"
           set_users_suggested_foods(user)
         when "食べない"
           donot_eat_meals(user)

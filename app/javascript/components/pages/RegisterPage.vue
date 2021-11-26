@@ -124,19 +124,22 @@
         </div>
       </v-form>
     </validation-observer>
-    <div class="captions mt-12 px-1">
-      <div class="mb-4 d-flex flex-column align-center">
-        <router-link to="/terms" class="text-body-2 accent--text mb-2">
+    <div class="captions mt-12 px-1 d-flex flex-column align-center">
+      <div class="mb-4 d-flex flex-column flex-sm-row align-center">
+        <router-link to="/terms" class="text-body-2 accent--text mb-2 mb-sm-0">
           利用規約
         </router-link>
-        <router-link to="/privacy" class="text-body-2 accent--text">
+        <router-link
+          to="/privacy"
+          class="text-body-2 accent--text ml-0 ml-sm-5"
+        >
           プライバシーポリシー
         </router-link>
       </div>
-      <p class="caption-indented text-caption accent--text">
+      <div class="caption-indented text-caption accent--text">
         ※
         登録ボタンをクリックし登録処理が確定した時点で、利用規約及びプライバシーポリシーを確認の上同意したものとみなします。
-      </p>
+      </div>
     </div>
   </v-row>
 </template>
@@ -250,7 +253,7 @@ export default {
 
 .captions {
   margin: 0 auto;
-  max-width: 350px;
+  max-width: 500px;
 }
 
 .caption-indented {

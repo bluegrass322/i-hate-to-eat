@@ -103,10 +103,10 @@ class User < ApplicationRecord
   end
 
   # LINE自動通知機能用
-  # 当日の食事内容を送信（confirmあり）
-  def set_line_notification_cofirm
+  # 当日の食事内容を送信（ボタンテンプレート）
+  def set_line_notification_template
     text = make_meal_menu_for_line
-    set_line_confirm_eat_or_not(text)
+    set_temp_for_notice_sugegtions(text)
   end
 
   # LINE自動通知機能用
@@ -170,21 +170,39 @@ class User < ApplicationRecord
       }
     end
 
-    def set_line_confirm_eat_or_not(text)
+    def set_temp_for_notice_sugegtions(text)
       {
         type: "template",
         altText: "本日の食事内容をお知らせします",
         template: {
-          type: "confirm",
+          type: "buttons",
           text: text,
           actions: [
-            { "type": "message", "label": "食べない", "text": "食べない" },
-            { "type": "message", "label": "食べる", "text": "食べる" }
+            {
+              "type": "message",
+              "label": "食べる",
+              "text": "食べる"
+            }
           ]
         }
       }
     end
 end
+
+# def set_line_confirm_eat_or_not(text)
+#   {
+#     type: "template",
+#     altText: "本日の食事内容をお知らせします",
+#     template: {
+#       type: "confirm",
+#       text: text,
+#       actions: [
+#         { "type": "message", "label": "食べない", "text": "食べない" },
+#         { "type": "message", "label": "食べる", "text": "食べる" }
+#       ]
+#     }
+#   }
+# end
 
 # == Schema Information
 #
