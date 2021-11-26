@@ -4,7 +4,7 @@
       <div class="title-group mb-10">
         <div class="d-flex align-end text-subtitle-1 font-weight-bold mb-4">
           <div class="under-line line-left" />
-          利用規約
+          利用規約（調整中）
         </div>
         <div class="text-body-2">
           <p class="indented">

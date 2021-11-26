@@ -3,7 +3,7 @@
     <div id="text-group" class="accent--text">
       <div class="d-flex align-end text-subtitle-1 font-weight-bold mb-10">
         <div class="under-line line-left" />
-        プライバシーポリシー
+        プライバシーポリシー（調整中）
       </div>
 
       <div class="section01 mb-15">
