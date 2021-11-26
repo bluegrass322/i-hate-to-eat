@@ -129,7 +129,10 @@
         <router-link to="/terms" class="text-body-2 accent--text mb-2 mb-sm-0">
           利用規約
         </router-link>
-        <router-link to="/privacy" class="text-body-2 accent--text ml-0 ml-sm-5">
+        <router-link
+          to="/privacy"
+          class="text-body-2 accent--text ml-0 ml-sm-5"
+        >
           プライバシーポリシー
         </router-link>
       </div>
