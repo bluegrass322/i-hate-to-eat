@@ -115,7 +115,7 @@ Vue.use(
   VueGtag,
   {
     config: { id: 'UA-212123833-1' },
-    appName: 'Eat this 4 now!',
+    appName: 'Eat this 4 now',
     pageTrackerScreenviewEnabled: true,
   },
   router
