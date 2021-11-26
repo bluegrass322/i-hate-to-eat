@@ -14,7 +14,7 @@ const mutations = {
     state.message = message;
 
     if (typeof timeout === 'undefined') {
-      timeout = 3000;
+      timeout = 1000 * 3;
     }
 
     setTimeout(() => {

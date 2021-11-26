@@ -173,7 +173,8 @@ export default {
 
           this.$store.commit('flashMessage/setMessage', {
             type: 'success',
-            message: '登録に成功しました',
+            message: '登録成功、引き続き設定を行ってみましょう',
+            timeout: 1000 * 5,
           });
 
           // オートログイン
