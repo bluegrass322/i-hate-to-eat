@@ -176,8 +176,9 @@ export default {
             message: '登録に成功しました',
           });
 
-          // TODO: 遷移先を一時的にTopに、後に修正
-          this.$router.push({ name: 'TopPage' });
+          // オートログイン
+          this.$store.commit('authUser/login', res.data);
+          this.$router.push({ name: 'MyPageSetting' });
         })
         .catch((error) => {
           let e = error.response;

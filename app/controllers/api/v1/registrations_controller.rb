@@ -11,7 +11,9 @@ module Api
         user.dietary_reference_intake_id = DietaryReferenceIntake.first.id
 
         if user.save
-          head :ok
+          # suggestion生成
+          auto_login(user)
+          render json: { id: user.id }
         else
           render400(nil, user.errors.full_messages)
         end
