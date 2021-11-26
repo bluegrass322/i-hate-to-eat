@@ -6,7 +6,7 @@
     height="70"
     :type="type"
     :width="alertWidth"
-    class="alert d-flex justify-center ma-0 flex-grow-1"
+    class="alert d-flex justify-center align-center text-subtitle-2 ma-0 flex-grow-1"
   >
     {{ message }}
   </v-alert>
