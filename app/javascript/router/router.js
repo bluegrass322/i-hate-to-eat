@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import VueGtag from 'vue-gtag';
 import store from '../store/index';
 
+import AboutServicePage from '../components/pages/AboutServicePage';
 import HomePage from '../components/pages/HomePage';
 import LoginPage from '../components/pages/LoginPage';
 import MealSuggestionPage from '../components/pages/MealSuggestionPage';
@@ -38,6 +39,12 @@ const router = new VueRouter({
       path: '/login',
       component: LoginPage,
       name: 'LoginPage',
+      meta: { isPublic: true },
+    },
+    {
+      path: '/about',
+      component: AboutServicePage,
+      name: 'AboutServicePage',
       meta: { isPublic: true },
     },
     {
