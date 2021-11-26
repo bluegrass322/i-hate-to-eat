@@ -112,6 +112,8 @@
                 :style="`${item.style}`"
               >
                 <span class="list-item">{{ item.name }}</span>
+                <!-- TODO: noteは調整完了後に消す -->
+                <br /><span style="font-size: 0.3rem">{{ item.note }}</span>
               </v-list-item-title>
             </v-list-item>
           </template>
@@ -135,8 +137,8 @@ export default {
         { name: 'about', to: '/', style: 'text-decoration: line-through;' },
       ],
       listItemSmall: [
-        { name: 'terms of use（改装中）', to: '/terms' },
-        { name: 'privacy policy（改装中）', to: '/privacy' },
+        { name: 'terms of use', note: '(調整中)', to: '/terms' },
+        { name: 'privacy policy', note: '(調整中)', to: '/privacy' },
         { name: 'contact', to: '/', style: 'text-decoration: line-through;' },
       ],
     };
