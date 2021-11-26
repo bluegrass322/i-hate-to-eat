@@ -30,7 +30,7 @@
           </div>
           <div class="d-flex flex-row">
             <router-link
-              to="/"
+              to="/about"
               class="
                 about-link
                 d-flex
@@ -39,7 +39,6 @@
                 ml-5 ml-sm-0
                 mt-0 mt-sm-3
               "
-              style="text-decoration: line-through"
             >
               <span class="link-text" :style="aboutLinkText"
                 >about service</span

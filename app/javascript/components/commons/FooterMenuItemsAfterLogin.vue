@@ -73,12 +73,10 @@
               class="mb-6 pa-0"
               @click.stop="clickNavIcon()"
             >
-              <!-- TODO: styleは実装完了とともに消す -->
-              <v-list-item-title
-                class="accent--text font-weight-bold text-h6"
-                :style="`${item.style}`"
-              >
+              <v-list-item-title class="accent--text font-weight-bold text-h6">
                 <span class="list-item">{{ item.name }}</span>
+                <!-- TODO: noteは調整完了後に消す -->
+                <br /><span style="font-size: 0.3rem">{{ item.note }}</span>
               </v-list-item-title>
             </v-list-item>
           </template>
@@ -135,11 +133,11 @@ export default {
       maxWidth: 150,
       listMenuShow: false,
       listMenuBack: 'rgba(44, 76, 107, 0.8)',
-      // TODO: styleは実装完了とともに消す
       listItemLarge: [
         { name: 'mypage', to: '/mypage/setting' },
-        { name: 'about', to: '/', style: 'text-decoration: line-through;' },
+        { name: 'about', to: '/about', note: '(調整中)' },
       ],
+      // TODO: styleは実装完了とともに消す
       listItemSmall: [
         { name: 'terms of use', note: '(調整中)', to: '/terms' },
         { name: 'privacy policy', note: '(調整中)', to: '/privacy' },
