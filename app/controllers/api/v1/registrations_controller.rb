@@ -4,6 +4,8 @@ module Api
   module V1
     class RegistrationsController < Api::V1::BaseController
       include DriSetable
+      include SuggestionsCreatable
+
       skip_before_action :require_login
 
       def create
@@ -11,8 +13,9 @@ module Api
         user.dietary_reference_intake_id = DietaryReferenceIntake.first.id
 
         if user.save
-          # suggestion生成
+          create_suggestions(user)
           auto_login(user)
+
           render json: { id: user.id }
         else
           render400(nil, user.errors.full_messages)
