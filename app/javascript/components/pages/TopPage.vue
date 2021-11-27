@@ -124,7 +124,7 @@
               ブラウザバック、またはページをリロードするとフォームの入力内容はリセットされます。
             </div>
           </div>
-          <bmr-form class="my-8 mx-7" @click="createTrialSuggestion()" />
+          <trial-bmr-form class="my-8 mx-7" @click="createTrialSuggestion" />
         </v-col>
         <!-- Step.1 ここまで -->
 
@@ -193,13 +193,13 @@
 </template>
 
 <script>
-import BmrForm from '../parts/BmrForm';
+import TrialBmrForm from '../parts/TrialBmrForm';
 import FoodCard from '../parts/FoodCard';
 import NutrientsAchievement from '../parts/NutrientsAchievement';
 
 export default {
   components: {
-    BmrForm,
+    TrialBmrForm,
     FoodCard,
     NutrientsAchievement,
   },
@@ -347,9 +347,11 @@ export default {
     },
   },
   methods: {
-    createTrialSuggestion() {
+    createTrialSuggestion(...args) {
+      // レスト構文
+      const [age, gender] = args;
       this.axios
-        .post('/api/v1/trials', this.$store.state.bmrParams.user)
+        .post('/api/v1/trials', { age: age, gender: gender })
         .then((res) => {
           console.log(res.status);
           const r = res.data;
@@ -479,8 +481,5 @@ export default {
   border-top: 1px solid rgb(245, 245, 246);
   border-left: 1px solid rgb(245, 245, 246);
   border-right: 1px solid rgb(245, 245, 246);
-}
-
-.trial-title-text {
 }
 </style>
