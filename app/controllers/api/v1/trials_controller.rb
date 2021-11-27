@@ -8,11 +8,11 @@ module Api
       include DriSetable
 
       def create
+        age = params[:age].to_i
         gender = params[:gender]
-        age = calc_age(params[:birth])
 
         # BMR算出
-        bmr = calc_bmr(age, gender, params[:weight], params[:height]).floor
+        bmr = calc_bmr(age, gender)
         pfc = calc_amount_pfc(bmr)
 
         # DRI選出
@@ -31,18 +31,41 @@ module Api
       private
 
         def trial_params
-          params.permit(:gender, :birth, :height, :weight)
+          params.permit(:age, :gender)
         end
 
         def calc_age(birth)
           (Time.zone.today.strftime("%Y%m%d").to_i - birth.to_date.strftime("%Y%m%d").to_i) / 10_000
         end
 
-        def calc_bmr(age, gender, weight, height)
+        def calc_bmr(age, gender)
+          # 計算式を用いず、日本人の食事摂取基準（2020年版）を参照したおおよその値
           if gender == 'female'
-            (0.0481 * weight + 0.0234 * height - 0.0138 * age - 0.9708) * 1000 / 4.186
+            calc_female_bmr(age)
           else
-            (0.0481 * weight + 0.0234 * height - 0.0138 * age - 0.4235) * 1000 / 4.186
+            calc_male_bmr(age)
+          end
+        end
+
+        def calc_female_bmr(age)
+          case age
+          when 18..29
+            1700
+          when 30..49
+            1750
+          when 50..64
+            1650
+          end
+        end
+
+        def calc_male_bmr(age)
+          case age
+          when 18..29
+            2300
+          when 30..49
+            2300
+          when 50..64
+            2200
           end
         end
 
