@@ -80,13 +80,27 @@
               align-center
               text-body-2
               accent--text
-              mt-15
+              my-15
             "
           >
             <div class="suggestions-placeholder d-flex align-center">
               <div class="under-line line-vertical" />
               <span class="ml-1">{{ noneMessage }}</span>
             </div>
+          </div>
+          <div class="d-flex justify-center align-center my-5">
+            <v-btn
+              color="accent"
+              :height="btnHeihgt"
+              small
+              tile
+              outlined
+              :width="btnWidthLarge"
+              class="confirm-btn mx-5 px-5"
+              @click.stop="reloadSuggestions()"
+            >
+              Recreate
+            </v-btn>
           </div>
         </div>
       </v-col>
@@ -150,6 +164,7 @@ export default {
       noneMessage: '存在しません',
       btnHeihgt: '30',
       btnWidth: '40%',
+      btnWidthLarge: '209px',
     };
   },
   computed: {
@@ -201,6 +216,31 @@ export default {
         })
         .catch((e) => {
           console.error(e.response.status);
+        });
+    },
+    reloadSuggestions() {
+      this.axios
+        .patch('/api/v1/suggestion')
+        .then((res) => {
+          console.log(res.status);
+          const r = res.data;
+
+          this.suggestionsExists = true;
+          this.suggestions = r.meals;
+
+          this.$store.dispatch('nutrientsAchievements/setAttributes', {
+            totals: r.total,
+            achvs: r.achv,
+          });
+        })
+        .catch((e) => {
+          console.error(e.response.status);
+          const message = e.response.data.errors;
+
+          this.$store.commit('flashMessage/setMessage', {
+            type: 'error',
+            message: `${message}`,
+          });
         });
     },
     setSuggestions() {
