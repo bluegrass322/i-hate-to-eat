@@ -29,7 +29,7 @@ module Api
             errors: error_messages.compact
           }
 
-          render json: response, status: code
+          render json: response, status: code and return
         end
 
         def not_authenticated

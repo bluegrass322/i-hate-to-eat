@@ -3,18 +3,15 @@
 module Api
   module V1
     class SuggestionsController < Api::V1::BaseController
+      include SuggestionsCreatable
       include SuggestionsDestroyable
 
       def show
-        foods = current_user.suggested_foods
-        amt_pfc = current_user.set_attributes_for_pfc[:amt]
+        meals = current_user.suggested_foods
 
-        if foods.present?
-          total = get_intake_total(foods)
-          achv = get_achievement(total, current_user.bmr, amt_pfc,
-                                 current_user.dietary_reference_intake)
-
-          render json: { meals: foods, total: total, achv: achv }
+        if meals.present?
+          response = set_suggestions_response(current_user, meals)
+          render json: response
         else
           head :not_found
         end
@@ -28,6 +25,22 @@ module Api
         end
       end
 
+      def update
+        return render400(nil, '本日は既に食事をとっています') if current_user.meal_records.for_today.present?
+
+        begin
+          Suggestion.transaction do
+            destroy_suggestions_all(current_user) if current_user.suggestions.present?
+            meals = create_suggestions(current_user)
+            response = set_suggestions_response(current_user, meals)
+
+            render json: response and return
+          end
+        rescue StandardError
+          render400(nil, '食事内容のリロードに失敗しました') and return
+        end
+      end
+
       private
 
         def get_intake_total(foods)
@@ -38,6 +51,15 @@ module Api
         def get_achievement(total, bmr, pfc, dri)
           achv = IntakeAchievement.new
           achv.calc_intake_achievement(total, bmr, pfc, dri)
+        end
+
+        def set_suggestions_response(user, meals)
+          amt_pfc = user.set_attributes_for_pfc[:amt]
+
+          total = get_intake_total(meals)
+          achv = get_achievement(total, user.bmr, amt_pfc, user.dietary_reference_intake)
+
+          { meals: meals, total: total, achv: achv }
         end
     end
   end

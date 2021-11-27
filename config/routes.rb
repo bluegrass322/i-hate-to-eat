@@ -27,7 +27,7 @@ Rails.application.routes.draw do
       resources :meal_records, only: %i[index show create]
       resource :mypage, only: %i[show]
       resource :registration, only: %i[create]
-      resource :suggestion, only: %i[show destroy]
+      resource :suggestion, only: %i[show destroy update]
       resource :trials, only: %i[create]
       resource :user_account, only: %i[show update]
       resource :users_dietary_reference_intake, only: %i[update]
@@ -88,6 +88,8 @@ end
 #                         api_v1_mypage GET    /api/v1/mypage(.:format)                                                                 api/v1/mypages#show {:format=>/json/}
 #                   api_v1_registration POST   /api/v1/registration(.:format)                                                           api/v1/registrations#create {:format=>/json/}
 #                     api_v1_suggestion GET    /api/v1/suggestion(.:format)                                                             api/v1/suggestions#show {:format=>/json/}
+#                                       PATCH  /api/v1/suggestion(.:format)                                                             api/v1/suggestions#update {:format=>/json/}
+#                                       PUT    /api/v1/suggestion(.:format)                                                             api/v1/suggestions#update {:format=>/json/}
 #                                       DELETE /api/v1/suggestion(.:format)                                                             api/v1/suggestions#destroy {:format=>/json/}
 #                         api_v1_trials POST   /api/v1/trials(.:format)                                                                 api/v1/trials#create {:format=>/json/}
 #                   api_v1_user_account GET    /api/v1/user_account(.:format)                                                           api/v1/user_accounts#show {:format=>/json/}
