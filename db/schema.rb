@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_05_152508) do
+ActiveRecord::Schema.define(version: 2021_11_28_103110) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -197,10 +197,13 @@ ActiveRecord::Schema.define(version: 2021_11_05_152508) do
     t.text "email_ciphertext", null: false
     t.string "email_bidx", null: false
     t.integer "health_savings", default: 0, null: false
+    t.string "remember_me_token"
+    t.datetime "remember_me_token_expires_at"
     t.index ["dietary_reference_intake_id"], name: "index_users_on_dietary_reference_intake_id"
     t.index ["email_bidx"], name: "index_users_on_email_bidx", unique: true
     t.index ["line_user_id_bidx"], name: "index_users_on_line_user_id_bidx", unique: true
     t.index ["name"], name: "index_users_on_name", unique: true
+    t.index ["remember_me_token"], name: "index_users_on_remember_me_token"
   end
 
   add_foreign_key "eaten_foods", "foods"
