@@ -87,6 +87,8 @@
 </template>
 
 <script>
+import { getToday } from '../../plugins/get-timezone-today';
+
 export default {
   data() {
     return {
@@ -109,11 +111,9 @@ export default {
         .then((response) => {
           console.log(response.status);
 
-          this.$store.commit('authUser/login', response.data);
-          this.$store.commit('flashMessage/setMessage', {
-            type: 'success',
-            message: 'ログインしました',
-          });
+          const expires = getToday();
+          this.$store.commit('authUser/login', { userId: response.data, expires: expires });
+          this.$store.commit('flashMessage/setMessage', { type: 'success', message: 'ログインしました', });
 
           this.$router.push({ name: 'HomePage' });
         })
