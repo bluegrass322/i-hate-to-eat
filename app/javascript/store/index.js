@@ -25,8 +25,8 @@ const store = new Vuex.Store({
 
   plugins: [
     createPersistedState({
-      key: 'iHateToEat',
-      paths: ['authUser.userId', 'authUser.isLoggedIn'],
+      key: 'eatThis4Now',
+      paths: ['authUser.userId', 'authUser.isLoggedIn', 'authUser.expiresAt'],
       storage: window.localStorage,
     }),
   ],
