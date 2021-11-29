@@ -37,7 +37,7 @@ module MealRecordCreatable
     end
 
     def create_meal_record(user, params)
-      rec = user.meal_records.new(ate_at: @today)
+      rec = user.meal_records.build(ate_at: @today)
       rec.assign_attributes(params)
       rec.save!
       rec
@@ -45,7 +45,7 @@ module MealRecordCreatable
 
     def create_eaten_foods(record, foods)
       foods.each do |f|
-        ef = record.eaten_foods.new(food_id: f.id, amount: f.reference_amount)
+        ef = record.eaten_foods.build(food_id: f.id, amount: f.reference_amount)
         ef.save!
       end
     end

@@ -52,7 +52,7 @@ namespace :scheduler do
       begin
         Suggestion.transaction do
           meal_menus.each do |m|
-            item = user.suggestions.new(
+            item = user.suggestions.build(
               food_id: m.id,
               amount: m.reference_amount,
               target_date: Time.zone.today,
@@ -175,7 +175,7 @@ end
 #   # 確定したメニューの内容をSuggestionのインスタンスとして保存
 #   Suggestion.transaction do
 #     meal_menus.each do |m|
-#       item = user.suggestions.new(
+#       item = user.suggestions.build(
 #         food_id: m.id,
 #         amount: m.reference_amount,
 #         target_date: Time.zone.today,
