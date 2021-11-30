@@ -16,6 +16,9 @@ import store from '../store/index';
 import vuetify from '../vuetify/vuetify';
 import * as veeValidate from '../plugins/vee-validate';
 
+// ログインユーザーのexpiresチェック用
+import { checkAuthUserExpires } from '../plugins/check-auth-user';
+
 Vue.use(AxiosPlugin, { axios: axios, csrfToken: csrfToken });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -24,13 +27,30 @@ document.addEventListener('DOMContentLoaded', () => {
     store,
     veeValidate,
     vuetify,
+    computed: {
+      userLoggedIn() {
+        return this.$store.state.authUser.isLoggedIn;
+      },
+    },
     created() {
       localStorage.setItem('initialState', JSON.stringify(initialState));
+    },
+    mounted() {
+      // ログインユーザーのexpiresAtをチェックする
+      // TODO: 書き換え可能なローカルストレージに期限を置くべきでない
+      const loggedIn = this.$store.state.authUser.isLoggedIn;
+      const expiresAt = this.$store.state.authUser.expiresAt;
+
+      if (loggedIn === true && expiresAt !== null) {
+        if (checkAuthUserExpires(expiresAt)) {
+          this.$store.commit('authUser/RESET_AUTHUSER_STATE');
+          this.$router.push({ name: 'LoginPage' });
+        }
+      }
     },
     render: (h) => h(App),
   }).$mount();
   document.body.appendChild(app.$el);
-
   // TODO: 後に削除
   console.log(app);
 });

@@ -1,6 +1,7 @@
 export const initialState = {
-  userId: '',
+  userId: null,
   isLoggedIn: false,
+  expiresAt: null,
 };
 
 const getters = {
@@ -11,8 +12,9 @@ const mutations = {
   RESET_AUTHUSER_STATE(state) {
     Object.assign(state, JSON.parse(localStorage.getItem('initialState')));
   },
-  login(state, userId) {
+  login(state, { userId, expires }) {
     state.userId = userId.id;
+    state.expiresAt = expires;
     state.isLoggedIn = true;
   },
 };

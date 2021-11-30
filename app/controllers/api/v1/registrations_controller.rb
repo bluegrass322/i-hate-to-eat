@@ -14,7 +14,7 @@ module Api
 
         if user.save
           create_suggestions(user)
-          auto_login(user)
+          auto_login(user, true)
 
           render json: { id: user.id }
         else

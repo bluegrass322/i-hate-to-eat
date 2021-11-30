@@ -145,6 +145,8 @@
 </template>
 
 <script>
+import { getToday } from '../../plugins/get-timezone-today';
+
 export default {
   data() {
     return {
@@ -178,7 +180,12 @@ export default {
           });
 
           // オートログイン
-          this.$store.commit('authUser/login', res.data);
+          const expires = getToday();
+          this.$store.commit('authUser/login', {
+            userId: res.data,
+            expires: expires,
+          });
+
           this.$router.push({ name: 'MyPageSetting' });
         })
         .catch((error) => {

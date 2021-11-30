@@ -6,6 +6,8 @@ module Api
       include SuggestionsCreatable
       include SuggestionsDestroyable
 
+      before_action :check_meal_record_exists?, only: :update
+
       def show
         meals = current_user.suggested_foods
 
@@ -21,27 +23,27 @@ module Api
         if destroy_suggestions_all(current_user)
           head :ok
         else
-          render400(nil, '食事内容の削除に失敗しました')
+          render500(nil, "食事内容の削除に失敗しました")
         end
       end
 
       def update
-        return render400(nil, '本日は既に食事をとっています') if current_user.meal_records.for_today.present?
+        Suggestion.transaction do
+          destroy_suggestions_all(current_user) if current_user.suggestions.present?
+          meals = create_suggestions(current_user)
+          response = set_suggestions_response(current_user, meals)
 
-        begin
-          Suggestion.transaction do
-            destroy_suggestions_all(current_user) if current_user.suggestions.present?
-            meals = create_suggestions(current_user)
-            response = set_suggestions_response(current_user, meals)
-
-            render json: response and return
-          end
-        rescue StandardError
-          render400(nil, '食事内容のリロードに失敗しました') and return
+          render json: response
         end
+      rescue StandardError
+        render500(nil, "食事内容のリロードに失敗しました") and return
       end
 
       private
+
+        def check_meal_record_exists?
+          render500(nil, "本日は既に食事をとっています") if current_user.meal_records.for_today.present?
+        end
 
         def get_intake_total(foods)
           total = NutritionTotal.new
