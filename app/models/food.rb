@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class Food < ApplicationRecord
-  # Associations
+  # Association
   belongs_to :food_category
   has_many :suggestions, dependent: :destroy
   has_many :eaten_foods, dependent: :destroy
 
-  # Scopes
+  # Scope
   scope :prio_h, -> { where(priority: 15) }
   scope :prio_m, -> { where(priority: 10) }
   scope :prio_r, -> { where(priority: 5) }
@@ -14,7 +14,7 @@ class Food < ApplicationRecord
   scope :maindish, -> { where(food_category_id: [10, 11]) }
   scope :sidedish, -> { where(food_category_id: 1..9) }
 
-  # Validations
+  # Validation
   with_options presence: true do
     validates :name, length: { maximum: 30 }
 

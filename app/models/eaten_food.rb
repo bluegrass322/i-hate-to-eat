@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 class EatenFood < ApplicationRecord
-  # Associations
+  # Association
   belongs_to :meal_record
   belongs_to :food
 
-  # Validations
+  # Validation
   validates :amount, presence: true, numericality: true
   validates :meal_record_id, uniqueness: { scope: [:food_id] }
 end

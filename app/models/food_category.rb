@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
 class FoodCategory < ApplicationRecord
-  # Associations
+  # Association
   has_many :foods, dependent: :destroy
 
-  # Validations
+  # Validation
   validates :name, presence: true
 end
 
