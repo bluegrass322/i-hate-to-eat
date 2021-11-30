@@ -6,10 +6,10 @@ module Api
       skip_before_action :require_login
 
       def create
-        @user = login(params[:name], params[:password], true)
+        user = login(params[:name], params[:password], true)
 
-        if @user
-          render json: { id: @user.id }
+        if user
+          render json: { id: user.id }
         else
           render400(nil, "ログインに失敗しました")
         end
