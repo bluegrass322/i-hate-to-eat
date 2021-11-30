@@ -77,7 +77,7 @@ module Line
 
       # Event::Messageのテキストの内容により処理を振り分ける
       def reply_text_message(event)
-        user = User.where(line_user_id: event["source"]["userId"]).limit(1)[0]
+        user = User.find_by(line_user_id: event["source"]["userId"])
         return reply_user_not_found if user.blank?
 
         case event.message["text"]
