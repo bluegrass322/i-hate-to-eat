@@ -1,17 +1,20 @@
 # frozen_string_literal: true
 
 class DietaryReferenceIntake < ApplicationRecord
-  # Associations
+  # Association
   has_many :users, dependent: :nullify
 
-  # Enums
+  # Enum
   enum gender: { female: 0, male: 10 }
 
-  # Scopes
+  # Scope
   scope :for_female, -> { where(gender: 'female') }
   scope :for_male, -> { where(gender: 'male') }
+  scope :for_eighteen_to_twentynine, -> { where(age_bottom: 18) }
+  scope :for_thirty_to_fortynine, -> { where(age_bottom: 30) }
+  scope :for_fifty_to_sixtyfour, -> { where(age_bottom: 50) }
 
-  # Validations
+  # Validation
   with_options presence: true do
     validates :gender
 
@@ -60,19 +63,6 @@ class DietaryReferenceIntake < ApplicationRecord
       validates :vitamin_k
       validates :zinc
     end
-  end
-
-  # Class methods
-  def self.for_eighteen_to_twentynine
-    find_by(age_bottom: 18)
-  end
-
-  def self.for_thirty_to_fortynine
-    find_by(age_bottom: 30)
-  end
-
-  def self.for_fifty_to_sixtyfour
-    find_by(age_bottom: 50)
   end
 end
 
