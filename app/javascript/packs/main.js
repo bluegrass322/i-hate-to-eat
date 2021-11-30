@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
           this.$store.commit('authUser/RESET_AUTHUSER_STATE');
           this.$router.push({ name: 'LoginPage' });
         }
-      };
+      }
     },
     render: (h) => h(App),
   }).$mount();

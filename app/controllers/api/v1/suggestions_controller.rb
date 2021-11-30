@@ -28,17 +28,15 @@ module Api
       end
 
       def update
-        begin
-          Suggestion.transaction do
-            destroy_suggestions_all(current_user) if current_user.suggestions.present?
-            meals = create_suggestions(current_user)
-            response = set_suggestions_response(current_user, meals)
+        Suggestion.transaction do
+          destroy_suggestions_all(current_user) if current_user.suggestions.present?
+          meals = create_suggestions(current_user)
+          response = set_suggestions_response(current_user, meals)
 
-            render json: response
-          end
-        rescue StandardError
-          render500(nil, "食事内容のリロードに失敗しました") and return
+          render json: response
         end
+      rescue StandardError
+        render500(nil, "食事内容のリロードに失敗しました") and return
       end
 
       private

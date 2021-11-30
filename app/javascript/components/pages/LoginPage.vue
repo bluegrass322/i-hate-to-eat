@@ -112,8 +112,14 @@ export default {
           console.log(response.status);
 
           const expires = getToday();
-          this.$store.commit('authUser/login', { userId: response.data, expires: expires });
-          this.$store.commit('flashMessage/setMessage', { type: 'success', message: 'ログインしました', });
+          this.$store.commit('authUser/login', {
+            userId: response.data,
+            expires: expires,
+          });
+          this.$store.commit('flashMessage/setMessage', {
+            type: 'success',
+            message: 'ログインしました',
+          });
 
           this.$router.push({ name: 'HomePage' });
         })

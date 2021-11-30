@@ -181,7 +181,10 @@ export default {
 
           // オートログイン
           const expires = getToday();
-          this.$store.commit('authUser/login', { userId: res.data, expires: expires });
+          this.$store.commit('authUser/login', {
+            userId: res.data,
+            expires: expires,
+          });
 
           this.$router.push({ name: 'MyPageSetting' });
         })
