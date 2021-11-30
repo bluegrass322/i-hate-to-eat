@@ -13,7 +13,7 @@ module Api
       private
 
         def set_user
-          @user = User.includes(:dietary_reference_intake).find(current_user.id)
+          @user = User.find(current_user.id)
         end
     end
   end
