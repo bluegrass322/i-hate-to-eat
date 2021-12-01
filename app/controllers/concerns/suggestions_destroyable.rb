@@ -11,9 +11,11 @@ module SuggestionsDestroyable
       Suggestion.transaction do
         suggestions.each(&:destroy!)
       end
+      true
     rescue => e
       Rails.logger.error "User#{user.id}: Failed to create meal record. Cause...'#{e}'"
       notice_to_admin("Suggestionの削除に失敗")
+      false
     end
   end
 end

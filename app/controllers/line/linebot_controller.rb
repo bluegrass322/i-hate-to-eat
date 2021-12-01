@@ -45,6 +45,7 @@ module Line
 
         line_id = linkevent["source"]["userId"]
 
+        # 既に同じLINE IDが登録されているかチェック
         if User.where(line_user_id: line_id).present?
           linking_user.update!(line_nonce: nil)
           return set_reply_text("すでに同じLINE-IDが登録されています")
@@ -61,6 +62,22 @@ module Line
         set_reply_text("LINEアカウントの連携を解除しました")
       end
 
+      def donot_eat_meals(user)
+        if destroy_suggestions_all(user)
+          set_reply_text("了解しました")
+        else
+          set_reply_text("提案の削除処理に失敗しました")
+        end
+      end
+
+      def eat_meals(user)
+        if make_record_from_suggestion(user)
+          set_reply_text("great!!")
+        else
+          set_reply_text("既に登録済みか、または何らかの原因により登録処理に失敗しました")
+        end
+      end
+
       # アカウント連携完了後、プッシュメッセージを送信
       def push_linking_complete_message(user)
         to_name = user.name
@@ -71,8 +88,7 @@ module Line
           text: "ようこそ、#{to_name}さん"
         }
 
-        response = client.push_message(to_id, message)
-        p response
+        client.push_message(to_id, message)
       end
 
       # Event::Messageのテキストの内容により処理を振り分ける
@@ -106,12 +122,12 @@ module Line
         parsed_response = JSON.parse(response)
 
         # 連携手順2. ユーザーを連携URLにリダイレクトする
-        uri = URI("https://i-hate-to-eat.herokuapp.com/line/link")
+        uri = URI("https://www.eat-4now.com/line/link")
         uri.query = URI.encode_www_form({ linkToken: parsed_response["linkToken"] })
 
         return {
           type: "template",
-          altText: "アカウント連携用ページ",
+          altText: "アカウント連携はこちらから",
           template: {
             type: "buttons",
             text: "以下のURLからログインし、アカウント連携を行ってください \n" + "なお、連携の解除はいつでも行うことができます。",
@@ -124,29 +140,24 @@ module Line
         }
       end
 
+      def reply_user_not_found
+        { type: 'text', text: "ユーザーの取得に失敗しました" }
+      end
+
       # 汎用：テキストメッセージの作成
       def set_reply_text(text)
         { type: 'text', text: text }
       end
 
-      def reply_user_not_found
-        { type: 'text', text: "ユーザーの取得に失敗しました" }
-      end
-
       # ユーザーのBMR/PFC情報を返答
       def set_users_bmr_pfc(user)
         pfc = user.set_attributes_for_pfc[:amt]
-        text = "#{user.name}さん \n" +
+        text = "#{user.name}さん \n\n" +
                 "BMR: #{user.bmr}kcal \n" +
                 "P: #{pfc[:protein]}g \n" +
                 "F: #{pfc[:fat]}g \n" +
                 "C: #{pfc[:carbohydrate]}g"
 
-        set_reply_text(text)
-      end
-
-      def set_users_suggested_foods(user)
-        text = user.make_meal_menu_for_line
         set_reply_text(text)
       end
 
@@ -157,19 +168,9 @@ module Line
         set_reply_text(text)
       end
 
-      # 既にmeal_recrdが存在する
-      # 既にsuggestionが存在しない場合
-      def donot_eat_meals(user)
-        destroy_suggestions_all(user)
-        set_reply_text("OK!")
-      end
-
-      def eat_meals(user)
-        if make_record_from_suggestion(user)
-          set_reply_text("great!!")
-        else
-          set_reply_text("既に登録済みか、または何らかの原因により登録処理に失敗しました")
-        end
+      def set_users_suggested_foods(user)
+        text = user.make_meal_menu_for_line
+        set_reply_text(text)
       end
   end
 end
