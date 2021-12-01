@@ -2,24 +2,23 @@
 
 module MealRecordCreatable
   extend ActiveSupport::Concern
+
+  include NotificatableToAdmin
   include SuggestionsDestroyable
+  include TotalAndAchvGetable
 
   def make_record_from_suggestion(user)
     return false if user.meal_records.for_today.present?
 
-    @today = Time.zone.today
-    suggestions = user.suggestions.for_today
     foods = user.suggested_foods
-    return false if suggestions.blank? || foods.blank?
-
-    params = get_intake_total(foods)
+    return false if foods.blank?
 
     begin
       Suggestion.transaction do
-        record = create_meal_record(user, params)
+        record = create_meal_record(user, foods)
         create_eaten_foods(record, foods)
         adding_health_savings(user, record)
-        destroy_suggestions_all(suggestions)
+        destroy_suggestions_all(user)
         true
       end
     rescue StandardError => e
@@ -36,8 +35,10 @@ module MealRecordCreatable
       user.save!
     end
 
-    def create_meal_record(user, params)
-      rec = user.meal_records.build(ate_at: @today)
+    def create_meal_record(user, foods)
+      params = get_intake_total(foods)
+
+      rec = user.meal_records.build(ate_at: Time.current)
       rec.assign_attributes(params)
       rec.save!
       rec
@@ -48,14 +49,5 @@ module MealRecordCreatable
         ef = record.eaten_foods.build(food_id: f.id, amount: f.reference_amount)
         ef.save!
       end
-    end
-
-    def destroy_suggestions_all(suggestions)
-      suggestions.each(&:destroy!)
-    end
-
-    def get_intake_total(foods)
-      total = NutritionTotal.new
-      total.calc_intake_total(foods)
     end
 end

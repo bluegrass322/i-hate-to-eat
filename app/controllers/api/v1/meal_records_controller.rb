@@ -13,7 +13,7 @@ module Api
         if make_record_from_suggestion(current_user)
           head :ok
         else
-          render400(nil, "食事の記録に失敗しました")
+          render500(nil, "食事の記録に失敗しました")
         end
       end
     end
