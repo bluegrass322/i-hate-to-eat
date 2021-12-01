@@ -4,8 +4,7 @@ module Api
   module V1
     class UserWithdrawalsController < Api::V1::BaseController
       def show
-        u = current_user
-        render json: { id: u.id, name: u.name }
+        render json: { id: current_user.id, name: current_user.name }
       end
 
       def destroy
