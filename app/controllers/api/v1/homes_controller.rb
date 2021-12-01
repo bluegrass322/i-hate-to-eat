@@ -3,6 +3,8 @@
 module Api
   module V1
     class HomesController < Api::V1::BaseController
+      include TotalAndAchvGetable
+
       def show
         savings = current_user.health_savings
         response = { savings: savings }
@@ -12,24 +14,16 @@ module Api
           foods = record.recorded_foods.pluck(:id, :name, :subname, :reference_amount)
           record_data = { foods: foods }
 
-          achv = get_achievement(record, current_user)
+          achv = get_achievement(current_user, record)
           chart_data = get_chart_data(achv)
           record_data = record_data.merge(chart_data)
 
-          response.store("record", record_data)
+          response["record"] = record_data
         end
         render json: response
       end
 
       private
-
-        def get_achievement(record, user)
-          amt_pfc = user.set_attributes_for_pfc[:amt]
-
-          achv = IntakeAchievement.new
-          achv.calc_intake_achievement(record, user.bmr, amt_pfc,
-                                       user.dietary_reference_intake)
-        end
 
         def get_chart_data(achv)
           macro = get_radarchart_data(achv)
@@ -40,7 +34,7 @@ module Api
         end
 
         def get_radarchart_data(achv)
-          data = %w[calorie protein fat carbohydrate]
+          data = %w(calorie protein fat carbohydrate)
           data.map do |d|
             achv[d]
           end
@@ -51,10 +45,10 @@ module Api
           achieve = labels.map { |l| achv[l] }
           unachieve = achieve.map do |a|
             result = 100 - a
-            if result.negative?
-              0
-            else
+            unless result.negative?
               result
+            else
+              0
             end
           end
 
@@ -62,16 +56,16 @@ module Api
         end
 
         def vitamins_label
-          %w[vitamin_a vitamin_d vitamin_e vitamin_k
+          %w(vitamin_a vitamin_d vitamin_e vitamin_k
              vitamin_b1 vitamin_b2 niacin vitamin_b6
              vitamin_b12 folate pantothenic_acid
-             biotin vitamin_c]
+             biotin vitamin_c)
         end
 
         def minerals_label
-          %w[potassium calcium magnesium phosphorus
+          %w(potassium calcium magnesium phosphorus
              iron zinc copper manganese iodine
-             selenium chromium molybdenum]
+             selenium chromium molybdenum)
         end
     end
   end
