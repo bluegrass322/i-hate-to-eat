@@ -27,12 +27,12 @@ module SuggestionsCreatable
     end
   end
 
-  private
+  def get_meal_menus
+    foods = []
+    foods.concat(get_regular_food, get_main_dish, get_side_dishes)
+  end
 
-    def get_meal_menus
-      foods = []
-      foods.concat(get_regular_food, get_main_dish, get_side_dishes)
-    end
+  private
 
     def get_regular_food
       Food.prio_h.order("RANDOM()").limit(1)
