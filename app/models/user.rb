@@ -3,29 +3,29 @@
 class User < ApplicationRecord
   authenticates_with_sorcery!
 
-  # Associations
+  # Association
   belongs_to :dietary_reference_intake
   has_many :suggestions, dependent: :destroy
   has_many :suggested_foods, through: :suggestions, source: :food
   has_many :meal_records, dependent: :destroy
 
-  # Scopes
+  # Scope
   scope :linked_line, -> { where.not(line_user_id: nil) }
   scope :notice_enable, -> { where(line_notification_enabled: true) }
   scope :set_mealtime, -> { where.not(mealtime_first: nil) }
   scope :wish_line_notice, -> { linked_line.notice_enable.set_mealtime }
 
-  # Encryption
+  # Encrypt
   encrypts :email
   blind_index :email
   encrypts :line_user_id
   blind_index :line_user_id
 
-  # Enums
+  # Enum
   enum gender: { female: 0, male: 10 }
   enum role: { general: 0, admin: 10 }
 
-  # Validations
+  # Validation
   include ActiveModel::Validations
   validates_with PfcValidator
 
@@ -60,7 +60,7 @@ class User < ApplicationRecord
   validates :line_notification_enabled, inclusion: { in: [true, false] }
   validates :mealtime_first, mealtime: true, allow_nil: true
 
-  # Instance methods
+  # Instance method
   def calc_age
     (Time.zone.today.strftime("%Y%m%d").to_i - birth.strftime("%Y%m%d").to_i) / 10_000
   end
@@ -74,6 +74,20 @@ class User < ApplicationRecord
     else
       (0.0481 * weight + 0.0234 * height - 0.0138 * age - 0.4235) * 1000 / 4.186
     end
+  end
+
+  # LINE通知機能用
+  # 当日の食事内容を送信（ボタンなし）
+  def make_meal_menu_for_line
+    text = Time.current.strftime("%F").to_s
+    total_cal = 0
+
+    foods = suggested_foods
+    foods.each do |f|
+      text << "\n- #{f.name} #{f.subname}: #{(f.reference_amount * 100).floor}g"
+      total_cal += (f.calorie * f.reference_amount).floor
+    end
+    text << "\n\n計 #{total_cal} / #{bmr.floor}kcal が摂取できます"
   end
 
   def set_mypage_params
@@ -113,22 +127,9 @@ class User < ApplicationRecord
   # 1週間分のhealth_savinsを合算して送信
   def set_health_savings_this_week
     total = calc_health_savings_this_week
+
     { type: "text",
       text: "今週の健康貯金\n+ ¥#{total}" }
-  end
-
-  # LINE自動通知機能用
-  # 当日の食事内容を送信（confirmなし）
-  def make_meal_menu_for_line
-    text = Time.zone.today.to_s
-    total_cal = 0
-
-    foods = suggested_foods
-    foods.each do |f|
-      text << "\n- #{f.name} #{f.subname}: #{(f.reference_amount * 100).floor}g"
-      total_cal += (f.calorie * f.reference_amount).floor
-    end
-    text << "\n\n計 #{total_cal} / #{bmr.floor}kcal が摂取できます"
   end
 
   private
@@ -146,12 +147,13 @@ class User < ApplicationRecord
     end
 
     def calc_health_savings_this_week
-      records = meal_records.this_week
+      calories = meal_records.this_week.pluck(:calorie)
       total = 0
-      return total if records.blank?
 
-      records.each do |r|
-        total += r.calorie
+      return total if calories.blank?
+
+      calories.each do |c|
+        total += c
       end
       total.floor
     end
