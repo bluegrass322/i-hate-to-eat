@@ -3,12 +3,25 @@
 # LINE通知用
 require 'line/bot'
 
+def admin_line_id
+  Rails.application.credentials.admin[:LINE_ID]
+end
+
 def client
   Line::Bot::Client.new do |config|
     config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
     config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
   end
 end
+
+def push_message_to_admin(text)
+  time = Time.current.strftime("%c")
+
+  message = { type: "text", text: "#{time}\n#{text}" }
+  client.push_message(admin_line_id, message)
+end
+# ここまで
+
 
 namespace :scheduler do
   include NotificatableToAdmin
@@ -22,10 +35,10 @@ namespace :scheduler do
       end
     rescue StandardError => e
       Rails.logger.error "User#{user.id}: Failed to destroy suggestions. Cause...'#{e}'"
-      notice_to_admin("Suggestionの削除に失敗")
+      push_message_to_admin("Suggestionの削除に失敗")
     end
 
-    complete_message('destroy_expired_suggestions')
+    push_message_to_admin("destroy_expired_suggestionsが正常に終了")
   end
 
   desc "ユーザーごとに当日の食事内容を新規作成"
@@ -36,7 +49,7 @@ namespace :scheduler do
       create_suggestions(user)
     end
 
-    complete_message('create_suggestion')
+    push_message_to_admin("create_suggestionが正常に終了")
   end
 
   desc "ユーザーの設定した時間に食事内容を通知"
@@ -66,7 +79,7 @@ namespace :scheduler do
       client.push_message(to_id, message)
     end
 
-    complete_message('notice_health_savings')
+    push_message_to_admin("notice_health_savingsが正常に終了")
   end
 
   # 以下動作テスト用のタスク
