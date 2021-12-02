@@ -24,8 +24,6 @@ end
 
 
 namespace :scheduler do
-  include NotificatableToAdmin
-
   desc "期限切れのsuggestionを削除"
   task destroy_expired_suggestions: :environment do
     User.find_each do |user|
