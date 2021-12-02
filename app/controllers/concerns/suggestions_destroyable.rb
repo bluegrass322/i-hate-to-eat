@@ -12,7 +12,7 @@ module SuggestionsDestroyable
         suggestions.each(&:destroy!)
       end
       true
-    rescue => e
+    rescue StandardError => e
       Rails.logger.error "User#{user.id}: Failed to create meal record. Cause...'#{e}'"
       notice_to_admin("Suggestionの削除に失敗")
       false

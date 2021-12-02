@@ -21,7 +21,7 @@ module SuggestionsCreatable
           item.save!
         end
       end
-    rescue => e
+    rescue StandardError => e
       Rails.logger.error "User#{user.id}: Failed to save the suggestion. Cause...'#{e}'"
       notice_to_admin("Suggestionの生成に失敗")
     end

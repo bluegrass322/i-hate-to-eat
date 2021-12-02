@@ -35,11 +35,11 @@ class IntakeAchievement
   attribute :vitamin_k, :float, default: 0.0
   attribute :zinc, :float, default: 0.0
 
-  # Callbacks
+  # Callback
   define_model_callbacks :save
   before_save :attr_validation
 
-  # Validates
+  # Validation
   with_options presence: true, numericality: true do
     validates :biotin
     validates :calcium
@@ -72,7 +72,7 @@ class IntakeAchievement
     validates :zinc
   end
 
-  # Instance methods
+  # Instance method
   def calc_intake_achievement(total, bmr, pfc, dri)
     params = attributes
     params.each_key do |k|

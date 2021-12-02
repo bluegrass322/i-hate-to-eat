@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-include NotificatableToAdmin
-
 # LINE通知用
 require 'line/bot'
 
@@ -13,18 +11,18 @@ def client
 end
 
 namespace :scheduler do
+  include NotificatableToAdmin
+
   desc "期限切れのsuggestionを削除"
   task destroy_expired_suggestions: :environment do
     User.find_each do |user|
-      begin
-        Suggestion.transaction do
-          expired_suggestion = user.suggestions.where("expires_at < ?", Time.current)
-          expired_suggestion.each(&:destroy!) if expired_suggestion.present?
-        end
-      rescue => e
-        Rails.logger.error "User#{user.id}: Failed to destroy suggestions. Cause...'#{e}'"
-        notice_to_admin("Suggestionの削除に失敗")
+      Suggestion.transaction do
+        expired_suggestion = user.suggestions.where("expires_at < ?", Time.current)
+        expired_suggestion.each(&:destroy!) if expired_suggestion.present?
       end
+    rescue StandardError => e
+      Rails.logger.error "User#{user.id}: Failed to destroy suggestions. Cause...'#{e}'"
+      notice_to_admin("Suggestionの削除に失敗")
     end
 
     complete_message('destroy_expired_suggestions')

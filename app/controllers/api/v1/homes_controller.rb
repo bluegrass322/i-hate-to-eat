@@ -34,7 +34,7 @@ module Api
         end
 
         def get_radarchart_data(achv)
-          data = %w(calorie protein fat carbohydrate)
+          data = %w[calorie protein fat carbohydrate]
           data.map do |d|
             achv[d]
           end
@@ -45,10 +45,10 @@ module Api
           achieve = labels.map { |l| achv[l] }
           unachieve = achieve.map do |a|
             result = 100 - a
-            unless result.negative?
-              result
-            else
+            if result.negative?
               0
+            else
+              result
             end
           end
 
@@ -56,16 +56,16 @@ module Api
         end
 
         def vitamins_label
-          %w(vitamin_a vitamin_d vitamin_e vitamin_k
+          %w[vitamin_a vitamin_d vitamin_e vitamin_k
              vitamin_b1 vitamin_b2 niacin vitamin_b6
              vitamin_b12 folate pantothenic_acid
-             biotin vitamin_c)
+             biotin vitamin_c]
         end
 
         def minerals_label
-          %w(potassium calcium magnesium phosphorus
+          %w[potassium calcium magnesium phosphorus
              iron zinc copper manganese iodine
-             selenium chromium molybdenum)
+             selenium chromium molybdenum]
         end
     end
   end

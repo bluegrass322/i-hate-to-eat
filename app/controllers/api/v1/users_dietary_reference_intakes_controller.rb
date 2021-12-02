@@ -12,7 +12,7 @@ module Api
           json_string = DietaryReferenceIntakeSerializer
                         .new(current_user.dietary_reference_intake)
                         .serialized_json
-          binding.pry
+
           render json: json_string
         else
           render400(nil, current_user.errors.full_messages)
