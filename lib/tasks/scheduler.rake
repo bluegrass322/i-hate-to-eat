@@ -1,7 +1,10 @@
 # frozen_string_literal: true
 
+include NotificatableToAdmin
+
 # LINE通知用
 require 'line/bot'
+
 def client
   Line::Bot::Client.new do |config|
     config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
@@ -9,74 +12,38 @@ def client
   end
 end
 
-def admin_line_id
-  Rails.application.credentials.admin[:LINE_ID]
-end
-
-def complete_message(task_name)
-  date_time = Time.current.strftime("%c")
-  { type: "text", text: "#{date_time}\n#{task_name}が正常に終了" }
-end
-# ここまで
-
 namespace :scheduler do
   desc "期限切れのsuggestionを削除"
   task destroy_expired_suggestions: :environment do
     User.find_each do |user|
-      Suggestion.transaction do
-        expired_suggestion = user.suggestions.where("expires_at < ?", Time.current)
-        expired_suggestion.each(&:destroy!) if expired_suggestion.present?
+      begin
+        Suggestion.transaction do
+          expired_suggestion = user.suggestions.where("expires_at < ?", Time.current)
+          expired_suggestion.each(&:destroy!) if expired_suggestion.present?
+        end
+      rescue => e
+        Rails.logger.error "User#{user.id}: Failed to destroy suggestions. Cause...'#{e}'"
+        notice_to_admin("Suggestionの削除に失敗")
       end
     end
 
-    # 完了を管理者のLINEに通知
-    to_id = admin_line_id
-    message = complete_message('destroy_expired_suggestions')
-    response = client.push_message(to_id, message)
-    p response
+    complete_message('destroy_expired_suggestions')
   end
 
   desc "ユーザーごとに当日の食事内容を新規作成"
   task create_suggestion: :environment do
+    include SuggestionsCreatable
+
     User.find_each do |user|
-      meal_menus = []
-
-      # 食材を上限4種類にしぼり提案を作成する場合
-      regular = Food.prio_h.order("RANDOM()").limit(1)
-      main = Food.prio_m.maindish.order("RANDOM()").limit(1)
-      side = Food.prio_rm.sidedish.order("RANDOM()").limit(2)
-
-      meal_menus.concat(regular, main, side)
-
-      # 確定したメニューの内容をSuggestionのインスタンスとして保存
-      begin
-        Suggestion.transaction do
-          meal_menus.each do |m|
-            item = user.suggestions.build(
-              food_id: m.id,
-              amount: m.reference_amount,
-              target_date: Time.zone.today,
-              expires_at: Time.current.end_of_day
-            )
-
-            item.save!
-          end
-        end
-      rescue StandardError => e
-        Rails.logger.warn "User#{user.id}: Failed to save the suggestion. Cause...'#{e}'"
-      end
+      create_suggestions(user)
     end
 
-    # 完了を管理者のLINEに通知
-    to_id = admin_line_id
-    message = complete_message('create_suggestion')
-    response = client.push_message(to_id, message)
-    p response
+    complete_message('create_suggestion')
   end
 
   desc "ユーザーの設定した時間に食事内容を通知"
   task notice_suggestion: :environment do
-    t = Time.zone.now
+    t = Time.current
     time_now = t - (t.to_i % (60 * 30))
 
     User.wish_line_notice.find_each do |user|
@@ -84,16 +51,13 @@ namespace :scheduler do
         to_id = user.line_user_id
         message = user.set_line_notification_template
 
-        response = client.push_message(to_id, message)
-        p response
+        client.push_message(to_id, message)
       end
     end
   end
 
   desc "1週間のhealth_savingsの合計を通知"
   task notice_health_savings_for_this_week: :environment do
-    require 'line/bot'
-
     # 週1回、特定の曜日にのみ通知が行われるよう
     next unless Time.zone.today.wday.zero?
 
@@ -101,15 +65,10 @@ namespace :scheduler do
       to_id = user.line_user_id
       message = user.set_health_savings_this_week
 
-      response = client.push_message(to_id, message)
-      p response
+      client.push_message(to_id, message)
     end
 
-    # 完了を管理者のLINEに通知
-    to_id = admin_line_id
-    message = complete_message('notice_health_savings')
-    response = client.push_message(to_id, message)
-    p response
+    complete_message('notice_health_savings')
   end
 
   # 以下動作テスト用のタスク
@@ -122,7 +81,7 @@ namespace :scheduler do
   task push_line_message_test: :environment do
     require 'line/bot'
 
-    User.where.not(line_user_id: nil).find_each do |user|
+    User.linked_line.find_each do |user|
       to_name = user.name
       to_id = user.line_user_id
       bmr = user.bmr
@@ -131,12 +90,13 @@ namespace :scheduler do
         type: "text",
         text: "#{to_name}さんのBMR: #{bmr}kcal"
       }
+
       client = Line::Bot::Client.new do |config|
         config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
         config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
       end
-      response = client.push_message(to_id, message)
-      p response
+
+      client.push_message(to_id, message)
     end
   end
 end
