@@ -9,6 +9,13 @@ module NotificatableToAdmin
     client.push_message(admin_line_id, message)
   end
 
+  def complete_message(task_name)
+    text = "#{task_name}が正常に終了"
+    message = set_message(text)
+
+    client.push_message(admin_line_id, message)
+  end
+
   private
 
     def admin_line_id
