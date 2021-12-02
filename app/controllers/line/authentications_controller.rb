@@ -19,7 +19,10 @@ module Line
         nonce = SecureRandom.urlsafe_base64(16)
         login_user.update!(line_nonce: nonce)
 
-        redirect_to "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}"
+        uri = URI("https://access.line.me/dialog/bot/accountLink")
+        uri.query = URI.encode_www_form({ linkToken: link_token, nonce: nonce })
+
+        redirect_to uri
       else
         flash.now[:danger] = "ログイン失敗"
         render :link

@@ -3,6 +3,8 @@
 module Api
   module V1
     class HomesController < Api::V1::BaseController
+      include TotalAndAchvGetable
+
       def show
         savings = current_user.health_savings
         response = { savings: savings }
@@ -12,24 +14,16 @@ module Api
           foods = record.recorded_foods.pluck(:id, :name, :subname, :reference_amount)
           record_data = { foods: foods }
 
-          achv = get_achievement(record, current_user)
+          achv = get_achievement(current_user, record)
           chart_data = get_chart_data(achv)
           record_data = record_data.merge(chart_data)
 
-          response.store("record", record_data)
+          response["record"] = record_data
         end
         render json: response
       end
 
       private
-
-        def get_achievement(record, user)
-          amt_pfc = user.set_attributes_for_pfc[:amt]
-
-          achv = IntakeAchievement.new
-          achv.calc_intake_achievement(record, user.bmr, amt_pfc,
-                                       user.dietary_reference_intake)
-        end
 
         def get_chart_data(achv)
           macro = get_radarchart_data(achv)

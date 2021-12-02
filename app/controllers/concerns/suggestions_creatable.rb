@@ -2,19 +2,19 @@
 
 module SuggestionsCreatable
   extend ActiveSupport::Concern
+  include NotificatableToAdmin
 
   def create_suggestions(user)
     # 食材を上限4種類にしぼり提案を作成する場合
     meal_menus = get_meal_menus
 
-    # 確定したメニューの内容をSuggestionのインスタンスとして保存
     begin
       Suggestion.transaction do
         meal_menus.each do |m|
           item = user.suggestions.build(
             food_id: m.id,
             amount: m.reference_amount,
-            target_date: Time.zone.today,
+            target_date: Time.current,
             expires_at: Time.current.end_of_day
           )
 
@@ -22,16 +22,17 @@ module SuggestionsCreatable
         end
       end
     rescue StandardError => e
-      Rails.logger.warn "User#{user.id}: Failed to save the suggestion. Cause...'#{e}'"
+      Rails.logger.error "User#{user.id}: Failed to save the suggestion. Cause...'#{e}'"
+      notice_to_admin("Suggestionの生成に失敗")
     end
   end
 
-  private
+  def get_meal_menus
+    foods = []
+    foods.concat(get_regular_food, get_main_dish, get_side_dishes)
+  end
 
-    def get_meal_menus
-      foods = []
-      foods.concat(get_regular_food, get_main_dish, get_side_dishes)
-    end
+  private
 
     def get_regular_food
       Food.prio_h.order("RANDOM()").limit(1)

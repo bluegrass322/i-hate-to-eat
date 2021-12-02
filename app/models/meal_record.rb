@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
 class MealRecord < ApplicationRecord
-  # Associations
+  # Association
   belongs_to :user
   has_many :eaten_foods, dependent: :destroy
   has_many :recorded_foods, through: :eaten_foods, source: :food
 
-  # Scopes
-  scope :for_today, -> { where(ate_at: Time.zone.today) }
+  # Scope
+  scope :for_today, -> { where(ate_at: Time.current) }
   scope :this_week, -> { where(ate_at: 1.week.ago.beginning_of_day...Time.current) }
 
-  # Validations
+  # Validation
   with_options presence: true do
     with_options numericality: true do
       validates :biotin

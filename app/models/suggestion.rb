@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
 class Suggestion < ApplicationRecord
-  # Associations
+  # Association
   belongs_to :user
   belongs_to :food
 
-  # Scopes
-  scope :for_today, -> { where(target_date: Time.zone.today) }
+  # Scope
+  scope :for_today, -> { where(target_date: Time.current) }
 
-  # Validations
+  # Validation
   with_options presence: true do
     validates :amount
     validates :target_date

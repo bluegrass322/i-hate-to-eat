@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
 class DietaryReferenceIntake < ApplicationRecord
-  # Associations
+  # Association
   has_many :users, dependent: :nullify
 
-  # Enums
+  # Enum
   enum gender: { female: 0, male: 10 }
 
-  # Scopes
+  # Scope
   scope :for_female, -> { where(gender: 'female') }
   scope :for_male, -> { where(gender: 'male') }
 
-  # Validations
+  # Validation
   with_options presence: true do
     validates :gender
 
@@ -62,7 +62,7 @@ class DietaryReferenceIntake < ApplicationRecord
     end
   end
 
-  # Class methods
+  # Class method
   def self.for_eighteen_to_twentynine
     find_by(age_bottom: 18)
   end

@@ -10,7 +10,7 @@ module Api
 
       def create
         user = User.new(user_params)
-        user.dietary_reference_intake_id = DietaryReferenceIntake.first.id
+        user.dietary_reference_intake_id = dri_placeholder
 
         if user.save
           create_suggestions(user)
@@ -26,6 +26,10 @@ module Api
 
         def user_params
           params.require(:user).permit(:name, :email, :password, :password_confirmation)
+        end
+
+        def dri_placeholder
+          DietaryReferenceIntake.first.id
         end
     end
   end

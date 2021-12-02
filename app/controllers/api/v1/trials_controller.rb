@@ -6,6 +6,8 @@ module Api
       skip_before_action :require_login
 
       include DriSetable
+      include SuggestionsCreatable
+      include TotalAndAchvGetable
 
       def create
         age = params[:age].to_i
@@ -13,18 +15,18 @@ module Api
 
         # BMR算出
         bmr = calc_bmr(age, gender)
-        pfc = calc_amount_pfc(bmr)
 
         # DRI選出
         dri = set_dri(age, gender)
 
         # 提案作成
-        meals = create_trial_suggstions
+        meals = get_meal_menus
+
         # 達成度算出
         total = get_intake_total(meals)
-        achv = get_achievement(total, bmr, pfc, dri)
+        achv = get_achievement(total, bmr, dri)
 
-        # 返り値
+        # 戻り値
         render json: { bmr: bmr, dri: dri, meals: meals, total: total, achv: achv }
       end
 
@@ -32,10 +34,6 @@ module Api
 
         def trial_params
           params.permit(:age, :gender)
-        end
-
-        def calc_age(birth)
-          (Time.zone.today.strftime("%Y%m%d").to_i - birth.to_date.strftime("%Y%m%d").to_i) / 10_000
         end
 
         def calc_bmr(age, gender)
@@ -98,12 +96,9 @@ module Api
           end
         end
 
-        def get_intake_total(foods)
-          total = NutritionTotal.new
-          total.calc_intake_total(foods)
-        end
+        def get_achievement(total, bmr, dri)
+          pfc = calc_amount_pfc(bmr)
 
-        def get_achievement(total, bmr, pfc, dri)
           achv = IntakeAchievement.new
           achv.calc_intake_achievement(total, bmr, pfc, dri)
         end
@@ -119,17 +114,6 @@ module Api
           else
             DietaryReferenceIntake.for_male
           end
-        end
-
-        def create_trial_suggstions
-          meal_menus = []
-
-          # 食材を上限4種類にしぼり提案を作成する場合
-          regular = Food.prio_h.order("RANDOM()").limit(1)
-          main = Food.prio_m.maindish.order("RANDOM()").limit(1)
-          side = Food.prio_rm.sidedish.order("RANDOM()").limit(2)
-
-          meal_menus.concat(regular, main, side)
         end
     end
   end

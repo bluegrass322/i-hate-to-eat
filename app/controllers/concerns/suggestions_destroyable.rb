@@ -4,16 +4,17 @@ module SuggestionsDestroyable
   extend ActiveSupport::Concern
 
   def destroy_suggestions_all(user)
-    suggestions = user.suggestions.where(target_date: Time.zone.today)
+    suggestions = user.suggestions.for_today
     return render404(nil, "Suggestionが存在しません") if suggestions.blank?
 
     begin
       Suggestion.transaction do
         suggestions.each(&:destroy!)
       end
+      true
     rescue StandardError => e
-      # TODO: 例外処理を修正
-      Rails.logger.warn "User#{user.id}: Failed to create meal record. Cause...'#{e}'"
+      Rails.logger.error "User#{user.id}: Failed to create meal record. Cause...'#{e}'"
+      notice_to_admin("Suggestionの削除に失敗")
       false
     end
   end
