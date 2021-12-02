@@ -22,7 +22,6 @@ def push_message_to_admin(text)
 end
 # ここまで
 
-
 namespace :scheduler do
   desc "期限切れのsuggestionを削除"
   task destroy_expired_suggestions: :environment do
