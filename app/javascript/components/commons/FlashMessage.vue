@@ -2,12 +2,11 @@
   <v-alert
     v-if="message"
     elevation="0"
-    dense
     height="70"
+    tile
     :type="type"
     :width="alertWidth"
     class="
-      alert
       d-flex
       justify-center
       align-center
