@@ -1,32 +1,32 @@
 const state = {
   vitamins: {
-    vitamin_a: { label: 'ビタミンA', amount: '', unit: 'μgRAE' },
-    vitamin_d: { label: 'ビタミンD', amount: '', unit: 'μg' },
-    vitamin_e: { label: 'ビタミンE', amount: '', unit: 'mg' },
-    vitamin_k: { label: 'ビタミンK', amount: '', unit: 'μg' },
-    vitamin_b1: { label: 'ビタミンB1', amount: '', unit: 'mg' },
-    vitamin_b2: { label: 'ビタミンB2', amount: '', unit: 'mg' },
-    niacin: { label: 'ナイアシン', amount: '', unit: 'mgNE' },
-    vitamin_b6: { label: 'ビタミンB6', amount: '', unit: 'mg' },
-    vitamin_b12: { label: 'ビタミンB12', amount: '', unit: 'μg' },
-    folate: { label: '葉酸', amount: '', unit: 'μg' },
-    pantothenic_acid: { label: 'パントテン酸', amount: '', unit: 'mg' },
-    biotin: { label: 'ビオチン', amount: '', unit: 'μg' },
-    vitamin_c: { label: 'ビタミンC', amount: '', unit: 'mg' },
+    vitamin_a: { label: 'ビタミンA', amount: null, unit: 'μgRAE' },
+    vitamin_d: { label: 'ビタミンD', amount: null, unit: 'μg' },
+    vitamin_e: { label: 'ビタミンE', amount: null, unit: 'mg' },
+    vitamin_k: { label: 'ビタミンK', amount: null, unit: 'μg' },
+    vitamin_b1: { label: 'ビタミンB1', amount: null, unit: 'mg' },
+    vitamin_b2: { label: 'ビタミンB2', amount: null, unit: 'mg' },
+    niacin: { label: 'ナイアシン', amount: null, unit: 'mgNE' },
+    vitamin_b6: { label: 'ビタミンB6', amount: null, unit: 'mg' },
+    vitamin_b12: { label: 'ビタミンB12', amount: null, unit: 'μg' },
+    folate: { label: '葉酸', amount: null, unit: 'μg' },
+    pantothenic_acid: { label: 'パントテン酸', amount: null, unit: 'mg' },
+    biotin: { label: 'ビオチン', amount: null, unit: 'μg' },
+    vitamin_c: { label: 'ビタミンC', amount: null, unit: 'mg' },
   },
   minerals: {
-    potassium: { label: 'カリウム', amount: '', unit: 'mg' },
-    calcium: { label: 'カルシウム', amount: '', unit: 'mg' },
-    magnesium: { label: 'マグネシウム', amount: '', unit: 'mg' },
-    phosphorus: { label: 'リン', amount: '', unit: 'mg' },
-    iron: { label: '鉄', amount: '', unit: 'mg' },
-    zinc: { label: '亜鉛', amount: '', unit: 'mg' },
-    copper: { label: '銅', amount: '', unit: 'mg' },
-    manganese: { label: 'マンガン', amount: '', unit: 'mg' },
-    iodine: { label: 'ヨウ素', amount: '', unit: 'μg' },
-    selenium: { label: 'セレン', amount: '', unit: 'μg' },
-    chromium: { label: 'クロム', amount: '', unit: 'μg' },
-    molybdenum: { label: 'モリブデン', amount: '', unit: 'μg' },
+    potassium: { label: 'カリウム', amount: null, unit: 'mg' },
+    calcium: { label: 'カルシウム', amount: null, unit: 'mg' },
+    magnesium: { label: 'マグネシウム', amount: null, unit: 'mg' },
+    phosphorus: { label: 'リン', amount: null, unit: 'mg' },
+    iron: { label: '鉄', amount: null, unit: 'mg' },
+    zinc: { label: '亜鉛', amount: null, unit: 'mg' },
+    copper: { label: '銅', amount: null, unit: 'mg' },
+    manganese: { label: 'マンガン', amount: null, unit: 'mg' },
+    iodine: { label: 'ヨウ素', amount: null, unit: 'μg' },
+    selenium: { label: 'セレン', amount: null, unit: 'μg' },
+    chromium: { label: 'クロム', amount: null, unit: 'μg' },
+    molybdenum: { label: 'モリブデン', amount: null, unit: 'μg' },
   },
 };
 
@@ -36,23 +36,22 @@ const getters = {
 };
 
 const mutations = {
-  // TODO: これでエラーは起こらず正しく動作するか？
-  setVitamins(state, value) {
+  setVitamins(state, values) {
     Object.keys(state.vitamins).forEach((key) => {
-      state.vitamins[key].amount = value[key];
+      state.vitamins[key].amount = values[key];
     });
   },
-  setMinerals(state, value) {
+  setMinerals(state, values) {
     Object.keys(state.minerals).forEach((key) => {
-      state.minerals[key].amount = value[key];
+      state.minerals[key].amount = values[key];
     });
   },
 };
 
 const actions = {
-  setAttributes(context, attr) {
-    context.commit('setVitamins', attr);
-    context.commit('setMinerals', attr);
+  setStates(context, params) {
+    context.commit('setVitamins', params);
+    context.commit('setMinerals', params);
   },
 };
 
