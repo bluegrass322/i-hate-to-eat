@@ -3,12 +3,16 @@
 module Api
   module V1
     class BmrsController < Api::V1::BaseController
+      include DriSetable
+
       def update
-        current_user.assign_attributes(bmr_params)
-        current_user.bmr = current_user.calc_bmr.floor
+        assign_params(current_user)
+        dri = set_dri(current_user)
 
         if current_user.save
-          render json: { bmr: current_user.bmr, pfc_params: current_user.set_attributes_for_pfc }
+          serialized_dri = DietaryReferenceIntakeSerializer.new(dri).serialized_json
+
+          render json: { bmr: current_user.bmr, pfc_params: current_user.set_attributes_for_pfc, dri: serialized_dri }
         else
           render400(nil, current_user.errors.full_messages)
         end
@@ -18,6 +22,18 @@ module Api
 
         def bmr_params
           params.require(:user).permit(:gender, :birth, :height, :weight)
+        end
+
+        def assign_params(user)
+          user.assign_attributes(bmr_params)
+          user.bmr = user.calc_bmr.floor
+        end
+
+        def set_dri(user)
+          dri = set_reference_intake(user)
+          user.dietary_reference_intake_id = dri.id
+
+          dri
         end
     end
   end
