@@ -1,15 +1,20 @@
 const state = {
   user: {
-    gender: '',
-    birth: '',
-    height: '',
-    weight: '',
+    gender: null,
+    birth: null,
+    height: null,
+    weight: null,
   },
-  bmr: '',
+  bmr: null,
 };
 
-// TODO: 要リファクタリング
 const mutations = {
+  updateStates(state, params) {
+    Object.keys(state.user).forEach((key) => {
+      state.user[key] = params[key];
+    });
+    state.bmr = params.bmr
+  },
   updateGender(state, gender) {
     state.user.gender = gender;
   },
@@ -27,14 +32,9 @@ const mutations = {
   },
 };
 
-// TODO: 要リファクタリング
 const actions = {
-  setAttributes(context, attributes) {
-    context.commit('updateGender', attributes.gender);
-    context.commit('updateBirth', attributes.birth);
-    context.commit('updateHeight', attributes.height);
-    context.commit('updateWeight', attributes.weight);
-    context.commit('updateBmr', attributes.bmr);
+  setStates(context, params) {
+    context.commit('updateStates', params);
   },
 };
 
