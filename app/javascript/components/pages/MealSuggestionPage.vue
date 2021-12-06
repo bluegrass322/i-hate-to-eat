@@ -27,7 +27,7 @@
               "
             >
               <div
-                class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
+                class="item-title d-flex align-end accent--text pa-0 mb-5"
               >
                 本日の食材
                 <div class="under-line line-right-long" />
@@ -36,7 +36,7 @@
           </div>
 
           <template v-if="suggestionsExists" class="ma-0 pa-0">
-            <div style="width: 100%">
+            <div class="suggestions-container">
               <food-card :suggestions="suggestions" />
             </div>
             <div class="confirm-group d-flex flex-column align-center mt-13">
@@ -53,9 +53,9 @@
                   outlined
                   :width="btnWidth"
                   class="confirm-btn mx-5 px-5 flex-grow-1"
-                  @click.stop="destroySuggestions()"
+                  @click.stop="suggestionsDestroy()"
                 >
-                  No
+                  食べない
                 </v-btn>
                 <v-btn
                   color="accent"
@@ -65,9 +65,9 @@
                   outlined
                   :width="btnWidth"
                   class="confirm-btn mx-5 px-5 flex-grow-1"
-                  @click.stop="createMealRecord()"
+                  @click.stop="mealRecordCreate()"
                 >
-                  Yes
+                  食べない
                 </v-btn>
               </div>
             </div>
@@ -97,9 +97,9 @@
               outlined
               :width="btnWidthLarge"
               class="confirm-btn mx-5 px-5"
-              @click.stop="reloadSuggestions()"
+              @click.stop="suggestionsReload()"
             >
-              Recreate
+              リロード
             </v-btn>
           </div>
         </div>
@@ -115,7 +115,6 @@
           d-flex
           flex-column
           align-center
-          ma-0
           mt-16 mt-md-0
           mx-0 mx-md-auto
           pa-0
@@ -133,7 +132,7 @@
               "
             >
               <div
-                class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
+                class="item-title d-flex align-end accent--text pa-0 mb-5"
               >
                 摂取できる栄養
                 <div class="under-line line-right" />
@@ -164,7 +163,7 @@ export default {
       noneMessage: '存在しません',
       btnHeihgt: '30',
       btnWidth: '40%',
-      btnWidthLarge: '209px',
+      btnWidthLarge: '258px',
     };
   },
   computed: {
@@ -186,16 +185,16 @@ export default {
     },
   },
   mounted() {
-    this.setSuggestions();
+    this.suggestionsSet();
   },
   methods: {
-    createMealRecord() {
+    mealRecordCreate() {
       this.axios
         .post('/api/v1/meal_records')
         .then((res) => {
           console.log(res.status);
 
-          this.initializeSuggestions();
+          this.suggestionsInitialize();
           this.$store.commit('flashMessage/setMessage', {
             type: 'success',
             message: '記録を作成しました',
@@ -205,28 +204,44 @@ export default {
         })
         .catch((e) => {
           console.error(e.response.status);
+
+          const message = e.response.data.errors;
+          this.$store.commit('flashMessage/setMessage', {
+            type: 'error',
+            message: `${message}`,
+          });
         });
     },
-    destroySuggestions() {
+    suggestionsDestroy() {
       this.axios
         .delete('/api/v1/suggestion')
         .then((res) => {
           console.log(res.status);
-          this.initializeSuggestions();
+          this.suggestionsInitialize();
         })
         .catch((e) => {
           console.error(e.response.status);
+
+          const message = e.response.data.errors;
+          this.$store.commit('flashMessage/setMessage', {
+            type: 'error',
+            message: `${message}`,
+          });
         });
     },
-    reloadSuggestions() {
+    suggestionsInitialize() {
+      this.suggestionsExists = false;
+      this.suggestions = null;
+    },
+    suggestionsReload() {
       this.axios
         .patch('/api/v1/suggestion')
         .then((res) => {
           console.log(res.status);
           const r = res.data;
 
-          this.suggestionsExists = true;
           this.suggestions = r.meals;
+          this.suggestionsExists = true;
 
           this.$store.dispatch('nutrientsAchievements/setAttributes', {
             totals: r.total,
@@ -243,7 +258,7 @@ export default {
           });
         });
     },
-    setSuggestions() {
+    suggestionsSet() {
       this.axios
         .get('/api/v1/suggestion')
         .then((res) => {
@@ -262,10 +277,6 @@ export default {
           console.error(e.response.status);
         });
     },
-    initializeSuggestions() {
-      this.suggestions = {};
-      this.suggestionsExists = false;
-    },
   },
 };
 </script>
@@ -283,14 +294,14 @@ export default {
   width: 100%;
 }
 
-/* .desc-content {
-  max-width: 240px;
-} */
-
 .desc-content.desc-left {
   position: relative;
   top: 0;
   left: 0;
+}
+
+.suggestions-container {
+  width: 100%;
 }
 
 .suggestions-placeholder {
