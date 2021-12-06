@@ -1,16 +1,17 @@
 const state = {
   pct: {
-    protein: '',
-    fat: '',
-    carbohydrate: '',
+    protein: null,
+    fat: null,
+    carbohydrate: null,
   },
   amt: {
-    protein: '',
-    fat: '',
-    carbohydrate: '',
+    protein: null,
+    fat: null,
+    carbohydrate: null,
   },
 };
 
+// TODO: 要リファクタリング、ただし現在当ストアは不使用のため優先度低い
 const getters = {
   pct: (state) =>
     Object.keys(state.pct).forEach((key) => {
@@ -31,11 +32,12 @@ const mutations = {
     state.amt.carbohydrate = value.carbohydrate;
   },
 };
+// TODO: ここまで
 
 const actions = {
-  setAttributes(context, attr) {
-    context.commit('updatePct', attr.pct);
-    context.commit('updateAmt', attr.amt);
+  setStates(context, params) {
+    context.commit('updatePct', params.pct);
+    context.commit('updateAmt', params.amt);
   },
 };
 
