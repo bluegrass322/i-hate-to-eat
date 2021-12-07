@@ -11,7 +11,7 @@
           pa-0
         "
       >
-        新規ユーザー登録
+        ログイン
         <div class="under-line line-right" />
       </div>
     </div>
