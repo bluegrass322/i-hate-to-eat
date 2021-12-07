@@ -1,44 +1,44 @@
 const state = {
   basicInfo: {
-    name: '',
-    subname: '',
+    name: null,
+    subname: null,
     reference_amount: 1,
-    description: '',
+    description: null,
   },
   macro: {
-    calorie: { label: 'カロリー', amount: '', unit: 'kcal' },
-    protein: { label: 'タンパク質', amount: '', unit: 'g' },
-    fat: { label: '脂質', amount: '', unit: 'g' },
-    carbohydrate: { label: '炭水化物', amount: '', unit: 'g' },
+    calorie: { label: 'カロリー', amount: null, unit: 'kcal' },
+    protein: { label: 'タンパク質', amount: null, unit: 'g' },
+    fat: { label: '脂質', amount: null, unit: 'g' },
+    carbohydrate: { label: '炭水化物', amount: null, unit: 'g' },
   },
   vitamins: {
-    vitamin_a: { label: 'ビタミンA', amount: '', unit: 'μgRAE' },
-    vitamin_d: { label: 'ビタミンD', amount: '', unit: 'μg' },
-    vitamin_e: { label: 'ビタミンE', amount: '', unit: 'mg' },
-    vitamin_k: { label: 'ビタミンK', amount: '', unit: 'μg' },
-    vitamin_b1: { label: 'ビタミンB1', amount: '', unit: 'mg' },
-    vitamin_b2: { label: 'ビタミンB2', amount: '', unit: 'mg' },
-    niacin: { label: 'ナイアシン', amount: '', unit: 'mgNE' },
-    vitamin_b6: { label: 'ビタミンB6', amount: '', unit: 'mg' },
-    vitamin_b12: { label: 'ビタミンB12', amount: '', unit: 'μg' },
-    folate: { label: '葉酸', amount: '', unit: 'μg' },
-    pantothenic_acid: { label: 'パントテン酸', amount: '', unit: 'mg' },
-    biotin: { label: 'ビオチン', amount: '', unit: 'μg' },
-    vitamin_c: { label: 'ビタミンC', amount: '', unit: 'mg' },
+    vitamin_a: { label: 'ビタミンA', amount: null, unit: 'μgRAE' },
+    vitamin_d: { label: 'ビタミンD', amount: null, unit: 'μg' },
+    vitamin_e: { label: 'ビタミンE', amount: null, unit: 'mg' },
+    vitamin_k: { label: 'ビタミンK', amount: null, unit: 'μg' },
+    vitamin_b1: { label: 'ビタミンB1', amount: null, unit: 'mg' },
+    vitamin_b2: { label: 'ビタミンB2', amount: null, unit: 'mg' },
+    niacin: { label: 'ナイアシン', amount: null, unit: 'mgNE' },
+    vitamin_b6: { label: 'ビタミンB6', amount: null, unit: 'mg' },
+    vitamin_b12: { label: 'ビタミンB12', amount: null, unit: 'μg' },
+    folate: { label: '葉酸', amount: null, unit: 'μg' },
+    pantothenic_acid: { label: 'パントテン酸', amount: null, unit: 'mg' },
+    biotin: { label: 'ビオチン', amount: null, unit: 'μg' },
+    vitamin_c: { label: 'ビタミンC', amount: null, unit: 'mg' },
   },
   minerals: {
-    potassium: { label: 'カリウム', amount: '', unit: 'mg' },
-    calcium: { label: 'カルシウム', amount: '', unit: 'mg' },
-    magnesium: { label: 'マグネシウム', amount: '', unit: 'mg' },
-    phosphorus: { label: 'リン', amount: '', unit: 'mg' },
-    iron: { label: '鉄', amount: '', unit: 'mg' },
-    zinc: { label: '亜鉛', amount: '', unit: 'mg' },
-    copper: { label: '銅', amount: '', unit: 'mg' },
-    manganese: { label: 'マンガン', amount: '', unit: 'mg' },
-    iodine: { label: 'ヨウ素', amount: '', unit: 'μg' },
-    selenium: { label: 'セレン', amount: '', unit: 'μg' },
-    chromium: { label: 'クロム', amount: '', unit: 'μg' },
-    molybdenum: { label: 'モリブデン', amount: '', unit: 'μg' },
+    potassium: { label: 'カリウム', amount: null, unit: 'mg' },
+    calcium: { label: 'カルシウム', amount: null, unit: 'mg' },
+    magnesium: { label: 'マグネシウム', amount: null, unit: 'mg' },
+    phosphorus: { label: 'リン', amount: null, unit: 'mg' },
+    iron: { label: '鉄', amount: null, unit: 'mg' },
+    zinc: { label: '亜鉛', amount: null, unit: 'mg' },
+    copper: { label: '銅', amount: null, unit: 'mg' },
+    manganese: { label: 'マンガン', amount: null, unit: 'mg' },
+    iodine: { label: 'ヨウ素', amount: null, unit: 'μg' },
+    selenium: { label: 'セレン', amount: null, unit: 'μg' },
+    chromium: { label: 'クロム', amount: null, unit: 'μg' },
+    molybdenum: { label: 'モリブデン', amount: null, unit: 'μg' },
   },
 };
 
@@ -50,7 +50,6 @@ const getters = {
 };
 
 const mutations = {
-  // TODO: これでエラーは起こらず正しく動作するか？
   setInfo(state, value) {
     Object.keys(state.basicInfo).forEach((key) => {
       state.basicInfo[key] = value[key];
@@ -60,21 +59,23 @@ const mutations = {
   setMacro(state, value) {
     Object.keys(state.macro).forEach((key) => {
       state.macro[key].amount = Math.trunc(
-        value[key] * state.basicInfo.reference_amount
+        value[key] * value.reference_amount
       );
     });
   },
   setVitamins(state, value) {
     Object.keys(state.vitamins).forEach((key) => {
-      const origin = value[key] * state.basicInfo.reference_amount;
-      const amount = trunc2ndDec(origin);
+      const origin = value[key] * value.reference_amount;
+      const amount = trunc2ndDec(origin); // 小数第3位以下は切り捨て
+
       state.vitamins[key].amount = amount;
     });
   },
   setMinerals(state, value) {
     Object.keys(state.minerals).forEach((key) => {
-      const origin = value[key] * state.basicInfo.reference_amount;
-      const amount = trunc2ndDec(origin);
+      const origin = value[key] * value.reference_amount;
+      const amount = trunc2ndDec(origin); // 小数第3位以下は切り捨て
+
       state.minerals[key].amount = amount;
     });
   },
@@ -97,7 +98,7 @@ export default {
   actions,
 };
 
-// 小数第二位以下切り捨て用の関数
+// 小数第3位以下切り捨て
 const trunc2ndDec = (original) => {
   let midCalc = original * 100;
   midCalc = Math.trunc(midCalc);
