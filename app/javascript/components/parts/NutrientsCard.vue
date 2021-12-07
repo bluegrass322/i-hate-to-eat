@@ -19,13 +19,12 @@ export default {
     label: {
       type: String,
       required: true,
-      default: '',
+      default: null,
     },
     amount: {
-      // TODO: warnログ回避のために一時タイプを複数指定
       type: [String, Number],
       required: true,
-      default: '',
+      default: null,
     },
     unit: {
       type: String,
