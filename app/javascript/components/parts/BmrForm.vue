@@ -155,15 +155,14 @@ export default {
     return {
       railsErrors: {
         show: false,
-        message: '',
-        errorMessages: [],
+        message: null,
+        errorMessages: null,
       },
       birthInput: false,
     };
   },
   computed: {
     ...mapGetters('pfcBalance', ['amt']),
-    // TODO: 要リファクタリング
     gender: {
       get() {
         return this.$store.state.bmrParams.user.gender;
