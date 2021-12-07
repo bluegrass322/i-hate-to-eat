@@ -55,9 +55,7 @@
               align-start
             "
           >
-            <div
-              class="item-title d-flex align-end accent--text pa-0 mb-5"
-            >
+            <div class="item-title d-flex align-end accent--text pa-0 mb-5">
               あなたの栄養摂取基準
               <div class="under-line line-right" />
             </div>
@@ -132,7 +130,10 @@ export default {
           this.$store.commit('bmrParams/updateBmr', res.data.bmr);
 
           const dri = JSON.parse(res.data.dri);
-          this.$store.dispatch( 'referenceIntakes/setStates', dri.data.attributes);
+          this.$store.dispatch(
+            'referenceIntakes/setStates',
+            dri.data.attributes
+          );
 
           // this.dispatchPfc(res.data.pfc_params);
         })

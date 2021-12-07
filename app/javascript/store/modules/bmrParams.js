@@ -13,7 +13,7 @@ const mutations = {
     Object.keys(state.user).forEach((key) => {
       state.user[key] = params[key];
     });
-    state.bmr = params.bmr
+    state.bmr = params.bmr;
   },
   updateGender(state, gender) {
     state.user.gender = gender;

@@ -160,7 +160,7 @@ export default {
       },
       timePicker: false,
       passwordForm: false,
-      railsErrors: { 
+      railsErrors: {
         show: false,
         message: null,
         errorMessages: null,

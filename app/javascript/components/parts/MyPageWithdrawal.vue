@@ -1,20 +1,15 @@
 <template>
-  <div
-    id="withdrawal-page"
-    class="d-flex flex-column align-center ma-0 mt-5 pa-0"
-  >
-    <div
-      class="desc-text accent--text text-body-2 text-sm-body-1 ma-0 ml-7 pa-0"
-    >
-      <div class="text-item d-flex align-end ma-0 mb-4 mb-sm-6 pa-0">
+  <div id="withdrawal-page" class="d-flex flex-column align-center mt-5 pa-0">
+    <div class="desc-text accent--text text-body-2 text-sm-body-1 ml-7 pa-0">
+      <div class="text-item d-flex align-end mb-4 mb-sm-6 pa-0">
         退会する
         <div class="under-line line-title" />
       </div>
-      <div class="text-item ma-0 mb-4 mb-sm-6 pa-0">
+      <div class="text-item mb-4 mb-sm-6 pa-0">
         メールアドレス・LINE
         IDなどのすべてのユーザー情報を削除し、サービスの利用を中止します。
       </div>
-      <div class="text-item ma-0 mb-8 mb-sm-10 pa-0">
+      <div class="text-item mb-8 mb-sm-10 pa-0">
         なお、過去の記録の復元は不可能となりますので、あらかじめご了承ください。
       </div>
       <div class="under-line-spacer" />

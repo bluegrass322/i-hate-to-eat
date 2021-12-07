@@ -160,7 +160,7 @@ export default {
 .under-line {
   border-bottom: 1px solid rgb(245, 245, 246);
   position: relative;
-    top: -6px;
+  top: -6px;
 }
 
 .under-line.line-right {

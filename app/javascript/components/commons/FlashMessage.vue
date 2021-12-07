@@ -6,14 +6,7 @@
     tile
     :type="type"
     :width="alertWidth"
-    class="
-      d-flex
-      justify-center
-      align-center
-      text-subtitle-2
-      ma-0
-      flex-grow-1
-    "
+    class="d-flex justify-center align-center text-subtitle-2 ma-0 flex-grow-1"
   >
     {{ message }}
   </v-alert>

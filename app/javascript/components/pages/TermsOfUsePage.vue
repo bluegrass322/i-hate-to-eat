@@ -314,6 +314,10 @@ export default {};
 }
 
 /* class */
+.indented {
+  text-indent: 1em;
+}
+
 .under-line {
   border-bottom: 1px solid rgb(245, 245, 246);
   position: relative;
@@ -344,9 +348,5 @@ p {
 li {
   list-style-type: decimal;
   padding-bottom: 10px;
-}
-
-.indented {
-  text-indent: 1em;
 }
 </style>

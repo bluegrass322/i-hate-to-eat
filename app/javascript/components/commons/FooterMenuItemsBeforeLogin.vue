@@ -40,7 +40,16 @@
       login
     </v-btn>
 
-    <div class="menu-icon d-flex justify-center align-cneter flex-grow-0 flex-shrink-0 pt-1">
+    <div
+      class="
+        menu-icon
+        d-flex
+        justify-center
+        align-cneter
+        flex-grow-0 flex-shrink-0
+        pt-1
+      "
+    >
       <v-app-bar-nav-icon color="accent" @click.stop="clickNavIcon()" />
     </div>
     <!-- 以下、プルアップメニュー -->
@@ -108,7 +117,9 @@
               class="ma-0 pa-0"
               @click.stop="closeMenuDialog()"
             >
-              <v-list-item-title class="accent--text text-body-2 font-weight-medium">
+              <v-list-item-title
+                class="accent--text text-body-2 font-weight-medium"
+              >
                 <span class="list-item">{{ item.name }}</span>
                 <!-- TODO: noteは調整完了後に消す -->
                 <br /><span style="font-size: 0.3rem">{{ item.note }}</span>
@@ -185,8 +196,8 @@ export default {
 
 .listmenu-group {
   position: absolute;
-    top: 0;
-    right: 0;
+  top: 0;
+  right: 0;
 }
 
 .menu-icon {

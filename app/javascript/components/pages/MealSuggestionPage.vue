@@ -26,9 +26,7 @@
                 align-start
               "
             >
-              <div
-                class="item-title d-flex align-end accent--text pa-0 mb-5"
-              >
+              <div class="item-title d-flex align-end accent--text pa-0 mb-5">
                 本日の食材
                 <div class="under-line line-right-long" />
               </div>
@@ -67,7 +65,7 @@
                   class="confirm-btn mx-5 px-5 flex-grow-1"
                   @click.stop="mealRecordCreate()"
                 >
-                  食べない
+                  食べる
                 </v-btn>
               </div>
             </div>
@@ -131,9 +129,7 @@
                 align-start
               "
             >
-              <div
-                class="item-title d-flex align-end accent--text pa-0 mb-5"
-              >
+              <div class="item-title d-flex align-end accent--text pa-0 mb-5">
                 摂取できる栄養
                 <div class="under-line line-right" />
               </div>

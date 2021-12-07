@@ -58,9 +58,7 @@ const mutations = {
   // TODO: reference_amountを乗算する処理のリファクタリング
   setMacro(state, value) {
     Object.keys(state.macro).forEach((key) => {
-      state.macro[key].amount = Math.trunc(
-        value[key] * value.reference_amount
-      );
+      state.macro[key].amount = Math.trunc(value[key] * value.reference_amount);
     });
   },
   setVitamins(state, value) {

@@ -215,7 +215,7 @@ export default {
                   stepSize: 20,
                 },
               },
-            ], 
+            ],
             yAxes: [
               {
                 gridLines: {
@@ -355,7 +355,7 @@ const colorAccent = {
 
 const colorPrimary = {
   alpha8: 'rgba(44, 76, 107, 0.8)',
-}
+};
 
 // データセット
 const barChartAchv = {
@@ -384,7 +384,7 @@ const vitaminDatasets = [
 
 const mineralDatasets = [
   Object.assign({}, barChartAchv),
-  Object.assign({}, barChartUnachv)
+  Object.assign({}, barChartUnachv),
 ];
 </script>
 

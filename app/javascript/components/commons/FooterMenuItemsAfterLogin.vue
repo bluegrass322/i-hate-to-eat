@@ -27,7 +27,16 @@
       today's meal
     </v-btn>
 
-    <div class="menu-icon d-flex justify-center align-cneter flex-grow-0 flex-shrink-0 pb-1">
+    <div
+      class="
+        menu-icon
+        d-flex
+        justify-center
+        align-cneter
+        flex-grow-0 flex-shrink-0
+        pb-1
+      "
+    >
       <v-app-bar-nav-icon color="accent" @click.stop="clickNavIcon()" />
     </div>
     <!-- 以下、プルアップメニュー -->
