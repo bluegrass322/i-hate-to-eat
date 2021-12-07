@@ -156,14 +156,14 @@ export default {
     return {
       user: {
         line_notification_enabled: false,
-        mealtime_first: '',
+        mealtime_first: null,
       },
       timePicker: false,
       passwordForm: false,
-      railsErrors: {
+      railsErrors: { 
         show: false,
-        message: '',
-        errorMessages: [],
+        message: null,
+        errorMessages: null,
       },
     };
   },
@@ -171,6 +171,8 @@ export default {
     this.setAccount();
   },
   methods: {
+    allowedHours: (v) => v >= 7 && v <= 23,
+    allowedMinutes: (m) => m % 30 === 0,
     setAccount() {
       this.axios
         .get('/api/v1/user_account')
@@ -194,22 +196,19 @@ export default {
           });
         })
         .catch((error) => {
-          let e = error.response;
-          console.error(e.status);
+          console.error(error.response.status);
 
-          if (e.data.errors) {
-            this.railsErrors.errorMessages = e.data.errors;
-          }
-          if (this.railsErrors.errorMessages.length != 0) {
+          let e = error.response.data.errors;
+          if (e && e.length != 0) {
+            this.railsErrors.errorMessages = e;
             this.railsErrors.show = true;
+
             setTimeout(() => {
               this.railsErrors.show = false;
             }, 5000);
           }
         });
     },
-    allowedHours: (v) => v >= 7 && v <= 23,
-    allowedMinutes: (m) => m % 30 === 0,
   },
 };
 </script>
