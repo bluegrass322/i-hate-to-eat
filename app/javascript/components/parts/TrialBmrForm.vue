@@ -113,11 +113,11 @@ export default {
     return {
       railsErrors: {
         show: false,
-        message: '',
-        errorMessages: [],
+        message: null,
+        errorMessages: null,
       },
       age: null,
-      gender: '',
+      gender: null,
     };
   },
   computed: {

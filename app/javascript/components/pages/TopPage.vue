@@ -193,15 +193,15 @@
 </template>
 
 <script>
-import TrialBmrForm from '../parts/TrialBmrForm';
 import FoodCard from '../parts/FoodCard';
 import NutrientsAchievement from '../parts/NutrientsAchievement';
+import TrialBmrForm from '../parts/TrialBmrForm';
 
 export default {
   components: {
-    TrialBmrForm,
     FoodCard,
     NutrientsAchievement,
+    TrialBmrForm,
   },
   data() {
     return {
@@ -347,9 +347,10 @@ export default {
     },
   },
   methods: {
+    // レスト構文でemitからの複数の値を配列にして受け取る
     createTrialSuggestion(...args) {
-      // レスト構文
-      const [age, gender] = args;
+      const [age, gender] = args; // 分割代入
+
       this.axios
         .post('/api/v1/trials', { age: age, gender: gender })
         .then((res) => {

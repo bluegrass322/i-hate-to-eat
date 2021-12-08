@@ -17,9 +17,6 @@
             <div class="underline underline-left underline-second" />
           </div>
         </div>
-        <!-- <div class="line-third d-flex justify-start ma-0">
-          <div class="underline underline-third" />
-        </div> -->
       </v-col>
     </v-row>
 
@@ -139,7 +136,7 @@ export default {
           datasets: [
             {
               // dataキーはthis.$setで追加するため書かない
-              backgroundColor: 'rgba(44, 76, 107, 0.8)',
+              backgroundColor: colorPrimary['alpha8'],
               borderColor: colorAccent['alpha3'],
               borderWidth: 1,
               borderCapStyle: 'butt',
@@ -187,21 +184,16 @@ export default {
         vitamins: {
           data: {
             labels: labelVitamins,
-            datasets: [
-              JSON.parse(JSON.stringify(barChartAchv)),
-              JSON.parse(JSON.stringify(barChartUnachv)),
-            ],
+            datasets: vitaminDatasets,
           },
         },
         minerals: {
           data: {
             labels: labelMinerals,
-            datasets: [
-              JSON.parse(JSON.stringify(barChartAchv)),
-              JSON.parse(JSON.stringify(barChartUnachv)),
-            ],
+            datasets: mineralDatasets,
           },
         },
+        // オプションはvitamin, mineralで共用
         options: {
           legend: {
             display: false,
@@ -274,6 +266,8 @@ export default {
           const r = res.data;
 
           this.savings = r.savings;
+
+          // 普通にプロパティを追加するのではVueが変更を検知できずリアクティブにならないためVue.setを使用
           if (r.record) {
             this.$set(
               this.radarChart.data.datasets[0],
@@ -301,10 +295,9 @@ export default {
 };
 
 // 以下変数定義
+
 // チャートのラベル
 const labelMacros = ['kcal', 'Protein', 'Fat', 'Carbo'];
-// const labelMacros = ['エネルギー', 'タンパク質', '脂質', '炭水化物'];
-// const labelMacros = ['Calorie', 'Protein', 'Fat', 'Carbo'];
 
 const labelVitamins = [
   'ビタミンA',
@@ -337,7 +330,7 @@ const labelMinerals = [
   'モリブデン',
 ];
 
-// const labelMacros = ['Calorie', 'Protein', 'Fat', 'Carbo'];
+// const labelMacros = ['エネルギー', 'タンパク質', '脂質', '炭水化物'];
 
 // const labelVitamins = [
 //   'Vitamin A', 'Vitamin D', 'Vitamin E', 'Vitamin K',
@@ -360,14 +353,20 @@ const colorAccent = {
   alpha10: 'rgba(245, 245, 246, 1)',
 };
 
+const colorPrimary = {
+  alpha8: 'rgba(44, 76, 107, 0.8)',
+};
+
+// データセット
 const barChartAchv = {
   label: '摂取達成率',
   // dataキーはthis.$setで追加するため書かない
-  backgroundColor: 'rgba(44, 76, 107, 0.8)',
+  backgroundColor: colorPrimary['alpha8'],
   borderColor: colorAccent['alpha3'],
   borderWidth: 1,
   categoryPercentage: 0.7,
 };
+
 const barChartUnachv = {
   label: '摂取未達成率率',
   // dataキーはthis.$setで追加するため書かない
@@ -376,6 +375,17 @@ const barChartUnachv = {
   borderWidth: 1,
   categoryPercentage: 0.7,
 };
+
+// vitaminとmineralで同一オブジェクトを元にするためシャローコピー
+const vitaminDatasets = [
+  Object.assign({}, barChartAchv),
+  Object.assign({}, barChartUnachv),
+];
+
+const mineralDatasets = [
+  Object.assign({}, barChartAchv),
+  Object.assign({}, barChartUnachv),
+];
 </script>
 
 <style scoped>

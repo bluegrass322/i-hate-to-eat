@@ -55,9 +55,7 @@
               align-start
             "
           >
-            <div
-              class="item-title d-flex align-end accent--text ma-0 pa-0 mb-5"
-            >
+            <div class="item-title d-flex align-end accent--text pa-0 mb-5">
               あなたの栄養摂取基準
               <div class="under-line line-right" />
             </div>
@@ -106,23 +104,23 @@ export default {
 
           const r = res.data;
           this.dispatchBmr(r.bmr_params);
-          this.dispatchPfc(r.pfc_params);
           this.dispatchDri(r.dri_params);
+          // this.dispatchPfc(r.pfc_params);
         })
         .catch((e) => {
           console.log(e.response.status);
         });
     },
     dispatchBmr(params) {
-      this.$store.dispatch('bmrParams/setAttributes', params);
-    },
-    dispatchPfc(params) {
-      this.$store.dispatch('pfcBalance/setAttributes', params);
+      this.$store.dispatch('bmrParams/setStates', params);
     },
     dispatchDri(params) {
-      this.$store.dispatch('referenceIntakes/setAttributes', params);
+      this.$store.dispatch('referenceIntakes/setStates', params);
     },
-    // TODO: 要リファクタリング
+    // 現時点では未使用のため一旦コメントアウト
+    // dispatchPfc(params) {
+    //   this.$store.dispatch('pfcBalance/setStates', params);
+    // },
     updateBmrAndReference() {
       this.axios
         .patch('/api/v1/bmr', { user: this.$store.state.bmrParams.user })
@@ -130,46 +128,23 @@ export default {
           console.log(res.status);
 
           this.$store.commit('bmrParams/updateBmr', res.data.bmr);
-          this.dispatchPfc(res.data.pfc_params);
 
-          // TODO: genderまたはbirthの値に変更がある時のみ実行するよう
-          this.updateReferenceIntake();
-        })
-        .catch((error) => {
-          let e = error.response;
-          console.error(e.status);
-
-          if (e.data.errors) {
-            this.railsErrors.errorMessages = e.data.errors;
-          }
-          if (this.railsErrors.errorMessages.length != 0) {
-            this.railsErrors.show = true;
-            setTimeout(() => {
-              this.railsErrors.show = false;
-            }, 5000);
-          }
-        });
-    },
-    updateReferenceIntake() {
-      this.axios
-        .patch('/api/v1/users_dietary_reference_intake')
-        .then((res) => {
-          console.log(res.status);
-
+          const dri = JSON.parse(res.data.dri);
           this.$store.dispatch(
-            'referenceIntakes/setAttributes',
-            res.data.data.attributes
+            'referenceIntakes/setStates',
+            dri.data.attributes
           );
+
+          // this.dispatchPfc(res.data.pfc_params);
         })
         .catch((error) => {
-          let e = error.response;
-          console.error(e.status);
+          console.error(error.response.status);
 
-          if (e.data.errors) {
-            this.railsErrors.errorMessages = e.data.errors;
-          }
-          if (this.railsErrors.errorMessages.length != 0) {
+          let e = error.response.data.errors;
+          if (e && e.length != 0) {
+            this.railsErrors.errorMessages = e;
             this.railsErrors.show = true;
+
             setTimeout(() => {
               this.railsErrors.show = false;
             }, 5000);

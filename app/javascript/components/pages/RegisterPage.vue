@@ -7,9 +7,8 @@
           align-end
           text-subtitle-1 text-sm-h6
           accent--text
-          ma-0
-          pa-0
           mb-5
+          pa-0
         "
       >
         新規ユーザー登録
@@ -151,18 +150,18 @@ export default {
   data() {
     return {
       user: {
-        name: '',
-        email: '',
-        gender: '',
-        birth: '',
-        password: '',
-        password_confirmation: '',
+        name: null,
+        email: null,
+        gender: null,
+        birth: null,
+        password: null,
+        password_confirmation: null,
       },
       birthInput: false,
       railsErrors: {
         show: false,
-        message: '',
-        errorMessages: [],
+        message: null,
+        errorMessages: null,
       },
     };
   },
@@ -189,14 +188,13 @@ export default {
           this.$router.push({ name: 'MyPageSetting' });
         })
         .catch((error) => {
-          let e = error.response;
-          console.error(e.status);
+          console.error(error.response.status);
 
-          if (e.data.errors) {
-            this.railsErrors.errorMessages = e.data.errors;
-          }
-          if (this.railsErrors.errorMessages.length != 0) {
+          let e = error.response.data.errors;
+          if (e && e.length != 0) {
+            this.railsErrors.errorMessages = e;
             this.railsErrors.show = true;
+
             setTimeout(() => {
               this.railsErrors.show = false;
             }, 5000);
@@ -243,8 +241,8 @@ export default {
 
 /* アイコン・入力値含むテキストフィールド */
 .v-text-field.form-item >>> .v-input__slot {
-  padding: 0 10px 0 0 !important;
   color: rgba(90, 120, 153, 1) !important;
+  padding: 0 10px 0 0 !important;
 }
 
 /* prepend-inner-icon */
@@ -256,8 +254,8 @@ export default {
 
 /* outlinedの場合 */
 .v-text-field.form-item >>> .v-input__slot {
-  border-radius: 0;
   border: 1px solid rgb(245, 245, 246);
+  border-radius: 0;
 }
 
 .captions {

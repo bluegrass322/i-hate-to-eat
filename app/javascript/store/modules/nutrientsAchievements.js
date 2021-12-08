@@ -1,43 +1,43 @@
 const state = {
   macro: {
-    calorie: { label: 'カロリー', total: '', unit: 'kcal', achv: '' },
-    protein: { label: 'タンパク質', total: '', unit: 'g', achv: '' },
-    fat: { label: '脂質', total: '', unit: 'g', achv: '' },
-    carbohydrate: { label: '炭水化物', total: '', unit: 'g', achv: '' },
+    calorie: { label: 'カロリー', total: null, unit: 'kcal', achv: null },
+    protein: { label: 'タンパク質', total: null, unit: 'g', achv: null },
+    fat: { label: '脂質', total: null, unit: 'g', achv: null },
+    carbohydrate: { label: '炭水化物', total: null, unit: 'g', achv: null },
   },
   vitamins: {
-    vitamin_a: { label: 'ビタミンA', total: '', unit: 'μgRAE', achv: '' },
-    vitamin_d: { label: 'ビタミンD', total: '', unit: 'μg', achv: '' },
-    vitamin_e: { label: 'ビタミンE', total: '', unit: 'mg', achv: '' },
-    vitamin_k: { label: 'ビタミンK', total: '', unit: 'μg', achv: '' },
-    vitamin_b1: { label: 'ビタミンB1', total: '', unit: 'mg', achv: '' },
-    vitamin_b2: { label: 'ビタミンB2', total: '', unit: 'mg', achv: '' },
-    niacin: { label: 'ナイアシン', total: '', unit: 'mgNE', achv: '' },
-    vitamin_b6: { label: 'ビタミンB6', total: '', unit: 'mg', achv: '' },
-    vitamin_b12: { label: 'ビタミンB12', total: '', unit: 'μg', achv: '' },
-    folate: { label: '葉酸', total: '', unit: 'μg', achv: '' },
+    vitamin_a: { label: 'ビタミンA', total: null, unit: 'μgRAE', achv: null },
+    vitamin_d: { label: 'ビタミンD', total: null, unit: 'μg', achv: null },
+    vitamin_e: { label: 'ビタミンE', total: null, unit: 'mg', achv: null },
+    vitamin_k: { label: 'ビタミンK', total: null, unit: 'μg', achv: null },
+    vitamin_b1: { label: 'ビタミンB1', total: null, unit: 'mg', achv: null },
+    vitamin_b2: { label: 'ビタミンB2', total: null, unit: 'mg', achv: null },
+    niacin: { label: 'ナイアシン', total: null, unit: 'mgNE', achv: null },
+    vitamin_b6: { label: 'ビタミンB6', total: null, unit: 'mg', achv: null },
+    vitamin_b12: { label: 'ビタミンB12', total: null, unit: 'μg', achv: null },
+    folate: { label: '葉酸', total: null, unit: 'μg', achv: null },
     pantothenic_acid: {
       label: 'パントテン酸',
-      total: '',
+      total: null,
       unit: 'mg',
-      achv: '',
+      achv: null,
     },
-    biotin: { label: 'ビオチン', total: '', unit: 'μg', achv: '' },
-    vitamin_c: { label: 'ビタミンC', total: '', unit: 'mg', achv: '' },
+    biotin: { label: 'ビオチン', total: null, unit: 'μg', achv: null },
+    vitamin_c: { label: 'ビタミンC', total: null, unit: 'mg', achv: null },
   },
   minerals: {
-    potassium: { label: 'カリウム', total: '', unit: 'mg', achv: '' },
-    calcium: { label: 'カルシウム', total: '', unit: 'mg', achv: '' },
-    magnesium: { label: 'マグネシウム', total: '', unit: 'mg', achv: '' },
-    phosphorus: { label: 'リン', total: '', unit: 'mg', achv: '' },
-    iron: { label: '鉄', total: '', unit: 'mg', achv: '' },
-    zinc: { label: '亜鉛', total: '', unit: 'mg', achv: '' },
-    copper: { label: '銅', total: '', unit: 'mg', achv: '' },
-    manganese: { label: 'マンガン', total: '', unit: 'mg', achv: '' },
-    iodine: { label: 'ヨウ素', total: '', unit: 'μg', achv: '' },
-    selenium: { label: 'セレン', total: '', unit: 'μg', achv: '' },
-    chromium: { label: 'クロム', total: '', unit: 'μg', achv: '' },
-    molybdenum: { label: 'モリブデン', total: '', unit: 'μg', achv: '' },
+    potassium: { label: 'カリウム', total: null, unit: 'mg', achv: null },
+    calcium: { label: 'カルシウム', total: null, unit: 'mg', achv: null },
+    magnesium: { label: 'マグネシウム', total: null, unit: 'mg', achv: null },
+    phosphorus: { label: 'リン', total: null, unit: 'mg', achv: null },
+    iron: { label: '鉄', total: null, unit: 'mg', achv: null },
+    zinc: { label: '亜鉛', total: null, unit: 'mg', achv: null },
+    copper: { label: '銅', total: null, unit: 'mg', achv: null },
+    manganese: { label: 'マンガン', total: null, unit: 'mg', achv: null },
+    iodine: { label: 'ヨウ素', total: null, unit: 'μg', achv: null },
+    selenium: { label: 'セレン', total: null, unit: 'μg', achv: null },
+    chromium: { label: 'クロム', total: null, unit: 'μg', achv: null },
+    molybdenum: { label: 'モリブデン', total: null, unit: 'μg', achv: null },
   },
 };
 
@@ -50,19 +50,19 @@ const getters = {
 const mutations = {
   setMacro(state, { total, achv }) {
     Object.keys(state.macro).forEach((key) => {
-      state.macro[key].total = Math.trunc(total[key]);
+      state.macro[key].total = Math.trunc(total[key]); // 少数は切り捨て
       state.macro[key].achv = achv[key];
     });
   },
   setVitamins(state, { total, achv }) {
     Object.keys(state.vitamins).forEach((key) => {
-      state.vitamins[key].total = trunc2ndDec(total[key]);
+      state.vitamins[key].total = trunc2ndDec(total[key]); // 小数第3位以下は切り捨て
       state.vitamins[key].achv = achv[key];
     });
   },
   setMinerals(state, { total, achv }) {
     Object.keys(state.minerals).forEach((key) => {
-      state.minerals[key].total = trunc2ndDec(total[key]);
+      state.minerals[key].total = trunc2ndDec(total[key]); // 小数第3位以下は切り捨て
       state.minerals[key].achv = achv[key];
     });
   },
@@ -84,7 +84,7 @@ export default {
   actions,
 };
 
-// 小数第二位以下切り捨て用の関数
+// 小数第3位以下切り捨て
 const trunc2ndDec = (original) => {
   let midCalc = original * 100;
   midCalc = Math.trunc(midCalc);

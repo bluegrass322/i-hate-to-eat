@@ -3,6 +3,7 @@ import VueRouter from 'vue-router';
 import VueGtag from 'vue-gtag';
 import store from '../store/index';
 
+// 各ページ
 import AboutServicePage from '../components/pages/AboutServicePage';
 import HomePage from '../components/pages/HomePage';
 import LoginPage from '../components/pages/LoginPage';
@@ -23,6 +24,7 @@ Vue.use(VueRouter);
 const router = new VueRouter({
   mode: 'history',
   routes: [
+    // 以下、パブリックページ
     {
       path: '/',
       component: TopPage,
@@ -101,7 +103,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  // isPublicでない=ログインが必要なページの場合
+  // !isPublic == 要ログインページの場合
   if (to.matched.some((record) => !record.meta.isPublic)) {
     // かつログインしていない場合
     if (!store.state.authUser.isLoggedIn) {

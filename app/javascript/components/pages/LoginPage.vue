@@ -7,12 +7,11 @@
           align-end
           text-subtitle-1 text-sm-h6
           accent--text
-          ma-0
-          pa-0
           mb-5
+          pa-0
         "
       >
-        新規ユーザー登録
+        ログイン
         <div class="under-line line-right" />
       </div>
     </div>
@@ -92,12 +91,12 @@ import { getToday } from '../../plugins/get-timezone-today';
 export default {
   data() {
     return {
-      name: '',
-      password: '',
+      name: null,
+      password: null,
       railsErrors: {
         show: false,
-        message: '',
-        errorMessages: [],
+        message: null,
+        errorMessages: null,
       },
     };
   },
@@ -121,17 +120,16 @@ export default {
             message: 'ログインしました',
           });
 
-          this.$router.push({ name: 'HomePage' });
+          this.$router.push({ name: 'MealSuggestionPage' });
         })
         .catch((error) => {
-          let e = error.response;
-          console.error(e.status);
+          console.error(error.response.status);
 
-          if (e.data.errors) {
-            this.railsErrors.errorMessages = e.data.errors;
-          }
-          if (this.railsErrors.errorMessages.length != 0) {
+          let e = error.response.data.errors;
+          if (e && e.length != 0) {
+            this.railsErrors.errorMessages = e;
             this.railsErrors.show = true;
+
             setTimeout(() => {
               this.railsErrors.show = false;
             }, 5000);
@@ -180,8 +178,8 @@ export default {
 
 /* アイコン・入力値含むテキストフィールド */
 .v-text-field.form-item >>> .v-input__slot {
-  padding: 0 10px 0 0 !important;
   color: rgba(90, 120, 153, 1) !important;
+  padding: 0 10px 0 0 !important;
 }
 
 /* prepend-inner-icon */
@@ -193,7 +191,7 @@ export default {
 
 /* outlinedの場合 */
 .v-text-field.form-item >>> .v-input__slot {
-  border-radius: 0;
   border: 1px solid rgb(245, 245, 246);
+  border-radius: 0;
 }
 </style>
