@@ -46,7 +46,7 @@ module Line
         line_id = linkevent["source"]["userId"]
 
         # 既に同じLINE IDが登録されているかチェック
-        if User.where(line_user_id: line_id).present?
+        if User.exists?(line_user_id: line_id)
           linking_user.update!(line_nonce: nil)
           return set_reply_text("すでに同じLINE-IDが登録されています")
         end
