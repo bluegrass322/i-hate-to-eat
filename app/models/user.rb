@@ -90,7 +90,7 @@ class User < ApplicationRecord
     text << "\n\n計 #{total_cal} / #{bmr.floor}kcal が摂取できます"
   end
 
-  def set_mypage_params
+  def mypage_params
     {
       bmr_params: set_attributes_for_bmr,
       pfc_params: set_attributes_for_pfc,
