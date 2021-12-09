@@ -13,7 +13,7 @@ module Api
         meals = current_user.suggested_foods
 
         if meals.present?
-          response = set_suggestions_response(current_user, meals)
+          response = suggestions_response(current_user, meals)
           render json: response
         else
           head :not_found
@@ -31,7 +31,7 @@ module Api
       def update
         destroy_suggestions_all(current_user) if current_user.suggestions.present?
         meals = create_suggestions(current_user)
-        response = set_suggestions_response(current_user, meals)
+        response = suggestions_response(current_user, meals)
 
         if response.present?
           render json: response
@@ -46,7 +46,7 @@ module Api
           render500(nil, "本日は既に食事をとっています") if current_user.meal_records.for_today.present?
         end
 
-        def set_suggestions_response(user, meals)
+        def suggestions_response(user, meals)
           total = intake_total(meals)
           achv = intake_achievement(user, total)
 
