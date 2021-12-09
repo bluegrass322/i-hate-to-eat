@@ -15,7 +15,7 @@ module Api
           record_data = { foods: foods }
 
           achv = intake_achievement(current_user, record)
-          chart_data = get_chart_data(achv)
+          chart_data = charts_data(achv)
           record_data = record_data.merge(chart_data)
 
           response["record"] = record_data
@@ -25,15 +25,15 @@ module Api
 
       private
 
-        def get_chart_data(achv)
-          macro = get_radarchart_data(achv)
-          vitamin = get_barchart_data(vitamins_label, achv)
-          mineral = get_barchart_data(minerals_label, achv)
+        def charts_data(achv)
+          macro = radarchart_data(achv)
+          vitamin = barchart_data(vitamins_label, achv)
+          mineral = barchart_data(minerals_label, achv)
 
           { macros: macro, vitamins: vitamin, minerals: mineral }
         end
 
-        def get_radarchart_data(achv)
+        def radarchart_data(achv)
           data = %w[calorie protein fat carbohydrate]
           data.map do |d|
             achv[d]
@@ -41,8 +41,9 @@ module Api
         end
 
         # TODO: 要リファクタリング
-        def get_barchart_data(labels, achv)
+        def barchart_data(labels, achv)
           achieve = labels.map { |l| achv[l] }
+
           unachieve = achieve.map do |a|
             result = 100 - a
             if result.negative?
