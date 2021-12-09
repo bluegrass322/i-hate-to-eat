@@ -14,7 +14,7 @@ module Api
           foods = record.recorded_foods.pluck(:id, :name, :subname, :reference_amount)
           record_data = { foods: foods }
 
-          achv = get_achievement(current_user, record)
+          achv = intake_achievement(current_user, record)
           chart_data = get_chart_data(achv)
           record_data = record_data.merge(chart_data)
 

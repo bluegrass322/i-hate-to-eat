@@ -36,7 +36,7 @@ module MealRecordCreatable
     end
 
     def create_meal_record(user, foods)
-      params = get_intake_total(foods)
+      params = intake_total(foods)
 
       rec = user.meal_records.build(ate_at: Time.current)
       rec.assign_attributes(params)

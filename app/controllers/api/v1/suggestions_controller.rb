@@ -47,8 +47,8 @@ module Api
         end
 
         def set_suggestions_response(user, meals)
-          total = get_intake_total(meals)
-          achv = get_achievement(user, total)
+          total = intake_total(meals)
+          achv = intake_achievement(user, total)
 
           { meals: meals, total: total, achv: achv }
         end
