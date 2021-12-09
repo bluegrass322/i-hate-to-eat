@@ -7,7 +7,8 @@ module Api
 
       def update
         assign_params(current_user)
-        dri = set_dri(current_user)
+        dri = dietary_reference_intake_for(current_user)
+        current_user.dietary_reference_intake_id = dri.id
 
         if current_user.save
           serialized_dri = DietaryReferenceIntakeSerializer.new(dri).serialized_json
@@ -27,13 +28,6 @@ module Api
         def assign_params(user)
           user.assign_attributes(bmr_params)
           user.bmr = user.calc_bmr.floor
-        end
-
-        def set_dri(user)
-          dri = set_reference_intake(user)
-          user.dietary_reference_intake_id = dri.id
-
-          dri
         end
     end
   end
