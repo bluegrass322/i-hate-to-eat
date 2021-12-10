@@ -49,7 +49,7 @@ module Line
         when "アカウント連携解除"
           disconnecting_accounts(user)
         when "BMR確認"
-          confirm_bmr_pfc(user)
+          BmrAndPfcReplier.call(user)
         when "今日の食材"
           suggested_foods_for_today(user)
         when "食べない"
@@ -155,26 +155,6 @@ module Line
 
         client.push_message(to_id, message)
       end      
-
-
-      # ユーザーのBMR/PFC情報を返答
-      # def confirm_bmr_pfc(user)
-      #   pfc = user.attributes_pfc[:amt]
-      #   text = "#{user.name}さん \n\n" +
-      #           "BMR: #{user.bmr}kcal \n" +
-      #           "P: #{pfc[:protein]}g \n" +
-      #           "F: #{pfc[:fat]}g \n" +
-      #           "C: #{pfc[:carbohydrate]}g"
-
-      #   reply_text(text)
-      # end
-
-      # def confirm_health_savings(user)
-      #   total = user.health_savings
-      #   text = "現在の健康貯金総額\n" + "¥#{total}"
-
-      #   reply_text(text)
-      # end
 
       def suggested_foods_for_today(user)
         text = user.make_meal_menu_for_line
