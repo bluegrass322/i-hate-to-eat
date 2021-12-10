@@ -7,7 +7,7 @@ module Line
     include SuggestionsDestroyable
 
     # TODO: もう少しスマートな方法はないか？
-    require "./app/lib/linebot/linebot_base"
+    require "./lib/linebot/linebot_base"
     Dir[Rails.root.join("app", "lib", "linebot", "*.rb")].each {|file| require file }
 
     def callback
