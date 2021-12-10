@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class HealthSavingsReplier < LinebotBase
   def self.call(user)
     new(user).call
@@ -21,6 +23,6 @@ class HealthSavingsReplier < LinebotBase
     end
 
     def textualize(total)
-      "現在の健康貯金総額\n" + "¥#{total}"
+      "現在の健康貯金総額\n¥#{total}"
     end
 end
