@@ -34,6 +34,10 @@ Layout/LineLength:
   Exclude:
     - 'config/**/*'
 
+Lint/MissingSuper:
+  Exclude:
+    - 'app/lib/linebot/**/*'
+
 Layout/IndentationConsistency:
   EnforcedStyle: indented_internal_methods
 
