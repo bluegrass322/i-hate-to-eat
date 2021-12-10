@@ -23,10 +23,10 @@ class BmrAndPfcReplier < LinebotBase
     end
 
     def textualize(amount)
-      "#{@user.name}さん \n\n" +
-      "BMR: #{@user.bmr}kcal \n" +
-      "P: #{amount[:protein]}g \n" +
-      "F: #{amount[:fat]}g \n" +
-      "C: #{amount[:carbohydrate]}g"
+      "#{@user.name}さん \n\n" \
+        "BMR: #{@user.bmr}kcal \n" \
+        "P: #{amount[:protein]}g \n" \
+        "F: #{amount[:fat]}g \n" \
+        "C: #{amount[:carbohydrate]}g"
     end
 end
