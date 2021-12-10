@@ -98,7 +98,7 @@ class User < ApplicationRecord
     }
   end
 
-  def set_account_params
+  def account_params
     {
       name: name,
       email: email,

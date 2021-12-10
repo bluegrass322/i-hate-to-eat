@@ -4,7 +4,7 @@ module Api
   module V1
     class UserAccountsController < Api::V1::BaseController
       def show
-        attributes = current_user.set_account_params
+        attributes = current_user.account_params
         render json: attributes
       end
 
