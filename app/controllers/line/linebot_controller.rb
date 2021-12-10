@@ -7,8 +7,8 @@ module Line
     include SuggestionsDestroyable
 
     # TODO: もう少しスマートな方法はないか？
-    require Rails.root.join("app", "lib", "linebot", "linebot_base")
-    Dir[Rails.root.join("app", "lib", "linebot", "*")].each {|file| require file }
+    require "./../../lib/linebot/linebot_base"
+    Dir[Rails.root.join(".", "..", "..", "lib", "linebot", "*")].each {|file| require file }
 
     def callback
       # 送られてきたデータをrubyが扱いやすいよう変換
@@ -158,16 +158,16 @@ module Line
 
 
       # ユーザーのBMR/PFC情報を返答
-      def confirm_bmr_pfc(user)
-        pfc = user.set_attributes_for_pfc[:amt]
-        text = "#{user.name}さん \n\n" +
-                "BMR: #{user.bmr}kcal \n" +
-                "P: #{pfc[:protein]}g \n" +
-                "F: #{pfc[:fat]}g \n" +
-                "C: #{pfc[:carbohydrate]}g"
+      # def confirm_bmr_pfc(user)
+      #   pfc = user.attributes_pfc[:amt]
+      #   text = "#{user.name}さん \n\n" +
+      #           "BMR: #{user.bmr}kcal \n" +
+      #           "P: #{pfc[:protein]}g \n" +
+      #           "F: #{pfc[:fat]}g \n" +
+      #           "C: #{pfc[:carbohydrate]}g"
 
-        reply_text(text)
-      end
+      #   reply_text(text)
+      # end
 
       # def confirm_health_savings(user)
       #   total = user.health_savings
