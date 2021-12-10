@@ -92,8 +92,8 @@ class User < ApplicationRecord
 
   def mypage_params
     {
-      bmr_params: set_attributes_for_bmr,
-      pfc_params: set_attributes_for_pfc,
+      bmr_params: attributes_bmr,
+      pfc_params: attributes_pfc,
       dri_params: dietary_reference_intake
     }
   end
@@ -107,7 +107,7 @@ class User < ApplicationRecord
     }
   end
 
-  def set_attributes_for_pfc
+  def attributes_pfc
     { pct: { protein: percentage_protein,
              fat: percentage_fat,
              carbohydrate: percentage_carbohydrate },
@@ -162,7 +162,7 @@ class User < ApplicationRecord
       new_record? || changes[:crypted_password]
     end
 
-    def set_attributes_for_bmr
+    def attributes_bmr
       {
         gender: gender,
         birth: birth,

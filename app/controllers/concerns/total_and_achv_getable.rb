@@ -4,7 +4,7 @@ module TotalAndAchvGetable
   extend ActiveSupport::Concern
 
   def intake_achievement(user, total)
-    pfc = user.set_attributes_for_pfc[:amt]
+    pfc = user.attributes_pfc[:amt]
 
     achv = IntakeAchievement.new
     achv.calc_intake_achievement(total, user.bmr, pfc, user.dietary_reference_intake)

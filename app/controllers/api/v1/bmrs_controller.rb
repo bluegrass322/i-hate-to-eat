@@ -13,7 +13,7 @@ module Api
         if current_user.save
           serialized_dri = DietaryReferenceIntakeSerializer.new(dri).serialized_json
 
-          render json: { bmr: current_user.bmr, pfc_params: current_user.set_attributes_for_pfc, dri: serialized_dri }
+          render json: { bmr: current_user.bmr, pfc_params: current_user.attributes_pfc, dri: serialized_dri }
         else
           render400(nil, current_user.errors.full_messages)
         end
