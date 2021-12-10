@@ -51,7 +51,7 @@ module Line
         when "BMR確認"
           BmrAndPfcReplier.call(user)
         when "今日の食材"
-          suggested_foods_for_today(user)
+          SuggestionsReplier.call(user)
         when "食べない"
           donot_eat_meals(user)
         when "食べる"
@@ -154,11 +154,6 @@ module Line
         }
 
         client.push_message(to_id, message)
-      end      
-
-      def suggested_foods_for_today(user)
-        text = user.make_meal_menu_for_line
-        reply_text(text)
       end
   end
 end
