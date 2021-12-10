@@ -7,8 +7,8 @@ module Line
     include SuggestionsDestroyable
 
     # TODO: もう少しスマートな方法はないか？
-    require_relative "../../lib/linebot/linebot_base"
-    Dir[Rails.root.join("..", "..", "lib", "linebot", "*")].each {|file| require_relative file }
+    require_relative "./../../lib/linebot/linebot_base"
+    Dir[Rails.root.join(".", "..", "..", "lib", "linebot", "*")].each {|file| require_relative file }
 
     def callback
       # 送られてきたデータをrubyが扱いやすいよう変換
