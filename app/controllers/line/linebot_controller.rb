@@ -47,7 +47,7 @@ module Line
 
         case event.message["text"]
         when "アカウント連携解除"
-          disconnecting_accounts(user)
+          AccountLinkingRemover.call(user)
         when "BMR確認"
           BmrAndPfcReplier.call(user)
         when "今日の食材"
@@ -94,12 +94,6 @@ module Line
 
         push_linking_complete_message(linking_user)
         reply_text("アカウントの連携が完了しました")
-      end
-
-      # LINEアカウント連携解除
-      def disconnecting_accounts(user)
-        user.update!(line_user_id: nil)
-        reply_text("LINEアカウントの連携を解除しました")
       end
 
       def donot_eat_meals(user)
