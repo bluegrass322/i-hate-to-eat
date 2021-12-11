@@ -38,6 +38,30 @@ module Line
 
     private
 
+      # Event::Messageのテキストの内容により処理を振り分ける
+      def reply_text_message(event)
+        user = User.find_by(line_user_id: event["source"]["userId"])
+        return reply_user_not_found if user.blank?
+
+        case event.message["text"]
+        when "アカウント連携解除"
+          AccountLinkingRemover.call(user)
+        when "BMR確認"
+          BmrAndPfcReplier.call(user)
+        when "今日の食材"
+          SuggestionsReplier.call(user)
+        when "食べない"
+          donot_eat_meals(user)
+        when "食べる"
+          eat_meals(user)
+        when "健康貯金"
+          HealthSavingsReplier.call(user)
+        else
+          # 所定の文言以外にはエラーメッセージを返す
+          set_reply_text("ちょっと何言ってるかわからない")
+        end
+      end
+
       # LINEアカウント連携 5. アカウントを連携する
       def complete_linking_account(linkevent)
         nonce = linkevent.nonce.to_s
@@ -56,12 +80,6 @@ module Line
         linking_user.update!(line_user_id: line_id, line_nonce: nil)
         push_linking_complete_message(linking_user)
         set_reply_text("アカウントの連携が完了しました")
-      end
-
-      # LINEアカウント連携解除
-      def disconnecting_accounts(user)
-        user.update!(line_user_id: nil)
-        set_reply_text("LINEアカウントの連携を解除しました")
       end
 
       def donot_eat_meals(user)
@@ -91,30 +109,6 @@ module Line
         }
 
         client.push_message(to_id, message)
-      end
-
-      # Event::Messageのテキストの内容により処理を振り分ける
-      def reply_text_message(event)
-        user = User.find_by(line_user_id: event["source"]["userId"])
-        return reply_user_not_found if user.blank?
-
-        case event.message["text"]
-        when "アカウント連携解除"
-          disconnecting_accounts(user)
-        when "BMR確認"
-          BmrAndPfcReplier.call(user)
-        when "今日の食材"
-          SuggestionsReplier.call(user)
-        when "食べない"
-          donot_eat_meals(user)
-        when "食べる"
-          eat_meals(user)
-        when "健康貯金"
-          HealthSavingsReplier.call(user)
-        else
-          # 所定の文言以外にはエラーメッセージを返す
-          set_reply_text("ちょっと何言ってるかわからない")
-        end
       end
 
       # アカウント連携用URIの生成
