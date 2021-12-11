@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require "./app/lib/common/module/notificatable_to_admin"
+require "./app/lib/common/notificatable_to_admin"
 
 class LinebotBase
   include Common::NotificatableToAdmin
