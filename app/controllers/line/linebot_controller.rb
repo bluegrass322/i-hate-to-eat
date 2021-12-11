@@ -3,6 +3,11 @@ module Line
     # LINEからのPOSTはprotect_from_forgeryを通過できない
     protect_from_forgery except: :callback
 
+    require "./app/lib/linebot/linebot_base"
+    require "./app/lib/linebot/bmr_and_pfc_replier"
+    require "./app/lib/linebot/health_savings_replier"
+    require "./app/lib/linebot/suggestions_replier"
+
     include MealRecordCreatable
     include SuggestionsDestroyable
 
@@ -100,15 +105,15 @@ module Line
         when "アカウント連携解除"
           disconnecting_accounts(user)
         when "BMR確認"
-          set_users_bmr_pfc(user)
+          BmrAndPfcReplier.call(user)
         when "今日の食材"
-          set_users_suggested_foods(user)
+          SuggestionsReplier.call(user)
         when "食べない"
           donot_eat_meals(user)
         when "食べる"
           eat_meals(user)
         when "健康貯金"
-          set_users_health_savings(user)
+          HealthSavingsReplier.call(user)
         else
           # 所定の文言以外にはエラーメッセージを返す
           set_reply_text("ちょっと何言ってるかわからない")
@@ -147,30 +152,6 @@ module Line
       # 汎用：テキストメッセージの作成
       def set_reply_text(text)
         { type: 'text', text: text }
-      end
-
-      # ユーザーのBMR/PFC情報を返答
-      def set_users_bmr_pfc(user)
-        pfc = user.set_attributes_for_pfc[:amt]
-        text = "#{user.name}さん \n\n" +
-                "BMR: #{user.bmr}kcal \n" +
-                "P: #{pfc[:protein]}g \n" +
-                "F: #{pfc[:fat]}g \n" +
-                "C: #{pfc[:carbohydrate]}g"
-
-        set_reply_text(text)
-      end
-
-      def set_users_health_savings(user)
-        total = user.health_savings
-        text = "現在の健康貯金総額\n" + "¥#{total}"
-
-        set_reply_text(text)
-      end
-
-      def set_users_suggested_foods(user)
-        text = user.make_meal_menu_for_line
-        set_reply_text(text)
       end
   end
 end
