@@ -3,10 +3,7 @@ module Line
     # LINEからのPOSTはprotect_from_forgeryを通過できない
     protect_from_forgery except: :callback
 
-    require "./app/lib/linebot/linebot_base"
-    require "./app/lib/linebot/bmr_and_pfc_replier"
-    require "./app/lib/linebot/health_savings_replier"
-    require "./app/lib/linebot/suggestions_replier"
+    Dir[Rails.root.join(".", "app", "lib", "linebot", "*")].each {|file| require_relative file }
 
     include MealRecordCreatable
     include SuggestionsDestroyable
