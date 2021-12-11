@@ -22,9 +22,7 @@ module Line
         uri = URI("https://access.line.me/dialog/bot/accountLink")
         uri.query = URI.encode_www_form({ linkToken: link_token, nonce: nonce })
 
-        redirect_to uri
-
-        # redirect_to "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}"
+        redirect_to uri.to_s
       else
         flash.now[:danger] = "ログイン失敗"
         render :link
