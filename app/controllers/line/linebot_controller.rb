@@ -6,10 +6,6 @@ module Line
     include MealRecordCreatable
     include SuggestionsDestroyable
 
-    # TODO: もう少しスマートな方法はないか？
-    require_relative "./../../lib/linebot/linebot_base"
-    Dir[Rails.root.join(".", "..", "..", "lib", "linebot", "*")].each {|file| require_relative file }
-
     def callback
       # 送られてきたデータをrubyが扱いやすいよう変換
       events = client.parse_events_from(@body)
@@ -21,14 +17,14 @@ module Line
           message = if event.result == "ok"
                       complete_linking_account(event)
                     else
-                      reply_text("アカウントの連携に失敗しました")
+                      set_reply_text("アカウントの連携に失敗しました")
                     end
         when Line::Bot::Event::Follow
           message = reply_url_for_linking(event["source"]["userId"])
         when Line::Bot::Event::Message
           case event.type
           when Line::Bot::Event::MessageType::Text
-            message = reply_to_text_message(event)
+            message = reply_text_message(event)
           end
         end
         client.reply_message(event['replyToken'], message) if message
@@ -40,75 +36,45 @@ module Line
 
     private
 
-      # Event::Messageのテキストの内容により処理を振り分ける
-      def reply_to_text_message(event)
-        user = User.find_by(line_user_id: event["source"]["userId"])
-        return reply_user_not_found if user.blank?
-
-        case event.message["text"]
-        when "アカウント連携解除"
-          AccountLinkingRemover.call(user)
-        when "BMR確認"
-          BmrAndPfcReplier.call(user)
-        when "今日の食材"
-          SuggestionsReplier.call(user)
-        when "食べない"
-          donot_eat_meals(user)
-        when "食べる"
-          eat_meals(user)
-        when "健康貯金"
-          HealthSavingsReplier.call(user)
-          # confirm_health_savings(user)
-        else
-          # 所定の文言以外にはエラーメッセージを返す
-          reply_text("ちょっと何言ってるかわからない")
-        end
-      end
-
-      # 汎用：ユーザー取得失敗メッセージ
-      def reply_user_not_found
-        { type: 'text', text: "ユーザーの取得に失敗しました" }
-      end
-
-      # 汎用：テキストメッセージの作成
-      def reply_text(text)
-        { type: 'text', text: text }
-      end
-
       # LINEアカウント連携 5. アカウントを連携する
       def complete_linking_account(linkevent)
         nonce = linkevent.nonce.to_s
         linking_user = User.find_by(line_nonce: nonce)
 
-        return reply_text("対象のユーザーが見つかりませんでした") unless linking_user
+        return set_reply_text("対象のユーザーが見つかりませんでした") unless linking_user
 
         line_id = linkevent["source"]["userId"]
 
         # 既に同じLINE IDが登録されているかチェック
-        if User.exists?(line_user_id: line_id)
+        if User.where(line_user_id: line_id).present?
           linking_user.update!(line_nonce: nil)
-          return reply_text("すでに同じLINE-IDが登録されています")
+          return set_reply_text("すでに同じLINE-IDが登録されています")
         end
 
         linking_user.update!(line_user_id: line_id, line_nonce: nil)
-
         push_linking_complete_message(linking_user)
-        reply_text("アカウントの連携が完了しました")
+        set_reply_text("アカウントの連携が完了しました")
+      end
+
+      # LINEアカウント連携解除
+      def disconnecting_accounts(user)
+        user.update!(line_user_id: nil)
+        set_reply_text("LINEアカウントの連携を解除しました")
       end
 
       def donot_eat_meals(user)
         if destroy_suggestions_all(user)
-          reply_text("了解しました")
+          set_reply_text("了解しました")
         else
-          reply_text("提案の削除処理に失敗しました")
+          set_reply_text("提案の削除処理に失敗しました")
         end
       end
 
       def eat_meals(user)
         if make_record_from_suggestion(user)
-          reply_text("great!!")
+          set_reply_text("great!!")
         else
-          reply_text("既に登録済みか、または何らかの原因により登録処理に失敗しました")
+          set_reply_text("既に登録済みか、または何らかの原因により登録処理に失敗しました")
         end
       end
 
@@ -123,6 +89,30 @@ module Line
         }
 
         client.push_message(to_id, message)
+      end
+
+      # Event::Messageのテキストの内容により処理を振り分ける
+      def reply_text_message(event)
+        user = User.find_by(line_user_id: event["source"]["userId"])
+        return reply_user_not_found if user.blank?
+
+        case event.message["text"]
+        when "アカウント連携解除"
+          disconnecting_accounts(user)
+        when "BMR確認"
+          set_users_bmr_pfc(user)
+        when "今日の食材"
+          set_users_suggested_foods(user)
+        when "食べない"
+          donot_eat_meals(user)
+        when "食べる"
+          eat_meals(user)
+        when "健康貯金"
+          set_users_health_savings(user)
+        else
+          # 所定の文言以外にはエラーメッセージを返す
+          set_reply_text("ちょっと何言ってるかわからない")
+        end
       end
 
       # アカウント連携用URIの生成
@@ -148,6 +138,39 @@ module Line
             }]
           }
         }
+      end
+
+      def reply_user_not_found
+        { type: 'text', text: "ユーザーの取得に失敗しました" }
+      end
+
+      # 汎用：テキストメッセージの作成
+      def set_reply_text(text)
+        { type: 'text', text: text }
+      end
+
+      # ユーザーのBMR/PFC情報を返答
+      def set_users_bmr_pfc(user)
+        pfc = user.set_attributes_for_pfc[:amt]
+        text = "#{user.name}さん \n\n" +
+                "BMR: #{user.bmr}kcal \n" +
+                "P: #{pfc[:protein]}g \n" +
+                "F: #{pfc[:fat]}g \n" +
+                "C: #{pfc[:carbohydrate]}g"
+
+        set_reply_text(text)
+      end
+
+      def set_users_health_savings(user)
+        total = user.health_savings
+        text = "現在の健康貯金総額\n" + "¥#{total}"
+
+        set_reply_text(text)
+      end
+
+      def set_users_suggested_foods(user)
+        text = user.make_meal_menu_for_line
+        set_reply_text(text)
       end
   end
 end
