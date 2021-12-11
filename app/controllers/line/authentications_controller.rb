@@ -21,7 +21,11 @@ module Line
         nonce = SecureRandom.urlsafe_base64(16)
         Rails.logger.debug "Nonce: #{nonce}"
 
-        login_user.update!(line_nonce: nonce)
+        begin
+          login_user.update!(line_nonce: nonce)
+        rescue => e
+          Rails.logger.error "#{e}"
+        end
         Rails.logger.debug "UserNonce: #{login_user.nonce}"
 
         # uri = URI("https://access.line.me/dialog/bot/accountLink")
