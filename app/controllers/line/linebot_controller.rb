@@ -22,7 +22,7 @@ module Line
                       set_reply_text("アカウントの連携に失敗しました")
                     end
         when Line::Bot::Event::Follow
-          message = reply_url_for_linking(event["source"]["userId"])
+          message = AccountLinkingUriCreater.call(client, event["source"]["userId"])
         when Line::Bot::Event::Message
           case event.type
           when Line::Bot::Event::MessageType::Text
@@ -109,31 +109,6 @@ module Line
         }
 
         client.push_message(to_id, message)
-      end
-
-      # アカウント連携用URIの生成
-      def reply_url_for_linking(line_id)
-        # 連携手順1. 連携トークンを発行する
-        response = client.create_link_token(line_id).body
-        parsed_response = JSON.parse(response)
-
-        # 連携手順2. ユーザーを連携URLにリダイレクトする
-        uri = URI("https://www.eat-4now.com/line/link")
-        uri.query = URI.encode_www_form({ linkToken: parsed_response["linkToken"] })
-
-        return {
-          type: "template",
-          altText: "アカウント連携はこちらから",
-          template: {
-            type: "buttons",
-            text: "以下のURLからログインし、アカウント連携を行ってください \n" + "なお、連携の解除はいつでも行うことができます。",
-            actions: [{
-              type: "uri",
-              label: "アカウント連携ページ",
-              uri: uri
-            }]
-          }
-        }
       end
 
       def reply_user_not_found
