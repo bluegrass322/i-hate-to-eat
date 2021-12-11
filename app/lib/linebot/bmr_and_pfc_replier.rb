@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require './app/lib/linebot/linebot_base'
+
 class BmrAndPfcReplier < LinebotBase
   def self.call(user)
     new(user).call
