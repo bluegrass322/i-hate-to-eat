@@ -1,9 +1,11 @@
 # frozen_string_literal: true
 
+require "./app/lib/common/module/notificatable_to_admin"
+
 module SuggestionsDestroyable
   extend ActiveSupport::Concern
 
-  include NotificatableToAdmin
+  include Common::NotificatableToAdmin
 
   def destroy_suggestions_all(user)
     suggestions = user.suggestions.for_today

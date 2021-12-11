@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
+require "./app/lib/common/module/notificatable_to_admin"
+
 module SuggestionsCreatable
   extend ActiveSupport::Concern
-  include NotificatableToAdmin
+
+  include Common::NotificatableToAdmin
 
   def create_suggestions(user)
     # 食材を上限4種類にしぼり提案を作成する場合

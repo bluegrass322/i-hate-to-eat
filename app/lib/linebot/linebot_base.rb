@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
+require "./app/lib/common/module/notificatable_to_admin"
+
 class LinebotBase
-  require 'line/bot'
+  include Common::NotificatableToAdmin
 
   # 汎用：テキストメッセージの作成
   def reply_text(text)
