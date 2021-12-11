@@ -17,9 +17,9 @@ module Line
  
         # 連携手順4. nonceを生成してユーザーをLINEプラットフォームにリダイレクトする
         nonce = SecureRandom.urlsafe_base64(16)
+        Rails.logger.debug "CreatedNonce: #{nonce}"
 
         begin
-          binding.pry
           login_user.update!(line_nonce: nonce)
         rescue => e
           Rails.logger.error "#{e}"

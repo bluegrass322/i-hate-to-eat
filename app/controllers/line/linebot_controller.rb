@@ -44,7 +44,10 @@ module Line
       # LINEアカウント連携 5. アカウントを連携する
       def complete_linking_account(linkevent)
         nonce = linkevent.nonce.to_s
+        Rails.logger.debug "EventNonce: #{nonce}"
+
         linking_user = User.find_by(line_nonce: nonce)
+        Rails.logger.debug "EventNonce: #{linking_user}"
 
         return set_reply_text("対象のユーザーが見つかりませんでした") unless linking_user
 
