@@ -24,11 +24,11 @@ module Line
         login_user.update!(line_nonce: nonce)
         Rails.logger.debug "UserNonce: #{login_user.nonce}"
 
-        uri = URI("https://access.line.me/dialog/bot/accountLink")
-        uri.query = URI.encode_www_form({ linkToken: link_token, nonce: nonce })
-        Rails.logger.debug "URI: #{uri}"
+        # uri = URI("https://access.line.me/dialog/bot/accountLink")
+        # uri.query = URI.encode_www_form({ linkToken: link_token, nonce: nonce })
+        # redirect_to uri
 
-        redirect_to uri
+        redirect_to "https://access.line.me/dialog/bot/accountLink?linkToken=#{link_token}&nonce=#{nonce}"
       else
         flash.now[:danger] = "ログイン失敗"
         render :link
