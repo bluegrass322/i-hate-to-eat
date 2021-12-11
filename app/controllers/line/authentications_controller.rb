@@ -17,14 +17,7 @@ module Line
  
         # 連携手順4. nonceを生成してユーザーをLINEプラットフォームにリダイレクトする
         nonce = SecureRandom.urlsafe_base64(16)
-        Rails.logger.debug "CreatedNonce: #{nonce}"
-
-        begin
-          login_user.update!(line_nonce: nonce)
-        rescue => e
-          Rails.logger.error "#{e}"
-        end
-        Rails.logger.debug "UserNonce: #{login_user.line_nonce}"
+        login_user.update!(line_nonce: nonce)
 
         # uri = URI("https://access.line.me/dialog/bot/accountLink")
         # uri.query = URI.encode_www_form({ linkToken: link_token, nonce: nonce })
