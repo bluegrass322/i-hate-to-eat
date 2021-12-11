@@ -39,7 +39,7 @@ class AccountLinkingUriCreater < LinebotBase
         altText: "アカウント連携はこちらから",
         template: {
           type: "buttons",
-          text: "以下のURLからログインし、アカウント連携を行ってください \n" + "なお、連携の解除はいつでも行うことができます。",
+          text: "以下のURLからログインし、アカウント連携を行ってください \nなお、連携の解除はいつでも行うことができます。",
           actions: [{
             type: "uri",
             label: "アカウント連携ページ",
