@@ -1,6 +1,9 @@
+require './app/lib/linebot/nonce_and_redirect_uri_creater'
+
 module Line
   class AuthenticationsController < Line::BaseController
     layout 'line/layouts/line_login'
+
     skip_before_action :validate_signature
 
     def link
@@ -14,15 +17,10 @@ module Line
 
       if login_user
         link_token = params[:link_token]
- 
-        # 連携手順4. nonceを生成してユーザーをLINEプラットフォームにリダイレクトする
-        nonce = SecureRandom.urlsafe_base64(16)
-        login_user.update!(line_nonce: nonce)
 
-        uri = URI("https://access.line.me/dialog/bot/accountLink")
-        uri.query = URI.encode_www_form({ linkToken: link_token, nonce: nonce })
+        uri = NonceAndRedirectUriCreater.call(login_user, link_token)
 
-        redirect_to uri.to_s
+        redirect_to uri
       else
         flash.now[:danger] = "ログイン失敗"
         render :link
