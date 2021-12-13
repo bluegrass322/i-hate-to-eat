@@ -17,11 +17,12 @@ module Line
         case event
         when Line::Bot::Event::AccountLink
           message = if event.result == "ok"
-                      complete_linking_account(event)
+                      AccountLinkingCompleter.call(event)
                     else
                       set_reply_text("アカウントの連携に失敗しました")
                     end
         when Line::Bot::Event::Follow
+          # 既に登録されているか？
           message = AccountLinkingUriCreater.call(client, event["source"]["userId"])
         when Line::Bot::Event::Message
           case event.type
@@ -60,12 +61,6 @@ module Line
           # 所定の文言以外にはエラーメッセージを返す
           set_reply_text("ちょっと何言ってるかわからない")
         end
-      end
-
-      # LINEアカウント連携 5. アカウントを連携する
-      def complete_linking_account(linkevent)
-        # event = Json.parse(linkevent, symbolize_names: true)
-        AccountLinkingCompleter.call(linkevent)
       end
 
       def donot_eat_meals(user)
