@@ -5,6 +5,7 @@ require './app/lib/linebot/linebot_base'
 class AccountLinkingCompleter < LinebotBase
   def self.call(event)
     user = linking_user(event)
+    Rails.logger.debug "User: #{user}"
     return reply_text("対象のユーザーが見つかりませんでした") unless user
 
     new(user, event).call
@@ -15,6 +16,7 @@ class AccountLinkingCompleter < LinebotBase
       cancel_linking
     else
       save_line_id
+      Rails.logger.debug "Save line ID"
       complete_message
     end
   end
@@ -24,6 +26,7 @@ class AccountLinkingCompleter < LinebotBase
     def initialize(user, event)
       @user = user
       @line_id = event['source']['userId']
+      Rails.logger.debug "Initialize: #{@user} / #{@line_id}"
     end
 
     def linking_user(event)
@@ -40,7 +43,6 @@ class AccountLinkingCompleter < LinebotBase
     end
 
     def complete_message
-      to_name = @user.name
-      [reply_text("アカウントの連携が完了しました"), reply_text("ようこそ、#{to_name}さん")]
+      [reply_text("アカウントの連携が完了しました"), reply_text("ようこそ、#{@user.name}さん")]
     end
 end
