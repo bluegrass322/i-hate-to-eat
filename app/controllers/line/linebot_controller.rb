@@ -45,7 +45,7 @@ module Line
       # Event::Messageのテキストの内容により処理を振り分ける
       def reply_text_message(event)
         user = User.find_by(line_user_id: event["source"]["userId"])
-        return reply_user_not_found if user.blank?
+        return reply_text("ユーザーの取得に失敗しました") unless user
 
         case event.message["text"]
         when "アカウント連携解除"
@@ -76,17 +76,12 @@ module Line
 
       def eat_meals(user)
         if make_record_from_suggestion(user)
-          reply_text("great!!")
+          reply_text("素晴らしい")
         else
           reply_text("既に登録済みか、または何らかの原因により登録処理に失敗しました")
         end
       end
 
-      def reply_user_not_found
-        { type: 'text', text: "ユーザーの取得に失敗しました" }
-      end
-
-      # 汎用：テキストメッセージの作成
       def reply_text(text)
         { type: 'text', text: text }
       end
