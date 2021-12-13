@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'line/bot'
-require "./app/lib/modules/common/notificatable_to_admin"
+require "./app/lib/common/notificatable_to_admin"
 
 namespace :scheduler do
   desc "期限切れのsuggestionを削除"
