@@ -3,8 +3,6 @@ module Line
     # LINEからのPOSTはprotect_from_forgeryを通過できない
     protect_from_forgery except: :callback
 
-    Dir[Rails.root.join(".", "app", "lib", "classes", "line", "*")].each {|file| require file }
-
     include MealRecordCreatable
     include SuggestionsDestroyable
 
