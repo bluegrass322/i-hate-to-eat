@@ -33,7 +33,7 @@ class AccountLinkingCompleter < LinebotBase
 
     def cancel_linking
       @user.update!(line_nonce: nil)
-      return reply_text("すでに同じLINE-IDが登録されています")
+      reply_text("すでに同じLINE-IDが登録されています")
     end
 
     def save_line_id
