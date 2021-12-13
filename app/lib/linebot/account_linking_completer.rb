@@ -4,14 +4,10 @@ require './app/lib/linebot/linebot_base'
 
 class AccountLinkingCompleter < LinebotBase
   def self.call(event)
-    nonce = event.nonce.to_s
-    linking_user = User.find_by(line_nonce: nonce)
+    user = linking_user(event)
+    return reply_text("対象のユーザーが見つかりませんでした") unless user
 
-    return reply_text("対象のユーザーが見つかりませんでした") unless linking_user
-
-    line_id = event['source']['userId']
-
-    new(linking_user, line_id).call
+    new(user, event).call
   end
 
   def call
@@ -19,16 +15,19 @@ class AccountLinkingCompleter < LinebotBase
       cancel_linking
     else
       save_line_id
-      push_complete_message
-      reply_text("アカウントの連携が完了しました")
+      complete_message
     end
   end
 
   private
 
-    def initialize(user, line_id)
+    def initialize(user, event)
       @user = user
-      @line_id = line_id
+      @line_id = event['source']['userId']
+    end
+
+    def linking_user(event)
+      User.find_by(line_nonce: event.nonce.to_s)
     end
 
     def cancel_linking
@@ -40,15 +39,8 @@ class AccountLinkingCompleter < LinebotBase
       @user.update!(line_user_id: @line_id, line_nonce: nil)
     end
 
-    def push_complete_message
+    def complete_message
       to_name = @user.name
-      to_id = @user.line_user_id
-
-      message = {
-        type: "text",
-        text: "ようこそ、#{to_name}さん"
-      }
-
-      client.push_message(to_id, message)
+      [reply_text("アカウントの連携が完了しました"), reply_text("ようこそ、#{to_name}さん")]
     end
 end
