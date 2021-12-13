@@ -1,30 +1,13 @@
 # frozen_string_literal: true
 
-# LINE通知用
 require 'line/bot'
-
-def admin_line_id
-  Rails.application.credentials.admin[:LINE_ID]
-end
-
-def client
-  Line::Bot::Client.new do |config|
-    config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
-    config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
-  end
-end
-
-def push_message_to_admin(text)
-  time = Time.current.strftime("%c")
-
-  message = { type: "text", text: "#{time}\n#{text}" }
-  client.push_message(admin_line_id, message)
-end
-# ここまで
+require "./app/lib/modules/common/notificatable_to_admin"
 
 namespace :scheduler do
   desc "期限切れのsuggestionを削除"
   task destroy_expired_suggestions: :environment do
+    include Common::NotificatableToAdmin
+
     User.find_each do |user|
       Suggestion.transaction do
         expired_suggestion = user.suggestions.where("expires_at < ?", Time.current)
@@ -32,21 +15,22 @@ namespace :scheduler do
       end
     rescue StandardError => e
       Rails.logger.error "User#{user.id}: Failed to destroy suggestions. Cause...'#{e}'"
-      push_message_to_admin("Suggestionの削除に失敗")
+      notice_to_admin("Suggestionの削除に失敗")
     end
 
-    push_message_to_admin("destroy_expired_suggestionsが正常に終了")
+    complete_message("destroy_expired_suggestions")
   end
 
   desc "ユーザーごとに当日の食事内容を新規作成"
   task create_suggestion: :environment do
+    include Common::NotificatableToAdmin
     include SuggestionsCreatable
 
     User.find_each do |user|
       create_suggestions(user)
     end
 
-    push_message_to_admin("create_suggestionが正常に終了")
+    complete_message("create_suggestion")
   end
 
   desc "ユーザーの設定した時間に食事内容を通知"
@@ -76,7 +60,7 @@ namespace :scheduler do
       client.push_message(to_id, message)
     end
 
-    push_message_to_admin("notice_health_savingsが正常に終了")
+    complete_message("notice_health_savings")
   end
 
   # 以下動作テスト用のタスク
