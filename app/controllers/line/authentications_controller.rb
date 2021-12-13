@@ -1,8 +1,9 @@
-require './app/lib/classes/line/nonce_and_redirect_uri_creater'
 
 module Line
   class AuthenticationsController < Line::BaseController
     layout 'line/layouts/line_login'
+
+    require './app/lib/classes/line/nonce_and_redirect_uri_creater'
 
     skip_before_action :validate_signature
 
