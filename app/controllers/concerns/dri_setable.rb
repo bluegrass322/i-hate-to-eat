@@ -3,14 +3,14 @@
 module DriSetable
   extend ActiveSupport::Concern
 
-  def set_reference_intake(user)
-    by_gender = witch_gender?(user)
-    check_age_range(user, by_gender)
+  def dietary_reference_intake_for(user)
+    by_gender = witch_gender(user)
+    which_age_group(user, by_gender)
   end
 
   private
 
-    def witch_gender?(user)
+    def witch_gender(user)
       case user.gender
       when 'female'
         DietaryReferenceIntake.for_female
@@ -19,7 +19,7 @@ module DriSetable
       end
     end
 
-    def check_age_range(user, dri)
+    def which_age_group(user, dri)
       age = user.calc_age
 
       case age

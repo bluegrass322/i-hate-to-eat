@@ -6,7 +6,7 @@ module Api
       include DriSetable
 
       def update
-        dri = set_reference_intake(current_user)
+        dri = dietary_reference_intake_for(current_user)
 
         if current_user.update(dietary_reference_intake_id: dri.id)
           json_string = DietaryReferenceIntakeSerializer

@@ -23,8 +23,8 @@ module Api
         meals = get_meal_menus
 
         # 達成度算出
-        total = get_intake_total(meals)
-        achv = get_achievement(total, bmr, dri)
+        total = intake_total(meals)
+        achv = trial_intake_achievement(total, bmr, dri)
 
         # 戻り値
         render json: { bmr: bmr, dri: dri, meals: meals, total: total, achv: achv }
@@ -96,7 +96,7 @@ module Api
           end
         end
 
-        def get_achievement(total, bmr, dri)
+        def trial_intake_achievement(total, bmr, dri)
           pfc = calc_amount_pfc(bmr)
 
           achv = IntakeAchievement.new

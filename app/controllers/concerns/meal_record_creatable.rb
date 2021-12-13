@@ -3,7 +3,7 @@
 module MealRecordCreatable
   extend ActiveSupport::Concern
 
-  include NotificatableToAdmin
+  include Common::NotificatableToAdmin
   include SuggestionsDestroyable
   include TotalAndAchvGetable
 
@@ -13,17 +13,21 @@ module MealRecordCreatable
     foods = user.suggested_foods
     return false if foods.blank?
 
+    # if文の条件式に使いたいので戻り値は真偽値
     begin
       Suggestion.transaction do
         record = create_meal_record(user, foods)
         create_eaten_foods(record, foods)
+
         adding_health_savings(user, record)
         destroy_suggestions_all(user)
+
         true
       end
     rescue StandardError => e
-      # TODO: 例外処理を修正
       Rails.logger.warn "User#{user.id}: Failed to create meal record. Cause...'#{e}'"
+      notice_to_admin("MealRecordの作成に失敗")
+
       false
     end
   end
@@ -36,11 +40,12 @@ module MealRecordCreatable
     end
 
     def create_meal_record(user, foods)
-      params = get_intake_total(foods)
+      params = intake_total(foods)
 
       rec = user.meal_records.build(ate_at: Time.current)
       rec.assign_attributes(params)
       rec.save!
+
       rec
     end
 

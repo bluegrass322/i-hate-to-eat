@@ -3,6 +3,8 @@
 module SuggestionsDestroyable
   extend ActiveSupport::Concern
 
+  include Common::NotificatableToAdmin
+
   def destroy_suggestions_all(user)
     suggestions = user.suggestions.for_today
     return render404(nil, "Suggestionが存在しません") if suggestions.blank?

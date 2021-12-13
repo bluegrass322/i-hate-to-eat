@@ -25,6 +25,7 @@ module IHateToEat
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
+    config.autoloader = :classic
 
     config.i18n.default_locale = :ja
     config.i18n.available_locales = %i[ja]
