@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require './app/lib/classes/line/linebot_base'
-
 module Line
   class NonceAndRedirectUriCreater < Line::LinebotBase
     def self.call(user, link_token)
