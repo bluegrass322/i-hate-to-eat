@@ -4,8 +4,7 @@ require './app/lib/linebot/linebot_base'
 
 class AccountLinkingCompleter < LinebotBase
   def self.call(event)
-    Rails.logger.debug "CalledEvent: #{event}"
-    user = linking_user(event)
+    user = User.find_by(line_nonce: event.nonce.to_s)
     Rails.logger.debug "User: #{user}"
     return reply_text("対象のユーザーが見つかりませんでした") unless user
 
@@ -30,11 +29,11 @@ class AccountLinkingCompleter < LinebotBase
       Rails.logger.debug "Initialize: #{@user} / #{@line_id}"
     end
 
-    def linking_user(event)
-      Rails.logger.debug "LinkingUserEvent: #{event}"
-      Rails.logger.debug "EventNonce: #{event.nonce}"
-      User.find_by(line_nonce: event.nonce.to_s)
-    end
+    # def linking_user(event)
+    #   Rails.logger.debug "LinkingUserEvent: #{event}"
+    #   Rails.logger.debug "EventNonce: #{event.nonce}"
+    #   User.find_by(line_nonce: event.nonce.to_s)
+    # end
 
     def cancel_linking
       @user.update!(line_nonce: nil)
