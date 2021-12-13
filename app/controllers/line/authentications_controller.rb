@@ -1,4 +1,4 @@
-require './app/lib/linebot/nonce_and_redirect_uri_creater'
+require './app/lib/classes/line/nonce_and_redirect_uri_creater'
 
 module Line
   class AuthenticationsController < Line::BaseController

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require './app/lib/linebot/linebot_base'
+require './app/lib/classes/line/linebot_base'
 
 class AccountLinkingUriCreater < LinebotBase
   def self.call(client, line_id)
