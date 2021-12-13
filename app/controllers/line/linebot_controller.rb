@@ -11,11 +11,13 @@ module Line
     def callback
       # 送られてきたデータをrubyが扱いやすいよう変換
       events = client.parse_events_from(@body)
+      Rails.logger.debug "Events: #{events}"
 
       # 複数同時に送られてくる可能性のあるイベントたちを1つずつ処理
       events.each do |event|
         case event
         when Line::Bot::Event::AccountLink
+          Rails.logger.debug "Event: #{event}"
           message = if event.result == "ok"
                       complete_linking_account(event)
                     else
@@ -64,22 +66,10 @@ module Line
 
       # LINEアカウント連携 5. アカウントを連携する
       def complete_linking_account(linkevent)
-        nonce = linkevent.nonce.to_s
-        linking_user = User.find_by(line_nonce: nonce)
+        event = Json.parse(linkevent, symbolize_names: true)
+        Rails.logger.debug "ParsedEvent: #{event}"
 
-        return set_reply_text("対象のユーザーが見つかりませんでした") unless linking_user
-
-        line_id = linkevent["source"]["userId"]
-
-        # 既に同じLINE IDが登録されているかチェック
-        if User.where(line_user_id: line_id).present?
-          linking_user.update!(line_nonce: nil)
-          return set_reply_text("すでに同じLINE-IDが登録されています")
-        end
-
-        linking_user.update!(line_user_id: line_id, line_nonce: nil)
-        push_linking_complete_message(linking_user)
-        set_reply_text("アカウントの連携が完了しました")
+        AccountLinkingCompleter.call(event)
       end
 
       def donot_eat_meals(user)
@@ -96,19 +86,6 @@ module Line
         else
           set_reply_text("既に登録済みか、または何らかの原因により登録処理に失敗しました")
         end
-      end
-
-      # アカウント連携完了後、プッシュメッセージを送信
-      def push_linking_complete_message(user)
-        to_name = user.name
-        to_id = user.line_user_id
-
-        message = {
-          type: "text",
-          text: "ようこそ、#{to_name}さん"
-        }
-
-        client.push_message(to_id, message)
       end
 
       def reply_user_not_found
