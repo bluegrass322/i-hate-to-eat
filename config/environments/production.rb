@@ -53,7 +53,7 @@ Rails.application.configure do
 
   # TODO: LINE機能のデバック時にのみレベルをdebugに
   # TODO: 終了後warnに戻すこと
-  config.log_level = :debug
+  config.log_level = :error
 
   # Prepend all log lines with the following tags.
   config.log_tags = [:request_id]
