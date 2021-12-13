@@ -30,7 +30,7 @@ module Line
         when Line::Bot::Event::Message
           case event.type
           when Line::Bot::Event::MessageType::Text
-            message = reply_text_message(event)
+            message = reply_to_text_message(event)
           end
         end
         client.reply_message(event['replyToken'], message) if message
@@ -43,7 +43,7 @@ module Line
     private
 
       # Event::Messageのテキストの内容により処理を振り分ける
-      def reply_text_message(event)
+      def reply_to_text_message(event)
         user = User.find_by(line_user_id: event["source"]["userId"])
         return reply_text("ユーザーの取得に失敗しました") unless user
 
