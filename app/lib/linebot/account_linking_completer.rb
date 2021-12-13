@@ -9,7 +9,7 @@ class AccountLinkingCompleter < LinebotBase
 
     return reply_text("対象のユーザーが見つかりませんでした") unless linking_user
 
-    line_id = event[:source][:userId]
+    line_id = event['source']['userId']
 
     new(linking_user, line_id).call
   end

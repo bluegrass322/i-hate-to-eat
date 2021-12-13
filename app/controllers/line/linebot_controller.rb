@@ -11,13 +11,11 @@ module Line
     def callback
       # 送られてきたデータをrubyが扱いやすいよう変換
       events = client.parse_events_from(@body)
-      Rails.logger.debug "Events: #{events}"
 
       # 複数同時に送られてくる可能性のあるイベントたちを1つずつ処理
       events.each do |event|
         case event
         when Line::Bot::Event::AccountLink
-          Rails.logger.debug "Event: #{event}"
           message = if event.result == "ok"
                       complete_linking_account(event)
                     else
@@ -66,10 +64,8 @@ module Line
 
       # LINEアカウント連携 5. アカウントを連携する
       def complete_linking_account(linkevent)
-        event = Json.parse(linkevent, symbolize_names: true)
-        Rails.logger.debug "ParsedEvent: #{event}"
-
-        AccountLinkingCompleter.call(event)
+        # event = Json.parse(linkevent, symbolize_names: true)
+        AccountLinkingCompleter.call(linkevent)
       end
 
       def donot_eat_meals(user)
