@@ -31,7 +31,7 @@ class AccountLinkingCompleter < LinebotBase
     end
 
     def linking_user(event)
-      Rails.logger.debug "EventNonce: #{event.nonce.to_s}"
+      Rails.logger.debug "EventNonce: #{event.nonce}"
       User.find_by(line_nonce: event.nonce.to_s)
     end
 
