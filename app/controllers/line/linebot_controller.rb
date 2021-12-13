@@ -19,11 +19,14 @@ module Line
           message = if event.result == "ok"
                       AccountLinkingCompleter.call(event)
                     else
-                      set_reply_text("アカウントの連携に失敗しました")
+                      reply_text("アカウントの連携に失敗しました")
                     end
         when Line::Bot::Event::Follow
-          # 既に登録されているか？
-          message = AccountLinkingUriCreater.call(client, event["source"]["userId"])
+          message = if User.exists?(line_user_id: event["source"]["userId"])
+                      reply_text("おかえりなさい")
+                    else
+                      AccountLinkingUriCreater.call(client, event["source"]["userId"])
+                    end
         when Line::Bot::Event::Message
           case event.type
           when Line::Bot::Event::MessageType::Text
@@ -59,23 +62,23 @@ module Line
           HealthSavingsReplier.call(user)
         else
           # 所定の文言以外にはエラーメッセージを返す
-          set_reply_text("ちょっと何言ってるかわからない")
+          reply_text("ちょっと何言ってるかわからない")
         end
       end
 
       def donot_eat_meals(user)
         if destroy_suggestions_all(user)
-          set_reply_text("了解しました")
+          reply_text("了解しました")
         else
-          set_reply_text("提案の削除処理に失敗しました")
+          reply_text("提案の削除処理に失敗しました")
         end
       end
 
       def eat_meals(user)
         if make_record_from_suggestion(user)
-          set_reply_text("great!!")
+          reply_text("great!!")
         else
-          set_reply_text("既に登録済みか、または何らかの原因により登録処理に失敗しました")
+          reply_text("既に登録済みか、または何らかの原因により登録処理に失敗しました")
         end
       end
 
@@ -84,7 +87,7 @@ module Line
       end
 
       # 汎用：テキストメッセージの作成
-      def set_reply_text(text)
+      def reply_text(text)
         { type: 'text', text: text }
       end
   end
