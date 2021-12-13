@@ -18,7 +18,7 @@ module Line
       if login_user
         link_token = params[:link_token]
 
-        uri = NonceAndRedirectUriCreater.call(login_user, link_token)
+        uri = Line::NonceAndRedirectUriCreater.call(login_user, link_token)
 
         redirect_to uri
       else

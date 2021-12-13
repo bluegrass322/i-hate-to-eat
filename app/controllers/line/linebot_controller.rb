@@ -17,7 +17,7 @@ module Line
         case event
         when Line::Bot::Event::AccountLink
           message = if event.result == "ok"
-                      AccountLinkingCompleter.call(event)
+                      Line::AccountLinkingCompleter.call(event)
                     else
                       reply_text("アカウントの連携に失敗しました")
                     end
@@ -25,7 +25,7 @@ module Line
           message = if User.exists?(line_user_id: event["source"]["userId"])
                       reply_text("おかえりなさい")
                     else
-                      AccountLinkingUriCreater.call(client, event["source"]["userId"])
+                      Line::AccountLinkingUriCreater.call(client, event["source"]["userId"])
                     end
         when Line::Bot::Event::Message
           case event.type
@@ -49,17 +49,17 @@ module Line
 
         case event.message["text"]
         when "アカウント連携解除"
-          AccountLinkingRemover.call(user)
+          Line::AccountLinkingRemover.call(user)
         when "BMR確認"
-          BmrAndPfcReplier.call(user)
+          Line::BmrAndPfcReplier.call(user)
         when "今日の食材"
-          SuggestionsReplier.call(user)
+          Line::SuggestionsReplier.call(user)
         when "食べない"
           donot_eat_meals(user)
         when "食べる"
           eat_meals(user)
         when "健康貯金"
-          HealthSavingsReplier.call(user)
+          Line::HealthSavingsReplier.call(user)
         else
           # 所定の文言以外にはエラーメッセージを返す
           reply_text("ちょっと何言ってるかわからない")
