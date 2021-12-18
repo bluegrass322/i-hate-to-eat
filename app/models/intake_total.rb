@@ -72,6 +72,12 @@ class IntakeTotal
     validates :zinc
   end
 
+
+  # Class method
+  def self.call(foods)
+    new.calc_intake_total(foods)
+  end
+
   # Instance method
   def calc_intake_total(foods)
     params = attributes
@@ -83,7 +89,9 @@ class IntakeTotal
       end
       params[k] = sum.floor(4)
     end
+
     self.attributes = params
+    # self
   end
 
   private

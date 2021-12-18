@@ -11,7 +11,6 @@ module TotalAndAchvGetable
   end
 
   def intake_total(foods)
-    total = NutritionTotal.new
-    total.calc_intake_total(foods)
+    total = IntakeTotal.call(foods)
   end
 end
