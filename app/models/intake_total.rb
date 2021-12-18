@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class NutritionTotal
+class IntakeTotal
   include ActiveModel::Model
   include ActiveModel::Attributes
 
@@ -72,6 +72,11 @@ class NutritionTotal
     validates :zinc
   end
 
+  # Class method
+  def self.call(foods)
+    new.calc_intake_total(foods)
+  end
+
   # Instance method
   def calc_intake_total(foods)
     params = attributes
@@ -83,7 +88,9 @@ class NutritionTotal
       end
       params[k] = sum.floor(4)
     end
+
     self.attributes = params
+    # self
   end
 
   private

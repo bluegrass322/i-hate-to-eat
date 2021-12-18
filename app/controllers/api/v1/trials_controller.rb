@@ -99,8 +99,7 @@ module Api
         def trial_intake_achievement(total, bmr, dri)
           pfc = calc_amount_pfc(bmr)
 
-          achv = IntakeAchievement.new
-          achv.calc_intake_achievement(total, bmr, pfc, dri)
+          IntakeAchievement.call(total, bmr, pfc, dri)
         end
 
         def set_dri(age, gender)
