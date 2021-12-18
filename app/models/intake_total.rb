@@ -72,7 +72,6 @@ class IntakeTotal
     validates :zinc
   end
 
-
   # Class method
   def self.call(foods)
     new.calc_intake_total(foods)
