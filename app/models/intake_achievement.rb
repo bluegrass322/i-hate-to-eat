@@ -72,6 +72,11 @@ class IntakeAchievement
     validates :zinc
   end
 
+  # Class method
+  def self.call(total, bmr, pfc, dri)
+    new.calc_intake_achievement(total, bmr, pfc, dri)
+  end
+
   # Instance method
   def calc_intake_achievement(total, bmr, pfc, dri)
     params = attributes
