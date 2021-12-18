@@ -6,7 +6,7 @@ module TotalAndAchvGetable
   def intake_achievement(user, total)
     pfc = user.attributes_pfc[:amt]
 
-    achv = IntakeAchievement.call(total, user.bmr, pfc, user.dietary_reference_intake)
+    IntakeAchievement.call(total, user.bmr, pfc, user.dietary_reference_intake)
   end
 
   def intake_total(foods)
