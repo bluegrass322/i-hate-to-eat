@@ -203,7 +203,7 @@ RSpec.describe User, type: :model do
             expect(user).to be_valid
             expect(user.errors).to be_empty
           end
-        end    
+        end
       end
 
       context "異常系" do
@@ -435,6 +435,28 @@ RSpec.describe User, type: :model do
             expect(user).to be_invalid
             expect(user.errors[:mealtime_first]).to include "通知の時間は7:00 - 23:00の間で設定してください"
           end
+        end
+      end
+    end
+  end
+
+  describe "インスタンスメソッド" do
+    describe ":calc_age" do
+      context "現在18歳になる生年月日の場合" do
+        it "戻り値が18になること" do
+          date = Time.current.ago(18.years)
+          user = build(:user, birth: date)
+
+          expect(user.calc_age).to eq 18
+        end
+      end
+
+      context "現在59歳になる生年月日の場合" do
+        fit "戻り値が59になること" do
+          date = Time.current.ago(59.years)
+          user = build(:user, birth: date)
+
+          expect(user.calc_age).to eq 59
         end
       end
     end
