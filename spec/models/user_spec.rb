@@ -3,20 +3,29 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  describe "バリデーション" do
-    describe "正常系" do
-      # 新規登録時に最低限必要な属性について
-      context "ユーザー名、メールアドレス、パスワード、パスワード（確認）がある場合" do        
-        it "validになること" do
-          user = build(:user)
-          user.valid?
-  
-          expect(user).to be_valid
-          expect(user.errors).to be_empty
-        end
-      end
+  it "factoryがvalidなインスタンスを生成すること" do
+    expect(build(:user)).to be_valid
+  end
 
-      describe "ユーザー名" do
+  describe "バリデーション" do
+    # 新規登録時に最低限必要な属性について
+    context "ユーザー名、メールアドレス、パスワード、パスワード（確認）がある場合" do        
+      it "validになること" do
+        user = build(:user,
+          name: "test",
+          email: "test@example.com",
+          password: "password",
+          password_confirmation: "password"
+        )
+        user.valid?
+
+        expect(user).to be_valid
+        expect(user.errors).to be_empty
+      end
+    end
+
+    describe "ユーザー名" do
+      context "正常系" do        
         context "大文字と小文字で区別されている場合" do
           it "validになること" do
             other_user = create(:user, name: "Test")
@@ -30,57 +39,43 @@ RSpec.describe User, type: :model do
         end
       end
 
-      describe "パスワード" do
-        context "7文字以上の場合" do
-          it "validになること" do
-            pass = "a" * 7
-
-            user = build(:user, password: pass, password_confirmation: pass)
-            user.valid?
-
-            expect(user).to be_valid
-            expect(user.errors).to be_empty
-          end
-        end
-      end
-    end
-
-    describe "異常系" do
-      describe "ユーザー名" do
+      context "異常系" do        
         context "nilの場合" do
           it "invalidになること" do
             user = build(:user, name: nil)
             user.valid?
-
+  
             expect(user).to be_invalid
             expect(user.errors[:name]).to include "を入力してください"
           end
         end
-
+  
         context "空文字の場合" do
           it "invalidになること" do
             user = build(:user, name: "")
             user.valid?
-
+  
             expect(user).to be_invalid
             expect(user.errors[:name]).to include "を入力してください"
           end
         end
-
+  
         context "重複している場合" do
           it "invalidになること" do
             other_user = create(:user, name: "Test")
-
+  
             user = build(:user, name: "Test")
             user.valid?
-
+  
             expect(user).to be_invalid
             expect(user.errors[:name]).to include "はすでに存在します"
           end
         end
       end
+    end
 
-      describe "メールアドレス" do
+    describe "メールアドレス" do
+      context "異常系" do
         context "nilの場合" do
           it "invalidになること" do
             user = build(:user, email: nil)
@@ -90,7 +85,7 @@ RSpec.describe User, type: :model do
             expect(user.errors[:email]).to include "を入力してください"
           end
         end
-
+  
         context "空文字の場合" do
           it "invalidになること" do
             user = build(:user, email: "")
@@ -100,7 +95,7 @@ RSpec.describe User, type: :model do
             expect(user.errors[:email]).to include "を入力してください"
           end
         end
-
+  
         context "重複している場合" do
           it "invalidになること" do
             other_user = create(:user)
@@ -112,7 +107,7 @@ RSpec.describe User, type: :model do
             expect(user.errors[:email]).to include "はすでに存在します"
           end
         end
-
+  
         context "アドレスの形式でない場合" do
           it "invalidになること" do
             user = build(:user, email: "test")
@@ -123,8 +118,24 @@ RSpec.describe User, type: :model do
           end
         end
       end
+    end
 
-      describe "パスワード" do
+    describe "パスワード" do
+      context "正常系" do        
+        context "7文字以上の場合" do
+          it "validになること" do
+            pass = "a" * 7
+  
+            user = build(:user, password: pass, password_confirmation: pass)
+            user.valid?
+  
+            expect(user).to be_valid
+            expect(user.errors).to be_empty
+          end
+        end
+      end
+
+      context "異常系" do
         context "nilの場合" do
           it "invalidになること" do
             user = build(:user, name: nil)
