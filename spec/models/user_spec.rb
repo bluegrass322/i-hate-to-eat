@@ -8,7 +8,6 @@ RSpec.describe User, type: :model do
   end
 
   describe "バリデーション" do
-    # 新規登録時に最低限必要な属性について
     context "ユーザー名、メールアドレス、パスワード、パスワード（確認）がある場合" do        
       it "validになること" do
         user = build(:user,
@@ -60,7 +59,7 @@ RSpec.describe User, type: :model do
           end
         end
   
-        context "重複している場合" do
+        context "重複した値の場合" do
           it "invalidになること" do
             other_user = create(:user, name: "Test")
   
@@ -96,7 +95,7 @@ RSpec.describe User, type: :model do
           end
         end
   
-        context "重複している場合" do
+        context "重複した値の場合" do
           it "invalidになること" do
             other_user = create(:user)
   
@@ -175,6 +174,266 @@ RSpec.describe User, type: :model do
 
             expect(user).to be_invalid
             expect(user.errors[:password_confirmation]).to include "とパスワードの入力が一致しません"
+          end
+        end
+      end
+    end
+
+    describe "生年月日" do
+      context "正常系" do
+        context "現在18歳になる生年月日の場合" do
+          it "validになること" do
+            date = Time.current.ago(18.years)
+
+            user = build(:user, birth: date)
+            user.valid?
+
+            expect(user).to be_valid
+            expect(user.errors).to be_empty
+          end
+        end
+
+        context "現在59歳になる生年月日の場合" do
+          it "validになること" do
+            date = Time.current.ago(59.years)
+
+            user = build(:user, birth: date)
+            user.valid?
+
+            expect(user).to be_valid
+            expect(user.errors).to be_empty
+          end
+        end    
+      end
+
+      context "異常系" do
+        context "未来の日付の場合" do
+          it "invalidになること" do
+            date = Time.current.since(1.day)
+            
+            user = build(:user, birth: date)
+            user.valid?
+
+            expect(user).to be_invalid
+            expect(user.errors[:birth]).to include "未来の日付は入力できません"
+          end
+        end
+
+        context "現在17歳になる生年月日の場合" do
+          it "invalidになること" do
+            date = Time.current.ago(17.years)
+
+            user = build(:user, birth: date)
+            user.valid?
+
+            expect(user).to be_invalid
+            expect(user.errors[:birth]).to include "本サービスは18歳以上60歳未満の方が対象です"
+          end
+        end
+
+        context "現在60歳になる生年月日の場合" do
+          it "invalidになること" do
+            date = Time.current.ago(60.years)
+
+            user = build(:user, birth: date)
+            user.valid?
+
+            expect(user).to be_invalid
+            expect(user.errors[:birth]).to include "本サービスは18歳以上60歳未満の方が対象です"
+          end  
+        end
+      end
+    end
+
+    describe "身長" do
+      context "正常系" do
+        context "整数値の場合" do
+          it "validになること" do
+            user = build(:user, height: 160)
+            user.valid?
+
+            expect(user).to be_valid
+            expect(user.errors).to be_empty
+          end
+        end
+      end
+
+      context "異常系" do
+        context "数値でない場合" do
+          it "invalidになること" do
+            user = build(:user, height: "string")
+            user.valid?
+
+            expect(user).to be_invalid
+            expect(user.errors[:height]).to include "は数値で入力してください"
+          end
+        end
+
+        context "少数の場合" do
+          it "invalidになること" do
+            user = build(:user, height: 160.0)
+            user.valid?
+
+            expect(user).to be_invalid
+            expect(user.errors[:height]).to include "は整数で入力してください"
+          end
+        end
+      end
+    end
+
+    describe "体重" do
+      context "正常系" do
+        context "数値の場合" do
+          it "validになること" do
+            user = build(:user, weight: 50.0)
+            user.valid?
+
+            expect(user).to be_valid
+            expect(user.errors).to be_empty
+          end
+        end
+      end
+
+      context "異常系" do
+        context "数値でない場合" do
+          it "invalidになること" do
+            user = build(:user, weight: "string")
+            user.valid?
+
+            expect(user).to be_invalid
+            expect(user.errors[:weight]).to include "は数値で入力してください"
+          end
+        end
+      end
+    end
+
+    describe "bmr" do
+      context "正常系" do
+        context "数値の場合" do
+          it "validになること" do
+            user = build(:user, bmr: 1600.0)
+            user.valid?
+
+            expect(user).to be_valid
+            expect(user.errors).to be_empty
+          end
+        end
+      end
+
+      context "異常系" do
+        context "数値でない場合" do
+          it "invalidになること" do
+            user = build(:user, bmr: "string")
+            user.valid?
+
+            expect(user).to be_invalid
+            expect(user.errors[:bmr]).to include "は数値で入力してください"
+          end
+        end
+      end
+    end
+
+    describe "health_savings" do
+      context "正常系" do
+        context "整数の場合" do
+          it "validになること" do
+            user = build(:user, health_savings: 10)
+            user.valid?
+
+            expect(user).to be_valid
+            expect(user.errors).to be_empty
+          end
+        end
+      end
+
+      context "異常系" do
+        context "数値でない場合" do
+          it "invalidになること" do
+            user = build(:user, health_savings: "string")
+            user.valid?
+
+            expect(user).to be_invalid
+            expect(user.errors[:health_savings]).to include "は数値で入力してください"
+          end
+        end
+
+        context "少数の場合" do
+          it "invalidになること" do
+            user = build(:user, health_savings: 10.0)
+            user.valid?
+
+            expect(user).to be_invalid
+            expect(user.errors[:health_savings]).to include "は整数で入力してください"
+          end
+        end
+      end
+    end
+
+    describe "line_uesr_id" do
+      context "異常系" do
+        context "重複した値の場合" do
+          it "invalidになること" do
+            other_user = create(:user, line_user_id: "test")
+
+            user = build(:user, line_user_id: other_user.line_user_id)
+            user.valid?
+
+            expect(user).to be_invalid
+            expect(user.errors[:line_user_id]).to include "はすでに存在します"
+          end
+        end
+      end
+    end
+
+    describe "mealtime_first" do
+      context "正常系" do
+        context "午前7時の場合" do
+          it "validになること" do
+            time = Time.local(2021, 1, 1, 7, 0)
+
+            user = build(:user, mealtime_first: time)
+            user.valid?
+
+            expect(user).to be_valid
+            expect(user.errors).to be_empty
+          end
+        end
+
+        context "午後11時の場合" do
+          it "validになること" do
+            time = Time.local(2021, 1, 1, 23, 0)
+
+            user = build(:user, mealtime_first: time)
+            user.valid?
+
+            expect(user).to be_valid
+            expect(user.errors).to be_empty
+          end
+        end
+      end
+
+      context "異常系" do
+        context "午前6時59分の場合" do
+          it "invalidになること" do
+            time = Time.local(2021, 1, 1, 6, 59)
+
+            user = build(:user, mealtime_first: time)
+            user.valid?
+
+            expect(user).to be_invalid
+            expect(user.errors[:mealtime_first]).to include "通知の時間は7:00 - 23:00の間で設定してください"
+          end
+        end
+
+        context "11時1分の場合" do
+          it "invalidになること" do
+            time = Time.local(2021, 1, 1, 23, 1)
+
+            user = build(:user, mealtime_first: time)
+            user.valid?
+
+            expect(user).to be_invalid
+            expect(user.errors[:mealtime_first]).to include "通知の時間は7:00 - 23:00の間で設定してください"
           end
         end
       end
