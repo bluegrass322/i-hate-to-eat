@@ -2,6 +2,9 @@
 
 FactoryBot.define do
   factory :meal_record do
+    ate_at { Time.current }
+
+    association :user
   end
 end
 

@@ -2,6 +2,8 @@
 
 FactoryBot.define do
   factory :eaten_food do
+    association :user
+    association :food
   end
 end
 
