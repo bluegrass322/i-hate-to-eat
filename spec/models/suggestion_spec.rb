@@ -3,7 +3,102 @@
 require 'rails_helper'
 
 RSpec.describe Suggestion, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "factoryがvalidなインスタンスを生成すること" do
+    expect(build(:suggestion)).to be_valid
+  end
+
+  describe "amount" do
+    context "正常系" do
+      context "少数の場合" do
+        it "validになること" do
+          suggestion = build(:suggestion, amount: 0.1)
+          suggestion.valid?
+
+          expect(suggestion).to be_valid
+          expect(suggestion.errors).to be_empty
+        end
+      end
+
+      context "整数の場合" do
+        it "validになること" do
+          suggestion = build(:suggestion, amount: 2)
+          suggestion.valid?
+
+          expect(suggestion).to be_valid
+          expect(suggestion.errors).to be_empty
+        end
+      end
+    end
+
+    context "異常系" do
+      context "nilの場合" do
+        it "invalidになること" do
+          suggestion = build(:suggestion, amount: nil)
+          suggestion.valid?
+
+          expect(suggestion).to be_invalid
+          expect(suggestion.errors[:amount]).to include "を入力してください"
+        end
+      end
+
+      context "数値でない場合" do
+        it "値が0.0になること" do
+          suggestion = build(:suggestion, amount: "string")
+          suggestion.valid?
+
+          expect(suggestion.amount).to eq 0.0
+        end
+      end
+    end
+  end
+
+  describe "expires_at" do
+    context "異常系" do
+      context "nilの場合" do
+        it "invalidになること" do
+          suggestion = build(:suggestion, expires_at: nil)
+          suggestion.valid?
+      
+          expect(suggestion).to be_invalid
+          expect(suggestion.errors[:expires_at]).to include "を入力してください"
+        end
+      end
+
+      context "Timeオブジェクトでない場合" do
+        it "invalidになること" do
+          suggestion = build(:suggestion, expires_at: "string")
+          suggestion.valid?
+      
+          expect(suggestion).to be_invalid
+          expect(suggestion.errors[:expires_at]).to include "を入力してください"
+        end
+      end
+    end
+  end
+
+  describe "target_date" do
+    context "異常系" do
+      context "nilの場合" do
+        it "invalidになること" do
+          suggestion = build(:suggestion, target_date: nil)
+          suggestion.valid?
+      
+          expect(suggestion).to be_invalid
+          expect(suggestion.errors[:target_date]).to include "を入力してください"
+        end
+      end
+
+      context "Timeオブジェクトでない場合" do
+        it "invalidになること" do
+          suggestion = build(:suggestion, target_date: "string")
+          suggestion.valid?
+      
+          expect(suggestion).to be_invalid
+          expect(suggestion.errors[:target_date]).to include "を入力してください"
+        end
+      end
+    end
+  end
 end
 
 # == Schema Information
