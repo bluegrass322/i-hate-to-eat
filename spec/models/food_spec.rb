@@ -3,6 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Food, type: :model do
+  # seedでのみ作成するため優先度低
 end
 
 # == Schema Information
