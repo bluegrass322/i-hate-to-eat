@@ -2,6 +2,11 @@
 
 FactoryBot.define do
   factory :suggestion do
+    expires_at { Time.current.end_of_day }
+    target_date { Time.current }
+
+    association :user
+    association :food
   end
 end
 
