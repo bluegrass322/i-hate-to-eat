@@ -2,6 +2,8 @@
 
 FactoryBot.define do
   factory :dietary_reference_intake do
+    age_bottom { 18 }
+    age_top { 29 }
   end
 end
 
