@@ -452,7 +452,7 @@ RSpec.describe User, type: :model do
       end
 
       context "現在59歳になる生年月日の場合" do
-        fit "戻り値が59になること" do
+        it "戻り値が59になること" do
           date = Time.current.ago(59.years)
           user = build(:user, birth: date)
 
