@@ -19,6 +19,26 @@ export default {
     FlashMessage,
     FooterMenu,
   },
+  mounted() {
+    const routeInstance = this.$route;
+    this.createPageTitle(routeInstance);
+  },
+  // 戻り値を返す必要はないためwatchを使用
+  watch: {
+    '$route' (routeInstance, from) {
+      this.createPageTitle(routeInstance);
+    }
+  },
+  methods: {
+    createPageTitle(routeInstance) {
+      if (routeInstance.meta.title) {
+        const pageTitle = routeInstance.meta.title + ' | Eat this 4 now';
+        document.title = pageTitle;
+      } else {
+        document.title = 'Eat this 4 now';
+      }
+    },
+  }
 };
 </script>
 
