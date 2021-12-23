@@ -19,15 +19,15 @@ export default {
     FlashMessage,
     FooterMenu,
   },
+  // 戻り値を返す必要はないためwatchを使用
+  watch: {
+    $route(routeInstance) {
+      this.createPageTitle(routeInstance);
+    },
+  },
   mounted() {
     const routeInstance = this.$route;
     this.createPageTitle(routeInstance);
-  },
-  // 戻り値を返す必要はないためwatchを使用
-  watch: {
-    '$route' (routeInstance, from) {
-      this.createPageTitle(routeInstance);
-    }
   },
   methods: {
     createPageTitle(routeInstance) {
@@ -38,7 +38,7 @@ export default {
         document.title = 'Eat this 4 now';
       }
     },
-  }
+  },
 };
 </script>
 
