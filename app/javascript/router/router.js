@@ -19,6 +19,9 @@ import TopPage from '../components/pages/TopPage';
 
 import NotFoundPage from '../components/pages/NotFoundPage';
 
+// descriptionの定義ファイル
+import pageDesc from '../constants/page-descriptions';
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({
@@ -40,6 +43,7 @@ const router = new VueRouter({
       meta: {
         isPublic: true,
         title: 'Register',
+        desc: pageDesc.REGISTER,
       },
     },
     {
@@ -49,6 +53,7 @@ const router = new VueRouter({
       meta: {
         isPublic: true,
         title: 'Login',
+        desc: pageDesc.LOGIN,
       },
     },
     {
@@ -85,6 +90,7 @@ const router = new VueRouter({
       name: 'HomePage',
       meta: {
         title: 'Home',
+        desc: pageDesc.HOME,
       },
     },
     {
@@ -97,6 +103,7 @@ const router = new VueRouter({
           name: 'MyPageSetting',
           meta: {
             title: 'Setting',
+            desc: pageDesc.MYPAGE_SETTING,
           },
         },
         {
@@ -105,6 +112,7 @@ const router = new VueRouter({
           name: 'MyPageAccount',
           meta: {
             title: 'Account',
+            desc: pageDesc.MYPAGE_ACCOUNT,
           },
         },
         {
@@ -113,6 +121,7 @@ const router = new VueRouter({
           name: 'MyPageWithdrawal',
           meta: {
             title: 'Withdrawal',
+            desc: pageDesc.MYPAGE_WITHDRAWAL,
           },
         },
       ],
@@ -123,6 +132,7 @@ const router = new VueRouter({
       name: 'MealSuggestionPage',
       meta: {
         title: "Today's meal",
+        desc: pageDesc.SUGGESTION,
       },
     },
     // 404 not found
