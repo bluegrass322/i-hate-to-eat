@@ -1,8 +1,24 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
     <title>Eat this 4 now</title>
     <meta name="description">
+
+    <!-- OGP設定 -->
+    <meta property="og:url" content="https://www.eat-4now.com/">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="食事嫌いのための食材提案&リマインドツール">
+    <meta property="og:description" content="
+      「食事が嫌い」「何を食べるか考えることすら面倒」「そもそも食事を取ることを忘れてしまう」……
+      そんな悩みを持つ方々のために、栄養価の高い食材を1日に4つ提案。
+      LINEアカウントを連携すれば設定した時間にリマインド通知を受け取ることも可能です
+    ">
+    <meta property="og:site_name" content="Eat this 4 now">
+    <meta property="og:image" content="https://www.eat-4now.com/assets/images/ogp.png">
+
+    <!-- Twitter設定 -->
+    <meta name="twitter:card" content="summary_large_image">
+    <!-- OGPここまで -->
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <%= csrf_meta_tags %>
@@ -19,6 +35,7 @@
         gtag('config', 'UA-212123833-1');
       </script>
     <% end %>
+    <!-- Google Analyticsここまで -->
 
     <%= stylesheet_link_tag 'application', media: 'all' %>
     <%= javascript_pack_tag 'application' %>
