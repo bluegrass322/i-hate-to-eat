@@ -37,20 +37,18 @@ export default {
   },
   methods: {
     createPageTitle(routeInstance) {
-      const commonTitle = 'Eat this 4 now';
-
       if (routeInstance.meta.title) {
-        const pageTitle = routeInstance.meta.title + ' | ' + commonTitle;
+        const pageTitle = routeInstance.meta.title + ' | ' + baseTitle;
         document.title = pageTitle;
       } else {
-        document.title = commonTitle;
+        document.title = baseTitle;
       }
     },
     createPageDesc(routeInstance) {
       let pageDesc = DESC_COMMON;
 
       if (routeInstance.meta.desc) {
-        pageDesc = routeInstance.meta.desc + ' | Eat this 4 now';
+        pageDesc = routeInstance.meta.desc + ' | ' + baseTitle;
       } else {
         pageDesc = pageDesc + DESC_DEFAULT;
       }
@@ -61,6 +59,8 @@ export default {
     },
   },
 };
+
+const baseTitle = 'Eat this 4 now';
 </script>
 
 <style scoped>
