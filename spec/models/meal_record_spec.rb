@@ -3,7 +3,64 @@
 require 'rails_helper'
 
 RSpec.describe MealRecord, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it "factoryがvalidなインスタンスを生成すること" do
+    expect(build(:meal_record)).to be_valid
+  end
+
+  describe "ate_at" do
+    let(:user) { create(:user) }
+
+    context "正常系" do
+      context "同一ユーザーに異なる日付の場合" do
+        it "vaidになること" do
+          other_record = create(:meal_record, user_id: user.id, ate_at: Time.current.ago(1.day))
+
+          record = build(:meal_record, user_id: user.id, ate_at: Time.current)
+          record.valid?
+
+          expect(record).to be_valid
+          expect(user.errors).to be_empty
+        end
+      end
+
+      context "異なるユーザーに重複した日付の場合" do
+        it "vaidになること" do
+          other_user = create(:user)
+          other_record = create(:meal_record, user_id: other_user.id, ate_at: Time.current)
+
+          record = build(:meal_record, user_id: user.id, ate_at: Time.current)
+          record.valid?
+
+          expect(record).to be_valid
+          expect(user.errors).to be_empty
+        end
+      end
+    end
+
+    context "異常系" do
+      context "nilの場合" do
+        it "invaidになること" do
+          record = build(:meal_record, user_id: user.id, ate_at: nil)
+          record.valid?
+
+          expect(record).to be_invalid
+          expect(record.errors[:ate_at]).to include "を入力してください"
+        end
+      end
+
+      context "同一ユーザーに重複した日付の場合" do
+        it "invaidになること" do
+          other_record = create(:meal_record, user_id: user.id, ate_at: Time.current)
+
+          record = build(:meal_record, user_id: user.id, ate_at: Time.current)
+          record.valid?
+
+          expect(record).to be_invalid
+          expect(record.errors[:ate_at]).to include "はすでに存在します"
+        end
+      end
+    end
+  end
 end
 
 # == Schema Information

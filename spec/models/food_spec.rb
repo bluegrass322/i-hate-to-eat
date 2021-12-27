@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe Food, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  # seedでのみ作成するため優先度低
 end
 
 # == Schema Information

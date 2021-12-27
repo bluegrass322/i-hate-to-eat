@@ -31,7 +31,8 @@ class User < ApplicationRecord
 
   with_options presence: true do
     validates :name, length: { maximum: 50 }, uniqueness: { case_sensitive: true }
-    validates :email, uniqueness: { case_sensitive: false }
+    validates :email, uniqueness: { case_sensitive: false },
+                      format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i, message: "メールアドレスの形式が正しくありません" }
     validates :role
     validates :gender
 

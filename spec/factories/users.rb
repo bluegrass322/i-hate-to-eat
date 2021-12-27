@@ -2,6 +2,12 @@
 
 FactoryBot.define do
   factory :user do
+    sequence(:name, "user_0")
+    sequence(:email) { |n| "user_#{n}@example.com" }
+    password { "password" }
+    password_confirmation { "password" }
+
+    association :dietary_reference_intake
   end
 end
 

@@ -19,6 +19,9 @@ import TopPage from '../components/pages/TopPage';
 
 import NotFoundPage from '../components/pages/NotFoundPage';
 
+// descriptionの定義ファイル
+import pageDesc from '../constants/page-descriptions';
+
 Vue.use(VueRouter);
 
 const router = new VueRouter({
@@ -29,43 +32,66 @@ const router = new VueRouter({
       path: '/',
       component: TopPage,
       name: 'TopPage',
-      meta: { isPublic: true },
+      meta: {
+        isPublic: true,
+      },
     },
     {
       path: '/register',
       component: RegisterPage,
       name: 'RegisterPage',
-      meta: { isPublic: true },
+      meta: {
+        isPublic: true,
+        title: 'Register',
+        desc: pageDesc.REGISTER,
+      },
     },
     {
       path: '/login',
       component: LoginPage,
       name: 'LoginPage',
-      meta: { isPublic: true },
+      meta: {
+        isPublic: true,
+        title: 'Login',
+        desc: pageDesc.LOGIN,
+      },
     },
     {
       path: '/about',
       component: AboutServicePage,
       name: 'AboutServicePage',
-      meta: { isPublic: true },
+      meta: {
+        isPublic: true,
+        title: 'About',
+      },
     },
     {
       path: '/terms',
       component: TermsOfUsePage,
       name: 'TermsOfUsePage',
-      meta: { isPublic: true },
+      meta: {
+        isPublic: true,
+        title: 'Terms of use',
+      },
     },
     {
       path: '/privacy',
       component: PrivacyPolicyPage,
       name: 'PrivacyPolicyPage',
-      meta: { isPublic: true },
+      meta: {
+        isPublic: true,
+        title: 'Privacy policy',
+      },
     },
     // 以下、要ログイン
     {
       path: '/home',
       component: HomePage,
       name: 'HomePage',
+      meta: {
+        title: 'Home',
+        desc: pageDesc.HOME,
+      },
     },
     {
       path: '/mypage',
@@ -75,16 +101,28 @@ const router = new VueRouter({
           path: 'setting',
           component: MyPageSetting,
           name: 'MyPageSetting',
+          meta: {
+            title: 'Setting',
+            desc: pageDesc.MYPAGE_SETTING,
+          },
         },
         {
           path: 'account',
           component: MyPageAccount,
           name: 'MyPageAccount',
+          meta: {
+            title: 'Account',
+            desc: pageDesc.MYPAGE_ACCOUNT,
+          },
         },
         {
           path: 'withdrawal',
           component: MyPageWithdrawal,
           name: 'MyPageWithdrawal',
+          meta: {
+            title: 'Withdrawal',
+            desc: pageDesc.MYPAGE_WITHDRAWAL,
+          },
         },
       ],
     },
@@ -92,12 +130,19 @@ const router = new VueRouter({
       path: '/suggestion',
       component: MealSuggestionPage,
       name: 'MealSuggestionPage',
+      meta: {
+        title: "Today's meal",
+        desc: pageDesc.SUGGESTION,
+      },
     },
     // 404 not found
     {
       path: '*',
       component: NotFoundPage,
-      meta: { isPublic: true },
+      meta: {
+        isPublic: true,
+        title: 'Not found',
+      },
     },
   ],
 });

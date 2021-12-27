@@ -3,6 +3,13 @@
 require 'line/bot'
 require "./app/lib/common/notificatable_to_admin"
 
+def client
+  Line::Bot::Client.new do |config|
+    config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
+    config.channel_token = Rails.application.credentials.line[:CHANNEL_TOKEN]
+  end
+end
+
 namespace :scheduler do
   desc "期限切れのsuggestionを削除"
   task destroy_expired_suggestions: :environment do

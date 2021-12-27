@@ -14,12 +14,53 @@
 import FlashMessage from './components/commons/FlashMessage';
 import FooterMenu from './components/commons/FooterMenu';
 
+// descriptionの定義ファイル
+import { DESC_COMMON, DESC_DEFAULT } from './constants/page-descriptions';
+
 export default {
   components: {
     FlashMessage,
     FooterMenu,
   },
+  // 戻り値を返す必要はないためwatchを使用
+  watch: {
+    $route(routeInstance) {
+      this.createPageTitle(routeInstance);
+      this.createPageDesc(routeInstance);
+    },
+  },
+  mounted() {
+    const routeInstance = this.$route;
+
+    this.createPageTitle(routeInstance);
+    this.createPageDesc(routeInstance);
+  },
+  methods: {
+    createPageTitle(routeInstance) {
+      if (routeInstance.meta.title) {
+        const pageTitle = routeInstance.meta.title + ' | ' + baseTitle;
+        document.title = pageTitle;
+      } else {
+        document.title = baseTitle;
+      }
+    },
+    createPageDesc(routeInstance) {
+      let pageDesc = DESC_COMMON;
+
+      if (routeInstance.meta.desc) {
+        pageDesc = routeInstance.meta.desc + ' | ' + baseTitle;
+      } else {
+        pageDesc = pageDesc + DESC_DEFAULT;
+      }
+
+      document
+        .querySelector("meta[name='description']")
+        .setAttribute('content', pageDesc);
+    },
+  },
 };
+
+const baseTitle = 'Eat this 4 now';
 </script>
 
 <style scoped>
