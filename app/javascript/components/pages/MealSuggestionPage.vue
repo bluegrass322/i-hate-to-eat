@@ -159,7 +159,7 @@ export default {
       noneMessage: '存在しません',
       btnHeihgt: '30',
       btnWidth: '40%',
-      btnWidthLarge: '258px',
+      btnWidthLarge: '245px',
     };
   },
   computed: {
