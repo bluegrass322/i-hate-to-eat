@@ -8,6 +8,16 @@ FactoryBot.define do
     password_confirmation { "password" }
 
     association :dietary_reference_intake
+
+    trait :full_params do
+      birth { Time.local(1995, 3, 22) }
+      height { 165 }
+      weight { 50 }
+      bmr { 1500 }
+
+      line_notification_enabled { true }
+      mealtime_first { Time.local(2021, 1, 1, 17, 00) }
+    end
   end
 end
 
