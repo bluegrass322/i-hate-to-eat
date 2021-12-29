@@ -12,7 +12,7 @@ module Api
         if current_user.update(user_params)
           head :ok
         else
-          render400(nil, @user.errors.full_messages)
+          render400(nil, current_user.errors.full_messages)
         end
       end
 
