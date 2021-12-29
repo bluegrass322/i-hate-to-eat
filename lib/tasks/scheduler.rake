@@ -3,6 +3,7 @@
 require 'line/bot'
 require "./app/lib/common/notificatable_to_admin"
 
+# TODO: ロジックをさらにモデルに切り出す
 def client
   Line::Bot::Client.new do |config|
     config.channel_secret = Rails.application.credentials.line[:CHANNEL_SECRET]
