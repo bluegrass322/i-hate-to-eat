@@ -47,8 +47,8 @@ RSpec.describe "api/v1/user_accounts", type: :request do
     end
 
     context "異常系" do
-      context "invalidなユーザー名が与えられた場合" do
-        fit "更新処理に失敗すること" do
+      context "invalidな値が与えられた場合" do
+        it "更新処理に失敗すること" do
           invalid_params = {
             name: nil,
             email: nil,
