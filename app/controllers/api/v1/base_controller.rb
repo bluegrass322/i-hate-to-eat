@@ -6,6 +6,12 @@ module Api
       include Api::ExceptionHandler
 
       before_action :require_login
+
+      private
+
+        def not_authenticated
+          render400(nil, "ログインしてください")
+        end
     end
   end
 end
