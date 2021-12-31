@@ -1,6 +1,6 @@
 <template>
   <div id="bmr-form">
-    <validation-observer ref="observer" v-slot="{ handleSubmit }">
+    <validation-observer ref="observer" v-slot="{ handleSubmit, invalid }">
       <v-form @submit.prevent="handleSubmit($emit('click'))">
         <template v-if="railsErrors.show">
           <template v-for="e in railsErrors.errorMessages">
@@ -110,6 +110,7 @@
           <v-btn
             type="submit"
             color="accent"
+            :disabled="invalid"
             depressed
             height="40"
             max-width="90"
