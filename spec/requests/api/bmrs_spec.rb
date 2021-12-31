@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "api_v1_bmr", type: :request do
+RSpec.describe "/api/v1/bmr", type: :request do
   describe "#update" do
     before do
       # DietaryReferenceIntakeのseedデータ
@@ -35,7 +35,7 @@ RSpec.describe "api_v1_bmr", type: :request do
 
       context "異常系" do
         context "invalidな値が与えられた場合" do
-          fit "BMR関連情報の更新に失敗すること" do
+          it "BMR関連情報の更新に失敗すること" do
             invalid_params = {
               gender: nil,
               birth: Time.current.ago(10.years),
