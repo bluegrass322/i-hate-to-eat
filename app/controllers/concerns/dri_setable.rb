@@ -29,6 +29,8 @@ module DriSetable
         dri.for_thirty_to_fortynine
       when 50..64
         dri.for_fifty_to_sixtyfour
+      else
+        dri.first
       end
     end
 end
