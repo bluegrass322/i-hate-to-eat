@@ -6,7 +6,7 @@ module Api
       include DriSetable
 
       def update
-        return render400() if params[:user].has_value?(nil)
+        return render400 if params[:user].value?(nil)
 
         assign_params(current_user)
         dri = dietary_reference_intake_for(current_user)
