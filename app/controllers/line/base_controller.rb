@@ -3,7 +3,7 @@
 module Line
   class BaseController < ApplicationController
     require 'line/bot'
-    include Api::ExceptionHandler
+    include ExceptionHandler
 
     before_action :validate_signature
 
