@@ -24,7 +24,7 @@ jobs:
       - name: Prepare Ruby and Gems
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7.4
+          ruby-version: 2.7.5
           bundler-cache: true
 
       - name: Prepare Node
@@ -61,7 +61,7 @@ jobs:
       - name: Prepare Ruby and Gems
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7.4
+          ruby-version: 2.7.5
           bundler-cache: true
 
       - name: Prepare Node
