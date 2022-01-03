@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "api/v1/user_withdrawal", type: :request do
   describe "#destroy" do
     before do
-      signup_and_login
+      signup_and_login()
     end
 
     context "正常系" do
@@ -13,7 +13,7 @@ RSpec.describe "api/v1/user_withdrawal", type: :request do
             delete api_v1_user_withdrawal_path, params: { id: @user.id }
           }.to change(User, :count).by(-1)
   
-          expect(response).to have_http_status("200")
+          expect(response).to have_http_status(:ok)
 
         end
       end

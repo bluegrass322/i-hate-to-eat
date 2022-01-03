@@ -20,7 +20,7 @@ RSpec.describe "api/v1/registrations", type: :request do
           }.to change(User, :count).by(1)
 
           user = User.first
-          expect(response).to have_http_status("200")
+          expect(response).to have_http_status(:ok)
           expect(response.body).to include user.id.to_s
           expect(user.dietary_reference_intake_id).to eq DietaryReferenceIntake.first.id
         end

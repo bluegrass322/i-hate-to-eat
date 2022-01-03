@@ -14,7 +14,7 @@ RSpec.describe "api/v1/authentications", type: :request do
         it "ログインに成功すること" do
           post api_v1_authentication_path, params: @login_params
 
-          expect(response).to have_http_status("200")
+          expect(response).to have_http_status(:ok)
           expect(response.body).to include @user.id.to_s
         end
       end
@@ -69,13 +69,13 @@ RSpec.describe "api/v1/authentications", type: :request do
 
   describe "#destroy" do
     before do
-      signup_and_login
+      signup_and_login()
     end
 
     it "ログアウトに成功すること" do
       delete api_v1_authentication_path
 
-      expect(response).to have_http_status("200")
+      expect(response).to have_http_status(:ok)
     end
   end
 end
