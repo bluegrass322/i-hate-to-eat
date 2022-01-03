@@ -4,6 +4,14 @@ class FoodCategory < ApplicationRecord
   # Association
   has_many :foods, dependent: :destroy
 
+  # Scope
+  MAINDISHES = [ "魚介類", "肉" ]
+  SIDEDISHES = [ "穀物", "いも・でん粉", "砂糖・甘味", "豆",
+                 "種実", "野菜", "果実", "きのこ", "藻" ]
+
+  scope :main_cate, -> { where(name: MAINDISHES) }
+  scope :side_cate, -> { where(name: SIDEDISHES) }
+
   # Validation
   validates :name, presence: true
 end
