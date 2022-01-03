@@ -11,12 +11,8 @@ class Food < ApplicationRecord
   scope :prio_m, -> { where(priority: 10) }
   scope :prio_r, -> { where(priority: 5) }
   scope :prio_rm, -> { where(priority: 5..10) }
-
-  # TODO: category_idでなくfood_categoryのnameを使う
-  # もしくは判別用のintegerカラムを追加する
-  # もしデータを入れ直した際にズレてしまう & テストが作りにくい
-  scope :maindish, -> { where(food_category_id: [10, 11]) }
-  scope :sidedish, -> { where(food_category_id: 1..9) }
+  scope :maindish, -> { joins(:food_category).merge(FoodCategory.main_cate) }
+  scope :sidedish, -> { joins(:food_category).merge(FoodCategory.side_cate) }
 
   # Validation
   with_options presence: true do
