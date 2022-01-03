@@ -1,6 +1,6 @@
 <template>
   <div id="account-page">
-    <validation-observer ref="observer" v-slot="{ handleSubmit }">
+    <validation-observer ref="observer" v-slot="{ handleSubmit, invalid }">
       <v-form @submit.prevent="handleSubmit(updateAccount)">
         <template v-if="railsErrors.show">
           <v-alert class="text-center" dense type="error">
@@ -137,6 +137,7 @@
         <v-btn
           type="submit"
           color="accent"
+          :disabled="invalid"
           height="40"
           outlined
           tile
