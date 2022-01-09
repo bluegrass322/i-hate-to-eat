@@ -15,6 +15,8 @@
 - 設定した時間に、食事内容の提案とともに食事を促すメッセージを送るリマインド機能
 - 提案した食材の記録をもとに、目標栄養摂取量に対する達成度を算出
 
+![app_line_description](https://user-images.githubusercontent.com/79901594/148671227-18a8cceb-5ca2-4df1-b299-741c05c78dc8.png)
+
 <br />
 
 
